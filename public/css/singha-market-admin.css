@@ -1,0 +1,33 @@
+.sidebar-menu {
+    background: #ffd500;
+}
+.sidebar-menu .main-menu li.active > a {
+    color: #000000;
+}
+.sidebar-menu .main-menu a {
+    color: #ffffff;
+}
+.btn.btn-secondary,
+.btn.btn-primary{
+    background: #ffd500;
+}
+.sidebar-menu .logo-env {
+    border-bottom: 1px solid #ffffff;
+}
+.sidebar-menu .main-menu a {
+    border-bottom: 1px solid #ffffff;
+}
+div.datepicker table tr td.active, div.datepicker table tr td.active:hover, div.datepicker table tr td.active.disabled, div.datepicker table tr td.active.disabled:hover,
+div.datepicker table tr td span.active, div.datepicker table tr td span.active:hover, div.datepicker table tr td span.active.disabled, div.datepicker table tr td span.active.disabled:hover {
+    background: #ffd500;
+}
+.btn.btn-secondary:hover,
+.btn.btn-secondary:active, .btn.btn-secondary:focus {
+    background: #e9c928;
+}
+
+@media screen and (min-width: 769px) {
+    .sidebar-menu.collapsed .main-menu > li.active, .sidebar-menu.collapsed .main-menu > li li.active {
+        background-color: #e1bf13;
+    }
+}

@@ -1,0 +1,96 @@
+h1, h2, h3, h4, h5, h6 {
+    font-family: thaisans_neueregular,sans-serif;
+}
+
+h1{
+    font-size: 65px;
+}
+
+h2 {
+    padding-bottom: 26px;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.banner.auto-size {
+    padding-top: 80px;
+    padding-bottom: 5px;
+}
+
+.sidenav>li>a {
+    font-size: 24px;
+    line-height: 36px;
+}
+
+.sidenav>li li {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.site-header .navbar-brand>img {
+    display: inline-block;
+    max-height: 50px;
+    transition: .2s ease;
+}
+
+.sidebar-brand img{
+    max-height: 50px;
+}
+
+.sidebar-boxed .sidebar-brand {
+    margin-top: -70px;
+    margin-bottom: 30px;
+    display: block;
+    text-align: center;
+}
+
+.site-header.navbar-sm .navbar-brand>img {
+    max-height: 35px;
+}
+
+.site-header .navbar {
+    background-color: #2dbca6;
+}
+
+.banner h1 strong, .banner p {
+    font-weight: 600;
+}
+
+.main-content {
+    padding: 50px 50px 50px 0;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+.img-button {
+    margin-top: -6px;
+}
+
+.site-footer {
+    background: none;
+}
+
+@media screen and (max-width: 767px) {
+    h2{
+        padding-bottom: 16px;
+        font-size: 30px;
+    }
+
+    .site-header .navbar-brand > img {
+        max-height: 30px !important;
+    }
+
+    .banner.auto-size {
+        height: auto;
+        padding-top: 50px;
+        padding-bottom: 10px;
+    }
+
+    .navbar {
+        background-color: #2dbca6!important;
+    }
+
+    .main-content {
+        font-size: 18px;
+    }
+}

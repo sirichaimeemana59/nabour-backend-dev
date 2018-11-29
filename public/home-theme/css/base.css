@@ -1,0 +1,210 @@
+
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Globals
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+
+
+body {
+    font-family: "thaisans_neueregular", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    overflow-x: hidden;
+}
+
+.form-control {
+    font-size: 20px;
+    line-height: 18px;
+    padding: 2px 12px;
+}
+.cd-secondary-nav {
+    font-size: 22px;
+}
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Template
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+#main {
+    padding: 140px 0 120px;
+    background: rgb(26, 188, 156);
+}
+
+.padding-bottom50 {
+    padding-bottom: 50px;
+}
+
+form .form-group.validate-has-error .form-control {
+    border-color: #cc3f44;
+    color: #cc3f44;
+}
+form .form-group.validate-has-error .form-control+span,
+.email-error {
+    display: block;
+    padding-top: 5px;
+    font-size: 12px;
+    color: #cc3f44;
+}
+.signup-main-content {
+    /*background: url(../img/nb.jpg);*/
+}
+.home-panel {
+    padding: 20px;
+    padding-bottom: 0;
+}
+#verify-form .label-warning {
+    display: block;
+    font-size: 18px;
+    padding: 8px;
+    margin: 0 30px 15px 30px;
+}
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Info Bar
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+
+#info-bar a {
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+    display: block;
+    height: 60px;
+    margin: 0;
+    text-decoration: none;
+}
+
+#info-bar a.btn-green:hover {
+    background-color: #238b68;
+}
+
+span.demo-logo,
+span.back-to-pavilion {
+    display: block;
+    width: 50%;
+}
+
+span.demo-logo {
+    float: left;
+    text-align: left;
+}
+
+span.back-to-pavilion {
+    float: right;
+    text-align: right;
+}
+
+.btn-green {
+    background: #32c896;
+    padding: 10px 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Header
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+header {
+    padding: 30px 0;
+}
+
+#title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#title h1 {
+    color: #fff;
+    font-size: 42px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#title h2 {
+    color: #C5FAE9;
+    font-size: 20px;
+}
+
+.screenshot-area-heading h2 {
+    text-align: center;
+    padding: 40px 0;
+}
+.effects .img img {
+    margin-bottom: 10px !important;
+}
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Footer
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+
+.footer-heading p {
+    text-align: center;
+    font-size: 14px;
+    padding: 20px 0 10px;
+    color: #fff;
+}
+
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Extras
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    content: "";
+    clear: both;
+    height: 0;
+}
+/* ------------------------------------------------------------ *\
+|* ------------------------------------------------------------ *|
+|* Media Queries
+|* ------------------------------------------------------------ *|
+\* ------------------------------------------------------------ */
+
+@media all and (max-width: 600px) {
+    .container {
+        width: 100%;
+    }
+    #main {
+        padding: 80px 0 0;
+    }
+    span.demo-logo,
+    span.back-to-pavilion {
+        width: 100%;
+    }
+
+    span.demo-logo,
+    span.back-to-pavilion {
+        float: none;
+        text-align: center;
+    }
+
+    span.demo-logo {
+        margin-bottom: 10px;
+    }
+
+    #title h1 {
+        font-size: 26px;
+    }
+
+    #title h2 {
+        font-size: 22px;
+    }
+
+}
+@media all and (max-width: 420px) {
+    #recaptcha {
+        transform:scale(0.67);
+        transform-origin:0 0
+    }
+}
