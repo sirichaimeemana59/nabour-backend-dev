@@ -5,8 +5,8 @@
             <span class="title">รายชื่อลูกค้า</span>
         </a>
         <ul {!! (Request::is('customer/*') ? 'style="display:block;"' : '') !!}>
-        	<li class="{{ (Request::is('customer/leads/list') ? 'active' : '') }}">
-				<a href="{{ url('customer/leads/list') }}">
+        	<li class="{{ (Request::is('/customer/leads/list') ? 'active' : '') }}">
+				<a href="{{ url('/customer/leads/list') }}">
                     <i class="fa fa-user"></i>
 					<span class="title">Leads</span>
 				</a>
@@ -25,6 +25,30 @@
 			</li>
 		</ul>
     </li>
+
+    {{--Service--}}
+    <li class="has-sub {{ (Request::is('service/package/*') ? 'active expanded' : '') }}">
+        <a href="">
+            <i class="fa fa-car"></i>
+            <span class="title">Service</span>
+        </a>
+        <ul style="{{ (Request::is('root/admin/package/*') ? 'display:block;' : '') }}">
+            <li class="{{ (Request::is('service/package/add'? 'active' : '')) }}">
+                <a href="{{url('service/package/add')}}">
+                    <i class="fa fa-car"></i>
+                    <span class="title">Package</span>
+                </a>
+            </li>
+            <li class="{{ (Request::is('service/package/service/add'? 'active' : ''))}}">
+                <a href="{!!url('service/package/service/add')!!}">
+                    <i class="fa fa-car"></i>
+                    <span class="title">ค่าบริการ</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    {{--End Package--}}
 
     <li class="{{ (Request::is('contract/*') ? 'active' : '') }}">
         <a href="{{ url('contract/list') }}">
