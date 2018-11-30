@@ -117,6 +117,7 @@
     </div>
 
 <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
+<script src="{{ url('/') }}/js/TweenMax.min.js"></script>
 <script src="{{ url('/') }}/js/resizeable.js"></script>
 <script src="{{ url('/') }}/js/xenon-api.js"></script>
 <script src="{{ url('/') }}/js/xenon-toggles.js"></script>
