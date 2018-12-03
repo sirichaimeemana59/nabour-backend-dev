@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('auth/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/auth/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/root/admin/property/list', 'RootAdmin\PropertyController@index');
@@ -54,6 +54,22 @@ Route::post('service/package/delete_service', 'product\PackageController@delete_
 Route::post('service/package/delete_service_open', 'product\PackageController@delete_service_open');
 //End Product
 
-//Product
+//---------------------------  Nabour officer Route --------------------------------------------//
 
-//End Product
+// Admin
+Route::get('root/admin/admin-system/list', 'RootAdmin\AdminSystemController@adminList');
+Route::post('root/admin/admin-system/add', 'RootAdmin\AdminSystemController@addAdmin');
+Route::post('root/admin/admin-system/view', 'RootAdmin\AdminSystemController@viewAdmin');
+Route::post('root/admin/admin-system/edit/get', 'RootAdmin\AdminSystemController@getAdmin');
+Route::post('root/admin/admin-system/edit', 'RootAdmin\AdminSystemController@editAdmin');
+Route::any('root/admin/admin-system/active', 'RootAdmin\AdminSystemController@setActive');
+Route::post('root/admin/admin-system/delete', 'RootAdmin\AdminSystemController@deleteAdmin');
+
+// Sale
+Route::get('admin/sales/list', 'RootAdmin\SalesOfficerController@salesList');
+Route::post('admin/sales/add', 'RootAdmin\SalesOfficerController@addSales');
+Route::post('admin/sales/view', 'RootAdmin\SalesOfficerController@viewSales');
+Route::post('admin/sales/edit/get', 'RootAdmin\SalesOfficerController@getSales');
+Route::post('admin/sales/edit', 'RootAdmin\SalesOfficerController@editSales');
+Route::any('admin/sales/active', 'RootAdmin\SalesOfficerController@setActive');
+Route::post('admin/sales/delete', 'RootAdmin\SalesOfficerController@deleteSales');

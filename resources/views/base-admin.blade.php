@@ -9,35 +9,35 @@
     <meta name="author" content="" />
     <title>Nabour Backend</title>
 
-    <link rel="stylesheet" href="{{ url('/') }}/css/fonts/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-core.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-forms.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-components.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-admin-skins.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/custom.css?version={{time()}}">
-    <link rel="stylesheet" href="{{ url('/') }}/font/Stidti/font.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/bootstrap.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-core.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-forms.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-components.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-admin-skins.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/custom.css?version={!!time() !!}">
+    <link rel="stylesheet" href="{!! url('/') !!}/font/Stidti/font.css">
 
     <!-- favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/android-icon-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="{{ url('/') }}/home-theme/img/favicon/manifest.json">
-    <meta name="msapplication-TileImage" content="{{ url('/') }}/home-theme/img/favicon/mstile-144x144.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/android-icon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="{!! url('/') !!}/home-theme/img/favicon/manifest.json">
+    <meta name="msapplication-TileImage" content="{!! url('/') !!}/home-theme/img/favicon/mstile-144x144.png">
 
     <!-- SweetAlert Library -->
-    <script src="{{ url('/') }}/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="{{ url('/') }}/js/jquery-1.11.1.min.js"></script>
+    <script src="{!! url('/') !!}/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{!! url('/') !!}/js/jquery-1.11.1.min.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,7 +50,7 @@
 <div class="page-loading-overlay">
     <div class="loader-2"></div>
 </div>
-    <input type="hidden" id="root-url" value="{{url('/')}}"/>
+    <input type="hidden" id="root-url" value="{!! url('/') !!}"/>
 
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
         <!-- Add "fixed" class to make the sidebar fixed always to the browser viewport. -->
@@ -64,12 +64,12 @@
 
                     <!-- logo -->
                     <div class="logo">
-                        <a href="{{ url('/') }}" class="logo-expanded">
-                            <img src="{{ url('/') }}/images/nb-logo.png" width="160" alt="" />
+                        <a href="{!! url('/') !!}" class="logo-expanded">
+                            <img src="{!! url('/') !!}/images/nb-logo.png" width="160" alt="" />
                         </a>
 
-                        <a href="{{ url('/') }}" class="logo-collapsed">
-                            <img src="{{ url('/') }}/images/nb-logo-@2x.png" width="40" alt="" />
+                        <a href="{!! url('/') !!}" class="logo-collapsed">
+                            <img src="{!! url('/') !!}/images/nb-logo-@2x.png" width="40" alt="" />
                         </a>
                     </div>
 
@@ -116,13 +116,13 @@
         </div>
     </div>
 
-<script src="{{ url('/') }}/js/bootstrap.min.js"></script>
-<script src="{{ url('/') }}/js/TweenMax.min.js"></script>
-<script src="{{ url('/') }}/js/resizeable.js"></script>
-<script src="{{ url('/') }}/js/xenon-api.js"></script>
-<script src="{{ url('/') }}/js/xenon-toggles.js"></script>
+<script src="{!! url('/') !!}/js/bootstrap.min.js"></script>
+<script src="{!! url('/') !!}/js/TweenMax.min.js"></script>
+<script src="{!! url('/') !!}/js/resizeable.js"></script>
+<script src="{!! url('/') !!}/js/xenon-api.js"></script>
+<script src="{!! url('/') !!}/js/xenon-toggles.js"></script>
 <!-- JavaScripts initializations and stuff -->
-<script src="{{ url('/') }}/js/xenon-custom.js"></script>
+<script src="{!! url('/') !!}/js/xenon-custom.js"></script>
 
     @yield('script')
 

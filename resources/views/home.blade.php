@@ -1,4 +1,4 @@
-{{--@extends('layouts.app')--}}
+{!!--@extends('layouts.app')--!!}
 @extends('base-admin')
 @section('content')
 
@@ -9,12 +9,12 @@
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1" >
             <li>
-                <a href="{{ url('/property') }}"><i class="fa-home"></i>Home</a>
+                <a href="{!! url('/property') !!}"><i class="fa-home"></i>Home</a>
             </li>
         </ol>
     </div>
 </div>
-{{-- //search --}}
+{!!-- //search --!!}
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
@@ -29,7 +29,7 @@
                                 <div class="card-body">
                                     @if (session('status'))
                                         <div class="alert alert-success" role="alert">
-                                            {{ session('status') }}
+                                            {!! session('status') !!}
                                         </div>
                                     @endif
                                     You are logged in as
@@ -61,7 +61,7 @@
 @section('script')
     <script>
         $(function () {
-            //alert('{{ 'aaaa' }}');
+            //alert('{!! 'aaaa' !!}');
         })
     </script>
 @endsection

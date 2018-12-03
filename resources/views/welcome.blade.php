@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{!! str_replace('_', '-', app()->getLocale()) !!}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,7 +55,7 @@
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
-                text-transform: uppercase;
+                text- __form: uppercase;
             }
 
             .m-b-md {
@@ -68,12 +68,12 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{!! url('/home') !!}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{!! route('login') !!}">Login</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{!! route('register') !!}">Register</a>
                         @endif
                     @endauth
                 </div>

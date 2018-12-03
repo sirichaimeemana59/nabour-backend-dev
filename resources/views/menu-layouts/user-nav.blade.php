@@ -13,12 +13,12 @@
         <li class="dropdown user-profile">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 @if(Auth::user()->profile_pic_name)
-                <img src="{{ env('URL_S3') . "/profile-img/" . Auth::user()->profile_pic_path . Auth::user()->profile_pic_name }}" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
+                <img src="{!! env('URL_S3') . "/profile-img/" . Auth::user()->profile_pic_path . Auth::user()->profile_pic_name !!}" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
                 @else
-                <img src="{{ url('/') }}/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
+                <img src="{!! url('/') !!}/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
                 @endif
                 <span>
-                    {{ Auth::user()->name }}
+                    {!! Auth::user()->name !!}
                     <i class="fa-angle-down"></i>
                 </span>
             </a>
