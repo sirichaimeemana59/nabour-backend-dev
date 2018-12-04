@@ -73,3 +73,34 @@ Route::post('admin/sales/edit/get', 'RootAdmin\SalesOfficerController@getSales')
 Route::post('admin/sales/edit', 'RootAdmin\SalesOfficerController@editSales');
 Route::any('admin/sales/active', 'RootAdmin\SalesOfficerController@setActive');
 Route::post('admin/sales/delete', 'RootAdmin\SalesOfficerController@deleteSales');
+
+
+//Invoice Receipt
+Route::get('root/admin/receipt', 'RootAdmin\feesBillsController@index');
+Route::post('root/admin/receipt/show', 'RootAdmin\feesBillsController@show');
+Route::post('root/admin/receipt/delete', 'RootAdmin\feesBillsController@destroy');
+Route::get('root/admin/property/receipt/import/{id}','RootAdmin\feesBillsController@importReceipt');
+Route::post('root/admin/property/receipt/import','RootAdmin\feesBillsController@startImportReceipt');
+Route::get('root/admin/property/expense/import/{id}','RootAdmin\feesBillsController@importExpense');
+Route::post('root/admin/property/expense/import','RootAdmin\feesBillsController@startImportExpense');
+
+// Property
+Route::get('customer/property/list', 'RootAdmin\PropertyController@index');
+Route::get('customer/property/demo/list', 'RootAdmin\PropertyController@demoList');
+Route::any('customer/property/edit/{id}', 'RootAdmin\PropertyController@edit');
+Route::any('customer/property/view/{id}', 'RootAdmin\PropertyController@view');
+Route::any('customer/property/add', 'RootAdmin\PropertyController@add');
+Route::any('customer/property/status', 'RootAdmin\PropertyController@status');
+Route::get('customer/property/directlogin/{id}', 'RootAdmin\PropertyController@directLogin');
+Route::post('customer/property/addunit', 'RootAdmin\PropertyController@createUnitCsv');
+Route::post('customer/property/update-unit', 'RootAdmin\PropertyController@addUnitCsvAfter');
+Route::post('customer/property/edit-data', 'RootAdmin\PropertyController@updatePropertyUnitCsv');
+
+// Initial Water&Electric Meters of Property
+Route::any('root/admin/property/initial-meter/get', 'RootAdmin\PropertyController@getInitialUnit');
+Route::post('root/admin/property/initial-meter/save', 'RootAdmin\PropertyController@importInitialUnit');
+
+// Property Feature
+Route::any('root/admin/property-feature/edit/get', 'RootAdmin\PropertyController@getPropertyFeature');
+Route::post('root/admin/property-feature/edit/save', 'RootAdmin\PropertyController@editPropertyFeature');
+

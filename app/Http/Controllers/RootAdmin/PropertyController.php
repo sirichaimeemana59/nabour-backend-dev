@@ -139,82 +139,13 @@ class PropertyController extends Controller {
                 $new_feature->menu_utility = true;
                 $new_feature->save();
 
-//                //Feature user setup UserPropertyFeature
-//                $new_feature_user = new UserPropertyFeature;
-//                $new_feature_user->property_id = $new_prop->id;
-//                $new_feature_user->menu_committee_room = true;
-//                $new_feature_user->menu_event = true;
-//                $new_feature_user->menu_vote = true;
-//                $new_feature_user->menu_tenant = true;
-//                $new_feature_user->menu_vehicle = true;
-//                $new_feature_user->menu_prepaid = true;
-//                $new_feature_user->menu_revenue_record = true;
-//                $new_feature_user->menu_retroactive_receipt = true;
-//                $new_feature_user->menu_common_fee = true;
-//                $new_feature_user->menu_cash_on_hand = true;
-//                $new_feature_user->menu_pettycash = true;
-//                $new_feature_user->menu_fund = true;
-//                $new_feature_user->menu_complain = true;
-//                $new_feature_user->menu_parcel = true;
-//                $new_feature_user->menu_message = true;
-//                $new_feature_user->menu_utility = true;
-//                $new_feature_user->save();
-
-
-                if(!empty($property['contract']['contract_sign_no'])) {
-                    $property_sign = new PropertyContract;
-                    $property_sign->fill($property['contract']);
-
-                    if(isset($property['contract']['contract_date'])){
-                        $property_sign->contract_date = NULL;
-                    }
-                    if(isset($property['contract']['contract_end_date'])){
-                        $property_sign->contract_end_date = NULL;
-                    }
-                    if(isset($property['contract']['info_delivery_date'])){
-                        $property_sign->info_delivery_date = NULL;
-                    }
-                    if(isset($property['contract']['info_used_date'])){
-                        $property_sign->info_used_date = NULL;
-                    }
-                    $property_sign->property_id = $new_prop->id;
-
-                    //dd($property_sign);
-                    $property_sign->save();
-                }
-
-
                 return redirect('root/admin/property/list'); 
             }
         }
-        $date=date("Y-m-d");
-        $cut_date_now=explode("-",$date);
-        $proper_con= new PropertyContract;
-
-        //$singg=$proper_con->where('year',$cut_date_now[0],'month',$cut_date_now[1]);
-        $singg = PropertyContract::whereYear('created_at', '=', $cut_date_now[0])
-                                ->whereMonth('created_at', '=', $cut_date_now[1])
-                                ->get();
-        $sing=$singg->max('contract_sign_no');
-        //$sing =  DB::select("SELECT MAX(contract_sign_no) FROM property_nb_contract WHERE EXTRACT(year FROM created_at) = '$cut_date_now[0]' AND EXTRACT(month FROM created_at) = '$cut_date_now[1]'");
-//        $max_cus =  DB::select("SELECT MAX(customer_id)AS cus FROM property_nb_contract");
-        $max_cus = $proper_con->max('customer_id');
-        $max_quo = $proper_con->max('quotation_id');
-
         $pmg = new ManagementGroup;
         $pmg = $pmg->get();
 
-        $sale1 = [];
-        $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
-            ->orderBy('created_at','DESC')
-            ->paginate(30);
-
-        $package = new package;
-        $package = $package->where('status','1');
-        $package = $package->get();
-        //dd($pmg);
-        return view('property.add',['sing'=>$sing,'max_cus'=>$max_cus,'pmg'=>$pmg])->with(compact('property','provinces','sale','max_quo','package'));
+        return view('property.add')->with(compact('property','provinces','pmg'));
         //dd($pmg);
     }
 
@@ -369,7 +300,7 @@ class PropertyController extends Controller {
         $props = new Property;
         $props = $props->with('userCount');
 
-        if(Request::get('sign_status')) {
+        /*if(Request::get('sign_status')) {
             if(Request::get('sign_status') == 1) {
                 $props = $props->whereHas('lastest_contract', function ($q) {
                     $q->where('contract_end_date', '>=', date('Y-m-d 23:59:59'));
@@ -380,8 +311,8 @@ class PropertyController extends Controller {
                 });
             }
         } else {
-            $props = $props->with('lastest_contract');
-        }
+            //$props = $props->with('lastest_contract');
+        }*/
 
         $props = $props->where('is_demo',false);
 
@@ -432,13 +363,15 @@ class PropertyController extends Controller {
 
         //dd($pmg);
 
-        $package = new package;
-        $package = $package->where('status','1');
-        $package = $package->get();
+        $package = $quotation = array();
+
+        //$package = new package;
+        //$package = $package->where('status','1');
+        //$package = $package->get();
 
 
-        $quotation = new quotation;
-        $quotation = $quotation->get();
+        //$quotation = new quotation;
+        //$quotation = $quotation->get();
 
         //dd($quotation);
 

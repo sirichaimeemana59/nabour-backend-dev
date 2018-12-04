@@ -14,7 +14,7 @@ class Province extends GeneralModel
         return $provinces += $this->orderBy('name_'.$lang, 'ASC')->lists('name_'.$lang,'code')->toArray();*/
 
         $lang = session()->get('lang');
-        $provinces = $this->orderBy('name_'.$lang, 'ASC')->lists('name_'.$lang,'code')->toArray();
+        $provinces = $this->orderBy('name_'.$lang, 'ASC')->pluck('name_'.$lang,'code')->toArray();
         asort($provinces);
         $provinceFirst = array(''=> trans('messages.AboutProp.province'));
         $provincesAll = $provinceFirst + $provinces;

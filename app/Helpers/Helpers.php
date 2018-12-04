@@ -1,5 +1,8 @@
 <?php
 
+define('PROPERTY_TYPE_EN',serialize(array('Property type','Housing estate/Village','Hotel/Rented room','Condo','Other')));
+define('PROPERTY_TYPE_TH',serialize(array('ประเภทอาคาร','บ้านจัดสรร/หมู่บ้าน','ห้องพัก/โรงแรม/ห้องเช่า','คอนโด','อื่นๆ')));
+
 function humanTiming ($time)
 {
     $time = strtotime($time);
