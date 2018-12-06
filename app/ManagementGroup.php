@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ManagementGroup extends Model
+class ManagementGroup extends GeneralModel
 {
     //
     protected $table = 'management_group';

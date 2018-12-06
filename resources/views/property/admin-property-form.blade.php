@@ -218,7 +218,7 @@
 					<div class="col-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon">
-								<i class="linecons-mail"></i>
+								<i class="fa-at"></i>
 							</span>
 							{!! Form::text('user[email]',null,array('class' => 'form-control', "data-validate" => "email")) !!}
 						</div>

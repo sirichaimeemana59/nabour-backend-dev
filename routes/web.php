@@ -85,7 +85,7 @@ Route::get('root/admin/property/expense/import/{id}','RootAdmin\feesBillsControl
 Route::post('root/admin/property/expense/import','RootAdmin\feesBillsController@startImportExpense');
 
 // Property
-Route::get('customer/property/list', 'RootAdmin\PropertyController@index');
+Route::any('customer/property/list', 'RootAdmin\PropertyController@index');
 Route::get('customer/property/demo/list', 'RootAdmin\PropertyController@demoList');
 Route::any('customer/property/edit/{id}', 'RootAdmin\PropertyController@edit');
 Route::any('customer/property/view/{id}', 'RootAdmin\PropertyController@view');
