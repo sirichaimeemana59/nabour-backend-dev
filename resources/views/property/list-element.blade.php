@@ -64,6 +64,15 @@
 									<i class="fa-edit"></i> แก้ไข
 								</a>
 							</li>
+							@if($row->active_status)
+								<li><a href="#" class="active-status" data-status="0" data-pid="{!! $row->id !!}">
+										<i class="fa-lock"></i> {!! trans('messages.Member.account_ban') !!}
+									</a></li>
+							@else
+								<li><a href="#" class="active-status" data-status="1" data-pid="{!! $row->id !!}">
+										<i class="fa-key"></i> {!! trans('messages.Member.account_unban') !!}
+									</a></li>
+							@endif
 							<?php /*
 							<li><a href="{!!url('/customer/property/directlogin/'.$row->id)!!}">
 									<i class="fa-user"></i> Login เป็น Admin

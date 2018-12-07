@@ -253,7 +253,7 @@ class SalesOfficerController extends Controller {
             $app_key = Request::get('app_key');
             if($app_key == $_ENV['APP_KEY']) {
                 $user = Request::get('user');
-                $officer = User::where('email',$user['email'])->first();
+                $officer = BackendUser::where('email',$user['email'])->first();
                 if($officer) {
                     $officer->active = ($user['status'] == "1") ? true : false;
                     $officer->save();
@@ -264,21 +264,21 @@ class SalesOfficerController extends Controller {
 
     public function viewSales () {
         if(Request::ajax()) {
-            $member = User::find(Request::get('uid'));
+            $member = BackendUser::find(Request::get('uid'));
             return view('sales.view-sales')->with(compact('member'));
         }
     }
 
     public function getSales () {
         if(Request::ajax()) {
-            $officer = User::find(Request::get('uid'));
+            $officer = BackendUser::find(Request::get('uid'));
             return view('sales.sales-form-edit')->with(compact('officer'));
         }
     }
 
     public function setActive () {
         if(Request::ajax()) {
-            $user = User::find(Request::get('uid'));
+            $user = BackendUser::find(Request::get('uid'));
             if($user) {
                 $user->active = Request::get('status');
                 $user->save();
@@ -300,7 +300,8 @@ class SalesOfficerController extends Controller {
                 ];
             }
             $validator = Validator::make($request, $rules);
-
+            $officer->fill(Request::except(['email','id']));
+            
             if ($validator->fails()) {
                 $officer->fill(Request::except(['email','id']));
                 return view('sales.officer-form-edit')->withErrors($vu)->with(compact('officer'));

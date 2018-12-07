@@ -75,7 +75,8 @@ class PropertyController extends Controller {
                 if(empty($new_prop->max_price)) $new_prop->max_price = 0;
                 $new_prop->save();
                 //dd($new_prop);
-                BackendUser::create([
+                $this->updateBackendProperty ($new_prop);
+                User::create([
                     'name' => $property['user']['name'],
                     'email' => $property['user']['email'],
                     'password' => bcrypt($property['user']['password']),
@@ -203,7 +204,7 @@ class PropertyController extends Controller {
                 if(empty($prop->max_price)) $prop->max_price = 0;
                 $prop->save();
              
-                $user = BackendUser::find($property['user']['id']);
+                $user = User::find($property['user']['id']);
                 //$user->fill($property['user']);
                 if(!empty($property['user']['password'])) {
                     $user->fill($property['user']);
@@ -411,13 +412,16 @@ class PropertyController extends Controller {
 
     public function status () {
         if(Request::ajax()) {
-            $property = Property::find(Request::get('pid'));
+            $property   = Property::find(Request::get('pid'));
+            $_property  = BackendProperty::find(Request::get('pid'));
+
             if($property) {
-                $property->active_status = Request::get('status');
+                $property->active_status = $_property->active_status = Request::get('status');
                 if($property->active_status == 0) {
                     $property->last_inactive_date = date('Y-m-d H:i:s');
                 }
                 $property->save();
+                $_property->save();
                 return response()->json(['result'=>true]);
             }
         }
@@ -645,7 +649,7 @@ class PropertyController extends Controller {
     }
 
     function directLogin ($id) {
-        $user = BackendUser::where('property_id',$id)->where('role',1)->first();
+        $user = User::where('property_id',$id)->where('role',1)->first();
         //dd($user);
         Request::session()->put('auth.root_admin',Auth::user());
         Auth::login($user);
@@ -928,6 +932,20 @@ class PropertyController extends Controller {
         }catch(Exception $ex){
             echo "error";
         }
+    }
+
+    public function updateBackendProperty ($property) {
+
+        $_property = BackendProperty::firstOrNew(array('id' => $property->id) );
+        $_property->juristic_person_name_th = $property->juristic_person_name_th;
+        $_property->juristic_person_name_en = $property->juristic_person_name_en;
+        $_property->province                = $property->province;
+        $_property->property_name_th        = $property->property_name_th;
+        $_property->juristic_person_name_th = $property->juristic_person_name_th;
+        $_property->property_name_en        = $property->property_name_en;
+        $_property->developer_group_id      = $property->developer_group_id;
+        $_property->id                      = $property->id;
+        $_property->save();
     }
 
 }
