@@ -11,11 +11,13 @@ use App\Http\Controllers\PushNotificationController;
 use DB;
 use App\PropertyMember;
 use App\PropertyUnit;
-use App\BackendModel\User;
+use App\BackendModel\User as BackendUser;
+use App\User;
 use App\Province;
 use App\Property;
 use App\SalePropertyDemo;
 use App\PropertyFeature;
+use Validator;
 
 class SalesOfficerController extends Controller {
 
@@ -31,7 +33,7 @@ class SalesOfficerController extends Controller {
 
     public function salesList() {
         $officer = [];
-        $officers = User::where('id','!=',Auth::user()->id)
+        $officers = BackendUser::where('id','!=',Auth::user()->id)
             ->where('role','=',4)
             ->orderBy('created_at','DESC')
             ->paginate(30);
@@ -43,25 +45,16 @@ class SalesOfficerController extends Controller {
         if (Request::isMethod('post')) {
             $officer = Request::all();
 
-            $new_officer = new User();
-            unset($new_officer->rules['fname']);
-            unset($new_officer->rules['lname']);
-            $new_officer->rules['name'] = 'required';
-            $officer['email'] = strtolower(trim($officer['email']));
-            $vu = $new_officer->validate($officer);
+            $validator = Validator::make($officer, [
+                'name' => 'required|max:255',
+                'email' => 'unique:back_office.users',
+                'password' => 'alpha_num|min:6|required',
+                'password_confirm' => 'alpha_num|min:6|required|same:password'
+            ]);
 
-            if($vu->fails()){
-                return view('sales.officer-form')->withErrors($vu)->with(compact('officer'));
+            if ($validator->fails()) {
+                return view('sales.sales-form')->withErrors($validator)->with(compact('officer'));
             }else {
-                /*User::create([
-                    'name' => $officer['name'],
-                    'email' => $officer['email'],
-                    'phone' => $officer['phone'],
-                    'password' => bcrypt($officer['password']),
-                    'property_id' => Auth::user()->property_id,
-                    'role' => 4
-                ]);*/
-
                 $this->createAccount($officer['name'], $officer['email'], $officer['phone'], bcrypt($officer['password']));
                 echo "saved";
             }
@@ -85,7 +78,7 @@ class SalesOfficerController extends Controller {
                 $this->createSaleDemoProperty($officer_id, $property_id, $default_password);
             }
 
-            return true;
+            return false;
 
         }catch(Exception $ex){
             return false;
@@ -94,7 +87,7 @@ class SalesOfficerController extends Controller {
 
     function createUserSales($user){
         try {
-            $user_create = User::create([
+            $user_create = BackendUser::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],
@@ -122,8 +115,6 @@ class SalesOfficerController extends Controller {
             $name_new = "NB" . substr($next_prefix, -3, 3);
 
             $new_property = new Property();
-            /*$new_property->fill($last_property->toArray());
-            unset($new_property->id);*/
             $new_property->property_name_th = "หมู่บ้าน " . $name_new;
             $new_property->property_name_en = "Demo " . $name_new;
             $new_property->juristic_person_name_th = "หมู่บ้าน " . $name_new;
@@ -166,7 +157,6 @@ class SalesOfficerController extends Controller {
             $new_feature->save();
 
             $this->createPropertyUnit($new_property->id,$name_new,$default_password);
-
             return $new_property->id;
         }catch(Exception $ex){
             return null;
@@ -250,7 +240,7 @@ class SalesOfficerController extends Controller {
     }
 
     function createSaleDemoProperty($officer_id, $property_id, $default_password){
-        
+        //echo $property_id;
         $user_create = SalePropertyDemo::create([
             'sale_id' => $officer_id,
             'property_id' => $property_id,
@@ -300,18 +290,18 @@ class SalesOfficerController extends Controller {
 
     public function editSales() {
         if (Request::isMethod('post')) {
-            $officer = User::find(Request::get('id'));
+            $officer = BackendUser::find(Request::get('id'));
             $request = Request::except('email');
-            unset($officer->rules['fname']);
-            unset($officer->rules['lname']);
-            unset($officer->rules['email']);
-            if(empty($request['password'])) {
-                unset($officer->rules['password']);
-                unset($officer->rules['password_confirm']);
+            $rules = ['name' => 'required|max:255'];
+            if(!empty($request['password'])) {
+                $rules += [
+                    'password' => 'alpha_num|min:6|required',
+                    'password_confirm' => 'alpha_num|min:6|required|same:password'
+                ];
             }
-            $officer->rules['name'] = 'required';
-            $vu = $officer->validate($request);
-            if($vu->fails()){
+            $validator = Validator::make($request, $rules);
+
+            if ($validator->fails()) {
                 $officer->fill(Request::except(['email','id']));
                 return view('sales.officer-form-edit')->withErrors($vu)->with(compact('officer'));
             }else {
@@ -328,7 +318,7 @@ class SalesOfficerController extends Controller {
     public function deleteSales(){
         try{
             if(Request::ajax()) {
-                $user = User::find(Request::get('uid'));
+                $user = BackendUser::find(Request::get('uid'));
                 if($user) {
                     $email = $user->email;
                     $this->deleteSalesAccount($email);
@@ -347,11 +337,10 @@ class SalesOfficerController extends Controller {
     public function deleteSalesAccount($email){
         try{
             $account = new AccountController();
-            $officer = User::where('email',$email)->first();
+            $officer = BackendUser::where('email',$email)->first();
             if($officer) {
                 $sale_id = $officer->id;
                 $list_property = SalePropertyDemo::with('property')->where('sale_id','=',$sale_id)->get();
-
                 foreach ($list_property as $item){
                     $property_id = $item->property_id;
 
@@ -369,9 +358,6 @@ class SalesOfficerController extends Controller {
                     $account->clearInvoice($property_id);
                     $account->clearPayee($property_id);
                     $account->clearVehicle($property_id);
-
-                    $item->delete();
-
                     $account->deleteUser($property_id);
                     $account->deleteProperty($property_id);
                 }

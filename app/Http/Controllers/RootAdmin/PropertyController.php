@@ -8,7 +8,7 @@ use Illuminate\Support\MessageBag;
 use App\Property;
 use App\BackendModel\Property as BackendProperty;
 use App\PropertyUnit;
-use App\User;
+use App\BackendModel\User as BackendUser;
 use App\Province;
 use App\PropertyFeature;
 use App\BillWater;
@@ -75,7 +75,7 @@ class PropertyController extends Controller {
                 if(empty($new_prop->max_price)) $new_prop->max_price = 0;
                 $new_prop->save();
                 //dd($new_prop);
-                User::create([
+                BackendUser::create([
                     'name' => $property['user']['name'],
                     'email' => $property['user']['email'],
                     'password' => bcrypt($property['user']['password']),
@@ -203,7 +203,7 @@ class PropertyController extends Controller {
                 if(empty($prop->max_price)) $prop->max_price = 0;
                 $prop->save();
              
-                $user = User::find($property['user']['id']);
+                $user = BackendUser::find($property['user']['id']);
                 //$user->fill($property['user']);
                 if(!empty($property['user']['password'])) {
                     $user->fill($property['user']);
@@ -281,7 +281,7 @@ class PropertyController extends Controller {
 
 
             $sale = [];
-            $sale1 = User::where('id','!=',Auth::user()->id)
+            $sale1 = BackendUser::where('id','!=',Auth::user()->id)
                 ->where('role','=',4)
                 ->orderBy('created_at','DESC')
                 ->paginate(30);
@@ -645,7 +645,7 @@ class PropertyController extends Controller {
     }
 
     function directLogin ($id) {
-        $user = User::where('property_id',$id)->where('role',1)->first();
+        $user = BackendUser::where('property_id',$id)->where('role',1)->first();
         //dd($user);
         Request::session()->put('auth.root_admin',Auth::user());
         Auth::login($user);

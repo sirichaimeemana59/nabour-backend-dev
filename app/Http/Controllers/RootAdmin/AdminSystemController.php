@@ -69,7 +69,7 @@ class AdminSystemController extends Controller {
                 'password' => $password,
                 'role' => 1 // Admin System role
             ]);
-
+            
             return true;
 
         }catch(Exception $ex){

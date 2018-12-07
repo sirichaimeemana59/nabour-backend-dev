@@ -1,4 +1,4 @@
-{!! Form::model($officer,array('url'=>'#','method'=>'post','id'=>'form-officer','class'=>'form-horizontal')) !!}
+{!! Form::model($officer,array('url'=>'#','method'=>'post','class'=>'form-horizontal')) !!}
 <div class="modal-body">
     <div class="form-group @if($errors->has('name')) validate-has-error @endif">
         <label class="col-sm-4 control-label">{!! trans('messages.name') !!}</label>
