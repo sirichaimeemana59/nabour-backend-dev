@@ -6,13 +6,14 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\MessageBag;
 # Model
 use App\Property;
+use App\BackendModel\Property as BackendProperty;
 use App\PropertyUnit;
-use App\User;
+use App\BackendModel\User as BackendUser;
 use App\Province;
 use App\PropertyFeature;
 use App\BillWater;
 use App\BillElectric;
-use App\PropertyContract;
+//use App\PropertyContract;
 use App\UserPropertyFeature;
 use App\ManagementGroup;
 use App\SalePropertyDemo;
@@ -41,16 +42,25 @@ class PropertyController extends Controller {
         {
 
             $property = Request::except('id','_token');
-            $new_prop = new Property;
-            $vp = $new_prop->validate($property);
+            //$new_prop = new Property;
+            //$vp = $new_prop->validate($property);
 
-            $new_user = new User();
-            unset($new_user->rules['fname']);
-            unset($new_user->rules['lname']);
-            $property['user']['email'] = strtolower(trim($property['user']['email']));
-            $vu = $new_user->validate($property['user']);
 
-            if($vp->fails() or $vu->fails()) {
+            $vu = Validator::make($officer, [
+                'name' => 'required|max:255',
+                'email' => 'unique:back_office.users',
+                'password' => 'alpha_num|min:6|required',
+                'password_confirm' => 'alpha_num|min:6|required|same:password'
+            ]);
+
+            $vp = Validator::make($property, [
+                'property_name_th'          => 'required',
+                'property_name_en'          => 'required',
+                'juristic_person_name_th'   => 'required',
+                'juristic_person_name_en'   => 'required'
+            ]);
+
+            if ($vu->fails() or $vu->fails()) {
                 $v = array_merge_recursive($vp->messages()->toArray(), $vu->messages()->toArray());
                 return redirect()->back()->withInput()->withErrors($v);
             } else {
@@ -65,6 +75,7 @@ class PropertyController extends Controller {
                 if(empty($new_prop->max_price)) $new_prop->max_price = 0;
                 $new_prop->save();
                 //dd($new_prop);
+                $this->updateBackendProperty ($new_prop);
                 User::create([
                     'name' => $property['user']['name'],
                     'email' => $property['user']['email'],
@@ -139,7 +150,7 @@ class PropertyController extends Controller {
                 $new_feature->menu_utility = true;
                 $new_feature->save();
 
-                return redirect('root/admin/property/list'); 
+                return redirect('customer/property/list'); 
             }
         }
         $pmg = new ManagementGroup;
@@ -155,22 +166,29 @@ class PropertyController extends Controller {
         if (Request::isMethod('post'))
         {
             $property = Request::all();
-            $num_id = Request::input('num_id');
+            //$num_id = Request::input('num_id');
            // echo print_r($property['contract']);
-            $prop = new Property();
-            $vp = $prop->validate($property);
+            //$prop = new Property();
+            //$vp = $prop->validate($property);
 
-            $user = new User();
-            unset($user->rules['fname']);
-            unset($user->rules['lname']);
-            $user->rules['email'] = 'required|email|max:255|unique:users,email,'.$property['user']['id'];
-            if(empty($property['user']['password'])) {
-                unset($user->rules['password']);
-                unset($user->rules['password_confirm']);
+
+            $rules = ['name' => 'required|max:255'];
+            if(!empty($request['password'])) {
+                $rules += [
+                    'password' => 'alpha_num|min:6|required',
+                    'password_confirm' => 'alpha_num|min:6|required|same:password'
+                ];
             }
-            $vu = $user->validate($property['user']);
+            $vu = Validator::make($request, $rules);
 
-            if($vp->fails() or $vu->fails()) {
+            $vp = Validator::make($property, [
+                'property_name_th'          => 'required',
+                'property_name_en'          => 'required',
+                'juristic_person_name_th'   => 'required',
+                'juristic_person_name_en'   => 'required'
+            ]);
+
+            if ($vp->fails() or $vu->fails()) {
                 $v = array_merge_recursive($vp->messages()->toArray(), $vu->messages()->toArray());
                 return redirect()->back()->withInput()->withErrors($v);
             } else {
@@ -202,7 +220,7 @@ class PropertyController extends Controller {
                      /*
                         property_nb_contract
                     */
-                    if(empty($num_id)){
+                    /*if(empty($num_id)){
                             $property_con = PropertyContract::find($id); 
                             $property_con->fill($property['contract']);    
                             $property_con->save();
@@ -212,10 +230,10 @@ class PropertyController extends Controller {
                             //dd($property);
                             $property_con->save();
                             //dd($property);
-                    }
+                    }*/
                     
                     
-                return redirect('root/admin/property/list');
+                return redirect('customer/property/list');
             }
         }
         else {
@@ -228,7 +246,7 @@ class PropertyController extends Controller {
 
             $user = $property->property_admin;
 
-            $proper_con= new PropertyContract;
+            //$proper_con= new PropertyContract;
 
             //$singg=$proper_con->where('year',$cut_date_now[0],'month',$cut_date_now[1]);
 
@@ -236,7 +254,7 @@ class PropertyController extends Controller {
 
            //$data =  DB::select("SELECT * FROM property_nb_contract WHERE property_id = '$id'");
 
-           $date=date("Y-m-d");
+           /*$date=date("Y-m-d");
            $cut_date_now=explode("-",$date);
 
             $data=PropertyContract::find($id);
@@ -245,7 +263,7 @@ class PropertyController extends Controller {
                 ->get();
             $sing=$singg->max('contract_sign_no');
             $max_cus = $proper_con->max('customer_id');
-            $max_quo = $proper_con->max('quotation_id');
+            $max_quo = $proper_con->max('quotation_id'); */
            //$sing =  DB::select("SELECT MAX(contract_sign_no) FROM property_nb_contract WHERE EXTRACT(year FROM created_at) = '$cut_date_now[0]' AND EXTRACT(month FROM created_at) = '$cut_date_now[1]'");
            //$max_cus =  DB::select("SELECT MAX(customer_id)AS cus FROM property_nb_contract");
            if(isset($user)) {
@@ -264,7 +282,7 @@ class PropertyController extends Controller {
 
 
             $sale = [];
-            $sale1 = User::where('id','!=',Auth::user()->id)
+            $sale1 = BackendUser::where('id','!=',Auth::user()->id)
                 ->where('role','=',4)
                 ->orderBy('created_at','DESC')
                 ->paginate(30);
@@ -272,9 +290,9 @@ class PropertyController extends Controller {
            /* $sale1 = new User;
             $sale1 = $sale1->get();*/
 
-            $package = new package;
-            $package = $package->where('status','1');
-            $package = $package->get();
+            $package = [];//new package;
+            //$package = $package->where('status','1');
+            //$package = $package->get();
 
             return view('property.edit')->with(compact('data_array','sing','max_cus','property','provinces','pmg','property1','sale1','max_quo','package'));
             //return view('property.edit',['property_data'=>$data,'sing'=>$sing,'max_cus'=>$max_cus])->with(compact('property','provinces'));
@@ -297,24 +315,8 @@ class PropertyController extends Controller {
     }
 
     public function index ()  {
-        $props = new Property;
-        $props = $props->with('userCount');
-
-        /*if(Request::get('sign_status')) {
-            if(Request::get('sign_status') == 1) {
-                $props = $props->whereHas('lastest_contract', function ($q) {
-                    $q->where('contract_end_date', '>=', date('Y-m-d 23:59:59'));
-                });
-            } else {
-                $props = $props->whereHas('lastest_contract', function ($q) {
-                    $q->where('contract_end_date', '<', date('Y-m-d 23:59:59'));
-                });
-            }
-        } else {
-            //$props = $props->with('lastest_contract');
-        }*/
-
-        $props = $props->where('is_demo',false);
+        $props = new BackendProperty;
+        //$props = $props->where('is_demo',false);
 
         if(Request::get('province')) {
             $props = $props->where('province','=',Request::get('province'));
@@ -359,9 +361,7 @@ class PropertyController extends Controller {
         $provinces = $p->getProvince();
 
         $pmg = new ManagementGroup;
-        $pmg = $pmg->get();
-
-        //dd($pmg);
+        $pmg = $pmg->pluck('name','id')->toArray();
 
         $package = $quotation = array();
 
@@ -412,13 +412,16 @@ class PropertyController extends Controller {
 
     public function status () {
         if(Request::ajax()) {
-            $property = Property::find(Request::get('pid'));
+            $property   = Property::find(Request::get('pid'));
+            $_property  = BackendProperty::find(Request::get('pid'));
+
             if($property) {
-                $property->active_status = Request::get('status');
+                $property->active_status = $_property->active_status = Request::get('status');
                 if($property->active_status == 0) {
                     $property->last_inactive_date = date('Y-m-d H:i:s');
                 }
                 $property->save();
+                $_property->save();
                 return response()->json(['result'=>true]);
             }
         }
@@ -454,7 +457,7 @@ class PropertyController extends Controller {
             $item->invite_code = $this->generateInviteCode();
             $item->save();
         }
-        return redirect('root/admin/property/list');
+        return redirect('customer/property/list');
     }
 
 
@@ -627,7 +630,7 @@ class PropertyController extends Controller {
         $property_sign->fill(Request::all());
         $property_sign->property_id = Request::get('property_id');
         $property_sign->save();
-        return redirect('root/admin/property/list');
+        return redirect('customer/property/list');
     }
 
     function editContract () {
@@ -641,7 +644,7 @@ class PropertyController extends Controller {
             $sign = PropertyContract::find(Request::get('id'));
             $sign->fill(Request::all());
             $sign->save();
-            return redirect('root/admin/property/list');
+            return redirect('customer/property/list');
         }
     }
 
@@ -929,6 +932,20 @@ class PropertyController extends Controller {
         }catch(Exception $ex){
             echo "error";
         }
+    }
+
+    public function updateBackendProperty ($property) {
+
+        $_property = BackendProperty::firstOrNew(array('id' => $property->id) );
+        $_property->juristic_person_name_th = $property->juristic_person_name_th;
+        $_property->juristic_person_name_en = $property->juristic_person_name_en;
+        $_property->province                = $property->province;
+        $_property->property_name_th        = $property->property_name_th;
+        $_property->juristic_person_name_th = $property->juristic_person_name_th;
+        $_property->property_name_en        = $property->property_name_en;
+        $_property->developer_group_id      = $property->developer_group_id;
+        $_property->id                      = $property->id;
+        $_property->save();
     }
 
 }

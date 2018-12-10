@@ -154,6 +154,9 @@ textarea,input,select,.input-lg,
     font-size: 24px;
     line-height: 26px;
 }
+.panel .panel-body {
+    color: #000;
+}
 .mailbox-env .mail-single .mail-single-header > h2 .go-back {
     font-size: 14px;
     line-height: 14px;

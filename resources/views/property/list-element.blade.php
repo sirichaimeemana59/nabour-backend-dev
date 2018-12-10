@@ -33,14 +33,10 @@
 		@if(!empty($p_rows))
 			<thead>
 			<tr>
-				<th width="8%">ลำดับ</th>
+				<th width="100px">ลำดับ</th>
 				<th width="*">รายชื่อนิติบุคคล</th>
 				<th width="15%">จังหวัด</th>
-				<th width="8%">ยูนิต</th>
-				<th width="8%">ลูกบ้าน</th>
-				<th width="8%">แพ็กเกจ</th>
-				<th width="10%">กลุ่มผู้บริหารนิติบุคคล</th>
-				<th width="15%">วันที่หมดสัญญา</th>
+				<th width="180px">กลุ่มผู้บริหารนิติบุคคล</th>
 				<th width="180px">การจัดการ</th>
 			</tr>
 			</thead>
@@ -49,19 +45,12 @@
 				<td>NB00000</td>
 				<td class="name">{!!$row->property_name_th." / ".$row->property_name_en!!}</td>
 				<td>{!!$provinces[$row->province]!!}</td>
-				<td align="right">{!!$row->unit_size!!}</td>
-				<td align="right">@if(count($row->userCount)) {!! number_format($row->userCount->first()->count) !!} @else 0 @endif</td>
-				<td>No package</td>
-				<td>
-					@foreach($pmg as $pow)
-                        <?php
-                        $text=$row->developer_group_id==$pow->id?$pow->name:"";
-                        ?>
-						{!!$text!!}
-					@endforeach
-				</td>
-				<td>
-					<span style="color:#b3b3b3;">ยังไม่มีข้อมูลสัญญา</span>
+				<td class="text-center">
+					@if( $row->developer_group_id )
+					{!! $pmg[$row->developer_group_id] !!}
+					@else
+						อื่นๆ
+					@endif
 				</td>
 				<td>
 					<div class="btn-group left-dropdown">
@@ -75,6 +64,16 @@
 									<i class="fa-edit"></i> แก้ไข
 								</a>
 							</li>
+							@if($row->active_status)
+								<li><a href="#" class="active-status" data-status="0" data-pid="{!! $row->id !!}">
+										<i class="fa-lock"></i> {!! trans('messages.Member.account_ban') !!}
+									</a></li>
+							@else
+								<li><a href="#" class="active-status" data-status="1" data-pid="{!! $row->id !!}">
+										<i class="fa-key"></i> {!! trans('messages.Member.account_unban') !!}
+									</a></li>
+							@endif
+							<?php /*
 							<li><a href="{!!url('/customer/property/directlogin/'.$row->id)!!}">
 									<i class="fa-user"></i> Login เป็น Admin
 								</a>
@@ -111,11 +110,11 @@
 								</a></li>
 							<li><a href="#" class="add-unit-link" data-toggle="modal" data-target="#edit-unit-csv-modal" data-pid="{!! $row->id !!}">
 									<i class="fa-home"></i> แก้ไขข้อมูลที่พักอาศัยโดยใช้ ID
-								</a></li>
+								</a></li> */?>
 							<li><a href="#" class="view-sign" data-toggle="tooltip" data-pid="{!! $row->id !!}">
 									<i class="fa-file-o"></i> ดู/แก้ไขสัญญา Nabour
 								</a></li>
-							<li><a href="{!!url('/customer/property/print/'.$row->id)!!}" target="_bank">
+							<li><a href="#" target="_bank">
 									<i class="fa-print"></i> พิมพ์ใบสัญญา
 								</a>
 							</li>

@@ -30,60 +30,50 @@
 				<div class="panel-body search-form">
 					<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
 						<div class="row">
-							<div class="col-sm-2 block-input">
+							<div class="col-sm-3 block-input">
 								<input class="form-control" size="25" placeholder="รหัสลูกค้า" name="customer">
 							</div>
-							<div class="col-sm-2 block-input">
+							<div class="col-sm-3 block-input">
 								<input class="form-control" size="25" placeholder="{!! trans('messages.name') !!}" name="name">
 							</div>
-							@if(!isset($demo))
-								<div class="col-sm-2">
-									{!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
-								</div>
+							
+							<div class="col-sm-3">
+								{!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
+							</div>
 
-								<div class="col-sm-2">
-									{!! Form::select('sign_status', [0 => 'สถานะสัญญา', 1 => 'ยังไม่หมดสัญญา', 2 => 'หมดสัญญา'],null,['id'=>'property-province','class'=>'form-control']) !!}
-								</div>
-								<div class="col-sm-2">
-									<select class="form-control" name="package">
-										<option value="">Package</option>
-										@foreach($package as $pac)
-											<option value="{!!$pac->id!!}">{!!$pac->name!!}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="col-sm-2">
-									{!! Form::select('property_type',$property_type,null,array('class'=>'form-control')) !!}
-								</div>
-									<br><br>
-								<div class="col-sm-2">
-									<select name="developer_group_id" id="" class="form-control">
-										<option value="">กลุ่มผู้บริหารนิติบุคคล</option>
-										@foreach($pmg as $row)
-											<option value="{!!$row->id!!}">{!!$row->name!!}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="col-sm-3 text-right">
-									@else
-										<div class="col-sm-9 text-right">
-											@endif
-											<br>
-											<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
-											<button type="button" class="btn btn-secondary @if(isset($demo)) d-search-property @else p-search-property @endif">{!! trans('messages.search') !!}</button>
-										</div>
-								</div>
+							<div class="col-sm-3">
+								{!! Form::select('sign_status', [0 => 'สถานะสัญญา', 1 => 'ยังไม่หมดสัญญา', 2 => 'หมดสัญญา'],null,['id'=>'property-province','class'=>'form-control']) !!}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<select class="form-control" name="package">
+									<option value="">Package</option>
+									@foreach($package as $pac)
+										<option value="{!!$pac->id!!}">{!!$pac->name!!}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-sm-3">
+								<select name="developer_group_id" id="" class="form-control">
+									<option value="">กลุ่มผู้บริหารนิติบุคคล</option>
+									@foreach($pmg as $key =>$row)
+										<option value="{!! $key !!}">{!! $row !!}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-sm-6 text-right">
+								<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+								<button type="button" class="btn btn-secondary @if(isset($demo)) d-search-property @else p-search-property @endif">{!! trans('messages.search') !!}</button>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	{{--@if(isset($demo))
-		<a href="{!!url('report_excel_property/demo')!!}" class="action-float-right btn btn-primary"><i class="fa fa-download"> </i> {!! trans('messages.Report.download') !!} </a><span></span>
-	@else
-		<a href="{!!url('report_excel_property')!!}" class="action-float-right btn btn-primary"><i class="fa fa-download"> </i> {!! trans('messages.Report.download') !!} </a><span></span>
-	@endif--}}
+	<a class="btn btn-info btn-primary action-float-right" href="{!! url('customer/property/add') !!}"><i class="fa fa-plus"> </i> เพิ่มโครงการ</a>
 
 	<div class="row">
 		<div class="col-sm-12">

@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" style="position: relative;">
                                     <label class="col-sm-2 control-label">{!! trans('messages.AboutProp.location') !!}</label>
                                      <div id="search-geo-block">
                                         <input id="address" class="controls" type="text" placeholder="Search Box">
@@ -164,7 +164,7 @@
 					<div class="col-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon">
-								<i class="linecons-mail"></i>
+								<i class="fa-at"></i>
 							</span>
 							{!! Form::text('user[email]',null,array('class' => 'form-control', "data-validate" => "email", 'readonly' => 'true')) !!}
 						</div>

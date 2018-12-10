@@ -26,7 +26,6 @@
 		</ul>
     </li>
 
-
     {{--End Package--}}
 
     <li class="{!!  (Request::is('contract/*') ? 'active' : '') !!}">
@@ -115,20 +114,38 @@
     </li>
 
     @if( Auth::user()->role == 0 )
-    <li class="{!! (Request::is('root/admin/admin-system/*') ? 'active' : '') !!}">
-        <a href="{!!url('root/admin/admin-system/list')!!}">
-            <i class="fa fa-user"></i>
-            <span class="title">ผู้ดูแลระบบ</span>
+
+    <li class="has-sub {!! (Request::is('root/admin/admin-system/*') || Request::is('admin/sales/*') ? 'active' : '') !!}">
+        <a href="#">
+            <i class="fa fa fa-group"></i>
+            <span class="title">ผู้ใช้งานระบบ</span>
         </a>
+
+        <ul {!! (Request::is('root/admin/admin-system/*') || Request::is('admin/sales/*') ? 'style="display:block;"' : '') !!}>
+            <li class="{!! (Request::is('root/admin/admin-system/*') ? 'active' : '') !!}">
+                <a href="{!! url('root/admin/admin-system/list') !!}">
+                    <i class="fa fa-user"></i>
+                    <span class="title">ผู้ดูแลระบบ</span>
+                </a>
+            </li>
+            <li class="{!! (Request::is('admin/sales/*') ? 'active' : '') !!}">
+                <a href="{!! url('admin/sales/list') !!}">
+                    <i class="fa fa-user"></i>
+                    <span class="title">พนักงานขาย</span>
+                </a>
+            </li>
+        </ul>
     </li>
-    @endif
-    @if( in_array(Auth::user()->role,[0,1]) )
+    
+    @elseif ( Auth::user()->role == 1 ) 
+    
     <li class="{!! (Request::is('admin/sales/*') ? 'active' : '') !!}">
         <a href="{!!url('admin/sales/list')!!}">
             <i class="fa fa-briefcase"></i>
             <span class="title">พนักงานขาย</span>
         </a>
     </li>
+
     @endif
 
     <li class="has-sub {!! (Request::is('support/*') ? 'active' : '') !!}">
@@ -145,7 +162,6 @@
             </li>
         </ul>
     </li>
-
     <li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">
         <a href="{!! url('property/setting') !!}">
             <i class="fa fa-gear"></i>

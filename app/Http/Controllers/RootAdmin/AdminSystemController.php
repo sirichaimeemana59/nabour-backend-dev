@@ -69,7 +69,7 @@ class AdminSystemController extends Controller {
                 'password' => $password,
                 'role' => 1 // Admin System role
             ]);
-
+            
             return true;
 
         }catch(Exception $ex){
@@ -82,7 +82,7 @@ class AdminSystemController extends Controller {
             $app_key = Request::get('app_key');
             if($app_key == $_ENV['APP_KEY']) {
                 $user = Request::get('user');
-                $officer = User::where('email',$user['email'])->first();
+                $officer = BackendUser::where('email',$user['email'])->first();
                 if($officer) {
                     $officer->active = ($user['status'] == "1") ? true : false;
                     $officer->save();
@@ -93,21 +93,21 @@ class AdminSystemController extends Controller {
 
     public function viewAdmin () {
         if(Request::ajax()) {
-            $member = User::find(Request::get('uid'));
+            $member = BackendUser::find(Request::get('uid'));
             return view('admin.view-officer')->with(compact('member'));
         }
     }
 
     public function getAdmin () {
         if(Request::ajax()) {
-            $officer = User::find(Request::get('uid'));
+            $officer = BackendUser::find(Request::get('uid'));
             return view('admin.officer-form-edit')->with(compact('officer'));
         }
     }
 
     public function setActive () {
         if(Request::ajax()) {
-            $user = User::find(Request::get('uid'));
+            $user = BackendUser::find(Request::get('uid'));
             if($user) {
                 $user->active = Request::get('status');
                 $user->save();
@@ -119,7 +119,7 @@ class AdminSystemController extends Controller {
 
     public function editAdmin() {
         if (Request::isMethod('post')) {
-            $officer = User::find(Request::get('id'));
+            $officer = BackendUser::find(Request::get('id'));
             $request = Request::except('email');
 
             $rules = ['name' => 'required|max:255'];
@@ -130,9 +130,9 @@ class AdminSystemController extends Controller {
                 ];
             }
             $validator = Validator::make($request, $rules);
+            $officer->fill(Request::except(['email','id']));
 
             if ($validator->fails()) {
-                $officer->fill(Request::except(['email','id']));
                 return view('admin.officer-form-edit')->withErrors($validator)->with(compact('officer'));
             }else {
                 $officer->name = $request['name'];
@@ -148,7 +148,7 @@ class AdminSystemController extends Controller {
     public function deleteAdmin(){
         try{
             if(Request::ajax()) {
-                $user = User::find(Request::get('uid'));
+                $user = BackendUser::find(Request::get('uid'));
                 if($user) {
                     //$email = $user->email;
                     //$this->deleteOfficerAccount($email);
