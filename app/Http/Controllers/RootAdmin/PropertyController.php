@@ -19,6 +19,7 @@ use App\ManagementGroup;
 use App\SalePropertyDemo;
 use App\package;
 use App\quotation;
+use Validator;
 
 use DB;
 class PropertyController extends Controller {
