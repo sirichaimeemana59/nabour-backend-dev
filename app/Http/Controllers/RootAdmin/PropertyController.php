@@ -46,7 +46,7 @@ class PropertyController extends Controller {
             //$vp = $new_prop->validate($property);
 
 
-            $vu = Validator::make($officer, [
+            $vu = Validator::make($property['user'], [
                 'name' => 'required|max:255',
                 'email' => 'unique:back_office.users',
                 'password' => 'alpha_num|min:6|required',
