@@ -61,6 +61,10 @@ Route::get('service/quotation_list', 'Quotation\QuotationController@index');
 Route::post('service/quotation/detail', 'Quotation\QuotationController@detail');
 Route::get('service/quotation/update/form/{id?}', 'Quotation\QuotationController@edit');
 Route::post('service/quotation/update/file', 'Quotation\QuotationController@update');
+Route::get('service/quotation/check/quotation/{id?}/{lead_id?}', 'Quotation\QuotationController@check');
+Route::get('service/quotation/check_out/quotation/{id?}/{lead_id?}', 'Quotation\QuotationController@check_out');
+Route::get('service/quotation/print_quotation/{id?}', 'Quotation\QuotationController@print');
+Route::get('service/quotation/success/{id?}', 'Quotation\QuotationController@success');
 //End Quotation
 
 //---------------------------  Nabour officer Route --------------------------------------------//

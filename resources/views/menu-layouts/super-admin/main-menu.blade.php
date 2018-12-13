@@ -26,7 +26,7 @@
         </ul>
     </li>
 
-<<<<<<< HEAD
+{{--<<<<<<< HEAD--}}
     {{--Service--}}
     <li class="has-sub {{ (Request::is('service/package/*') ? 'active expanded' : '') }}">
         <a href="">
@@ -49,8 +49,8 @@
         </ul>
     </li>
 
-=======
->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9
+{{--=======--}}
+{{-->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9--}}
     {{--End Package--}}
 
     <li class="{{ (Request::is('contract/*') ? 'active' : '') }}">
@@ -124,10 +124,10 @@
         </ul>
     </li>
 
-<<<<<<< HEAD
+
     <li class="has-sub {{ (Request::is('support/*') ? 'active' : '') }}">
         <a href="{{url('support')}}">
-=======
+
     @if( Auth::user()->role == 0 )
 
     <li class="has-sub {!! (Request::is('root/admin/admin-system/*') || Request::is('admin/sales/*') ? 'active' : '') !!}">
@@ -165,7 +165,7 @@
 
     <li class="has-sub {!! (Request::is('support/*') ? 'active' : '') !!}">
         <a href="{!! url('support') !!}">
->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9
+{{-->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9--}}
             <i class="fa fa-wrench"></i>
             <span class="title">เครื่องมือ support</span>
         </a>
@@ -178,14 +178,14 @@
             </li>
         </ul>
     </li>
-<<<<<<< HEAD
+{{--<<<<<<< HEAD--}}
 
     <li class="{{ (Request::is('property/setting/*') ? 'active' : '') }}">
         <a href="{{url('property/setting')}}">
-=======
+{{--=======--}}
     <li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">
         <a href="{!! url('property/setting') !!}">
->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9
+{{-->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9--}}
             <i class="fa fa-gear"></i>
             <span class="title">การตั้งค่า</span>
         </a>
