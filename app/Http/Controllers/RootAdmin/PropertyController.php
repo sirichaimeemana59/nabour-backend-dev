@@ -9,6 +9,7 @@ use App\Property;
 use App\BackendModel\Property as BackendProperty;
 use App\PropertyUnit;
 use App\BackendModel\User as BackendUser;
+use App\User;
 use App\Province;
 use App\PropertyFeature;
 use App\BillWater;
