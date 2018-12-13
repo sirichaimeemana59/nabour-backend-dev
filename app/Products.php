@@ -10,4 +10,5 @@ class Products extends GeneralModel
     protected $table = 'product';
     protected $fillable = ['product_code','name','description','price','price_with_vat','vat','status','is_delete'];
     protected  $primaryKey = 'id';
+    public $timestamps      = true;
 }
