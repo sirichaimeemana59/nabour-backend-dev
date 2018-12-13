@@ -9,6 +9,7 @@ use App\Property;
 use App\BackendModel\Property as BackendProperty;
 use App\PropertyUnit;
 use App\BackendModel\User as BackendUser;
+use App\User;
 use App\Province;
 use App\PropertyFeature;
 use App\BillWater;
@@ -19,6 +20,7 @@ use App\ManagementGroup;
 use App\SalePropertyDemo;
 use App\package;
 use App\quotation;
+use Validator;
 
 use DB;
 class PropertyController extends Controller {
@@ -42,11 +44,11 @@ class PropertyController extends Controller {
         {
 
             $property = Request::except('id','_token');
-            //$new_prop = new Property;
+            $new_prop = new Property;
             //$vp = $new_prop->validate($property);
 
 
-            $vu = Validator::make($officer, [
+            $vu = Validator::make($property['user'], [
                 'name' => 'required|max:255',
                 'email' => 'unique:back_office.users',
                 'password' => 'alpha_num|min:6|required',
