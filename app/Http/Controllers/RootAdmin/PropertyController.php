@@ -43,7 +43,7 @@ class PropertyController extends Controller {
         {
 
             $property = Request::except('id','_token');
-            //$new_prop = new Property;
+            $new_prop = new Property;
             //$vp = $new_prop->validate($property);
 
 
