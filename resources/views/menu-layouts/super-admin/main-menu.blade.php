@@ -26,34 +26,6 @@
         </ul>
     </li>
 
-<<<<<<< HEAD
-{{--<<<<<<< HEAD--}}
-    {{--Service--}}
-    <li class="has-sub {{ (Request::is('service/package/*') ? 'active expanded' : '') }}">
-        <a href="">
-            <i class="fa fa-car"></i>
-            <span class="title">Service</span>
-        </a>
-        <ul style="{{ (Request::is('service/package/*') ? 'display:block;' : '') }}">
-            <li class="{{ (Request::is('service/package/add'? 'active' : '')) }}">
-                <a href="{{url('service/package/add')}}">
-                    <i class="fa fa-car"></i>
-                    <span class="title">Package</span>
-                </a>
-            </li>
-            <li class="{{ (Request::is('service/package/service/add'? 'active' : ''))}}">
-                <a href="{!!url('service/package/service/add')!!}">
-                    <i class="fa fa-car"></i>
-                    <span class="title">ค่าบริการ</span>
-                </a>
-            </li>
-        </ul>
-    </li>
-
-{{--=======--}}
-{{-->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9--}}
-=======
->>>>>>> 7d0ce92095322a4ba5b936618fc7e53ee8c81d3a
     {{--End Package--}}
 
     <li class="{!!  (Request::is('contract/*') ? 'active' : '') !!}">
@@ -141,13 +113,6 @@
         </ul>
     </li>
 
-<<<<<<< HEAD
-
-    <li class="has-sub {{ (Request::is('support/*') ? 'active' : '') }}">
-        <a href="{{url('support')}}">
-
-=======
->>>>>>> 7d0ce92095322a4ba5b936618fc7e53ee8c81d3a
     @if( Auth::user()->role == 0 )
 
         <li class="has-sub {!! (Request::is('root/admin/admin-system/*') || Request::is('admin/sales/*') ? 'active' : '') !!}">
@@ -185,10 +150,6 @@
 
     <li class="has-sub {!! (Request::is('support/*') ? 'active' : '') !!}">
         <a href="{!! url('support') !!}">
-<<<<<<< HEAD
-{{-->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9--}}
-=======
->>>>>>> 7d0ce92095322a4ba5b936618fc7e53ee8c81d3a
             <i class="fa fa-wrench"></i>
             <span class="title">เครื่องมือ support</span>
         </a>
@@ -201,19 +162,8 @@
             </li>
         </ul>
     </li>
-<<<<<<< HEAD
-{{--<<<<<<< HEAD--}}
-
-    <li class="{{ (Request::is('property/setting/*') ? 'active' : '') }}">
-        <a href="{{url('property/setting')}}">
-{{--=======--}}
     <li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">
         <a href="{!! url('property/setting') !!}">
-{{-->>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9--}}
-=======
-    <li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">
-        <a href="{!! url('property/setting') !!}">
->>>>>>> 7d0ce92095322a4ba5b936618fc7e53ee8c81d3a
             <i class="fa fa-gear"></i>
             <span class="title">การตั้งค่า</span>
         </a>
