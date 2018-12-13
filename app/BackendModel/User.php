@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role'
+        'id', 'name', 'email', 'phone', 'password', 'role'
     ];
 
     /**
@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @var bool
      */
 
-    public $incrementing = false;
+    //public $incrementing = true;
 
     public $keyType = 'string';
 

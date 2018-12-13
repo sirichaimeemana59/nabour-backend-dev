@@ -8,7 +8,7 @@ use Illuminate\Support\MessageBag;
 use App\Property;
 use App\BackendModel\Property as BackendProperty;
 use App\PropertyUnit;
-use App\User;
+use App\BackendModel\User as BackendUser;
 use App\Province;
 use App\PropertyFeature;
 use App\BillWater;
@@ -75,6 +75,7 @@ class PropertyController extends Controller {
                 if(empty($new_prop->max_price)) $new_prop->max_price = 0;
                 $new_prop->save();
                 //dd($new_prop);
+                $this->updateBackendProperty ($new_prop);
                 User::create([
                     'name' => $property['user']['name'],
                     'email' => $property['user']['email'],
@@ -281,7 +282,7 @@ class PropertyController extends Controller {
 
 
             $sale = [];
-            $sale1 = User::where('id','!=',Auth::user()->id)
+            $sale1 = BackendUser::where('id','!=',Auth::user()->id)
                 ->where('role','=',4)
                 ->orderBy('created_at','DESC')
                 ->paginate(30);
@@ -411,13 +412,16 @@ class PropertyController extends Controller {
 
     public function status () {
         if(Request::ajax()) {
-            $property = Property::find(Request::get('pid'));
+            $property   = Property::find(Request::get('pid'));
+            $_property  = BackendProperty::find(Request::get('pid'));
+
             if($property) {
-                $property->active_status = Request::get('status');
+                $property->active_status = $_property->active_status = Request::get('status');
                 if($property->active_status == 0) {
                     $property->last_inactive_date = date('Y-m-d H:i:s');
                 }
                 $property->save();
+                $_property->save();
                 return response()->json(['result'=>true]);
             }
         }
@@ -928,6 +932,20 @@ class PropertyController extends Controller {
         }catch(Exception $ex){
             echo "error";
         }
+    }
+
+    public function updateBackendProperty ($property) {
+
+        $_property = BackendProperty::firstOrNew(array('id' => $property->id) );
+        $_property->juristic_person_name_th = $property->juristic_person_name_th;
+        $_property->juristic_person_name_en = $property->juristic_person_name_en;
+        $_property->province                = $property->province;
+        $_property->property_name_th        = $property->property_name_th;
+        $_property->juristic_person_name_th = $property->juristic_person_name_th;
+        $_property->property_name_en        = $property->property_name_en;
+        $_property->developer_group_id      = $property->developer_group_id;
+        $_property->id                      = $property->id;
+        $_property->save();
     }
 
 }

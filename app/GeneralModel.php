@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Validator;
 class GeneralModel extends Model
 {
 	public $timestamps;
-    public $incrementing = false;
+    //public $incrementing = true;
     public $keyType = 'string';
 
     public function validate($data)

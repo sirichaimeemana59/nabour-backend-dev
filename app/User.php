@@ -34,6 +34,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
+    public $keyType = 'string';
+
     public $rules = [
         'fname' => 'required',
         'lname' => 'required',

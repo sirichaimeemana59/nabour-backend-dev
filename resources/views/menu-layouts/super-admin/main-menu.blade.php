@@ -26,6 +26,7 @@
         </ul>
     </li>
 
+<<<<<<< HEAD
     {{--Service--}}
     <li class="has-sub {{ (Request::is('service/package/*') ? 'active expanded' : '') }}">
         <a href="">
@@ -48,6 +49,8 @@
         </ul>
     </li>
 
+=======
+>>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9
     {{--End Package--}}
 
     <li class="{{ (Request::is('contract/*') ? 'active' : '') }}">
@@ -121,8 +124,48 @@
         </ul>
     </li>
 
+<<<<<<< HEAD
     <li class="has-sub {{ (Request::is('support/*') ? 'active' : '') }}">
         <a href="{{url('support')}}">
+=======
+    @if( Auth::user()->role == 0 )
+
+    <li class="has-sub {!! (Request::is('root/admin/admin-system/*') || Request::is('admin/sales/*') ? 'active' : '') !!}">
+        <a href="#">
+            <i class="fa fa fa-group"></i>
+            <span class="title">ผู้ใช้งานระบบ</span>
+        </a>
+
+        <ul {!! (Request::is('root/admin/admin-system/*') || Request::is('admin/sales/*') ? 'style="display:block;"' : '') !!}>
+            <li class="{!! (Request::is('root/admin/admin-system/*') ? 'active' : '') !!}">
+                <a href="{!! url('root/admin/admin-system/list') !!}">
+                    <i class="fa fa-user"></i>
+                    <span class="title">ผู้ดูแลระบบ</span>
+                </a>
+            </li>
+            <li class="{!! (Request::is('admin/sales/*') ? 'active' : '') !!}">
+                <a href="{!! url('admin/sales/list') !!}">
+                    <i class="fa fa-user"></i>
+                    <span class="title">พนักงานขาย</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    @elseif ( Auth::user()->role == 1 ) 
+    
+    <li class="{!! (Request::is('admin/sales/*') ? 'active' : '') !!}">
+        <a href="{!!url('admin/sales/list')!!}">
+            <i class="fa fa-briefcase"></i>
+            <span class="title">พนักงานขาย</span>
+        </a>
+    </li>
+
+    @endif
+
+    <li class="has-sub {!! (Request::is('support/*') ? 'active' : '') !!}">
+        <a href="{!! url('support') !!}">
+>>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9
             <i class="fa fa-wrench"></i>
             <span class="title">เครื่องมือ support</span>
         </a>
@@ -135,9 +178,14 @@
             </li>
         </ul>
     </li>
+<<<<<<< HEAD
 
     <li class="{{ (Request::is('property/setting/*') ? 'active' : '') }}">
         <a href="{{url('property/setting')}}">
+=======
+    <li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">
+        <a href="{!! url('property/setting') !!}">
+>>>>>>> 9db85a3bdc4e23b56aa5d0acb8a84b1b876596f9
             <i class="fa fa-gear"></i>
             <span class="title">การตั้งค่า</span>
         </a>
