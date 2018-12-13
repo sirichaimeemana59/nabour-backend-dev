@@ -54,6 +54,15 @@ Route::post('service/package/delete_service', 'product\PackageController@delete_
 Route::post('service/package/delete_service_open', 'product\PackageController@delete_service_open');
 //End Product
 
+//Quotation
+Route::get('service/quotation/add/{id}/{ip?}', 'Quotation\QuotationController@index');
+Route::post('service/quotation/add/insert', 'Quotation\QuotationController@create');
+Route::get('service/quotation_list', 'Quotation\QuotationController@index');
+Route::post('service/quotation/detail', 'Quotation\QuotationController@detail');
+Route::get('service/quotation/update/form/{id?}', 'Quotation\QuotationController@edit');
+Route::post('service/quotation/update/file', 'Quotation\QuotationController@update');
+//End Quotation
+
 //---------------------------  Nabour officer Route --------------------------------------------//
 
 // Admin
