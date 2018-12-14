@@ -15,7 +15,7 @@
                     <tr>
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
                         <td>{!!$row->phone !!}</td>
-                        <td>{!!$row->lastest_sale->name!!}</td>
+                        <td>{!!$row->latest_sale->name!!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
                                 <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>

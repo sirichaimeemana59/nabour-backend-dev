@@ -27,7 +27,11 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">รายละเอียด Lead</h3>
+                    @if($lead->role==1)
+                        <h3 class="panel-title">รายละเอียด Lead</h3>
+                        @else
+                        <h3 class="panel-title">รายละเอียด Customer</h3>
+                    @endif
                 </div>
                 <div class="panel-body member-list-content">
                     <div class="tab-pane active" id="member-list">
@@ -50,7 +54,7 @@
         </div>
     </div>
 
-    @if($status ==0)
+    @if($status->status ==0)
         <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
         <a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>
     @else
@@ -89,13 +93,15 @@
                                                 <a href="{!! url('service/quotation/print_quotation/'.$row->quotation_code) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา">
                                                     <i class="fa-print"></i>
                                                 </a>
+                                                    @else
+                                                        <a href="{!! url('service/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                            <i class="fa-pencil-square-o"></i>
+                                                        </a>
+                                                        <a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">
+                                                            <i class="fa-trash"></i>
+                                                        </a>
                                                 @endif
-                                                <a href="{!! url('service/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
-                                                    <i class="fa-pencil-square-o"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">
-                                                    <i class="fa-trash"></i>
-                                                </a>
+
                                                 @endif
                                                     <a href="#" class="edit edit-service btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
                                                         <i class="fa-eye"></i>

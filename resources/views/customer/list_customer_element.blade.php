@@ -8,6 +8,7 @@
                     <th width="20%">ชื่อบริษัท</th>
                     <th width="*">เบอร์โทร</th>
                     <th width="*">จังหวัด</th>
+                    <th width="*">พนักงานขาย</th>
                     <th width="180px"></th>
                 </tr>
                 </thead>
@@ -18,6 +19,7 @@
                         <td>{!!$row->phone !!}</td>
                         <td>{!!$row->company_name !!}</td>
                         <td>{!!$provinces[$row->province]!!}</td>
+                        <td>{!!$row->latest_sale->name!!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
                                 <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>

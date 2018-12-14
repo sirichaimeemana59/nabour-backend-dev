@@ -32,14 +32,19 @@ class CustomerController extends Controller
     public function index()
     {
         $customer = new Customer;
+        $customer = $customer->where('role','=',0);
         $customer = $customer->get();
 
         $p = new Province;
         $provinces = $p->getProvince();
 
+        $sale = new User;
+        $sale = $sale->where('role','=',2);
+        $sale = $sale->get();
+
         //dump($customer->toArray());
 
-        return view('customer.list_customer')->with(compact('customer','provinces'));
+        return view('customer.list_customer')->with(compact('customer','provinces','sale'));
     }
 
     public function create()
@@ -57,7 +62,8 @@ class CustomerController extends Controller
             $customer->channel          = Request::get('channel');
             $customer->type             = Request::get('type');
             $customer->active_status    = 'f';
-            $customer->company_id       = null;
+            $customer->status           = 0;
+            $customer->sale_id          = Request::get('sale_id');
             $customer->save();
             //dump($customer->toArray());
         }
@@ -86,7 +92,11 @@ class CustomerController extends Controller
             $p = new Province;
             $provinces = $p->get();
 
-            return view('customer.customer_update')->with(compact('customer','provinces'));
+            $sale = new User;
+            $sale = $sale->where('role','=',2);
+            $sale = $sale->get();
+
+            return view('customer.customer_update')->with(compact('customer','provinces','sale'));
         }
     }
 
@@ -106,7 +116,8 @@ class CustomerController extends Controller
             $customer->channel          = Request::get('channel');
             $customer->type             = Request::get('type');
             $customer->active_status    = 'f';
-            $customer->company_id       = null;
+            $customer->status           = Request::get('status');
+            $customer->sale_id          = Request::get('sale_id');
             $customer->save();
             //dump($customer->toArray());
         }

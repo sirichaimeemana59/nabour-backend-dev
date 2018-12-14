@@ -11,6 +11,7 @@ use Redirect;
 use App\BackendModel\User;
 use App\Province;
 use App\LeadTable;
+use App\Customer;
 
 class LeadsController extends Controller
 {
@@ -24,7 +25,8 @@ class LeadsController extends Controller
         $sale = $sale->get();
 
 
-        $_lead = new LeadTable;
+        $_lead = new Customer;
+        $_lead = $_lead->where('role','=',1);
         $_lead = $_lead->get();
 
         //dump($sale->toArray());
@@ -35,7 +37,7 @@ class LeadsController extends Controller
     public function create()
     {
         if(Request::isMethod('post')) {
-            $lead = new LeadTable;
+            $lead = new Customer;
             $lead->firstname        =Request::get('firstname');
             $lead->lastname         =Request::get('lastname');
             $lead->phone            =Request::get('phone');
@@ -48,10 +50,12 @@ class LeadsController extends Controller
             $lead->sales_status     =Request::get('sales_status');
             $lead->sale_id          =Request::get('sale_id');
             $lead->company_name     =Request::get('company_name');
+            $lead->role             =1;
             $lead->save();
             //dump($lead->toArray());
         }
-        $_lead = new LeadTable;
+        $_lead = new Customer;
+        $_lead = $_lead->where('role','=',1);
         $_lead->get();
 
         return redirect('customer/Lead_form/add/list')->with(compact('_lead'));
@@ -71,12 +75,12 @@ class LeadsController extends Controller
     public function edit()
     {
         if(Request::isMethod('post')) {
-            $_lead = LeadTable::find(Request::get('id'));
+            $_lead = Customer::find(Request::get('id'));
 
             //dump($_lead->toArray());
 
             $p = new Province;
-            $provinces = $p->getProvince();
+            $provinces = $p->get();
 
             $sale = new User;
             $sale = $sale->where('role','=',2);
@@ -91,7 +95,7 @@ class LeadsController extends Controller
         if(Request::isMethod('post')) {
 
             $id = Request::input('lead_id');
-            $lead = LeadTable::find($id);
+            $lead = Customer::find($id);
             $lead->fill(Request::all());
             $lead->save();
             //dump($lead->toArray());
@@ -103,7 +107,7 @@ class LeadsController extends Controller
     public function destroy()
     {
         $id = Request::input('id2');
-        $lead = LeadTable::find($id);
+        $lead = Customer::find($id);
         $lead->delete();
         //dd($id);
         return redirect('customer/Lead_form/add/list');

@@ -16,7 +16,7 @@ class Quotation_transaction extends GeneralModel
 
     public function latest_lead ()
     {
-        return $this->hasOne('App\LeadTable','id','lead_id');
+        return $this->hasOne('App\Customer','id','lead_id');
     }
 
     public function latest_province ()

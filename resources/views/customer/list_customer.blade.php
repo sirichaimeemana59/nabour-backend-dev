@@ -101,19 +101,30 @@
                         <div class="col-sm-2">
                             {!! Form::select('type',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
                         </div>
+
+                        <label class="col-sm-1 control-label">พนักงานขาย</label>
+                        <div class="col-sm-2">
+                            <select name="sale_id" id="" class="form-control" required>
+                                <option value="">กรุณาเลือกพนักงานขาย</option>
+                                @foreach($sale as $srow)
+                                    <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <input type="hidden" name="sales_status" value="0">
                         <label class="col-sm-1 control-label">ชื่อบริษัท</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="company_name" type="text" required>
                         </div>
+                    </div>
 
+                    <div class="form-group">
                         <label class="col-sm-1 control-label">ที่อยู่</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="address" type="text" required>
                         </div>
-                    </div>
 
-                    <div class="form-group">
                         <label class="col-sm-1 control-label">จังหวัด</label>
                         <div class="col-sm-2">
                             {!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}

@@ -36,7 +36,7 @@ class QuotationController extends Controller
         $search = $search->where('lead_id',$id);
         $search = $search->first();
 
-        $lead = new LeadTable;
+        $lead = new Customer;
         $lead = $lead->where('id',$id);
         $lead = $lead->first();
 
@@ -49,7 +49,7 @@ class QuotationController extends Controller
             $package = $package->where('status', '1');
             $package = $package->get();
 
-            $lead = new LeadTable;
+            $lead = new Customer;
             $lead = $lead->where('id', $id);
             $lead = $lead->first();
 
@@ -64,17 +64,21 @@ class QuotationController extends Controller
             $quotation1 = $quotation1->get();
 
             $remark = new Quotation_transaction;
+            $remark = $remark->where('lead_id', $id);
             $remark = $remark->where('remark', 1);
             $remark = $remark->count();
 
             $status = new Quotation_transaction;
-            $status = $status->where('status', 1);
-            $status = $status->count();
+            $status = $status->where('lead_id', $id);
+            $status = $status->first();
 
-            //dd($remark);
+            $lead = new Customer;
+            $lead = $lead->where('id', $id);
+            $lead = $lead->first();
+            //dd($status);
 
             //dump($quotation1->toArray());
-            return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status'));
+            return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status','lead'));
         }
         //return ($id);
     }
@@ -117,7 +121,7 @@ class QuotationController extends Controller
         $quotation->send_email_status      = 0;
         $quotation->save();
 
-        return redirect('customer/leads/list');
+        return redirect('service/quotation/add/'.Request::get('lead_id'));
 
 
         //dump($quotation->toArray());
@@ -197,7 +201,7 @@ class QuotationController extends Controller
 
 
         //dump($quotation->toArray());
-        return redirect('/customer/leads/list');
+        return redirect('service/quotation/add/'.Request::get('lead_id'));
     }
 
     public function destroy($id)
@@ -264,7 +268,7 @@ class QuotationController extends Controller
         $quotation->status = 1;
         $quotation->save();
 
-        $lead = LeadTable::find($id);
+        $lead = Customer::find($id);
          //dd($lead->id);
         $customer = new Customer;
         $customer->firstname        = $lead->firstname;
@@ -277,8 +281,7 @@ class QuotationController extends Controller
         $customer->channel          = $lead->channel;
         $customer->type             = $lead->type;
         $customer->active_status    = 'f';
-        $customer->company_id       = $id;
-        $customer->save();
+        //$customer->save();
         //dump($customer->toArray());
             //dd($quotation);
        return redirect('service/quotation/add/'.$id);

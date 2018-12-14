@@ -234,7 +234,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">พนักงานขาย</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" name="sale" value="{{$lead->lastest_sale->name}}" class="form-control" readonly>
+                                                    <input type="text" name="sale" value="{{$lead->latest_sale->name}}" class="form-control" readonly>
                                                     <input type="hidden" name="sales_id" value="{{$lead->sale_id}}" class="form-control" readonly>
                                                 </div>
                                             </div>
@@ -392,7 +392,7 @@
                 </div>
 
                 <input type="hidden" id="baht-label" value="{{ trans('messages.Report.baht') }}" />
-
+                <input type="hidden" name="role" value="{!! $lead->role !!}">
             </div>
         </div>
     </section>

@@ -28,24 +28,37 @@
     <div class="col-sm-2">
         {!! Form::select('channel',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','required')) !!}
     </div>
-    
+
     <label class="col-sm-1 control-label">ประเภท</label>
     <div class="col-sm-2">
         {!! Form::select('type',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
+    </div>
+
+    <label class="col-sm-1 control-label">พนักงานขาย</label>
+    <div class="col-sm-2">
+        <select name="sale_id" id="" class="form-control">
+            <option value="">กรุณาเลือกพนักงานขาย</option>
+            @foreach($sale as $srow)
+                <?php
+                $sale=$customer->sale_id==$srow->id?"selected":"";
+                ?>
+                <option value="{!!$srow->id!!}" {!!$sale!!}>{!!$srow->name!!}</option>
+            @endforeach
+        </select>
     </div>
 
     <label class="col-sm-1 control-label">ชื่อบริษัท</label>
     <div class="col-sm-2">
         <input class="form-control" name="company_name" type="text" required value="{!! $customer->company_name !!}">
     </div>
+</div>
 
+<div class="form-group">
     <label class="col-sm-1 control-label">ที่อยู่</label>
     <div class="col-sm-2">
         <input class="form-control" name="address" type="text" required value="{!!$customer->address !!}">
     </div>
-</div>
 
-<div class="form-group">
     <label class="col-sm-1 control-label">จังหวัด</label>
     <div class="col-sm-2">
         <select name="province" id="" class="form-control">
@@ -64,6 +77,7 @@
         <input class="form-control" name="postcode" type="text" required value="{!!$customer->postcode !!}">
     </div>
     <input type="hidden" name="company_id" value="{!! $customer->company_id !!}">
+    <input type="hidden" name="role" value="{!! $customer->role !!}">
 </div>
 </div>
 <div class="modal-footer">
