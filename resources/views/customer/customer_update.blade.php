@@ -26,11 +26,12 @@
 
     <label class="col-sm-1 control-label">แหล่งที่มา</label>
     <div class="col-sm-2">
-        <input class="form-control" name="channel" type="text" required value="{!!$customer->channel!!}">
+        {!! Form::select('channel',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','required')) !!}
     </div>
+    
     <label class="col-sm-1 control-label">ประเภท</label>
     <div class="col-sm-2">
-        <input class="form-control" name="type" type="text" required value="{!!$customer->type!!}">
+        {!! Form::select('type',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
     </div>
 
     <label class="col-sm-1 control-label">ชื่อบริษัท</label>
