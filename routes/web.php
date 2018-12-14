@@ -77,6 +77,10 @@ Route::post('customer/Customer_form/delete', 'Customer\CustomerController@destro
 Route::post('customer/Customer_form/check', 'Customer\CustomerController@check');
 //End Customer
 
+//Contract sign no
+Route::get('service/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'Contract\ContractsignController@index');
+//End Contract
+
 //---------------------------  Nabour officer Route --------------------------------------------//
 
 // Admin

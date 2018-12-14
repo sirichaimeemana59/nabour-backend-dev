@@ -39,7 +39,7 @@ class CustomerController extends Controller
         $provinces = $p->getProvince();
 
         $sale = new User;
-        $sale = $sale->where('role','=',2);
+        $sale = $sale->where('role','=',4);
         $sale = $sale->get();
 
         //dump($customer->toArray());
@@ -93,7 +93,7 @@ class CustomerController extends Controller
             $provinces = $p->get();
 
             $sale = new User;
-            $sale = $sale->where('role','=',2);
+            $sale = $sale->where('role','=',4);
             $sale = $sale->get();
 
             return view('customer.customer_update')->with(compact('customer','provinces','sale'));
