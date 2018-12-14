@@ -47,8 +47,7 @@ class LeadsController extends Controller
             $lead->type             =Request::get('type');
             $lead->sales_status     =Request::get('sales_status');
             $lead->sale_id          =Request::get('sale_id');
-            $lead->created_at       ='2018-11-30 05:35:35';
-            $lead->updated_at       ='2018-11-30 05:35:35';
+            $lead->company_name     =Request::get('company_name');
             $lead->save();
             //dump($lead->toArray());
         }
@@ -77,7 +76,7 @@ class LeadsController extends Controller
             //dump($_lead->toArray());
 
             $p = new Province;
-            $provinces = $p->get();
+            $provinces = $p->getProvince();
 
             $sale = new User;
             $sale = $sale->where('role','=',2);

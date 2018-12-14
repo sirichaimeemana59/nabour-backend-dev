@@ -2,7 +2,7 @@
 @section('content')
     <div class="page-title">
         <div class="title-env">
-            <h1 class="title">รายการ Lead</h1>
+            <h1 class="title">รายการลูกค้า</h1>
         </div>
         <div class="breadcrumb-env">
 
@@ -10,9 +10,9 @@
                 <li>
                     <a href=""><i class="fa-home"></i>Home</a>
                 </li>
-                <li><a href="">Leads</a></li>
+                <li><a href="">Customer</a></li>
                 <li class="active">
-                    <strong>List Leads</strong>
+                    <strong>List Customer</strong>
                 </li>
             </ol>
         </div>
@@ -34,6 +34,9 @@
                             <div class="col-sm-2 block-input">
                                 <input class="form-control" size="25" placeholder="ชื่อ" name="name">
                             </div>
+                            <div class="col-sm-3">
+                                {!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -41,16 +44,16 @@
         </div>
     </div>
     {{--end search--}}
-    <button type="button" class="btn btn-info btn-primary action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> เพิ่ม Lead</button>
+    <button type="button" class="btn btn-info btn-primary action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> เพิ่ม Customer</button>
 
     {{--content--}}
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" id="panel-lead-list">
                 <div class="panel-heading">
-                    <h3 class="panel-title">รายงาน Lead</h3>
+                    <h3 class="panel-title">รายงานลูกค้า</h3>
                 </div>
-                @include('lead.list_lead_element')
+                @include('customer.list_customer_element')
             </div>
         </div>
     </div>
@@ -62,10 +65,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">เพิ่ม Lead</h4>
+                    <h4 class="modal-title">เพิ่ม Customer</h4>
                 </div>
                 <div class="modal-body">
-                    {!! Form::model(null,array('url' => array('customer/Lead_form/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+                    {!! Form::model(null,array('url' => array('customer/Customer_form/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
                     <div class="form-group">
                         <label class="col-sm-1 control-label">ชื่อ</label>
                         <div class="col-sm-2">
@@ -98,37 +101,22 @@
                         <div class="col-sm-2">
                             <input class="form-control" name="type" type="text" required>
                         </div>
-
-                        <label class="col-sm-1 control-label">พนักงานขาย</label>
-                        <div class="col-sm-2">
-                            <select name="sale_id" id="" class="form-control" required>
-                                <option value="">กรุณาเลือกพนักงานขาย</option>
-                                @foreach($sale as $srow)
-                                    <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <input type="hidden" name="sales_status" value="0">
                         <label class="col-sm-1 control-label">ชื่อบริษัท</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="company_name" type="text" required>
                         </div>
-                    </div>
 
-                    <div class="form-group">
                         <label class="col-sm-1 control-label">ที่อยู่</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="address" type="text" required>
                         </div>
+                    </div>
 
+                    <div class="form-group">
                         <label class="col-sm-1 control-label">จังหวัด</label>
                         <div class="col-sm-2">
-                            <select name="province" id="" class="form-control" required>
-                                <option value="">กรุณาเลือกจังหวัด</option>
-                                @foreach($provinces as $row)
-                                    <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
-                                @endforeach
-                            </select>
+                            {!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
                         </div>
 
                         <label class="col-sm-1 control-label">รหัสไปรษณีย์</label>
@@ -148,17 +136,17 @@
     {{--end insert--}}
 
     {{--update --}}
-    <div class="modal fade" id="edit-lead" role="dialog" >
+    <div class="modal fade" id="edit-customer" role="dialog" >
         <div class="modal-dialog modal-lg" style="width: 85%; height: 100%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">แก้ไข Lead</h4>
+                    <h4 class="modal-title">แก้ไข Customer</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div id="lead-content1" class="form">
+                            <div id="lead-content2" class="form">
 
                             </div>
                         </div>
@@ -176,13 +164,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">ลบข้อมูล Lead</h4>
+                    <h4 class="modal-title">ลบข้อมูล Customer</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form">
-                                {!! Form::model(null,array('url' => array('customer/Lead_form/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                {!! Form::model(null,array('url' => array('customer/Customer_form/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
                                 <br>
                                 <input type="hidden" name="id2" id="id2">
                                 <div style="text-align: center;">
@@ -201,6 +189,38 @@
         </div>
     </div>
     {{--end delete--}}
+
+    {{--cancel--}}
+    <div class="modal fade" id="delete1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">คืนสถานะ Customer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                {!! Form::model(null,array('url' => array('customer/Customer_form/check'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                <br>
+                                <input type="hidden" name="id3" id="id3">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn1.iconfinder.com/data/icons/jetflat-multimedia-vol-4/90/0042_089_check_well_ready_okey-512.png" alt="" width="50%">
+                                    <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >เปิดใช้</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end cancel--}}
 @endsection
 
 @section('script')
@@ -226,19 +246,19 @@
         }
 
         //update
-        $('#panel-lead-list').on('click','.edit-lead' ,function (){
+        $('#panel-lead-list').on('click','.edit-customer' ,function (){
             var id = $(this).data('vehicle-id');
             $('.v-loading').show();
-            $('#lead-content1').empty();
+            $('#lead-content2').empty();
             //console.log();
             $.ajax({
-                url : $('#root-url').val()+"/customer/list_update_lead",
+                url : $('#root-url').val()+"/customer/list_update_customer",
                 method : 'post',
                 dataType: 'html',
                 data : ({'id':id}),
                 success: function (r) {
                     $('.v-loading').hide();
-                    $('#lead-content1').html(r);
+                    $('#lead-content2').html(r);
                 },
                 error : function () {
 
@@ -259,6 +279,10 @@
 
         function mate_del(id) {
             document.getElementById("id2").value = id;
+        }
+
+        function mate_del3(id) {
+            document.getElementById("id3").value = id;
         }
 
     </script>

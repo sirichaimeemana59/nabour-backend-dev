@@ -49,9 +49,12 @@
             </div>
         </div>
     </div>
-    <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+
     @if($status ==0)
-    <a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>
+        <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+        <a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>
+    @else
+        <a href="{!!url('/service/quotation/cancel/'.$id)!!}" ><button type="button" class="btn btn-danger action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ยกเลิกใบเสนอราคา</button></a>
     @endif
     <div class="row">
         <div class="col-md-12">

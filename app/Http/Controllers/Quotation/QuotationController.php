@@ -25,6 +25,7 @@ use App\BackendModel\Quotation;
 use App\BackendModel\Quotation_transaction;
 use App\Products;
 use App\success;
+use App\Customer;
 
 class QuotationController extends Controller
 {
@@ -263,7 +264,34 @@ class QuotationController extends Controller
         $quotation->status = 1;
         $quotation->save();
 
+        $lead = LeadTable::find($id);
+         //dd($lead->id);
+        $customer = new Customer;
+        $customer->firstname        = $lead->firstname;
+        $customer->lastname         = $lead->lastname;
+        $customer->phone            = $lead->phone;
+        $customer->email            = $lead->email;
+        $customer->address          = $lead->address;
+        $customer->province         = $lead->province;
+        $customer->company_name     = $lead->company_name;
+        $customer->channel          = $lead->channel;
+        $customer->type             = $lead->type;
+        $customer->active_status    = 'f';
+        $customer->company_id       = $id;
+        $customer->save();
+        //dump($customer->toArray());
             //dd($quotation);
+       return redirect('service/quotation/add/'.$id);
+
+    }
+
+    public function cancel($id)
+    {
+        $quotation = success::find($id);
+        $quotation->status = 0;
+        $quotation->save();
+
+        //dd($quotation);
         return redirect('service/quotation/add/'.$id);
 
     }

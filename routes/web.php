@@ -65,7 +65,17 @@ Route::get('service/quotation/check/quotation/{id?}/{lead_id?}', 'Quotation\Quot
 Route::get('service/quotation/check_out/quotation/{id?}/{lead_id?}', 'Quotation\QuotationController@check_out');
 Route::get('service/quotation/print_quotation/{id?}', 'Quotation\QuotationController@print');
 Route::get('service/quotation/success/{id?}', 'Quotation\QuotationController@success');
+Route::get('service/quotation/cancel/{id?}', 'Quotation\QuotationController@cancel');
 //End Quotation
+
+//Customer
+Route::get('customer/customer/list', 'Customer\CustomerController@index');
+Route::post('customer/Customer_form/add', 'Customer\CustomerController@create');
+Route::post('customer/list_update_customer', 'Customer\CustomerController@edit');
+Route::post('customer/Customer_form/update', 'Customer\CustomerController@update');
+Route::post('customer/Customer_form/delete', 'Customer\CustomerController@destroy');
+Route::post('customer/Customer_form/check', 'Customer\CustomerController@check');
+//End Customer
 
 //---------------------------  Nabour officer Route --------------------------------------------//
 

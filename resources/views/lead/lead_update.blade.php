@@ -47,13 +47,18 @@
             </select>
         </div>
 
-        <label class="col-sm-1 control-label">ที่อยู่</label>
+        <label class="col-sm-1 control-label">ชื่อบริษัท</label>
         <div class="col-sm-2">
-            <input class="form-control" name="address" type="text" required value="{!!$_lead->address !!}">
+            <input class="form-control" name="company_name" type="text" required value="{!! $_lead->company_name !!}">
         </div>
     </div>
 
     <div class="form-group">
+        <label class="col-sm-1 control-label">ที่อยู่</label>
+        <div class="col-sm-2">
+            <input class="form-control" name="address" type="text" required value="{!!$_lead->address !!}">
+        </div>
+
         <label class="col-sm-1 control-label">จังหวัด</label>
         <div class="col-sm-2">
             <select name="province" id="" class="form-control">
