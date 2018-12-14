@@ -2,6 +2,19 @@
 
 define('PROPERTY_TYPE_EN',serialize(array('Property type','Housing estate/Village','Hotel/Rented room','Condo','Other')));
 define('PROPERTY_TYPE_TH',serialize(array('ประเภทอาคาร','บ้านจัดสรร/หมู่บ้าน','ห้องพัก/โรงแรม/ห้องเช่า','คอนโด','อื่นๆ')));
+define('LEADS_SOURCE', serialize(array(
+    0 => 'Facebook',
+    1   => 'Google',
+    2  => 'สื่อสิ่งพิมพ์',
+    3  => 'ผู้แนะนำ',
+    4   => 'อื่นๆ',
+)));
+define('LEADS_TYPE', serialize(array(
+    0 => 'นิติบุคคลจัดตั้งเอง',
+    1   => 'บริษัทบริหารนิติบุคคล',
+    2  => 'บริษัทพัฒนาอสังหา',
+    3   => 'อื่นๆ',
+)));
 
 function humanTiming ($time)
 {
