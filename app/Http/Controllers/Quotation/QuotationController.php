@@ -24,6 +24,7 @@ use App\BackendModel\User;
 use App\BackendModel\Quotation;
 use App\BackendModel\Quotation_transaction;
 use App\Products;
+use App\success;
 
 class QuotationController extends Controller
 {
@@ -61,8 +62,18 @@ class QuotationController extends Controller
             $quotation1 = $quotation1->where('lead_id', $id);
             $quotation1 = $quotation1->get();
 
+            $remark = new Quotation_transaction;
+            $remark = $remark->where('remark', 1);
+            $remark = $remark->count();
+
+            $status = new Quotation_transaction;
+            $status = $status->where('status', 1);
+            $status = $status->count();
+
+            //dd($remark);
+
             //dump($quotation1->toArray());
-            return view('quotation.list_quotation')->with(compact('lead','quotation1','id'));
+            return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status'));
         }
         //return ($id);
     }
@@ -152,37 +163,63 @@ class QuotationController extends Controller
             foreach ( Request::get('_data') as $q) {
 
                 $quotation_service = Quotation::find($q['id']);
-                $quotation_service->lead_id             = $q['quotation_code'];
+                $quotation_service->lead_id             = $q['lead_id'];
                 $quotation_service->package_id          = $q['service'];
                 $quotation_service->project_package     = empty($q['project'])?'0':$q['project'];
                 $quotation_service->month_package       = empty($q['price'])?'0':$q['price'];
                 $quotation_service->unit_package        = empty($q['unit_price'])?'0':$q['unit_price'];
-                $quotation_service->total_package       = empty($q['total'])?'0':$q['total'];
-                //$quotation_service->save();
-                dump($quotation_service->toArray());
+                $quotation_service->total_package       = empty($q['total1'])?'0':$q['total1'];
+                $quotation_service->save();
+                //dump($quotation_service->toArray());
             }
-           /* $quotation = Quotation_transaction::find(Request::get('quotation_id'));
-            $quotation->project_package 	= Request::get('package_id');
-            $quotation->month_package 		= Request::get('month_package');
-            $quotation->unit_package 		= Request::get('unit_package');
-            $quotation->total_package 		= Request::get('total_package');
-            $quotation->discount 		    = Request::get('discount');
-            $quotation->property_id 		= Request::get('quotation_id');
-            $quotation->sale_id 			= Request::get('sale_id');
-            $quotation->package_unit 		= Request::get('project_package');
-            $quotation->quotation_number 	= Request::get('quotation_number');*/
-            //$quotation->save();
+            $quotation = new Quotation_transaction;
+            $quotation = $quotation->find(Request::get('quotation_code'));
+
+            $quotation->product_id             = Request::get('package_id');
+            $quotation->quotation_code         = Request::get('quotation_code');
+            $quotation->product_amount         = Request::get('project_package');
+            $quotation->month_package          = Request::get('month_package');
+            $quotation->unit_price             = Request::get('unit_package');
+            $quotation->total                  = Request::get('total_package');
+            $quotation->product_price_with_vat = Request::get('grand_total');
+            $quotation->product_vat            = Request::get('vat');
+            $quotation->grand_total_price      = Request::get('sub_total');
+            $quotation->discount               = Request::get('discount');
+            $quotation->invalid_date           = Request::get('invalid_date');
+            $quotation->remark                 = 0;
+            $quotation->sales_id               = Request::get('sales_id');
+            $quotation->lead_id                = Request::get('lead_id');
+            $quotation->send_email_status      = 0;
+            $quotation->save();
+            //dd($quotation);
         }
 
 
         //dump($quotation->toArray());
-        //return redirect('/root/admin/list_quotation');
+        return redirect('/customer/leads/list');
     }
 
     public function destroy($id)
     {
         //
     }
+    public function check($id = null , $lead_id = null)
+    {
+        $quotation = Quotation_transaction::find($id);
+        $quotation->remark =1;
+        $quotation->save();
+        return redirect('/service/quotation/add/'.$lead_id);
+    }
+
+    public function check_out($id = null , $lead_id = null)
+    {
+        $quotation = Quotation_transaction::find($id);
+        $quotation->remark = 0;
+        $quotation->save();
+        return redirect('/service/quotation/add/'.$lead_id);
+    }
+
+
     public function detail()
     {
         if(Request::isMethod('post')) {
@@ -198,4 +235,37 @@ class QuotationController extends Controller
             return view('quotation.quotation_detail')->with(compact('quotation','quotation_service'));
         }
     }
+
+    public function print($id){
+
+        $quotation = new Quotation_transaction;
+        $quotation = $quotation->where('quotation_code', $id);
+        $quotation = $quotation->first();
+
+        $p = new Province;
+        $provinces = $p->getProvince();
+
+        $quotation1 = new Quotation_transaction;
+        $quotation1 = $quotation1->where('quotation_code', $id);
+        $quotation1 = $quotation1->first();
+
+        //dump($quotation1->toArray());
+        $quotation_service = new Quotation;
+        $quotation_service = $quotation_service->where('quotation_code', $id);
+        $quotation_service = $quotation_service->get();
+
+        return view('report.report_quotation')->with(compact('quotation','provinces','quotation1','quotation_service'));
+    }
+
+    public function success($id)
+    {
+        $quotation = success::find($id);
+        $quotation->status = 1;
+        $quotation->save();
+
+            //dd($quotation);
+        return redirect('service/quotation/add/'.$id);
+
+    }
+
 }

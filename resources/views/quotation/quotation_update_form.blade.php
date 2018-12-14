@@ -118,7 +118,7 @@
     <section class="bills-env">
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::model(null,array('url' => array('/service/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
+                {!! Form::model(null,array('url' => array('service/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
 
                 <table class="table table-striped table-condensed" id="itemsTable" style="min-width:600px;">
                     <thead>
@@ -134,6 +134,7 @@
                     <tbody>
                     @foreach($quotation_service as $key => $quo)
                         <input type="hidden" name="_data[{{ $key }}][id]" value="{{$quo->id}}">
+                        <input type="hidden" name="_data[{{ $key }}][lead_id]" value="{{$quo->lead_id}}">
                         <tr class="item-row">
                             {{--<a href="{{url('root/admin/report_quotation_update/'.$quo->id.'/'.$quo->property_id)}}"><i class="fa-trash"></i></a>--}}
                             <td></td>
@@ -148,7 +149,7 @@
                                     @endforeach
                                 </select>
                             </td>
-                            <input type="hidden" name="_data[{{ $key }}][id]" value="{{$quo->id}}"/>
+                            <input type="hidden" name="_data[{{ $key }}][quotation_code]" value="{{$quo->quotation_code}}"/>
                             <td><input type="text" required name="_data[{{ $key }}][project]" style="text-align: right;" value="{{number_format($quo->project_package,0)}}" class="toValidate form-control  tPrice"/>
                             </td>
                             <td>
@@ -237,9 +238,13 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Package</label>
                                                     <div class="col-sm-10">
-                                                        <input type="hidden" class="form-control" name="quotation_id"  readonly value="">
+                                                        <input type="hidden" name="quotation_code" value="{{$quotation->quotation_code}}"/>
+                                                        <input type="hidden" class="form-control" name="package_id"  readonly value="{!! $quotation->product_id !!}">
                                                         <input type="text" required class="form-control" required name="package" id="package" readonly value="{!! $quotation->lastest_package->name !!}">
                                                         <input type="hidden" class="form-control" name="price1" id="price1" readonly value="{!! $quotation->lastest_package->price !!}">
+                                                        <input type="hidden" class="form-control" name="sales_id"  readonly value="{!! $quotation->sales_id !!}">
+                                                        <input type="hidden" class="form-control" name="lead_id"  readonly value="{!! $quotation->lead_id !!}">
+                                                        {{--<input type="hidden" class="form-control" name="quotation_id"  readonly value="{!! $quotation->quotation_id !!}">--}}
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -320,7 +325,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Grand Total</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" value="{!! number_format($quotation->product_price_with_vat,2) !!}" name="grand_total" id="grand_total1" type="text" readonly>
+                                                    <input class="form-control" value="{!! $quotation->product_price_with_vat !!}" name="grand_total" id="grand_total1" type="text" readonly>
                                                 </div>
                                             </div>
                                         </div>

@@ -49,7 +49,10 @@
             </div>
         </div>
     </div>
-    <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info btn-primary action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+    <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+    @if($status ==0)
+    <a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -66,17 +69,34 @@
                                         <div class="well">
                                            <p>เลขที่ใบเสนอราคา :  {!!$row->quotation_code!!}</p>
                                             <p>Package : {!!$row->lastest_package->name!!}</p>
-                                            <p>ราคาสุทธิ : {!! number_format($row->product_price_with_vat,2) !!}</p>
+                                            <p>ราคาสุทธิ : {!! $row->product_price_with_vat !!}</p>
+                                            <br>
                                             <div style="text-align: right;">
-                                                <a href="#" class="edit edit-service btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
-                                                    <i class="fa-eye"></i>
+                                                @if($row->status !=1)
+                                                @if($row->remark == 0 AND $remark !=1)
+                                                <a href="{!! url('service/quotation/check/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ใช้ใบเสนอราคา">
+                                                    <i class="fa-check"></i>
                                                 </a>
+                                                @endif
+
+                                                @if($row->remark == 1)
+                                                <a href="{!! url('service/quotation/check_out/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-danger"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ยกเลิกใบเสนอราคา">
+                                                   <i class="fa-close"></i>
+                                                </a>
+                                                <a href="{!! url('service/quotation/print_quotation/'.$row->quotation_code) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา">
+                                                    <i class="fa-print"></i>
+                                                </a>
+                                                @endif
                                                 <a href="{!! url('service/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                                                     <i class="fa-pencil-square-o"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">
                                                     <i class="fa-trash"></i>
                                                 </a>
+                                                @endif
+                                                    <a href="#" class="edit edit-service btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
+                                                        <i class="fa-eye"></i>
+                                                    </a>
                                             </div>
                                         </div>
                                     </div>
