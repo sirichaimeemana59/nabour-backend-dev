@@ -23,6 +23,12 @@
                     <span class="title">นิติบุคคล</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('customer/property/demo/list') ? 'active' : '') !!}">
+                <a href="{!! url('customer/property/demo/list') !!}">
+                    <i class="fa fa-home"></i>
+                    <span class="title">นิติบุคคลทดลองใช้</span>
+                </a>
+            </li>
         </ul>
     </li>
 
@@ -35,8 +41,8 @@
         </a>
     </li>
 
-    <li class="{!! (Request::is('contract/*') ? 'active' : '') !!}">
-        <a href="{!! url('contract/list') !!}">
+    <li class="{!! (Request::is('quotation/*') ? 'active' : '') !!}">
+        <a href="{!! url('quotation/list') !!}">
             <i class="fa fa-file-o"></i>
             <span class="title">รายการใบเสนอราคา</span>
         </a>

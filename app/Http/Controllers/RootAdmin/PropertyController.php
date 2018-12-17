@@ -218,23 +218,6 @@ class PropertyController extends Controller {
                     $user->email = $property['user']['email'];
                 }
                 $user->save();
-
-                     /*
-                        property_nb_contract
-                    */
-                    /*if(empty($num_id)){
-                            $property_con = PropertyContract::find($id); 
-                            $property_con->fill($property['contract']);    
-                            $property_con->save();
-                    }else{
-                            $property_con = new PropertyContract; 
-                            $property_con->fill($property['contract']);
-                            //dd($property);
-                            $property_con->save();
-                            //dd($property);
-                    }*/
-                    
-                    
                 return redirect('customer/property/list');
             }
         }
@@ -247,27 +230,6 @@ class PropertyController extends Controller {
             }])->find($id);
 
             $user = $property->property_admin;
-
-            //$proper_con= new PropertyContract;
-
-            //$singg=$proper_con->where('year',$cut_date_now[0],'month',$cut_date_now[1]);
-
-
-
-           //$data =  DB::select("SELECT * FROM property_nb_contract WHERE property_id = '$id'");
-
-           /*$date=date("Y-m-d");
-           $cut_date_now=explode("-",$date);
-
-            $data=PropertyContract::find($id);
-            $singg = PropertyContract::whereYear('created_at', '=', $cut_date_now[0])
-                ->whereMonth('created_at', '=', $cut_date_now[1])
-                ->get();
-            $sing=$singg->max('contract_sign_no');
-            $max_cus = $proper_con->max('customer_id');
-            $max_quo = $proper_con->max('quotation_id'); */
-           //$sing =  DB::select("SELECT MAX(contract_sign_no) FROM property_nb_contract WHERE EXTRACT(year FROM created_at) = '$cut_date_now[0]' AND EXTRACT(month FROM created_at) = '$cut_date_now[1]'");
-           //$max_cus =  DB::select("SELECT MAX(customer_id)AS cus FROM property_nb_contract");
            if(isset($user)) {
                 $property = $property->toArray();
                 $property['user'] = $user->toArray();
@@ -276,28 +238,18 @@ class PropertyController extends Controller {
             if(isset($data)) {
                 $data_array = $data->toArray();
             }
-            //dd($property1->cat_property);
-
 
             $pmg = new ManagementGroup;
             $pmg = $pmg->get();
 
 
-            $sale = [];
             $sale1 = BackendUser::where('id','!=',Auth::user()->id)
                 ->where('role','=',4)
                 ->orderBy('created_at','DESC')
                 ->paginate(30);
 
-           /* $sale1 = new User;
-            $sale1 = $sale1->get();*/
-
-            $package = [];//new package;
-            //$package = $package->where('status','1');
-            //$package = $package->get();
-
+            $package = array();
             return view('property.edit')->with(compact('data_array','sing','max_cus','property','provinces','pmg','property1','sale1','max_quo','package'));
-            //return view('property.edit',['property_data'=>$data,'sing'=>$sing,'max_cus'=>$max_cus])->with(compact('property','provinces'));
         }
 
     }
@@ -405,7 +357,7 @@ class PropertyController extends Controller {
         $provinces = $p->getProvince();
         if(!Request::ajax()) {
             $property_list = array(''=> trans('messages.Signup.select_property') );
-            return view('property.list')->with(compact('p_rows','provinces','property_list','demo'));
+            return view('property.demo-list')->with(compact('p_rows','provinces','property_list','demo'));
         } else {
             return view('property.demo-list-element')->with(compact('p_rows','provinces'));
         }

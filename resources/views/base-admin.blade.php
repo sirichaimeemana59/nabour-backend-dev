@@ -87,8 +87,11 @@
                 @else
                     @include('menu-layouts.sales.main-menu')
                 @endif */ ?>
-
-                @include('menu-layouts.super-admin.main-menu')
+                @if( Auth::user()->role == 2)
+                    @include('menu-layouts.sales.main-menu')
+                @else
+                    @include('menu-layouts.super-admin.main-menu')
+                @endif
             </div>
         </div>
 
