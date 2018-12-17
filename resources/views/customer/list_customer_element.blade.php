@@ -16,8 +16,8 @@
                 @foreach($customer as $row)
                     <tr>
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
-                        <td>{!!$row->phone !!}</td>
                         <td>{!!$row->company_name !!}</td>
+                        <td>{!!$row->phone !!}</td>
                         <td>{!!$provinces[$row->province]!!}</td>
                         <td>{!!$row->latest_sale->name!!}</td>
                         <td>

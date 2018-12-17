@@ -23,18 +23,38 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">ค้นหา</h3>
+                    <h3 class="panel-title">{!! trans('messages.search') !!}</h3>
                 </div>
                 <div class="panel-body search-form">
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
                         <div class="row">
-                            <div class="col-sm-2 block-input">
-                                <input class="form-control" size="25" placeholder="รหัสลูกค้า" name="customer">
+                            {{--<div class="col-sm-3 block-input">--}}
+                                {{--<input class="form-control" size="25" placeholder="รหัสลูกค้า" name="customer">--}}
+                            {{--</div>--}}
+                            <div class="col-sm-3 block-input">
+                                <input class="form-control" size="25" placeholder="{!! trans('messages.name') !!}" name="name">
                             </div>
-                            <div class="col-sm-2 block-input">
-                                <input class="form-control" size="25" placeholder="ชื่อ" name="name">
+
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}--}}
+                            {{--</div>--}}
+
+                            <div class="col-sm-3">
+                                <select name="sale_id" id="" class="form-control" required>
+                                    <option value="">กรุณาเลือกพนักงานขาย</option>
+                                    @foreach($sale as $srow)
+                                        <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                                    @endforeach
+                                </select>
                             </div>
+
+                            <div class="col-sm-3 text-right">
+                                <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+                                <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
+                            </div>
+
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -50,7 +70,9 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">รายงาน Lead</h3>
                 </div>
-                @include('lead.list_lead_element')
+                <div class="panel-body" id="landing-property-list">
+                    @include('lead.list_lead_element')
+                </div>
             </div>
         </div>
     </div>
@@ -204,15 +226,15 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/nabour-vehicle.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/nabour-search-form.js')!!}"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datatables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/selectboxit/jquery.selectBoxIt.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/nabour-search-form.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/toastr/toastr.min.js"></script>
     <script type="text/javascript">
         // Override
         function validateForm () {
@@ -224,6 +246,10 @@
                 errorPlacement: function(error, element) { element.addClass('error'); }
             });
         }
+
+        $('.p-search-property').on('click',function () {
+            propertyPage (1);
+        });
 
         //update
         $('#panel-lead-list').on('click','.edit-lead' ,function (){
@@ -261,5 +287,18 @@
             document.getElementById("id2").value = id;
         }
 
+        function propertyPage (page) {
+            var data = $('#search-form').serialize()+'&page='+page;
+            $('#landing-property-list').css('opacity','0.6');
+            $.ajax({
+                url     : $('#root-url').val()+"/customer/leads/list",
+                data    : data,
+                dataType: "html",
+                method: 'post',
+                success: function (h) {
+                    $('#landing-property-list').css('opacity','1').html(h);
+                }
+            })
+        }
     </script>
 @endsection

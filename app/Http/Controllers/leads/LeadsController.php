@@ -17,6 +17,16 @@ class LeadsController extends Controller
 {
     public function index()
     {
+        $_lead = new Customer;
+
+        if(Request::get('name')) {
+            $_lead = $_lead->where('firstname','=',Request::get('name'));
+        }
+
+        if(Request::get('sale_id')) {
+            $_lead = $_lead->where('sale_id','=',Request::get('sale_id'));
+        }
+
         $p = new Province;
         $provinces = $p->get();
 
@@ -25,13 +35,17 @@ class LeadsController extends Controller
         $sale = $sale->get();
 
 
-        $_lead = new Customer;
+
         $_lead = $_lead->where('role','=',1);
         $_lead = $_lead->get();
 
         //dump($sale->toArray());
 
-        return view('lead.list_lead')->with(compact('provinces','sale','_lead'));
+        if(!Request::ajax()) {
+            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead'));
+        }else{
+            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead'));
+        }
     }
 
     public function create()

@@ -32,6 +32,24 @@ class CustomerController extends Controller
     public function index()
     {
         $customer = new Customer;
+
+
+        if(Request::get('name')) {
+            $customer = $customer->where('firstname','=',Request::get('name'));
+        }
+
+        if(Request::get('company_name')) {
+            $customer = $customer->where('company_name','=',Request::get('company_name'));
+        }
+
+        if(Request::get('sale_id')) {
+            $customer = $customer->where('sale_id','=',Request::get('sale_id'));
+        }
+
+        if(Request::get('province')) {
+            $customer = $customer->where('province','=',Request::get('province'));
+        }
+
         $customer = $customer->where('role','=',0);
         $customer = $customer->get();
 
@@ -44,7 +62,12 @@ class CustomerController extends Controller
 
         //dump($customer->toArray());
 
-        return view('customer.list_customer')->with(compact('customer','provinces','sale'));
+        if(!Request::ajax()) {
+            return view('customer.list_customer')->with(compact('customer','provinces','sale'));
+        }else{
+            return view('customer.list_customer_element')->with(compact('customer','provinces','sale'));
+        }
+
     }
 
     public function create()

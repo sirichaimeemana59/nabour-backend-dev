@@ -27,7 +27,7 @@ Route::get('/projects', 'HomeController@nabourAdminHome');
 Route::get('/home', 'HomeController@SalesHome');
 
 //Leads
-Route::get('customer/leads/list', 'leads\LeadsController@index');
+Route::any('customer/leads/list', 'leads\LeadsController@index');
 Route::post('customer/Lead_form/add', 'leads\LeadsController@create');
 Route::get('customer/Lead_form/add/list', 'leads\LeadsController@index');
 Route::post('customer/Lead_form/delete', 'leads\LeadsController@destroy');
@@ -69,7 +69,7 @@ Route::get('service/quotation/cancel/{id?}', 'Quotation\QuotationController@canc
 //End Quotation
 
 //Customer
-Route::get('customer/customer/list', 'Customer\CustomerController@index');
+Route::any('customer/customer/list', 'Customer\CustomerController@index');
 Route::post('customer/Customer_form/add', 'Customer\CustomerController@create');
 Route::post('customer/list_update_customer', 'Customer\CustomerController@edit');
 Route::post('customer/Customer_form/update', 'Customer\CustomerController@update');
