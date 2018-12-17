@@ -21,7 +21,7 @@ class LeadsController extends Controller
         $provinces = $p->get();
 
         $sale = new User;
-        $sale = $sale->where('role','=',4);
+        $sale = $sale->where('role','=',2);
         $sale = $sale->get();
 
 
@@ -83,7 +83,7 @@ class LeadsController extends Controller
             $provinces = $p->get();
 
             $sale = new User;
-            $sale = $sale->where('role','=',4);
+            $sale = $sale->where('role','=',2);
             $sale = $sale->get();
 
             return view('lead.lead_update')->with(compact('_lead','provinces','sale'));

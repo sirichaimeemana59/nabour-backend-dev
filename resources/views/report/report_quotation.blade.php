@@ -1,3 +1,4 @@
+@extends('print')
 <style>
     .title_left{
         text-align:left;
@@ -22,7 +23,7 @@
     }
 </style>
 
-{{--@section('content')--}}
+@section('content')
     <div class="content">
         <div class="title_left">
             <table>
@@ -205,4 +206,4 @@
         </table>
     </div>
     </div>
-{{--@stop--}}
+@stop

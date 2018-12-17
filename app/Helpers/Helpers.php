@@ -15,6 +15,18 @@ define('LEADS_TYPE', serialize(array(
     2  => 'บริษัทพัฒนาอสังหา',
     3   => 'อื่นๆ',
 )));
+define('CONTRACT_TYPE', serialize(array(
+    0 => '0',
+    1   => '1',
+    2  => '2',
+    3   => '3',
+)));
+define('PAYMENT_TERM_TYPE', serialize(array(
+    0 => '0',
+    1   => '1',
+    2  => '2',
+    3   => '3',
+)));
 
 function humanTiming ($time)
 {

@@ -64,7 +64,7 @@ class PackageController extends Controller
         $service = $service->get();
 
         $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
+            ->where('role','=',2)
             ->orderBy('created_at','DESC')
             ->paginate(30);
 
@@ -340,7 +340,7 @@ class PackageController extends Controller
         $package = $package->get();
 
         $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
+            ->where('role','=',2)
             ->orderBy('created_at','DESC')
             ->paginate(30);
         //dd($sale);

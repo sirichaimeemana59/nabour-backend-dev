@@ -29,4 +29,9 @@ class Quotation_transaction extends GeneralModel
         return $this->hasOne('App\BackendModel\User','id','sales_id')->orderBy('created_at','desc');
     }
 
+    public function latest_contract ()
+    {
+        return $this->hasOne('App\contract','quotation_id','quotation_code');
+    }
+
 }

@@ -77,6 +77,7 @@ class QuotationController extends Controller
             $lead = $lead->first();
             //dd($status);
 
+
             //dump($quotation1->toArray());
             return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status','lead'));
         }

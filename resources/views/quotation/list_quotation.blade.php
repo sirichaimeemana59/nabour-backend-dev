@@ -77,11 +77,15 @@
                                            <p>เลขที่ใบเสนอราคา :  {!!$row->quotation_code!!}</p>
                                             <p>Package : {!!$row->lastest_package->name!!}</p>
                                             <p>ราคาสุทธิ : {!! $row->product_price_with_vat !!}</p>
+                                            @if(!empty($row->latest_contract->contract_code))
+                                            <p>เอกสารสัญญา : {!! $row->latest_contract->contract_code !!}</p>
+                                            @endif
                                             <br>
                                             <div style="text-align: right;">
                                                 {{--@if($row->status !=1)--}}
                                                 {{--@if($row->remark == 0 AND $remark !=1)--}}
-                                                <a href="{!! url('service/contract/sign/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                {{--<a href="{!! url('service/contract/sign/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา" target="_blank">--}}
+                                                <a href="{!! url('service/contract/sign/form/'.$row->lead_id.'/'.$row->quotation_code) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                                     <i class="fa-check"></i>
                                                 </a>
                                                 {{--@endif--}}
@@ -90,7 +94,7 @@
                                                 <a href="{!! url('service/quotation/check_out/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-danger"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ยกเลิกใบเสนอราคา">
                                                    <i class="fa-close"></i>
                                                 </a>--}}
-                                                <a href="{!! url('service/quotation/print_quotation/'.$row->quotation_code) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา">
+                                                <a href="{!! url('service/quotation/print_quotation/'.$row->quotation_code) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                                                     <i class="fa-print"></i>
                                                 </a>
                                                     {{--@else--}}

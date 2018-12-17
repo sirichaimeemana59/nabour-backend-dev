@@ -1,4 +1,4 @@
-{{--@extends('print')--}}
+@extends('print')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +77,7 @@
 
 </head>
 <body>
-{{--@section('content')--}}
+@section('content')
     <span id="pageFooter"></span><header align="right" id="header"><img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         {{--@foreach ($users as $row)--}}
@@ -443,7 +443,7 @@
 </div>--}}
     {{--@endforeach--}}
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
-{{--@stop--}}
+@stop
 </body>
 </html>
 

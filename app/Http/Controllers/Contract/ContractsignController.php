@@ -26,6 +26,7 @@ use App\BackendModel\Quotation_transaction;
 use App\Products;
 use App\success;
 use App\Customer;
+use App\contract;
 
 class ContractsignController extends Controller
 {
@@ -43,15 +44,85 @@ class ContractsignController extends Controller
     }
 
 
-    public function create()
+    public function create($id = null, $quo_id = null)
     {
+        $search = new contract;
+        $search = $search->where('quotation_id', $quo_id);
+        $search = $search->first();
+
+        //dd($search);
+
+        if(!empty($search)){
+            $quotation1 = new Quotation_transaction;
+            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->first();
+
+            $lead = new Customer;
+            $lead = $lead->where('id', $id);
+            $lead = $lead->first();
+
+            $contract = new contract;
+            $contract = $contract->where('quotation_id', $quo_id);
+            $contract = $contract->first();
+
+
+//            $date=date("Y-m-d");
+//            $cut_date_now=explode("-",$date);
+//
+//            $singg = contract::whereYear('created_at', '=', $cut_date_now[0])
+//                ->whereMonth('created_at', '=', $cut_date_now[1])
+//                ->get();
+//            $sing=$singg->max('contract_code');
+
+
+            return view('contract.contract_update')->with(compact('quotation1','lead','quo_id','contract','search'));
+
+        }else{
+            $quotation1 = new Quotation_transaction;
+            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->first();
+
+            $lead = new Customer;
+            $lead = $lead->where('id', $id);
+            $lead = $lead->first();
+
+            $contract = new contract;
+
+
+            $date=date("Y-m-d");
+            $cut_date_now=explode("-",$date);
+
+            $singg = contract::whereYear('created_at', '=', $cut_date_now[0])
+                ->whereMonth('created_at', '=', $cut_date_now[1])
+                ->get();
+            $sing=$singg->max('contract_code');
+
+
+            return view('contract.contract_form')->with(compact('quotation1','lead','sing','quo_id','contract'));
+        }
+
 
     }
 
 
-    public function store(Request $request)
+    public function save()
     {
-        //
+        $contract = new contract;
+        $contract->contract_code        = Request::get('contract_code');
+        $contract->start_date           = Request::get('start_date');
+        $contract->end_date             = Request::get('end_date');
+        $contract->contract_type        = Request::get('contract_type');
+        $contract->grand_total_price    = Request::get('price');
+        $contract->sales_id             = Request::get('sales_id');
+        $contract->customer_id          = Request::get('customer_id');
+        $contract->payment_term_type    = Request::get('payment_term_type');
+        $contract->contract_status      = 0;
+        $contract->quotation_id         = Request::get('quotation_id');
+        $contract->person_name          = Request::get('person_name');
+        $contract->save();
+
+        //dump($contract->toArray());
+        return redirect('service/quotation/add/'.Request::get('customer_id'));
     }
 
 
@@ -67,9 +138,23 @@ class ContractsignController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+        $contract = new contract;
+        $contract->contract_code        = Request::get('contract_code');
+        $contract->start_date           = Request::get('start_date');
+        $contract->end_date             = Request::get('end_date');
+        $contract->contract_type        = Request::get('contract_type');
+        $contract->grand_total_price    = Request::get('price');
+        $contract->sales_id             = Request::get('sales_id');
+        $contract->customer_id          = Request::get('customer_id');
+        $contract->payment_term_type    = Request::get('payment_term_type');
+        $contract->contract_status      = 0;
+        $contract->quotation_id         = Request::get('quotation_id');
+        $contract->person_name          = Request::get('person_name');
+        $contract->save();
+
+        return redirect('service/quotation/add/'.Request::get('customer_id'));
     }
 
 

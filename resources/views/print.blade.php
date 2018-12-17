@@ -11,38 +11,34 @@
     <title>Nabour</title>
 
     <!-- Print Invoice & Receipt -->
-    @if(Auth::user()->property)
-    <link rel="stylesheet" href="{{url()}}/css/print/print-type{{Auth::user()->property->document_print_type}}.css?version={{time()}}">
-    @else
-    <link rel="stylesheet" href="{{url()}}/css/print/print-type0.css?version={{time()}}">
-    @endif
-    {{--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Arimo:400,700,400italic">--}}
-    <link rel="stylesheet" href="{{ url('/') }}/css/fonts/linecons/css/linecons.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/fonts/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-core.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-forms.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/xenon-components.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/custom.css?version={{time()}}">
-    <link rel="stylesheet" href="{{ url('/') }}/font/thaisans/font.css">
-    <link rel="stylesheet" href="{{ url('/') }}/css/fonts/elusive/css/elusive.css">
+
+    <link rel="stylesheet" href="{!! url('/') !!}/css/print/print-type0.css?version={!!time()!!}">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/fonts/linecons/css/linecons.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/bootstrap.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-core.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-forms.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/xenon-components.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/custom.css?version={!!time()!!}">
+    <link rel="stylesheet" href="{!! url('/') !!}/font/thaisans/font.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/css/fonts/elusive/css/elusive.css">
 
     <!-- favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url('/') }}/home-theme/img/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/android-icon-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="{{ url('/') }}/home-theme/img/favicon/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="{{ url('/') }}/home-theme/img/favicon/manifest.json">
-    <meta name="msapplication-TileImage" content="{{ url('/') }}/home-theme/img/favicon/mstile-144x144.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{!! url('/') !!}/home-theme/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/android-icon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="{!! url('/') !!}/home-theme/img/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="{!! url('/') !!}/home-theme/img/favicon/manifest.json">
+    <meta name="msapplication-TileImage" content="{!! url('/') !!}/home-theme/img/favicon/mstile-144x144.png">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,15 +48,8 @@
 </head>
 <body class="print-only-content">
         @yield('content')
-    <script src="{{ url('/') }}/js/jquery-1.11.1.min.js"></script>
+    <script src="{!! url('/') !!}/js/jquery-1.11.1.min.js"></script>
     <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-72495831-1', 'auto');
-        ga('send', 'pageview');
-
         $(window).load( function () {
             window.print();
             setTimeout(function(){window.close();}, 1);

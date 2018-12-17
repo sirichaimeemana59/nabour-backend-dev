@@ -79,6 +79,9 @@ Route::post('customer/Customer_form/check', 'Customer\CustomerController@check')
 
 //Contract sign no
 Route::get('service/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'Contract\ContractsignController@index');
+Route::get('service/contract/sign/form/{id?}/{quo_id?}', 'Contract\ContractsignController@create');
+Route::post('service/contract/sign/add', 'Contract\ContractsignController@save');
+Route::post('service/contract/sign/update', 'Contract\ContractsignController@update');
 //End Contract
 
 //---------------------------  Nabour officer Route --------------------------------------------//
