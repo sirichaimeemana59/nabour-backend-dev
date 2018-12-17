@@ -7,7 +7,7 @@
     ?>
     <div class="page-title">
         <div class="title-env">
-            <h1 class="title">ใบเสนอราคา</h1>
+            <h1 class="title">เอกสารสัญญา</h1>
         </div>
         <div class="breadcrumb-env">
 
@@ -17,7 +17,7 @@
                 </li>
                 <li>Service</li>
                 <li class="active">
-                    <strong>ใบเสนอราคา</strong>
+                    <strong>เอกสารสัญญา</strong>
                 </li>
             </ol>
         </div>
