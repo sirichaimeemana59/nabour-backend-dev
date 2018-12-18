@@ -76,7 +76,7 @@
                                         <div class="well">
                                            <p>เลขที่ใบเสนอราคา :  {!!$row->quotation_code!!}</p>
                                             <p>Package : {!!$row->lastest_package->name!!}</p>
-                                            <p>ราคาสุทธิ : {!! $row->product_price_with_vat !!}</p>
+                                            <p>ราคาสุทธิ : {!! number_format($row->product_price_with_vat,2) !!}</p>
                                             @if(!empty($row->latest_contract->contract_code))
                                             <p>เอกสารสัญญา : {!! $row->latest_contract->contract_code !!}</p>
                                             @endif

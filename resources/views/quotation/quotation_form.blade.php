@@ -380,7 +380,7 @@
                                                 <label class="col-sm-2 control-label">วันหมดอายุ </label>
                                                 <div class="col-sm-10">
                                                     {{--{!! Form::text('due_date',null,array('class'=>'form-control datepicker','data-format' => "yyyy/mm/dd",'size'=>25,'readonly','data-language'=>App::getLocale(),'style'=>'z-index:1 !important;')) !!}--}}
-                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy/mm/dd">
+                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy-mm-dd">
                                                 </div>
                                             </div>
                                         </div>

@@ -33,7 +33,7 @@ class ContractsignController extends Controller
 
     public function index($quotation_code = null , $lead_id = null)
     {
-        $quotation = new Quotation_transaction;
+        $quotation = new Quotation;
         $quotation = $quotation->where('lead_id',$lead_id);
         $quotation = $quotation->first();
 
@@ -53,7 +53,7 @@ class ContractsignController extends Controller
         //dd($search);
 
         if(!empty($search)){
-            $quotation1 = new Quotation_transaction;
+            $quotation1 = new Quotation;
             $quotation1 = $quotation1->where('lead_id', $id);
             $quotation1 = $quotation1->first();
 
@@ -78,7 +78,7 @@ class ContractsignController extends Controller
             return view('contract.contract_update')->with(compact('quotation1','lead','quo_id','contract','search'));
 
         }else{
-            $quotation1 = new Quotation_transaction;
+            $quotation1 = new Quotation;
             $quotation1 = $quotation1->where('lead_id', $id);
             $quotation1 = $quotation1->first();
 
@@ -140,7 +140,7 @@ class ContractsignController extends Controller
 
     public function update()
     {
-        $contract = new contract;
+        $contract = contract::find(Request::get('id'));
         $contract->contract_code        = Request::get('contract_code');
         $contract->start_date           = Request::get('start_date');
         $contract->end_date             = Request::get('end_date');
@@ -153,7 +153,7 @@ class ContractsignController extends Controller
         $contract->quotation_id         = Request::get('quotation_id');
         $contract->person_name          = Request::get('person_name');
         $contract->save();
-
+        //dump($contract->toArray());
         return redirect('service/quotation/add/'.Request::get('customer_id'));
     }
 

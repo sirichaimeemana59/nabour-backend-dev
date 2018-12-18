@@ -32,7 +32,7 @@ class QuotationController extends Controller
 
     public function index($id = null,$ip = null)
     {
-        $search = new Quotation_transaction;
+        $search = new Quotation;
         $search = $search->where('lead_id',$id);
         $search = $search->first();
 
@@ -53,22 +53,22 @@ class QuotationController extends Controller
             $lead = $lead->where('id', $id);
             $lead = $lead->first();
 
-            $quotation = new Quotation;
+            $quotation = new Quotation_transaction;
             $max_cus = $quotation->max('quotation_code');
 
             return view('quotation.quotation_form')->with(compact('service', 'package', 'lead', 'id', 'max_cus'));
         }else{
 
-            $quotation1 = new Quotation_transaction;
+            $quotation1 = new Quotation;
             $quotation1 = $quotation1->where('lead_id', $id);
             $quotation1 = $quotation1->get();
 
-            $remark = new Quotation_transaction;
+            $remark = new Quotation;
             $remark = $remark->where('lead_id', $id);
             $remark = $remark->where('remark', 1);
             $remark = $remark->count();
 
-            $status = new Quotation_transaction;
+            $status = new Quotation;
             $status = $status->where('lead_id', $id);
             $status = $status->first();
 
@@ -87,21 +87,7 @@ class QuotationController extends Controller
     public function create()
     {
 
-        foreach (Request::get('transaction') as $t) {
-            $trans = new Quotation;
-                $trans->package_id 			= $t['service'];
-                $trans->project_package		= empty($t['project'])?'0':$t['project'];
-                $trans->month_package   	= empty($t['price'])?'0':$t['price'];
-                $trans->unit_package 			= empty($t['unit_price'])?'0':$t['unit_price'];
-                $trans->total_package 		= empty($t['total'])?'0':$t['total'];
-                $trans->lead_id 		    = Request::get('lead_id');
-                $trans->quotation_code 		= Request::get('quotation_code');
-                $trans->save();
-            //dd($trans);
-            //dump($trans->toArray());
-        }
-
-        $quotation = new Quotation_transaction;
+        $quotation = new Quotation;
         $id_package = Request::get('id_package');
         $cut_id = explode("|",$id_package);
 
@@ -122,6 +108,26 @@ class QuotationController extends Controller
         $quotation->send_email_status      = 0;
         $quotation->save();
 
+        $search = Quotation::find(Request::get('quotation_code'));
+        //dd($search);
+
+        foreach (Request::get('transaction') as $t) {
+            $trans = new Quotation_transaction;
+            $trans->package_id 			= $t['service'];
+            $trans->project_package		= empty($t['project'])?'0':$t['project'];
+            $trans->month_package   	= empty($t['price'])?'0':$t['price'];
+            $trans->unit_package 			= empty($t['unit_price'])?'0':$t['unit_price'];
+            $trans->total_package 		= empty($t['total'])?'0':$t['total'];
+            $trans->lead_id 		    = Request::get('lead_id');
+            $trans->quotation_code 		= Request::get('quotation_code');
+            $trans->quotation_id 		= $search->quotation_id;
+
+            $trans->save();
+            //dd($trans);
+            //dump($trans->toArray());
+        }
+
+
         return redirect('service/quotation/add/'.Request::get('lead_id'));
 
 
@@ -140,11 +146,11 @@ class QuotationController extends Controller
 
     public function edit($id)
     {
-        $quotation = new Quotation_transaction;
+        $quotation = new Quotation;
         $quotation = $quotation->where('quotation_code', $id);
         $quotation = $quotation->first();
 
-        $quotation_service = new Quotation;
+        $quotation_service = new Quotation_transaction;
         $quotation_service = $quotation_service->where('quotation_code', $id);
         $quotation_service = $quotation_service->get();
 
@@ -168,7 +174,7 @@ class QuotationController extends Controller
         if( !empty(Request::get('_data'))) {
             foreach ( Request::get('_data') as $q) {
 
-                $quotation_service = Quotation::find($q['id']);
+                $quotation_service = Quotation_transaction::find($q['id']);
                 $quotation_service->lead_id             = $q['lead_id'];
                 $quotation_service->package_id          = $q['service'];
                 $quotation_service->project_package     = empty($q['project'])?'0':$q['project'];
@@ -178,7 +184,7 @@ class QuotationController extends Controller
                 $quotation_service->save();
                 //dump($quotation_service->toArray());
             }
-            $quotation = new Quotation_transaction;
+            $quotation = new Quotation;
             $quotation = $quotation->find(Request::get('quotation_code'));
 
             $quotation->product_id             = Request::get('package_id');
@@ -211,7 +217,7 @@ class QuotationController extends Controller
     }
     public function check($id = null , $lead_id = null)
     {
-        $quotation = Quotation_transaction::find($id);
+        $quotation = Quotation::find($id);
         $quotation->remark =1;
         $quotation->save();
         return redirect('/service/quotation/add/'.$lead_id);
@@ -219,7 +225,7 @@ class QuotationController extends Controller
 
     public function check_out($id = null , $lead_id = null)
     {
-        $quotation = Quotation_transaction::find($id);
+        $quotation = Quotation::find($id);
         $quotation->remark = 0;
         $quotation->save();
         return redirect('/service/quotation/add/'.$lead_id);
@@ -230,11 +236,11 @@ class QuotationController extends Controller
     {
         if(Request::isMethod('post')) {
 
-            $quotation = new Quotation_transaction;
+            $quotation = new Quotation;
             $quotation = $quotation->where('quotation_code', Request::get('id'));
             $quotation = $quotation->get();
 
-            $quotation_service = new Quotation;
+            $quotation_service = new Quotation_transaction;
             $quotation_service = $quotation_service->where('quotation_code', Request::get('id'));
             $quotation_service = $quotation_service->get();
 
@@ -244,19 +250,19 @@ class QuotationController extends Controller
 
     public function print($id){
 
-        $quotation = new Quotation_transaction;
+        $quotation = new Quotation;
         $quotation = $quotation->where('quotation_code', $id);
         $quotation = $quotation->first();
 
         $p = new Province;
         $provinces = $p->getProvince();
 
-        $quotation1 = new Quotation_transaction;
+        $quotation1 = new Quotation;
         $quotation1 = $quotation1->where('quotation_code', $id);
         $quotation1 = $quotation1->first();
 
         //dump($quotation1->toArray());
-        $quotation_service = new Quotation;
+        $quotation_service = new Quotation_transaction;
         $quotation_service = $quotation_service->where('quotation_code', $id);
         $quotation_service = $quotation_service->get();
 

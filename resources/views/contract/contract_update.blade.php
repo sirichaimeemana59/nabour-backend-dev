@@ -83,6 +83,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">เลขที่สัญญา</label>
                         <div class="col-sm-10">
+                            <input type="hidden" name="id" value="{!! $contract->id !!}">
                             <input class="form-control" name="contract_code" type="text" readonly value="{!! $contract->contract_code !!}">
                         </div>
                     </div>
@@ -111,7 +112,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่ทำสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy/mm/dd" name="start_date" type="text" required value="{!! $contract->start_date !!}" >
+                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required value="{!! $contract->start_date !!}" >
                         </div>
                     </div>
                     {{--<div class="form-group">
@@ -153,7 +154,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" required data-format="yyyy/mm/dd" name="end_date" type="text" value="{!! $contract->end_date !!}" >
+                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" value="{!! $contract->end_date !!}" >
                         </div>
                     </div>
                     {{--<div class="form-group">

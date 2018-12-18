@@ -40,6 +40,9 @@
 
         $(function() {
 
+            $('#month_package').keyup(function() {
+                updateTotal();
+            });
             $('#project_package').keyup(function() {
                 updateTotal();
             });
@@ -257,14 +260,14 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">จำนวนเดือน</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control tmonth" required name="month_package" id="month_package" type="text" readonly value="{!! $quotation->month_package !!}" >
+                                                        <input class="form-control tmonth" required name="month_package" id="month_package" type="text"  value="{!! $quotation->month_package !!}" onkeyup="JavaScript:return fnccheck_package();">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">จำนวนหน่วย</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control tunit" required name="unit_package" value="{!! $quotation->unit_price !!}" id="unit_package" type="text" readonly>
+                                                        <input class="form-control tunit" required name="unit_package" id="unit_package" value="{!! $quotation->unit_price !!}" id="unit_package" type="text" readonly>
                                                     </div>
                                                 </div>
                                                 <?php
@@ -325,7 +328,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Grand Total</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" value="{!! $quotation->product_price_with_vat !!}" name="grand_total" id="grand_total1" type="text" readonly>
+                                                    <input class="form-control" value="{!! number_format($quotation->product_price_with_vat,2) !!}" name="grand_total" id="grand_total1" type="text" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -350,7 +353,7 @@
                                                 <label class="col-sm-2 control-label">วันหมดอายุ </label>
                                                 <div class="col-sm-10">
                                                     {{--{!! Form::text('due_date',null,array('class'=>'form-control datepicker','data-format' => "yyyy/mm/dd",'size'=>25,'readonly','data-language'=>App::getLocale(),'style'=>'z-index:1 !important;')) !!}--}}
-                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy/mm/dd" value="{!! $quotation->invalid_date !!}">
+                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy-mm-dd" value="{!! $quotation->invalid_date !!}">
                                                 </div>
                                             </div>
                                         </div>

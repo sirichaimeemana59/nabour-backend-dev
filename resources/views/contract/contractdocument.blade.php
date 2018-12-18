@@ -44,7 +44,7 @@
 
         #pageFooter::after {
             /* counter-reset: page 2; */
-            content: counter(page) " / 6" ;
+            content: counter(page) " / 7" ;
             text-align: right;
             font-size:16px;
         }
@@ -87,7 +87,7 @@
             <div style="font-size=18px; font-weight: bold;" align="center">“เนเบอร์”</div>
         </div>
         <br>
-        <div align="right" style="font-size:16px;">สัญญาเลขที่  </div>
+        <div align="right" style="font-size:16px;">สัญญาเลขที่  {!! $quotation->latest_contract->contract_code !!}</div>
         <br>
 
 
@@ -116,7 +116,7 @@
         </div>
     </div>
     {{-- <div style="page-break-after:always;"></div>   --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ ..... &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
             <div class="numberdetail">
@@ -149,7 +149,7 @@
     </div>
     <footer align="center" style="font-size:12px;text-align:center;" id="footer"><span style="margin:0 0 50px 0;" class="a"> คุณ {!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10px;"> บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพ 10110</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="align:right;" class="a"> คุณจินตนา เลิศล้ำยิ่ง </span></footer>
     {{-- <div style="page-break-after:always;"></div> --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ ...... &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="subnode">
             <div>
@@ -192,7 +192,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ ..... &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"><br></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"><br></header>
     <div class="con">
         <div class="numberh">
             <div> 4.  &nbsp;&nbsp;&nbsp;<u>ข้อจำกัดความรับผิดชอบและการรับประกัน</u><br></div>
@@ -230,7 +230,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ ..... &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
             <div> 7.  &nbsp;&nbsp;&nbsp;<u>การส่งมอบ</u><br></div>
@@ -278,7 +278,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ ..... &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
             <div> 9.  &nbsp;&nbsp;&nbsp;<u>การบอกเลิก</u><br></div>
@@ -317,118 +317,122 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    {{--<span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {{$property_contract_data['contract_sign_no']}} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div align="center" style="font-weight: bold;font-size:16px;">เอกสารแนบท้ายสัญญา</div>
         <br><br>
         <table style="width:100%">
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ชื่อบริษัท</div></td>
-                <td align="left" style="font-size:16px;"><div>: {{$property['construction_by']}}</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!! $quotation->latest_lead->company_name !!}</div></td>
             </tr>
-            <tr>
+           {{-- <tr>
                 <td width="35%" style="font-size:16px;"><div>ชื่อโครงการ</div></td>
-                <td align="left" style="font-size:16px;"><div>: {{$property['property_name_th']}}</div></td>
+                <td align="left" style="font-size:16px;"><div>: .....</div></td>
             </tr>
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ประเภทโครงการ</div></td>
-                <td align="left" style="font-size:16px;"><div>: {{$property['property_name_th']}}</div></td>
+                <td align="left" style="font-size:16px;"><div>: .....</div></td>
             </tr>
             <tr>
                 <td width="35%" style="font-size:16px;"><div>จำนวนยูนิต</div></td>
-                <td align="left" style="font-size:16px;"><div>: {{$property['unit_size']}}  ยูนิต</div></td>
+                <td align="left" style="font-size:16px;"><div>: ....  ยูนิต</div></td>
+            </tr>--}}
+            <tr>
+                <td width="35%" style="font-size:16px;"><div>วันที่ทำสัญญา</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->latest_contract->start_date)!!}</div></td>
             </tr>
             <tr>
-                <td width="35%" style="font-size:16px;"><div>วันที่ขึ้นระบบ</div></td>
-                <td align="left" style="font-size:16px;"><div>: {{localDate($property_contract_data['info_delivery_date'])}}</div></td>
+                <td width="35%" style="font-size:16px;"><div>วันที่หมดัญญา</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->latest_contract->end_date)!!}</div></td>
             </tr>
             <tr>
-                <td width="35%" style="font-size:16px;"><div>วันที่ใช้งานจริง</div></td>--}}
+                {{--<td width="35%" style="font-size:16px;"><div>วันที่ใช้งานจริง</div></td>--}}
     <?php
-    /*                if(!empty($property_contract_data['info_used_date'])){
-                        $contract_length =$property_contract_data['contract_length']; //ระยะเวลาใช้งาน contract_length
-                        $free =$property_contract_data['free']; //แถมฟรี free
-                        $info_used_date =$property_contract_data['info_used_date'];  //วันที่เริ่มใช้งานจริง info_used_date
+//                 if(!empty($quotation->latest_contract->start_date)){
+//                        $contract_length =$property_contract_data['contract_length']; //ระยะเวลาใช้งาน contract_length
+//                        $free =0; //แถมฟรี free
+//                        $info_used_date =$property_contract_data['info_used_date'];  //วันที่เริ่มใช้งานจริง info_used_date
+//
+//                        $cut_date=explode("-", $info_used_date);
+//
+//                        if(!empty($free) && !empty($contract_length)){
+//                            $sum_month=$contract_length+$free;
+//                            if($sum_month==24){
+//                                $year=$cut_date[0]+2;
+//                                $end_date= $year."-".$cut_date[1]."-".$cut_date[2];
+//                            }else{
+//                                $sum_date_new=$contract_length+$free;
+//                                if($sum_date_new>=12){
+//                                    $year=$cut_date[0]+1;
+//                                    $del_month=abs($sum_month-12);//จำนวนเดือนเกิน 1 ปี
+//                                    $del_month_used=abs($cut_date[1]-1)+$del_month;//เดือนที่คงเหลือจากการใช้งานจริง + จำนวนเดือนเกิน 1 ปี
+//                                    //$month_new=abs($sum_date_new-12);
+//                                    if($del_month_used>12){
+//                                        $year=$cut_date[0]+2;
+//                                        $del_month_used=$del_month_used-12;
+//                                    }
+//                                    $end_date= $year."-".$del_month_used."-".$cut_date[2];
+//                                }else{
+//                                    $sum_month_new=abs($cut_date[1]-12);//เก็บเดือนคงเหลือในปีนั้น
+//                                    $new_month=$sum_month_new+$sum_month;//รวมเดือนคงเหลือกับเดือนที่จะใช้งาน
+//
+//                                    if($sum_date_new>$sum_month_new){
+//                                        $year=$cut_date[0]+1;
+//                                        $del_new_month=abs($sum_month_new-$sum_month)-1;//เก็บเดือนคงเหลือในปีหน้า
+//                                        $end_date= $year."-".$del_new_month."-".$cut_date[2];
+//                                    }else{
+//                                        $del_new_month=$cut_date[1]+$sum_month;
+//                                        $end_date= $cut_date[0]."-".$del_new_month."-".$cut_date[2];
+//                                    }
+//                                }
+//                            }
+//                        }elseif(empty($free) && !empty($contract_length)){
+//                            if($contract_length==12){
+//                                $year=$cut_date[0]+1;
+//                                $end_date= $year."-".$cut_date[1]."-".$cut_date[2];
+//                            }else{
+//                                $sum_month_new=$contract_length+($cut_date[1]-12);
+//                                if($sum_month_new>($cut_date[1]-12)){
+//                                    $year=$cut_date[0]+1;
+//                                    $new_month=$sum_month_new-1;
+//                                    $end_date= $year."-".$new_month."-".$cut_date[2];
+//                                }
+//                            }
+//                        }
+//                        $cut_str_date=explode("-",$end_date);
+//                        $count=strlen($cut_str_date[1]);
+//                        if($count<2){
+//                            $new_month_str="0".$cut_str_date[1];
+//                            $end_date=$cut_str_date[0]."-".$new_month_str."-".$cut_str_date[2];
+//                        }
+//                        if(empty($end_date)){
+//                            $end="2018-09-12";
+//                        }else{
+//                            $end=$end_date;
+//                        }
+//                    }else{
+//                        $date3=date("0000-01-01");
+//                        $cut_date3=explode(" ",$date3);
+//                        $cut_new_date3=explode("-",$cut_date3[0]);
+//                        $end=$cut_new_date3[0]."-".$cut_new_date3[1]."-".$cut_new_date3[2];
+//                    }
 
-                        $cut_date=explode("-", $info_used_date);
-
-                        if(!empty($free) && !empty($contract_length)){
-                            $sum_month=$contract_length+$free;
-                            if($sum_month==24){
-                                $year=$cut_date[0]+2;
-                                $end_date= $year."-".$cut_date[1]."-".$cut_date[2];
-                            }else{
-                                $sum_date_new=$contract_length+$free;
-                                if($sum_date_new>=12){
-                                    $year=$cut_date[0]+1;
-                                    $del_month=abs($sum_month-12);//จำนวนเดือนเกิน 1 ปี
-                                    $del_month_used=abs($cut_date[1]-1)+$del_month;//เดือนที่คงเหลือจากการใช้งานจริง + จำนวนเดือนเกิน 1 ปี
-                                    //$month_new=abs($sum_date_new-12);
-                                    if($del_month_used>12){
-                                        $year=$cut_date[0]+2;
-                                        $del_month_used=$del_month_used-12;
-                                    }
-                                    $end_date= $year."-".$del_month_used."-".$cut_date[2];
-                                }else{
-                                    $sum_month_new=abs($cut_date[1]-12);//เก็บเดือนคงเหลือในปีนั้น
-                                    $new_month=$sum_month_new+$sum_month;//รวมเดือนคงเหลือกับเดือนที่จะใช้งาน
-
-                                    if($sum_date_new>$sum_month_new){
-                                        $year=$cut_date[0]+1;
-                                        $del_new_month=abs($sum_month_new-$sum_month)-1;//เก็บเดือนคงเหลือในปีหน้า
-                                        $end_date= $year."-".$del_new_month."-".$cut_date[2];
-                                    }else{
-                                        $del_new_month=$cut_date[1]+$sum_month;
-                                        $end_date= $cut_date[0]."-".$del_new_month."-".$cut_date[2];
-                                    }
-                                }
-                            }
-                        }elseif(empty($free) && !empty($contract_length)){
-                            if($contract_length==12){
-                                $year=$cut_date[0]+1;
-                                $end_date= $year."-".$cut_date[1]."-".$cut_date[2];
-                            }else{
-                                $sum_month_new=$contract_length+($cut_date[1]-12);
-                                if($sum_month_new>($cut_date[1]-12)){
-                                    $year=$cut_date[0]+1;
-                                    $new_month=$sum_month_new-1;
-                                    $end_date= $year."-".$new_month."-".$cut_date[2];
-                                }
-                            }
-                        }
-                        $cut_str_date=explode("-",$end_date);
-                        $count=strlen($cut_str_date[1]);
-                        if($count<2){
-                            $new_month_str="0".$cut_str_date[1];
-                            $end_date=$cut_str_date[0]."-".$new_month_str."-".$cut_str_date[2];
-                        }
-                        if(empty($end_date)){
-                            $end="2018-09-12";
-                        }else{
-                            $end=$end_date;
-                        }
-                    }else{
-                        $date3=date("0000-01-01");
-                        $cut_date3=explode(" ",$date3);
-                        $cut_new_date3=explode("-",$cut_date3[0]);
-                        $end=$cut_new_date3[0]."-".$cut_new_date3[1]."-".$cut_new_date3[2];
-                    }
-
-                    */?>
+                    ?>
     {{--<td align="left" style="font-size:16px;"><div>: {{localDate($property_contract_data['info_used_date'])}} ถึง {{localDate($end)}}</div></td>
 </tr>--}}
     <?php /*$package=$property_contract_data['package']==1?"Lite Package (รวมทุก Feature ยกเว้นด้าน การเงิน)ราคา 1,250 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่รวมภาษีมูลค่าเพิ่ม 7%":"Full Package (มีทุก Feature รวมด้านการเงิน) โครงการที่มีจำนวนไม่เกิน 200 ยูนิต ราคา 1,800 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่ร่วมภาษีมูลค่าเพิ่ม 7%"*/?>
-    {{--<tr>
+    <tr>
         <td width="35%" style="font-size:16px;vertical-align: top;"><div>ค่าบริการรายเดือน</div></td>
-        <td align="left" style="font-size:16px;"><div>: {{$package}}</div> </td>
+        <td align="left" style="font-size:16px;"><div>: {!!$quotation->lastest_package->name!!} <br> {!!$quotation->lastest_package->description!!}</div> </td>
     </tr>
 </table><br><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
 <div></div>
-<div align="center" style="font-size:16px;">({{$property_contract_data['person_name']}})</div>
+<div align="center" style="font-size:16px;">({!!$quotation->latest_contract->person_name!!})</div>
 <br>
 <div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>
-<div align="center" style="font-size:16px;">{{$property['construction_by']}}</div><br><br>
+<div align="center" style="font-size:16px;">{!! $quotation->latest_lead->company_name !!}</div><br><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
 <div></div>
 <div align="center" style="font-size:16px;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</div>
@@ -437,10 +441,10 @@
 <div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
 <div></div>
-<div align="center" style="font-size:16px;">({{$property_contract_data['person_name']}})</div>
+<div align="center" style="font-size:16px;">({!!$quotation->latest_contract->person_name!!})</div>
 <br>
 <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
-</div>--}}
+</div>
     {{--@endforeach--}}
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
 @stop
