@@ -7,26 +7,13 @@ use Auth;
 use Redirect;
 
 use App\Http\Controllers\Controller;
-use App\PropertyUnit;
 use App\Province;
-use App\PropertyFeature;
-use App\BillWater;
-use App\BillElectric;
 use App\PropertyContract;
-use App\UserPropertyFeature;
-use App\ManagementGroup;
-use App\SalePropertyDemo;
-use App\Property;
-use App\Transaction;
 use App\service_quotation;
-use App\LeadTable;
-use App\BackendModel\User;
-use App\BackendModel\Quotation;
 use App\BackendModel\Quotation_transaction;
-use App\Products;
-use App\success;
 use App\Customer;
 use App\contract;
+use App\BackendModel\user as BackendUser;
 
 class ContractsignController extends Controller
 {
@@ -161,5 +148,31 @@ class ContractsignController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function contractList () {
+        $contracts = contract::orderBy('contract_code','desc');
+
+        if( Request::get('c_no') ) {
+            $contracts = $contracts->where('contract_code','like','%'.Request::get('c_no').'%');
+        }
+
+        if( Request::get('c_id') ) {
+            $contracts = $contracts->where('customer_id',Request::get('c_id'));
+        }
+
+        if( Request::get('sale_id') ) {
+            $contracts = $contracts->where('sales_id',Request::get('sale_id'));
+        }
+
+        $contracts = $contracts->paginate(1);
+        if( Request::ajax() ) {
+            return view('contract.list-element')->with(compact('contracts'));
+
+        } else {
+            $sales      = BackendUser::whereIn('role',[1,2])->pluck('name','id');
+            $customers = Customer::where('role',1)->pluck('company_name','id');
+            return view('contract.list')->with(compact('contracts','customers','sales'));
+        }
     }
 }

@@ -7,7 +7,7 @@
     ?>
     <div class="page-title">
         <div class="title-env">
-            <h1 class="title">ใบเสนอราคา</h1>
+            <h1 class="title">ใบสัญญา</h1>
         </div>
         <div class="breadcrumb-env">
 
@@ -15,8 +15,9 @@
                 <li>
                     <a href=""><i class="fa-home"></i>{{ trans('messages.page_home') }}</a>
                 </li>
+                <li>Service</li>
                 <li class="active">
-                    <strong>ใบเสนอราคา</strong>
+                    <strong>รายการใบสัญญา</strong>
                 </li>
             </ol>
         </div>
@@ -32,12 +33,13 @@
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
                         <div class="row">
                             <div class="col-sm-3 block-input">
-                                <input class="form-control" size="25" placeholder="เลขที่ใบเสนอราคา" name="q_no">
+                                <input class="form-control" size="25" placeholder="เลขที่สัญญา" name="c_no">
                             </div>
 
+
                             <div class="col-sm-3">
-                                <select name="leads_id" id="leads_id" class="form-control" required>
-                                    <option value="">รายชื่อ Leads</option>
+                                <select name="c_id" id="c_id" class="form-control" required>
+                                    <option value="">รายชื่อลูกค้า</option>
                                     @foreach($customers as $key => $row)
                                         <option value="{!! $key !!}">{!! $row !!}</option>
                                     @endforeach
@@ -57,7 +59,9 @@
                                 <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
                                 <button type="button" class="btn btn-secondary" id="submit-search">{!! trans('messages.search') !!}</button>
                             </div>
+
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -68,14 +72,16 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">รายการใบเสนอราคา</h3>
+                    <h3 class="panel-title">รายการใบสัญญา</h3>
                 </div>
                 <div class="panel-body member-list-content">
                     <div class="tab-pane active" id="member-list">
                         <div id="member-list-content">
-                            <div id="panel-q-list">
-                                @include('quotation.list-element')
+                            {{--content--}}
+                            <div id="panel-c-list">
+                                @include('contract.list-element')
                             </div>
+                            {{--endcontent--}}
                         </div>
                     </div>
                 </div>
@@ -95,7 +101,7 @@
     <link rel="stylesheet" href="{!!url('/js/select2/select2-bootstrap.css')!!}">
     <script type="text/javascript">
         $(function () {
-            $("#sale_id,#leads_id").select2({
+            $("#sale_id,#c_id").select2({
                 placeholder: "{{ trans('messages.unit_number') }}",
                 allowClear: true,
                 dropdownAutoWidth: true
@@ -130,15 +136,15 @@
 
             function searchPage (page) {
                 var data = $('form').serialize()+'&page='+page;
-                $('#panel-q-list').css('opacity','0.6');
+                $('#panel-c-list').css('opacity','0.6');
                 $.ajax({
-                    url     : $('#root-url').val()+"/quotation/list",
+                    url     : $('#root-url').val()+"/contract/list",
                     data    : data,
                     dataType: "html",
                     method: 'post',
                     success: function (h) {
-                        $('#panel-q-list').html(h);
-                        $('#panel-q-list').css('opacity','1');
+                        $('#panel-c-list').html(h);
+                        $('#panel-c-list').css('opacity','1');
                         //$('[data-toggle="tooltip"]').tooltip();
                         //cbr_replace();
                     }

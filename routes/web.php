@@ -68,6 +68,7 @@ Route::get('service/quotation/success/{id?}', 'Quotation\QuotationController@suc
 Route::get('service/quotation/cancel/{id?}', 'Quotation\QuotationController@cancel');
 
 Route::any('quotation/list', 'Quotation\QuotationController@quotationList');
+Route::any('contract/list', 'Contract\ContractsignController@contractList');
 //End Quotation
 
 //Customer

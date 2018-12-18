@@ -7,25 +7,14 @@ use Auth;
 use Redirect;
 
 use App\Http\Controllers\Controller;
-use App\PropertyUnit;
 use App\Province;
-use App\PropertyFeature;
-use App\BillWater;
-use App\BillElectric;
-use App\PropertyContract;
-use App\UserPropertyFeature;
-use App\ManagementGroup;
-use App\SalePropertyDemo;
-use App\Property;
-use App\Transaction;
 use App\service_quotation;
-use App\LeadTable;
-use App\BackendModel\User;
 use App\BackendModel\Quotation;
 use App\BackendModel\Quotation_transaction;
 use App\Products;
 use App\success;
 use App\Customer;
+use App\BackendModel\User as BackendUser;
 
 class QuotationController extends Controller
 {
@@ -308,7 +297,28 @@ class QuotationController extends Controller
 
     public function quotationList ()
     {
-        $quotation = Quotation::paginate(20);
-        return view('quotation.list')->with(compact('quotation'));
+        $quotations = Quotation::orderBy('quotation_code','desc');
+
+        if( Request::get('q_no') ) {
+            $quotations = $quotations->where('quotation_code','like','%'.Request::get('q_no').'%');
+        }
+
+        if( Request::get('leads_id') ) {
+            $quotations = $quotations->where('leads_id',Request::get('leads_id'));
+        }
+
+        if( Request::get('sale_id') ) {
+            $quotations = $quotations->where('sale_id',Request::get('sale_id'));
+        }
+
+        $quotations = $quotations->paginate(1);
+
+        if( Request::ajax() ) {
+            return view('quotation.list-element')->with(compact('quotations'));
+        } else {
+            $customers = Customer::where('role',1)->pluck('company_name','id');
+            $sales      = BackendUser::whereIn('role',[1,2])->pluck('name','id');
+            return view('quotation.list')->with(compact('quotations','customers','sales'));
+        }
     }
 }

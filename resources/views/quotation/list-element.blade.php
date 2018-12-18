@@ -1,23 +1,91 @@
-<table class="table">
-    <thead>
-    <tr>
-        <th>เลขที่ใบเสนอราคา</th>
-        <th>Package</th>
-        <th>ราคาสุทธิ</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($quotation as $row)
-    <tr>
-        <td>{!! $row->quotation_code !!}</td>
-        <td>{!! $row->lastest_package->name !!}</td>
-        <td>{!! $row->product_price_with_vat !!}</td>
-        <td></td>
-    </tr>
-    @endforeach
-    </tbody>
-</table>
+@if( $quotations->count() )
+    <?php
+    $from   = (($quotations->currentPage()-1)*$quotations->perPage())+1;
+    $to     = (($quotations->currentPage()-1)*$quotations->perPage())+$quotations->perPage();
+    $to     = ($to > $quotations->total()) ? $quotations->total() : $to;
+    $allpage 	= $quotations->lastPage();
+    ?>
+
+    <div class="row">
+        <div class="col-md-4" style="margin-bottom: 10px;">
+            <div class="dataTables_info" role="status" aria-live="polite" style="padding:0 0 10px 0;">
+                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$quotations->total()]) !!}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="text-right" >
+                <div class="invoice-options hidden-print option-top-md">
+                    @if($allpage > 1)
+                        @if($quotations->currentPage() > 1)
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $quotations->currentPage()-1 }}">{{ trans('messages.prev') }}</a>
+                        @endif
+                        @if($quotations->lastPage() > 1)
+                            <?php echo Form::selectRange('page', 1, $quotations->lastPage(),$quotations->currentPage(),['class'=>'form-control paginate-select']); ?>
+                        @endif
+                        @if($quotations->hasMorePages())
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $quotations->currentPage()+1 }}">{{ trans('messages.next') }}</a>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>เลขที่ใบเสนอราคา</th>
+            {{--<th>Leads</th>--}}
+            <th>Sales</th>
+            <th>ราคาสุทธิ</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($quotations as $row)
+        <tr>
+            <td>{!! $row->quotation_code !!}</td>
+            {{--<td></td>--}}
+            <td>{!! $row->sales->name !!}</td>
+            <td>{!! $row->product_price_with_vat !!}</td>
+            <td> Action </td>
+        </tr>
+        @endforeach
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-4" style="margin-bottom: 10px;">
+            <div class="dataTables_info" role="status" aria-live="polite" style="padding:0 0 10px 0;">
+                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$quotations->total()]) !!}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="text-right" >
+                <div class="invoice-options hidden-print option-top-md">
+                    @if($allpage > 1)
+                        @if($quotations->currentPage() > 1)
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $quotations->currentPage()-1 }}">{{ trans('messages.prev') }}</a>
+                        @endif
+                        @if($quotations->lastPage() > 1)
+                            <?php echo Form::selectRange('page', 1, $quotations->lastPage(),$quotations->currentPage(),['class'=>'form-control paginate-select']); ?>
+                        @endif
+                        @if($quotations->hasMorePages())
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $quotations->currentPage()+1 }}">{{ trans('messages.next') }}</a>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+@else
+<div class="row">
+    <div class="col-sm-12 text-center">
+        ไม่พบข้อมูล
+    </div>
+</div>
+@endif
 <?php
 /*
          <div class="col-sm-4">
