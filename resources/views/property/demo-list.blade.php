@@ -31,39 +31,9 @@
 					<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
 						<div class="row">
 							<div class="col-sm-3 block-input">
-								<input class="form-control" size="25" placeholder="รหัสลูกค้า" name="customer">
-							</div>
-							<div class="col-sm-3 block-input">
 								<input class="form-control" size="25" placeholder="{!! trans('messages.name') !!}" name="name">
 							</div>
-							
-							<div class="col-sm-3">
-								{!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
-							</div>
-
-							<div class="col-sm-3">
-								{!! Form::select('sign_status', [0 => 'สถานะสัญญา', 1 => 'ยังไม่หมดสัญญา', 2 => 'หมดสัญญา'],null,['id'=>'property-province','class'=>'form-control']) !!}
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-sm-3">
-								<select class="form-control" name="package">
-									<option value="">Package</option>
-									@foreach($package as $pac)
-										<option value="{!!$pac->id!!}">{!!$pac->name!!}</option>
-									@endforeach
-								</select>
-							</div>
-							<div class="col-sm-3">
-								<select name="developer_group_id" id="" class="form-control">
-									<option value="">กลุ่มผู้บริหารนิติบุคคล</option>
-									@foreach($pmg as $key =>$row)
-										<option value="{!! $key !!}">{!! $row !!}</option>
-									@endforeach
-								</select>
-							</div>
-							<div class="col-sm-6 text-right ">
+							<div class="col-sm-9 text-right ">
 								<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
 								<button type="button" class="btn btn-secondary @if(isset($demo)) d-search-property @else p-search-property @endif">{!! trans('messages.search') !!}</button>
 							</div>
@@ -336,16 +306,16 @@
         $(function () {
             $('.panel-body').on('click','.p-paginate-link', function (e){
                 e.preventDefault();
-                propertyPage($(this).attr('data-page'));
+                propertyDemoPage($(this).attr('data-page'));
             })
 
             $('.panel-body').on('change','.p-paginate-select', function (e){
                 e.preventDefault();
-                propertyPage($(this).val());
+                propertyDemoPage($(this).val());
             })
 
             $('.p-search-property').on('click',function () {
-                propertyPage (1);
+                propertyDemoPage (1);
             });
 
             $('.panel-body').on('click','.d-paginate-link', function (e){
@@ -658,19 +628,6 @@
             })
         });
 
-        function propertyPage (page) {
-            var data = $('#search-form').serialize()+'&page='+page;
-            $('#landing-property-list').css('opacity','0.6');
-            $.ajax({
-                url     : $('#root-url').val()+"/customer/property/list",
-                data    : data,
-                dataType: "html",
-                method: 'post',
-                success: function (h) {
-                    $('#landing-property-list').css('opacity','1').html(h);
-                }
-            })
-        }
 
         function propertyDemoPage (page) {
             var data = $('#search-form').serialize()+'&page='+page;

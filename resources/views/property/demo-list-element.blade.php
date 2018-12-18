@@ -78,12 +78,12 @@
 							<i class="fa-edit"></i> แก้ไข
 						</a>
 						</li>
-						<li><a href="#" class="edit-property-feature" data-status="1" data-pid="{!! $row->id !!}">
+						<?php /* <li><a href="#" class="edit-property-feature" data-status="1" data-pid="{!! $row->id !!}">
 							<i class="fa-cogs"></i> แก้ไขเมนูของนิติบุคคล
 						</a></li>
 						<li><a href="#" class="property-initial-meter-data" data-status="1" data-pid="{!! $row->id !!}">
 							<i class="fa-list-alt"></i> ข้อมูลมิเตอร์ตั้งต้น
-						</a></li>
+						</a></li> */ ?>
 						@if($row->active_status)
 						<li><a href="#" class="active-status" data-status="0" data-pid="{!! $row->id !!}">
 							<i class="fa-lock"></i> {!! trans('messages.Member.account_ban') !!}

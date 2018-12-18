@@ -66,6 +66,8 @@ Route::get('service/quotation/check_out/quotation/{id?}/{lead_id?}', 'Quotation\
 Route::get('service/quotation/print_quotation/{id?}', 'Quotation\QuotationController@print');
 Route::get('service/quotation/success/{id?}', 'Quotation\QuotationController@success');
 Route::get('service/quotation/cancel/{id?}', 'Quotation\QuotationController@cancel');
+
+Route::any('quotation/list', 'Quotation\QuotationController@quotationList');
 //End Quotation
 
 //Customer

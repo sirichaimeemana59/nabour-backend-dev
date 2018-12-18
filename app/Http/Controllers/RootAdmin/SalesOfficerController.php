@@ -34,7 +34,7 @@ class SalesOfficerController extends Controller {
     public function salesList() {
         $officer = [];
         $officers = BackendUser::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
+            ->where('role','=',2)
             ->orderBy('created_at','DESC')
             ->paginate(30);
 
@@ -68,7 +68,7 @@ class SalesOfficerController extends Controller {
                 'email' => $email,
                 'phone' => $phone,
                 'password' => $password,
-                'role' => 4
+                'role' => 2
             ];
 
             $officer_id = $this->createUserSales($user);
@@ -92,7 +92,7 @@ class SalesOfficerController extends Controller {
                 'email' => $user['email'],
                 'phone' => $user['phone'],
                 'password' => $user['password'],
-                'role' => 4
+                'role' => 2
             ]);
             return $user_create->id;
 

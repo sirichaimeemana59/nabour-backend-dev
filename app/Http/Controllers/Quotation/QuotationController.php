@@ -306,4 +306,9 @@ class QuotationController extends Controller
 
     }
 
+    public function quotationList ()
+    {
+        $quotation = Quotation::paginate(20);
+        return view('quotation.list')->with(compact('quotation'));
+    }
 }
