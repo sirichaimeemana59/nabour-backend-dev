@@ -38,8 +38,8 @@
                             <div class="col-sm-3">
                                 <select name="leads_id" id="leads_id" class="form-control" required>
                                     <option value="">รายชื่อ Leads</option>
-                                    @foreach($customers as $key => $row)
-                                        <option value="{!! $key !!}">{!! $row !!}</option>
+                                    @foreach($customers as $row)
+                                        <option value="{!! $row['id'] !!}">{!! $row['firstname']." ".$row['lastname'] !!}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -304,11 +304,11 @@ class QuotationController extends Controller
         }
 
         if( Request::get('leads_id') ) {
-            $quotations = $quotations->where('leads_id',Request::get('leads_id'));
+            $quotations = $quotations->where('lead_id',Request::get('leads_id'));
         }
 
         if( Request::get('sale_id') ) {
-            $quotations = $quotations->where('sale_id',Request::get('sale_id'));
+            $quotations = $quotations->where('sales_id',Request::get('sale_id'));
         }
 
         $quotations = $quotations->paginate(1);
@@ -316,7 +316,7 @@ class QuotationController extends Controller
         if( Request::ajax() ) {
             return view('quotation.list-element')->with(compact('quotations'));
         } else {
-            $customers = Customer::where('role',1)->pluck('company_name','id');
+            $customers = Customer::where('role',1)->select('firstname','lastname','id')->get();
             $sales      = BackendUser::whereIn('role',[1,2])->pluck('name','id');
             return view('quotation.list')->with(compact('quotations','customers','sales'));
         }

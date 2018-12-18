@@ -35,7 +35,7 @@
         <thead>
         <tr>
             <th>เลขที่ใบเสนอราคา</th>
-            {{--<th>Leads</th>--}}
+            <th>Leads</th>
             <th>Sales</th>
             <th>ราคาสุทธิ</th>
             <th>Action</th>
@@ -45,8 +45,8 @@
         @foreach($quotations as $row)
         <tr>
             <td>{!! $row->quotation_code !!}</td>
-            {{--<td></td>--}}
-            <td>{!! $row->sales->name !!}</td>
+            <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
+            <td>{!! $row->latest_sale->name !!}</td>
             <td>{!! $row->product_price_with_vat !!}</td>
             <td> Action </td>
         </tr>
