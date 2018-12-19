@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\RootAdmin;
 
 use Request;
 use Auth;
@@ -18,14 +18,17 @@ use App\ManagementGroup;
 use App\SalePropertyDemo;
 use App\Property;
 use App\Transaction;
-use App\service_quotation;
-use App\LeadTable;
+use App\BackendModel\service_quotation;
+use App\BackendModel\LeadTable;
 use App\BackendModel\User;
 use App\BackendModel\Quotation;
 use App\BackendModel\Quotation_transaction;
-use App\Products;
+use App\BackendModel\Products;
 use App\success;
-use App\Customer;
+use App\BackendModel\Customer;
+
+use Validator;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -60,12 +63,19 @@ class CustomerController extends Controller
         $sale = $sale->where('role','=',2);
         $sale = $sale->get();
 
+
+        $p_rows = new Customer;
+        $p_rows = $p_rows->where('role','=',0);
+        $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
+
+        //dd($p_rows);
+
         //dump($customer->toArray());
 
         if(!Request::ajax()) {
-            return view('customer.list_customer')->with(compact('customer','provinces','sale'));
+            return view('customer.list_customer')->with(compact('customer','provinces','sale','p_rows'));
         }else{
-            return view('customer.list_customer_element')->with(compact('customer','provinces','sale'));
+            return view('customer.list_customer_element')->with(compact('customer','provinces','sale','p_rows'));
         }
 
     }
@@ -87,6 +97,7 @@ class CustomerController extends Controller
             $customer->active_status    = 'f';
             $customer->status           = 0;
             $customer->sale_id          = Request::get('sale_id');
+            $customer->role             =0;
             $customer->save();
             //dump($customer->toArray());
         }

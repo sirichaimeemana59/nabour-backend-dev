@@ -5,34 +5,25 @@ namespace App\Http\Controllers\RootAdmin;
 use Request;
 use Auth;
 use Redirect;
-use App\package;
-use App\quotation;
 use App\Http\Controllers\Controller;
-use App\PropertyUnit;
-use App\User;
+use App\BackendModel\User;
 use App\Province;
-use App\PropertyFeature;
-use App\BillWater;
-use App\BillElectric;
-use App\PropertyContract;
-use App\UserPropertyFeature;
-use App\ManagementGroup;
-use App\SalePropertyDemo;
-use App\Property;
-use App\Transaction;
-use App\service_quotation;
-
+use App\BackendModel\LeadTable;
+use App\BackendModel\Products;
 class PackageController extends Controller
 {
 
     public function index()
     {
-        $package = new package;
+        $package = new Products;
         $package = $package->where('status','1');
         $package = $package->get();
 
+        $max_cus = new Products;
+        $max_cus = $max_cus->max('product_code');
+
         //dd($package);
-        return view('property.package',['package'=>$package]);
+        return view('product.package')->with(compact('package','max_cus'));
     }
 
     public function index_list()
@@ -73,7 +64,7 @@ class PackageController extends Controller
         $service = $service->get();
 
         $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
+            ->where('role','=',2)
             ->orderBy('created_at','DESC')
             ->paginate(30);
 
@@ -87,76 +78,194 @@ class PackageController extends Controller
 
     public function index_service()
     {
-        $package = new package;
+        $package = new Products;
         $package = $package->where('status','2');
         $package = $package->get();
 
+        $max_cus = new Products;
+        $max_cus = $max_cus->max('product_code');
 
         //dd($package);
-        return view('property.service',['package'=>$package]);
+        //dump($package->toArray());
+        return view('product.service')->with(compact('package','max_cus'));
     }
 
     public function add()
     {
-        $package = new package;
-        //$package->fill(Request::all());
-        $package->name      = Request::get('name');
-        $package->detail    = Request::get('detail');
-        $package->price     = Request::get('price');
-        $package->status    = Request::get('status');
-        $package->vat       = Request::get('vat1');
-        $package->save();
+        if(Request::get('vat1') ==1){
+            $product = new Products;
+            //$package->fill(Request::all());
+            $product->name              = Request::get('name');
+            $product->description       = Request::get('description');
+            $product->price             = Request::get('price');
+            $product->price_with_vat    = Request::get('vat_total');
+            $product->status            = Request::get('status');
+            $product->vat               = Request::get('vat_value');
+            $product->is_delete         = Request::get('is_delete');
+            $product->product_code      = Request::get('product_code');
+            //$product->created_at       ='2018-11-30 05:35:35';
+            //$product->updated_at       ='2018-11-30 05:35:35';
+            $product->save();
+        }else{
+            $product = new Products;
+            //$package->fill(Request::all());
+            $product->name              = Request::get('name');
+            $product->description       = Request::get('description');
+            $product->price             = Request::get('price');
+            $product->status            = Request::get('status');
+            $product->is_delete         = Request::get('is_delete');
+            $product->product_code      = Request::get('product_code');
+            //$product->created_at       ='2018-11-30 05:35:35';
+            //$product->updated_at       ='2018-11-30 05:35:35';
+            $product->save();
+        }
+
         //dd(Request::all());
-        //dump($package->toArray());
-        return redirect('root/admin/package/add');
+        //dump($product->toArray());
+        return redirect('service/package/add');
     }
 
     public function update()
     {
-        $id = Request::input('id');
-        $package = package::find($id);
-        $package->name      = Request::get('name');
-        $package->detail    = Request::get('detail');
-        $package->price     = Request::get('price');
-        $package->status    = Request::get('status');
-        $package->vat       = empty(Request::get('vat'))?'0':Request::get('vat');
-        $package->save();
+
+        if(Request::get('vat') != null){
+            $id = Request::input('id');
+            $product = Products::find($id);
+            $product->name              = Request::get('name');
+            $product->description       = Request::get('description');
+            $product->price             = Request::get('price');
+            $product->price_with_vat    = Request::get('vat_total');
+            $product->status            = Request::get('status');
+            $product->vat               = Request::get('vat_value');
+            $product->is_delete         = Request::get('is_delete');
+            $product->save();
+            //dump($product->toArray());
+        }else{
+            $id = Request::input('id');
+            $product = Products::find($id);
+            $product->name                  = Request::get('name');
+            $product->description           = Request::get('description');
+            if(Request::get('vat') == null AND Request::get('price_vat') != Request::get('price')){
+                $product->price             = Request::get('price_vat');
+                $product->price_with_vat             = "0";
+                $product->vat               = "0";
+            }else{
+                $product->price             = Request::get('price');
+            }
+
+            $product->status                = Request::get('status');
+            $product->is_delete             = Request::get('is_delete');
+            $product->save();
+            //dump($product->toArray());
+        }
+        //dump($product->toArray());
         //dd(Request::all());
-        //dump($package->toArray());
-        return redirect('root/admin/package/add');
+        //dump(Request::get('vat'));
+        return redirect('service/package/add');
     }
 
     public function delete()
     {
-        $package = package::find(Request::get('id2'));
-        $package->delete();
-        return redirect('root/admin/package/add');
+        $package = Products::find(Request::get('id2'));
+        $package->is_delete ='1';
+        $package->save();
+        return redirect('service/package/add');
+    }
+
+    public function delete_open()
+    {
+        $package = Products::find(Request::get('id3'));
+        $package->is_delete ='0';
+        $package->save();
+        return redirect('service/package/add');
     }
 
     public function add_service()
     {
-        $package = new package;
-        $package->fill(Request::all());
-        $package->save();
+        if(Request::get('vat1') ==1){
+            $product = new Products;
+            //$package->fill(Request::all());
+            $product->name              = Request::get('name');
+            $product->description       = Request::get('description');
+            $product->price             = Request::get('price');
+            $product->price_with_vat    = Request::get('vat_total');
+            $product->status            = Request::get('status');
+            $product->vat               = Request::get('vat_value');
+            $product->is_delete         = Request::get('is_delete');
+            $product->product_code         = Request::get('product_code');
+            //$product->created_at       ='2018-11-30 05:35:35';
+            //$product->updated_at       ='2018-11-30 05:35:35';
+            $product->save();
+        }else{
+            $product = new Products;
+            //$package->fill(Request::all());
+            $product->name              = Request::get('name');
+            $product->description       = Request::get('description');
+            $product->price             = Request::get('price');
+            $product->status            = Request::get('status');
+            $product->is_delete         = Request::get('is_delete');
+            $product->product_code         = Request::get('product_code');
+            //$product->created_at       ='2018-11-30 05:35:35';
+            //$product->updated_at       ='2018-11-30 05:35:35';
+            $product->save();
+        }
+
         //dd(Request::all());
-        return redirect('root/admin/package/service/add');
+        //dump($product->toArray());
+        //dd(Request::all());
+        return redirect('service/package/service/add');
     }
 
     public function update_service()
     {
-        $id = Request::input('id');
-        $package = package::find($id);
-        $package->fill(Request::all());
-        $package->save();
+        if(Request::get('vat') != null){
+            $id = Request::input('id');
+            $product = Products::find($id);
+            $product->name              = Request::get('name');
+            $product->description       = Request::get('description');
+            $product->price             = Request::get('price');
+            $product->price_with_vat    = Request::get('vat_total');
+            $product->status            = Request::get('status');
+            $product->vat               = Request::get('vat_value');
+            $product->is_delete         = Request::get('is_delete');
+            $product->save();
+        }else{
+            $id = Request::input('id');
+            $product = Products::find($id);
+            $product->name                  = Request::get('name');
+            $product->description           = Request::get('description');
+            if(Request::get('vat') == null AND Request::get('price_vat') != Request::get('price')){
+                $product->price             = Request::get('price_vat');
+                $product->price_with_vat             = "0";
+                $product->vat               = "0";
+            }else{
+                $product->price             = Request::get('price');
+            }
+
+            $product->status                = Request::get('status');
+            $product->is_delete             = Request::get('is_delete');
+            $product->save();
+            //dump($product->toArray());
+        }
+        //dump($product->toArray());
         //dd(Request::all());
-        return redirect('root/admin/package/service/add');
+        return redirect('service/package/service/add');
     }
 
     public function delete_service()
     {
-        $package = package::find(Request::get('id2'));
-        $package->delete();
-        return redirect('root/admin/package/service/add');
+        $package = Products::find(Request::get('id2'));
+        $package->is_delete ='1';
+        $package->save();
+        return redirect('service/package/service/add');
+    }
+
+    public function delete_service_open()
+    {
+        $package = Products::find(Request::get('id3'));
+        $package->is_delete ='0';
+        $package->save();
+        return redirect('service/package/service/add');
     }
 
     public function insert_quotaion_detail(){
@@ -231,7 +340,7 @@ class PackageController extends Controller
         $package = $package->get();
 
         $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
+            ->where('role','=',2)
             ->orderBy('created_at','DESC')
             ->paginate(30);
         //dd($sale);
@@ -244,11 +353,11 @@ class PackageController extends Controller
     {
 
         if(Request::isMethod('post')) {
-            $package = package::find(Request::get('id'));
+            $package = Products::find(Request::get('id'));
             //$package = $package->where('status','1');
             //$package = $package->get();
 
-            return view('property.package_update')->with(compact('package'));
+            return view('product.package_update')->with(compact('package'));
         }
 
        //return ('5555');service_detail
@@ -259,11 +368,11 @@ class PackageController extends Controller
     {
 
         if(Request::isMethod('post')) {
-            $service = package::find(Request::get('id'));
+            $service = Products::find(Request::get('id'));
             //$package = $package->where('status','1');
             //$package = $package->get();
 
-            return view('property.service_update')->with(compact('service'));
+            return view('product.service_update')->with(compact('service'));
         }
 
         //return ('5555');service_detail

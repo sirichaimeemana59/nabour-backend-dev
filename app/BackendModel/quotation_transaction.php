@@ -11,11 +11,11 @@ class Quotation_transaction extends GeneralModel
 
     public function lastest_package ()
     {
-        return $this->hasOne('App\Products','id','package_id');
+        return $this->hasOne('App\BackendModel\Products','id','package_id');
     }
 
     public function lastest_lead ()
     {
-        return $this->hasOne('App\LeadTable','id','lead_id');
+        return $this->hasOne('App\BackendModel\LeadTable','id','lead_id');
     }
 }

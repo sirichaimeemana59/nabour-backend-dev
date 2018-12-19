@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
+namespace App\BackendModel;
+use App\GeneralModel;
 
 class LeadTable extends GeneralModel
 {

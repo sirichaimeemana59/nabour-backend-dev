@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Contract;
+namespace App\Http\Controllers\RootAdmin;
 
 use Request;
 use Auth;
@@ -18,15 +18,15 @@ use App\ManagementGroup;
 use App\SalePropertyDemo;
 use App\Property;
 use App\Transaction;
-use App\service_quotation;
-use App\LeadTable;
+use App\BackendModel\service_quotation;
+use App\BackendModel\LeadTable;
 use App\BackendModel\User;
 use App\BackendModel\Quotation;
 use App\BackendModel\Quotation_transaction;
-use App\Products;
+use App\BackendModel\Products;
 use App\success;
-use App\Customer;
-use App\contract;
+use App\BackendModel\Customer;
+use App\BackendModel\contract;
 
 class ContractsignController extends Controller
 {

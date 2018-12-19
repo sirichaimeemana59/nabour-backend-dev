@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\leads;
+namespace App\Http\Controllers\RootAdmin;
 
 use App\Http\Controllers\Controller;
 use Request;
@@ -10,8 +10,8 @@ use Redirect;
 //Model
 use App\BackendModel\User;
 use App\Province;
-use App\LeadTable;
-use App\Customer;
+use App\BackendModel\LeadTable;
+use App\BackendModel\Customer;
 
 class LeadsController extends Controller
 {
@@ -41,10 +41,14 @@ class LeadsController extends Controller
 
         //dump($sale->toArray());
 
+        $p_rows = new Customer;
+        $p_rows = $p_rows->where('role','=',1);
+        $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
+
         if(!Request::ajax()) {
-            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead'));
+            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows'));
         }else{
-            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead'));
+            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows'));
         }
     }
 

@@ -11,17 +11,17 @@ class Quotation extends GeneralModel
 
     public function lastest_package ()
     {
-        return $this->hasOne('App\Products','id','product_id');
+        return $this->hasOne('App\BackendModel\Products','id','product_id');
     }
 
     public function latest_lead ()
     {
-        return $this->hasOne('App\Customer','id','lead_id');
+        return $this->hasOne('App\BackendModel\Customer','id','lead_id');
     }
 
     public function latest_province ()
     {
-        return $this->hasOne('App\Province','code','province');
+        return $this->hasOne('App\BackendModel\Province','code','province');
     }
 
     public function latest_sale ()
@@ -31,7 +31,7 @@ class Quotation extends GeneralModel
 
     public function latest_contract ()
     {
-        return $this->hasOne('App\contract','quotation_id','quotation_code');
+        return $this->hasOne('App\BackendModel\contract','quotation_id','quotation_code');
     }
 
 }

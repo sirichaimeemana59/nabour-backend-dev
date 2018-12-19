@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\RootAdmin;
 
-
-use App\Http\Controllers\Controller;
 use Request;
 use Auth;
 use Redirect;
-use App\package;
+
+use App\Http\Controllers\Controller;
 use App\PropertyUnit;
-use App\User;
 use App\Province;
 use App\PropertyFeature;
 use App\BillWater;
@@ -20,144 +18,297 @@ use App\ManagementGroup;
 use App\SalePropertyDemo;
 use App\Property;
 use App\Transaction;
-use App\service_quotation;
-use App\quotation;
-use DB;
+use App\BackendModel\service_quotation;
+use App\BackendModel\LeadTable;
+use App\BackendModel\User;
+use App\BackendModel\Quotation;
+use App\BackendModel\Quotation_transaction;
+use App\BackendModel\Products;
+use App\success;
+use App\BackendModel\Customer;
 
 class QuotationController extends Controller
 {
-    public function edit($id)
+
+    public function index($id = null,$ip = null)
     {
-        $quotation = new quotation;
-        $quotation = $quotation->where('property_id',$id);
-        $quotation = $quotation->first();
+        $search = new Quotation;
+        $search = $search->where('lead_id',$id);
+        $search = $search->first();
 
-        //dd($quotation);
+        $lead = new Customer;
+        $lead = $lead->where('id',$id);
+        $lead = $lead->first();
 
-        $service_quo = new service_quotation;
-        $service_quo = $service_quo->where('property_id',$id);
-        $service_quo = $service_quo->get();
+        if($search == null or $ip == 1) {
+            $service = new Products;
+            $service = $service->where('status', '2');
+            $service = $service->get();
 
-        //dd($service_quo);
+            $package = new Products;
+            $package = $package->where('status', '1');
+            $package = $package->get();
 
-        $search = new quotation;
-        $search = $search->where('property_id',$id);
-        $search = $search->get();
+            $lead = new Customer;
+            $lead = $lead->where('id', $id);
+            $lead = $lead->first();
 
-        //$search =quotation::find($id);
-        $num = count($search);
-        // dd($num);
+            $quotation = new Quotation_transaction;
+            $max_cus = $quotation->max('quotation_code');
 
-        $p = new Province;
-        $provinces = $p->getProvince();
-        //$property = PropertyContract::find($id);
-        $property = Property::find($id);
+            return view('quotation.quotation_form')->with(compact('service', 'package', 'lead', 'id', 'max_cus'));
+        }else{
 
-        $property1 = PropertyContract::find($id);
+            $quotation1 = new Quotation;
+            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->get();
 
-        //dd($property1);
+            $remark = new Quotation;
+            $remark = $remark->where('lead_id', $id);
+            $remark = $remark->where('remark', 1);
+            $remark = $remark->count();
 
-        $service = new package;
-        $service = $service->where('status','2');
-        $service = $service->get();
+            $status = new Quotation;
+            $status = $status->where('lead_id', $id);
+            $status = $status->first();
 
-        $package = new package;
-        $package = $package->where('status','1');
-        $package = $package->get();
+            $lead = new Customer;
+            $lead = $lead->where('id', $id);
+            $lead = $lead->first();
+            //dd($status);
 
-        $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
-            ->orderBy('created_at','DESC')
-            ->paginate(30);
 
-        //dd($quotation);
-        return view('property.quotation_update_form')->with(compact('quotation','provinces','property','property1','service','service_quo'));
+            //dump($quotation1->toArray());
+            return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status','lead'));
+        }
+        //return ($id);
     }
 
-    public function delete()
+    public function create()
     {
-        $service_quo = new service_quotation;
-        $service_quo = $service_quo->where('property_id',Request::get('id2'));
-        $service_quo->delete();
 
-        $quotation = new quotation;
-        $quotation = $quotation->where('property_id',Request::get('id2'));
-        $quotation->delete();
-        //return ($id);
-        return redirect('/root/admin/list_quotation');
+        $quotation = new Quotation;
+        $id_package = Request::get('id_package');
+        $cut_id = explode("|",$id_package);
+
+        $quotation->product_id             = $cut_id[0];
+        $quotation->quotation_code         = Request::get('quotation_code');
+        $quotation->product_amount         = Request::get('project_package');
+        $quotation->month_package          = Request::get('month_package');
+        $quotation->unit_price             = Request::get('unit_package');
+        $quotation->total                  = Request::get('total_package');
+        $quotation->product_price_with_vat = Request::get('grand_total');
+        $quotation->product_vat            = Request::get('vat');
+        $quotation->grand_total_price      = Request::get('sub_total');
+        $quotation->discount               = Request::get('discount');
+        $quotation->invalid_date           = Request::get('invalid_date');
+        $quotation->remark                 = 0;
+        $quotation->sales_id               = Request::get('sales_id');
+        $quotation->lead_id                = Request::get('lead_id');
+        $quotation->send_email_status      = 0;
+        $quotation->save();
+
+        $search = Quotation::find(Request::get('quotation_code'));
+        //dd($search);
+
+        foreach (Request::get('transaction') as $t) {
+            $trans = new Quotation_transaction;
+            $trans->package_id 			= $t['service'];
+            $trans->project_package		= empty($t['project'])?'0':$t['project'];
+            $trans->month_package   	= empty($t['price'])?'0':$t['price'];
+            $trans->unit_package 			= empty($t['unit_price'])?'0':$t['unit_price'];
+            $trans->total_package 		= empty($t['total'])?'0':$t['total'];
+            $trans->lead_id 		    = Request::get('lead_id');
+            $trans->quotation_code 		= Request::get('quotation_code');
+            $trans->quotation_id 		= $search->quotation_id;
+
+            $trans->save();
+            //dd($trans);
+            //dump($trans->toArray());
+        }
+
+
+        return redirect('service/quotation/add/'.Request::get('lead_id'));
+
+
+        //dump($quotation->toArray());
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function show()
+    {
+        return view('quotation.list_quotation');
+    }
+
+    public function edit($id)
+    {
+        $quotation = new Quotation;
+        $quotation = $quotation->where('quotation_code', $id);
+        $quotation = $quotation->first();
+
+        $quotation_service = new Quotation_transaction;
+        $quotation_service = $quotation_service->where('quotation_code', $id);
+        $quotation_service = $quotation_service->get();
+
+        $service = new Products;
+        $service = $service->where('status', '2');
+        $service = $service->get();
+
+        $package = new Products;
+        $package = $package->where('status', '1');
+        $package = $package->get();
+
+       /* $lead = new LeadTable;
+        $lead = $lead->where('id', $id);
+        $lead = $lead->first();*/
+
+        return view('quotation.quotation_update_form')->with(compact('quotation','package','quotation_service','service','package'));
     }
 
     public function update()
     {
         if( !empty(Request::get('_data'))) {
             foreach ( Request::get('_data') as $q) {
-                $service_quotation = service_quotation::find($q['id']);
-                $service_quotation->id          = $q['id'];
-                $service_quotation->property_id = $q['property_id'];
-                $service_quotation->service_id  = empty($q['service'])?'0':$q['service'];
-                $service_quotation->project     = empty($q['project'])?'0':$q['project'];
-                $service_quotation->month       = empty($q['price'])?'0':$q['price'];
-                $service_quotation->unit_price  = empty($q['unit_price'])?'0':$q['unit_price'];
-                $service_quotation->total       = empty($q['total1'])?'0':$q['total1'];
-                $service_quotation->save();
-                //dump($quotation->toArray());
+
+                $quotation_service = Quotation_transaction::find($q['id']);
+                $quotation_service->lead_id             = $q['lead_id'];
+                $quotation_service->package_id          = $q['service'];
+                $quotation_service->project_package     = empty($q['project'])?'0':$q['project'];
+                $quotation_service->month_package       = empty($q['price'])?'0':$q['price'];
+                $quotation_service->unit_package        = empty($q['unit_price'])?'0':$q['unit_price'];
+                $quotation_service->total_package       = empty($q['total1'])?'0':$q['total1'];
+                $quotation_service->save();
+                //dump($quotation_service->toArray());
             }
-            $quotation = quotation::find(Request::get('quotation_id'));
-            $quotation->project_package 	= Request::get('package_id');
-            $quotation->month_package 		= Request::get('month_package');
-            $quotation->unit_package 		= Request::get('unit_package');
-            $quotation->total_package 		= Request::get('total_package');
-            $quotation->discount 		    = Request::get('discount');
-            $quotation->property_id 		= Request::get('quotation_id');
-            $quotation->sale_id 			= Request::get('sale_id');
-            $quotation->package_unit 		= Request::get('project_package');
-            $quotation->quotation_number 	= Request::get('quotation_number');
+            $quotation = new Quotation;
+            $quotation = $quotation->find(Request::get('quotation_code'));
+
+            $quotation->product_id             = Request::get('package_id');
+            $quotation->quotation_code         = Request::get('quotation_code');
+            $quotation->product_amount         = Request::get('project_package');
+            $quotation->month_package          = Request::get('month_package');
+            $quotation->unit_price             = Request::get('unit_package');
+            $quotation->total                  = Request::get('total_package');
+            $quotation->product_price_with_vat = Request::get('grand_total');
+            $quotation->product_vat            = Request::get('vat');
+            $quotation->grand_total_price      = Request::get('sub_total');
+            $quotation->discount               = Request::get('discount');
+            $quotation->invalid_date           = Request::get('invalid_date');
+            $quotation->remark                 = 0;
+            $quotation->sales_id               = Request::get('sales_id');
+            $quotation->lead_id                = Request::get('lead_id');
+            $quotation->send_email_status      = 0;
             $quotation->save();
+            //dd($quotation);
         }
 
 
         //dump($quotation->toArray());
-        return redirect('/root/admin/list_quotation');
-
+        return redirect('service/quotation/add/'.Request::get('lead_id'));
     }
 
-    public function detail($id = null){
+    public function destroy($id)
+    {
+        //
+    }
+    public function check($id = null , $lead_id = null)
+    {
+        $quotation = Quotation::find($id);
+        $quotation->remark =1;
+        $quotation->save();
+        return redirect('/service/quotation/add/'.$lead_id);
+    }
+
+    public function check_out($id = null , $lead_id = null)
+    {
+        $quotation = Quotation::find($id);
+        $quotation->remark = 0;
+        $quotation->save();
+        return redirect('/service/quotation/add/'.$lead_id);
+    }
+
+
+    public function detail()
+    {
+        if(Request::isMethod('post')) {
+
+            $quotation = new Quotation;
+            $quotation = $quotation->where('quotation_code', Request::get('id'));
+            $quotation = $quotation->get();
+
+            $quotation_service = new Quotation_transaction;
+            $quotation_service = $quotation_service->where('quotation_code', Request::get('id'));
+            $quotation_service = $quotation_service->get();
+
+            return view('quotation.quotation_detail')->with(compact('quotation','quotation_service'));
+        }
+    }
+
+    public function print($id){
+
+        $quotation = new Quotation;
+        $quotation = $quotation->where('quotation_code', $id);
+        $quotation = $quotation->first();
 
         $p = new Province;
         $provinces = $p->getProvince();
-        //$property = PropertyContract::find($id);
-        $property = Property::find($id);
 
-        $property1 = PropertyContract::find($id);
+        $quotation1 = new Quotation;
+        $quotation1 = $quotation1->where('quotation_code', $id);
+        $quotation1 = $quotation1->first();
 
-        //dd($property1);
+        //dump($quotation1->toArray());
+        $quotation_service = new Quotation_transaction;
+        $quotation_service = $quotation_service->where('quotation_code', $id);
+        $quotation_service = $quotation_service->get();
 
-        $service = new package;
-        $service = $service->where('status','2');
-        $service = $service->get();
+        return view('report.report_quotation')->with(compact('quotation','provinces','quotation1','quotation_service'));
+    }
 
-        $package = new package;
-        $package = $package->where('status','1');
-        $package = $package->get();
+    public function success($id)
+    {
+        $quotation = success::find($id);
+        $quotation->status = 1;
+        $quotation->save();
 
-        $sale = User::where('id','!=',Auth::user()->id)
-            ->where('role','=',4)
-            ->orderBy('created_at','DESC')
-            ->paginate(30);
+        $lead = Customer::find($id);
+         //dd($lead->id);
+        $customer = new Customer;
+        $customer->firstname        = $lead->firstname;
+        $customer->lastname         = $lead->lastname;
+        $customer->phone            = $lead->phone;
+        $customer->email            = $lead->email;
+        $customer->address          = $lead->address;
+        $customer->province         = $lead->province;
+        $customer->company_name     = $lead->company_name;
+        $customer->channel          = $lead->channel;
+        $customer->type             = $lead->type;
+        $customer->active_status    = 'f';
+        //$customer->save();
+        //dump($customer->toArray());
+            //dd($quotation);
+       return redirect('service/quotation/add/'.$id);
 
-        $service_quo = new service_quotation;
-        $service_quo = $service_quo->where('property_id',$id);
-        $service_quo = $service_quo->get();
+    }
 
-        //dd($service_quo);
-
-        $quotation = new quotation;
-        $quotation = $quotation->where('property_id',$id);
-        $quotation = $quotation->first();
+    public function cancel($id)
+    {
+        $quotation = success::find($id);
+        $quotation->status = 0;
+        $quotation->save();
 
         //dd($quotation);
-        //dump($service_quo->toArray());
-            return view('property.quotation_detail')->with(compact('provinces','property','property1','service','package','sale','service_quo','quotation'));
-        }
+        return redirect('service/quotation/add/'.$id);
 
+    }
+
+    public function quotationList ()
+    {
+        $quotation = Quotation::paginate(20);
+        return view('quotation.list')->with(compact('quotation'));
+    }
 }

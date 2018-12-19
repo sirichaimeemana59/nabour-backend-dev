@@ -12,12 +12,12 @@ class Success extends GeneralModel
 
     public function lastest_package ()
     {
-        return $this->hasOne('App\Products','id','product_id');
+        return $this->hasOne('App\BackendModel\Products','id','product_id');
     }
 
     public function latest_lead ()
     {
-        return $this->hasOne('App\LeadTable','id','lead_id');
+        return $this->hasOne('App\BackendModel\LeadTable','id','lead_id');
     }
 
     public function latest_province ()

@@ -27,63 +27,63 @@ Route::get('/projects', 'HomeController@nabourAdminHome');
 Route::get('/home', 'HomeController@SalesHome');
 
 //Leads
-Route::any('customer/leads/list', 'leads\LeadsController@index');
-Route::post('customer/Lead_form/add', 'leads\LeadsController@create');
-Route::get('customer/Lead_form/add/list', 'leads\LeadsController@index');
-Route::post('customer/Lead_form/delete', 'leads\LeadsController@destroy');
-Route::post('customer/list_update_lead', 'leads\LeadsController@edit');
-Route::post('customer/Lead_form/update', 'leads\LeadsController@update');
+Route::any('customer/leads/list', 'RootAdmin\LeadsController@index');
+Route::post('customer/Lead_form/add', 'RootAdmin\LeadsController@create');
+Route::get('customer/Lead_form/add/list', 'RootAdmin\LeadsController@index');
+Route::post('customer/Lead_form/delete', 'RootAdmin\LeadsController@destroy');
+Route::post('customer/list_update_lead', 'RootAdmin\LeadsController@edit');
+Route::post('customer/Lead_form/update', 'RootAdmin\LeadsController@update');
 //End Leads
 
 //Product
 //Package
-Route::get('service/package/add', 'product\PackageController@index');
-Route::get('service/package/service/add', 'product\PackageController@index');
-Route::post('service/package/add_package', 'product\PackageController@add');
-Route::post('service/list_update_package', 'product\PackageController@package_detail');
-Route::post('service/package/update_package', 'product\PackageController@update');
-Route::post('service/package/delete_open', 'product\PackageController@delete_open');
-Route::post('service/package/delete', 'product\PackageController@delete');
+Route::get('service/package/add', 'RootAdmin\PackageController@index');
+Route::get('service/package/service/add', 'RootAdmin\PackageController@index');
+Route::post('service/package/add_package', 'RootAdmin\PackageController@add');
+Route::post('service/list_update_package', 'RootAdmin\PackageController@package_detail');
+Route::post('service/package/update_package', 'RootAdmin\PackageController@update');
+Route::post('service/package/delete_open', 'RootAdmin\PackageController@delete_open');
+Route::post('service/package/delete', 'RootAdmin\PackageController@delete');
 
 //Service
-Route::get('service/package/service/add', 'product\PackageController@index_service');
-Route::post('service/package/add_service', 'product\PackageController@add_service');
-Route::post('service/list_update_service', 'product\PackageController@service_detail');
-Route::post('service/package/update_service', 'product\PackageController@update_service');
-Route::post('service/package/delete_service', 'product\PackageController@delete_service');
-Route::post('service/package/delete_service_open', 'product\PackageController@delete_service_open');
+Route::get('service/package/service/add', 'RootAdmin\PackageController@index_service');
+Route::post('service/package/add_service', 'RootAdmin\PackageController@add_service');
+Route::post('service/list_update_service', 'RootAdmin\PackageController@service_detail');
+Route::post('service/package/update_service', 'RootAdmin\PackageController@update_service');
+Route::post('service/package/delete_service', 'RootAdmin\PackageController@delete_service');
+Route::post('service/package/delete_service_open', 'RootAdmin\PackageController@delete_service_open');
 //End Product
 
 //Quotation
-Route::get('service/quotation/add/{id}/{ip?}', 'Quotation\QuotationController@index');
-Route::post('service/quotation/add/insert', 'Quotation\QuotationController@create');
-Route::get('service/quotation_list', 'Quotation\QuotationController@index');
-Route::post('service/quotation/detail', 'Quotation\QuotationController@detail');
-Route::get('service/quotation/update/form/{id?}', 'Quotation\QuotationController@edit');
-Route::post('service/quotation/update/file', 'Quotation\QuotationController@update');
-Route::get('service/quotation/check/quotation/{id?}/{lead_id?}', 'Quotation\QuotationController@check');
-Route::get('service/quotation/check_out/quotation/{id?}/{lead_id?}', 'Quotation\QuotationController@check_out');
-Route::get('service/quotation/print_quotation/{id?}', 'Quotation\QuotationController@print');
-Route::get('service/quotation/success/{id?}', 'Quotation\QuotationController@success');
-Route::get('service/quotation/cancel/{id?}', 'Quotation\QuotationController@cancel');
+Route::get('service/quotation/add/{id}/{ip?}', 'RootAdmin\QuotationController@index');
+Route::post('service/quotation/add/insert', 'RootAdmin\QuotationController@create');
+Route::get('service/quotation_list', 'RootAdmin\QuotationController@index');
+Route::post('service/quotation/detail', 'RootAdmin\QuotationController@detail');
+Route::get('service/quotation/update/form/{id?}', 'RootAdmin\QuotationController@edit');
+Route::post('service/quotation/update/file', 'RootAdmin\QuotationController@update');
+Route::get('service/quotation/check/quotation/{id?}/{lead_id?}', 'RootAdmin\QuotationController@check');
+Route::get('service/quotation/check_out/quotation/{id?}/{lead_id?}', 'RootAdmin\QuotationController@check_out');
+Route::get('service/quotation/print_quotation/{id?}', 'RootAdmin\QuotationController@print');
+Route::get('service/quotation/success/{id?}', 'RootAdmin\QuotationController@success');
+Route::get('service/quotation/cancel/{id?}', 'RootAdmin\QuotationController@cancel');
 
-Route::any('quotation/list', 'Quotation\QuotationController@quotationList');
+Route::any('quotation/list', 'RootAdmin\QuotationController@quotationList');
 //End Quotation
 
 //Customer
-Route::any('customer/customer/list', 'Customer\CustomerController@index');
-Route::post('customer/Customer_form/add', 'Customer\CustomerController@create');
-Route::post('customer/list_update_customer', 'Customer\CustomerController@edit');
-Route::post('customer/Customer_form/update', 'Customer\CustomerController@update');
-Route::post('customer/Customer_form/delete', 'Customer\CustomerController@destroy');
-Route::post('customer/Customer_form/check', 'Customer\CustomerController@check');
+Route::any('customer/customer/list', 'RootAdmin\CustomerController@index');
+Route::post('customer/Customer_form/add', 'RootAdmin\CustomerController@create');
+Route::post('customer/list_update_customer', 'RootAdmin\CustomerController@edit');
+Route::post('customer/Customer_form/update', 'RootAdmin\CustomerController@update');
+Route::post('customer/Customer_form/delete', 'RootAdmin\CustomerController@destroy');
+Route::post('customer/Customer_form/check', 'RootAdmin\CustomerController@check');
 //End Customer
 
 //Contract sign no
-Route::get('service/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'Contract\ContractsignController@index');
-Route::get('service/contract/sign/form/{id?}/{quo_id?}', 'Contract\ContractsignController@create');
-Route::post('service/contract/sign/add', 'Contract\ContractsignController@save');
-Route::post('service/contract/sign/update', 'Contract\ContractsignController@update');
+Route::get('service/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'RootAdmin\ContractsignController@index');
+Route::get('service/contract/sign/form/{id?}/{quo_id?}', 'RootAdmin\ContractsignController@create');
+Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
+Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
 //End Contract
 
 //---------------------------  Nabour officer Route --------------------------------------------//
