@@ -17,12 +17,12 @@
                     <span class="title">ลูกค้า</span>
                 </a>
             </li>
-            <li class="{!! (Request::is('customer/property/list') ? 'active' : '') !!}">
+            <?php /* <li class="{!! (Request::is('customer/property/list') ? 'active' : '') !!}">
                 <a href="{!! url('customer/property/list') !!}">
                     <i class="fa fa-home"></i>
                     <span class="title">นิติบุคคล</span>
                 </a>
-            </li>
+            </li> */ ?>
 
             <li class="@if(Request::is('officer/property-list') || Request::is('officer/property/view*')) active @endif">
                 {{--<a href="{{ url('/officer/property-list/') }}">--}}
