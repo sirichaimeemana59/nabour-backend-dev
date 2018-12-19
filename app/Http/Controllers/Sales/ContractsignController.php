@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RootAdmin;
+namespace App\Http\Controllers\Sales;
 
 use Request;
 use Auth;
@@ -151,7 +151,7 @@ class ContractsignController extends Controller
     }
 
     public function contractList () {
-        $contracts = new contract;
+        $contracts = contract::where('sales_id',Auth::user()->id);
 
         if( Request::get('c_no') ) {
             $contracts = $contracts->where('contract_code','like','%'.Request::get('c_no').'%');
@@ -161,18 +161,13 @@ class ContractsignController extends Controller
             $contracts = $contracts->where('customer_id',Request::get('c_id'));
         }
 
-        if( Request::get('sale_id') ) {
-            $contracts = $contracts->where('sales_id',Request::get('sale_id'));
-        }
-
         $contracts = $contracts->orderBy('contract_code','desc')->paginate(1);
         if( Request::ajax() ) {
             return view('contract.list-element')->with(compact('contracts'));
 
         } else {
-            $sales      = BackendUser::whereIn('role',[1,2])->pluck('name','id');
             $customers = Customer::where('role',0)->pluck('company_name','id');
-            return view('contract.list')->with(compact('contracts','customers','sales'));
+            return view('contract.list-sales')->with(compact('contracts','customers'));
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RootAdmin;
+namespace App\Http\Controllers\Sales;
 
 use Request;
 use Auth;
@@ -298,8 +298,7 @@ class QuotationController extends Controller
 
     public function quotationList ()
     {
-        $quotations = new Quotation;
-        //return view('quotation.list')->with(compact('quotation'));
+        $quotations = Quotation::where('sales_id', Auth::user()->id);
 
         if( Request::get('q_no') ) {
             $quotations = $quotations->where('quotation_code','like','%'.Request::get('q_no').'%');
@@ -309,19 +308,14 @@ class QuotationController extends Controller
             $quotations = $quotations->where('lead_id',Request::get('leads_id'));
         }
 
-        if( Request::get('sale_id') ) {
-            $quotations = $quotations->where('sales_id',Request::get('sale_id'));
-        }
-
         $quotations = $quotations->orderBy('quotation_code','desc')->paginate(1);
         if( Request::ajax() ) {
             return view('quotation.list-element')->with(compact('quotations'));
 
         } else {
-            $sales      = BackendUser::whereIn('role',[1,2])->pluck('name','id');
             $customers = Customer::where('role',1)->select('firstname','lastname','id')->get();
             if( $customers ) $customers = $customers->toArray();
-            return view('quotation.list')->with(compact('quotations','customers','sales'));
+            return view('quotation.list-sales')->with(compact('quotations','customers'));
         }
     }
 }

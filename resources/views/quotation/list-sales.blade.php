@@ -39,16 +39,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-sm-3">
-                                <select name="sale_id" id="sale_id" class="form-control" required>
-                                    <option value="">พนักงานขาย</option>
-                                    @foreach($sales as $key => $row)
-                                        <option value="{!! $key !!}">{!! $row !!}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-sm-3 text-right">
+                            <div class="col-sm-6 text-right">
                                 <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
                                 <button type="button" class="btn btn-secondary" id="submit-search">{!! trans('messages.search') !!}</button>
                             </div>

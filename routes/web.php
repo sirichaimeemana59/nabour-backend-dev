@@ -68,6 +68,7 @@ Route::get('service/quotation/success/{id?}', 'RootAdmin\QuotationController@suc
 Route::get('service/quotation/cancel/{id?}', 'RootAdmin\QuotationController@cancel');
 
 Route::any('quotation/list', 'RootAdmin\QuotationController@quotationList');
+Route::any('contract/list', 'RootAdmin\ContractsignController@contractList');
 //End Quotation
 
 //Customer
@@ -136,3 +137,6 @@ Route::post('root/admin/property/initial-meter/save', 'RootAdmin\PropertyControl
 Route::any('root/admin/property-feature/edit/get', 'RootAdmin\PropertyController@getPropertyFeature');
 Route::post('root/admin/property-feature/edit/save', 'RootAdmin\PropertyController@editPropertyFeature');
 
+//-------------------------------- Sales Route --------------------------------------//
+Route::any('sales/quotation/list', 'Sales\QuotationController@quotationList');
+Route::any('sales/contract/list', 'Sales\ContractsignController@contractList');
