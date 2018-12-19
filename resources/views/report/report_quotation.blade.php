@@ -2,7 +2,7 @@
 <style>
     .title_left{
         text-align:left;
-        margin:25px 0 0 25px;
+        margin:5px 0 0 25px;
     }
     .line_table{
         border: 1px solid black;
@@ -20,6 +20,7 @@
         padding: 5px;
         font-family: 'thonburi';
         font-size: 12px;
+        /*border: 1px solid black;*/
     }
 </style>
 
@@ -39,23 +40,26 @@
         <div class="title_herder">
             <table style="border: 1px solid black; color: black;" width="100%">
                 <tr>
-                    <td colspan="2"><span style="color: black;">Attention</span></td>
-                    <td><span style="color: black;">: {!! $quotation->latest_lead->firstname !!}</span></td>
+                    <td><span style="color: black; width: 10%">Attention</span></td>
+                    <td><span style="color: black;">:</span></td>
+                    <td><span style="color: black;">{!! $quotation->latest_lead->firstname !!}</span></td>
                     <td colspan="5" style="border-right: 1px solid black; color: black;"><span style="color: black;"></span></td>
                     <td><span style="color: black;">No : {!! $quotation->quotation_code !!}</span></td>
                     <td><span style="color: black;"></span></td>
                 </tr>
                 <tr>
-                    <td colspan="8" style="border-right: 1px solid black; color: black;"></td>
-                    <td><span style="color: black;">Date : </span></td>
                     <?php
                     $date=date("Y-m-d");
                     ?>
-                    <td><span style="color: black;">{{localDate($date)}}</span></td>
+                    <td colspan="8" style="border-right: 1px solid black; color: black;"></td>
+                    <td><span style="color: black;">Date : {{localDate($date)}}</span></td>
+
+                    <td><span style="color: black;"></span></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><span style="color: black;">Address</span></td>
-                    <td><span style="color: black;">: {!! $quotation->latest_lead->address ." ". $provinces[$quotation['province']] ." ". $quotation->latest_lead->postcode!!}</span></td>
+                    <td><span style="color: black; width: 10%">Address</span></td>
+                    <td><span style="color: black;">:</span></td>
+                    <td><span style="color: black;">{!! $quotation->latest_lead->address ." ". $provinces[$quotation['province']] ." ". $quotation->latest_lead->postcode!!}</span></td>
                     <td colspan="5" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
                     <td><span style="color: black;">Salesperson : {!! $quotation->latest_sale->name !!}</span></td>
                     <td><span style="color: black;"></span></td>
@@ -71,14 +75,16 @@
                     <td colspan="2"></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><span style="color: black;">Taxes ID</span></td>
-                    <td><span style="color: black;">: -</span></td>
+                    <td><span style="color: black; width: 10%">Taxes ID</span></td>
+                    <td><span style="color: black;">:</span></td>
+                    <td><span style="color: black;"> -</span></td>
                     <td colspan="5" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
                     <td colspan="2"></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><span style="color: black;">Tel</span></td>
-                    <td><span style="color: black;">: {!! $quotation->latest_lead->phone !!}</span></td>
+                    <td><span style="color: black; width: 10%">Tel</span></td>
+                    <td><span style="color: black;">:</span></td>
+                    <td><span style="color: black;">{!! $quotation->latest_lead->phone !!}</span></td>
                     <td colspan="2"><span style="color: black;"></span></td>
                     <td><span style="color: black;">Fax : </span></td>
                     <td colspan="2" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
@@ -86,11 +92,12 @@
                     <td><span style="color: black;"></span></td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="border-bottom: 1px solid black;"><span style="color: black;">contact</span></td>
+                    <td style="border-bottom: 1px solid black;"><span style="color: black; width: 10%">contact</span></td>
                     <td style="border-bottom: 1px solid black;"><span style="color: black;">:</span></td>
-                    <td style="border-bottom: 1px solid black;"><span style="color: black;">คุณทรงสิทธิ์</span></td>
-                    <td style="border-bottom: 1px solid black;"><span style="color: black;">Email : </span></td>
-                    <td colspan="3" style="border-right: 1px solid black; border-bottom: 1px solid black;"><span style="color: black;">afmanager@stms.co.th</span></td>
+                    <td style="border-bottom: 1px solid black; width: 10%"><span style="color: black;">คุณทรงสิทธิ์</span></td>
+                    {{--<td style="border-bottom: 1px solid black;"><span style="color: black;"></span></td>--}}
+                    <td colspan="3" style="border-bottom: 1px solid black;"><span style="color: black;">Email : afmanager@stms.co.th</span></td>
+                    <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black;"><span style="color: black;"></span></td>
                     <td><span style="color: black;">Email : {!! $quotation->latest_sale->email !!}</span></td>
                     <td><span style="color: black;"></span></td>
                 </tr>
@@ -107,8 +114,6 @@
             </table>
         </div>
 
-        <br>
-        <span>หมายเหตุ : พิเศษ ส่วนลดค่าติดตั้งระบบโครงการที่ 2 มูลค่า 2,500 บาท</span>
         <br><br>
 
         <div class="table_content">
@@ -189,7 +194,8 @@
         <br>
         <span style="color: black;">หมายเหตุ<br>
                                 1. ใบเสนอราคานี้มีผล 15 วัน นับจากวันที่ยื่นในใบเสนอราคา	<br>
-                                2. ขอสงวนสิทธิ์ในการเปิดเผยใบเสนอราคานี้ต่อบุคคลที่สาม หากฝ่าฝืนใบเสนอราคานี้ถือว่าเป็นอันสิ้นสุด<br></span>
+                                2. ขอสงวนสิทธิ์ในการเปิดเผยใบเสนอราคานี้ต่อบุคคลที่สาม หากฝ่าฝืนใบเสนอราคานี้ถือว่าเป็นอันสิ้นสุด<br>
+                                3. พิเศษ ส่วนลดค่าติดตั้งระบบโครงการที่ 2 มูลค่า 2,500 บาท <br></span>
     </div><br>
     <div class="sign">
         <table width="100%" >
