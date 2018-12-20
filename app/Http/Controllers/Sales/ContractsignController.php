@@ -161,7 +161,7 @@ class ContractsignController extends Controller
             $contracts = $contracts->where('customer_id',Request::get('c_id'));
         }
 
-        $contracts = $contracts->orderBy('contract_code','desc')->paginate(1);
+        $contracts = $contracts->orderBy('contract_code','desc')->paginate(25);
         if( Request::ajax() ) {
             return view('contract.list-element')->with(compact('contracts'));
 
