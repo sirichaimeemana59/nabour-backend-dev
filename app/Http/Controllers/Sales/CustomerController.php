@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RootAdmin;
+namespace App\Http\Controllers\Sales;
 
 use Request;
 use Auth;
@@ -53,8 +53,10 @@ class CustomerController extends Controller
             $customer = $customer->where('province','=',Request::get('province'));
         }
 
-        $customer = $customer->where('role','=',0);
+        $customer = $customer->where('role','=',0)->where('sale_id','=',Auth::user()->id);
         $customer = $customer->get();
+
+        //dd($customer);
 
         $p = new Province;
         $provinces = $p->getProvince();
@@ -65,9 +67,10 @@ class CustomerController extends Controller
 
 
         $p_rows = new Customer;
-        $p_rows = $p_rows->where('role','=',0);
+        $p_rows = $p_rows->where('role','=',0)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
+       // dd($p_rows);
         //dd($p_rows);
 
         //dump($customer->toArray());
@@ -96,12 +99,17 @@ class CustomerController extends Controller
             $customer->type             = Request::get('type');
             $customer->active_status    = 'f';
             $customer->status           = 0;
-            $customer->sale_id          = Request::get('sale_id');
+            $customer->sale_id          = Auth::user()->id;
             $customer->role             =0;
             $customer->save();
             //dump($customer->toArray());
         }
-        return redirect('customer/customer/list');
+        if(Auth::user()->role !=2) {
+            return redirect('customer/customer/list');
+        }else{
+            return redirect('customer/sales/customer/list');
+        }
+
     }
 
     public function store(Request $request)
@@ -151,11 +159,15 @@ class CustomerController extends Controller
             $customer->type             = Request::get('type');
             $customer->active_status    = 'f';
             $customer->status           = Request::get('status');
-            $customer->sale_id          = Request::get('sale_id');
+            $customer->sale_id          = Auth::user()->id;
             $customer->save();
             //dump($customer->toArray());
         }
-        return redirect('customer/customer/list');
+        if(Auth::user()->role !=2) {
+            return redirect('customer/customer/list');
+        }else{
+            return redirect('customer/sales/customer/list');
+        }
     }
 
     public function destroy()
@@ -166,7 +178,11 @@ class CustomerController extends Controller
             $customer->save();
             //dump($customer->toArray());
         }
-        return redirect('customer/customer/list');
+        if(Auth::user()->role !=2) {
+            return redirect('customer/customer/list');
+        }else{
+            return redirect('customer/sales/customer/list');
+        }
     }
 
     public function check()
@@ -177,6 +193,10 @@ class CustomerController extends Controller
             $customer->save();
             //dump($customer->toArray());
         }
-        return redirect('customer/customer/list');
+        if(Auth::user()->role !=2) {
+            return redirect('customer/customer/list');
+        }else{
+            return redirect('customer/sales/customer/list');
+        }
     }
 }

@@ -21,7 +21,7 @@ class ContractsignController extends Controller
     public function index($quotation_code = null , $lead_id = null)
     {
         $quotation = new Quotation;
-        $quotation = $quotation->where('lead_id',$lead_id);
+        $quotation = $quotation->where('quotation_code',$quotation_code);
         $quotation = $quotation->first();
 
         $p = new Province;

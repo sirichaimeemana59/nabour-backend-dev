@@ -1,4 +1,8 @@
-{!! Form::model($customer,array('url' => array('customer/Customer_form/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+@if(Auth::user()->role !=2)
+    {!! Form::model($customer,array('url' => array('customer/Customer_form/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+@else
+    {!! Form::model($customer,array('url' => array('customer/sales/Customer_form/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+@endif
 <div class="form-group">
     <input type="hidden" name="customer_id" value="{!!$customer->id!!}">
     <label class="col-sm-1 control-label">ชื่อ</label>
@@ -36,15 +40,24 @@
 
     <label class="col-sm-1 control-label">พนักงานขาย</label>
     <div class="col-sm-2">
-        <select name="sale_id" id="" class="form-control">
-            <option value="">กรุณาเลือกพนักงานขาย</option>
-            @foreach($sale as $srow)
-                <?php
-                $sale=$customer->sale_id==$srow->id?"selected":"";
-                ?>
-                <option value="{!!$srow->id!!}" {!!$sale!!}>{!!$srow->name!!}</option>
-            @endforeach
-        </select>
+        @if(Auth::user()->role !=2)
+            <select name="sale_id" id="" class="form-control" required>
+                <option value="">กรุณาเลือกพนักงานขาย</option>
+                @foreach($sale as $srow)
+                    <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                @endforeach
+            </select>
+        @else
+            <select name="sale_id" id="" class="form-control"  disabled="true">
+                <option value="">กรุณาเลือกพนักงานขาย</option>
+                @foreach($sale as $_srow)
+                    <?php
+                    $select=$_srow->id==Auth::user()->id?"selected":"";
+                    ?>
+                    <option value="{!!$_srow->id!!}" {!! $select !!}>{!!$_srow->name!!}</option>
+                @endforeach
+            </select>
+        @endif
     </div>
 
     <label class="col-sm-1 control-label">ชื่อบริษัท</label>

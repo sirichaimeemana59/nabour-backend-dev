@@ -5,14 +5,14 @@
             <span class="title">รายชื่อลูกค้า</span>
         </a>
         <ul {!! (Request::is('customer/*') ? 'style="display:block;"' : '') !!}>
-            <li class="{!!  (Request::is('customer/leads/list') ? 'active' : '') !!}">
-                <a href="{!!  url('/customer/leads/list') !!}">
+            <li class="{!!  (Request::is('customer/sales/leads/list') ? 'active' : '') !!}">
+                <a href="{!!  url('/customer/sales/leads/list') !!}">
                     <i class="fa fa-user"></i>
                     <span class="title">Leads</span>
                 </a>
             </li>
-            <li class="{!! (Request::is('customer/customer/list') ? 'active' : '') !!}">
-                <a href="{!! url('customer/customer/list') !!}">
+            <li class="{!! (Request::is('customer/sales/customer/list') ? 'active' : '') !!}">
+                <a href="{!! url('customer/sales/customer/list') !!}">
                     <i class="fa fa-user"></i>
                     <span class="title">ลูกค้า</span>
                 </a>

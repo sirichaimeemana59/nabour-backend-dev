@@ -35,6 +35,15 @@ Route::post('customer/list_update_lead', 'RootAdmin\LeadsController@edit');
 Route::post('customer/Lead_form/update', 'RootAdmin\LeadsController@update');
 //End Leads
 
+//Leads Sales
+Route::any('customer/sales/leads/list','Sales\LeadsController@index');
+Route::post('customer/sales/Lead_form/add','Sales\LeadsController@create');
+Route::get('customer/sales/Lead_form/add/list','Sales\LeadsController@index');
+Route::post('customer/sales/Lead_form/delete','Sales\LeadsController@destroy');
+Route::post('customer/sales/list_update_lead','Sales\LeadsController@edit');
+Route::post('customer/sales/Lead_form/update','Sales\LeadsController@update');
+//End Leads Sales
+
 //Product
 //Package
 Route::get('service/package/add', 'RootAdmin\PackageController@index');
@@ -79,6 +88,15 @@ Route::post('customer/Customer_form/update', 'RootAdmin\CustomerController@updat
 Route::post('customer/Customer_form/delete', 'RootAdmin\CustomerController@destroy');
 Route::post('customer/Customer_form/check', 'RootAdmin\CustomerController@check');
 //End Customer
+
+//Customer Sales
+Route::any('customer/sales/customer/list', 'Sales\CustomerController@index');
+Route::post('customer/sales/Customer_form/add', 'Sales\CustomerController@create');
+Route::post('customer/sales/list_update_customer', 'Sales\CustomerController@edit');
+Route::post('customer/sales/Customer_form/update', 'Sales\CustomerController@update');
+Route::post('customer/sales/Customer_form/delete', 'Sales\CustomerController@destroy');
+Route::post('customer/sales/Customer_form/check', 'Sales\CustomerController@check');
+//End Customer Sales
 
 //Contract sign no
 Route::get('service/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'RootAdmin\ContractsignController@index');

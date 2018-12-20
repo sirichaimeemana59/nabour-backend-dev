@@ -95,8 +95,12 @@
                     <h4 class="modal-title">เพิ่ม Customer</h4>
                 </div>
                 <div class="modal-body">
-                    {!! Form::model(null,array('url' => array('customer/Customer_form/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
-                    <div class="form-group">
+                    @if(Auth::user()->role !=2)
+                        {!! Form::model(null,array('url' => array('customer/Customer_form/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+                    @else
+                        {!! Form::model(null,array('url' => array('customer/sales/Customer_form/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+                    @endif
+                        <div class="form-group">
                         <label class="col-sm-1 control-label">ชื่อ</label>
                         <div class="col-sm-2">
                             <input class="form-control" name="firstname" id="firstname" type="text" required>
@@ -131,12 +135,24 @@
 
                         <label class="col-sm-1 control-label">พนักงานขาย</label>
                         <div class="col-sm-2">
-                            <select name="sale_id" id="" class="form-control" required>
-                                <option value="">กรุณาเลือกพนักงานขาย</option>
-                                @foreach($sale as $srow)
-                                    <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
-                                @endforeach
-                            </select>
+                            @if(Auth::user()->role !=2)
+                                <select name="sale_id" id="" class="form-control" required>
+                                    <option value="">กรุณาเลือกพนักงานขาย</option>
+                                    @foreach($sale as $srow)
+                                        <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <select name="sale_id" id="" class="form-control"  disabled="true">
+                                    <option value="">กรุณาเลือกพนักงานขาย</option>
+                                    @foreach($sale as $_srow)
+                                        <?php
+                                        $select=$_srow->id==Auth::user()->id?"selected":"";
+                                        ?>
+                                        <option value="{!!$_srow->id!!}" {!! $select !!}>{!!$_srow->name!!}</option>
+                                    @endforeach
+                                </select>
+                            @endif
                         </div>
 
                         <input type="hidden" name="sales_status" value="0">
@@ -208,8 +224,12 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form">
-                                {!! Form::model(null,array('url' => array('customer/Customer_form/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
-                                <br>
+                                @if(Auth::user()->role !=2)
+                                    {!! Form::model(null,array('url' => array('customer/Customer_form/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/sales/Customer_form/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @endif
+                                    <br>
                                 <input type="hidden" name="id2" id="id2">
                                 <div style="text-align: center;">
                                     <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">

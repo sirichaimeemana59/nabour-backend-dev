@@ -1,3 +1,8 @@
+<?php
+    $from=0;
+    $to=0;
+    $allpage=0;
+?>
 @if($p_rows->count() > 0)
     <?php
     $to   	= $p_rows->total() - (($p_rows->currentPage())*$p_rows->perPage());
@@ -5,7 +10,7 @@
     $from   = $p_rows->total() - (($p_rows->currentPage())*$p_rows->perPage())+$p_rows->perPage();
     $allpage = $p_rows->lastPage();
     ?>
-@endif
+
 <div class="panel-body member-list-content">
     <div class="tab-pane active" id="member-list">
         <div id="member-list-content">
@@ -31,6 +36,7 @@
                         </div>
                     </div>
                 @endif
+        @endif
             </div>
             <table cellspacing="0" class="table table-bordered table-striped">
                 <thead>
