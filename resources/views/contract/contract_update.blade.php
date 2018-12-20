@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$quotation1->quotation_code.'/'.$quotation1->lead_id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
+    <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$contract->quotation_id.'/'.$quotation1->lead_id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
     {{--content--}}
     {!! Form::model($contract,array('url' => array('service/contract/sign/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
     <div class="row">
