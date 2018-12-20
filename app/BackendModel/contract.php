@@ -18,6 +18,6 @@ class contract extends GeneralModel
     }
 
     public function customer () {
-        return $this->hasOne('App\customer','id','customer_id');
+        return $this->hasOne('App\BackendModel\Customer','id','customer_id');
     }
 }
