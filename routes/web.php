@@ -182,3 +182,10 @@ Route::post('root/admin/property-feature/edit/save', 'RootAdmin\PropertyControll
 //-------------------------------- Sales Route --------------------------------------//
 Route::any('sales/quotation/list', 'Sales\QuotationController@quotationList');
 Route::any('sales/contract/list', 'Sales\ContractsignController@contractList');
+// Demo Site
+Route::any('sales/property/list', 'Sales\PropertyController@index');
+Route::get('sales/property/view/{id}', 'Sales\PropertyController@view');
+Route::post('sales/property/reset', 'Sales\PropertyController@reset');
+Route::post('sales/property/assign', 'Sales\PropertyController@assignDemoProperty');
+Route::post('sales/property/disable', 'Sales\PropertyController@disablePropertyDemo');
+Route::post('sales/property/enable', 'Sales\PropertyController@enablePropertyDemo');

@@ -317,7 +317,7 @@ class QuotationController extends Controller
             $quotations = $quotations->where('lead_id',Request::get('leads_id'));
         }
 
-        $quotations = $quotations->orderBy('quotation_code','desc')->paginate(1);
+        $quotations = $quotations->orderBy('quotation_code','desc')->paginate(25);
         if( Request::ajax() ) {
             return view('quotation.list-element')->with(compact('quotations'));
 
