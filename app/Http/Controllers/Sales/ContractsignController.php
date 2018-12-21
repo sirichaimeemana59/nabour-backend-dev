@@ -164,7 +164,7 @@ class ContractsignController extends Controller
     }
 
     public function contractList () {
-        $contracts = contract::with('quotation')->where('sales_id',Auth::user()->id);
+        $contracts = contract::where('sales_id',Auth::user()->id);
 
         if( Request::get('c_no') ) {
             $contracts = $contracts->where('contract_code','like','%'.Request::get('c_no').'%');
