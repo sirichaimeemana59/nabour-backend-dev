@@ -34,4 +34,5 @@ class Quotation extends GeneralModel
         return $this->hasOne('App\BackendModel\contract','quotation_id','id');
     }
 
+
 }

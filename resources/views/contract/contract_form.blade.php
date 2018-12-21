@@ -27,7 +27,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @if($lead->role==1)
+                    @if($quotation1->latest_sale->role==1)
                         <h3 class="panel-title">รายละเอียด Lead</h3>
                     @else
                         <h3 class="panel-title">รายละเอียด Customer</h3>
@@ -38,13 +38,13 @@
                         <div id="member-list-content">
                             {{--content--}}
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : {!!$lead->firstname ."   ". $lead->lastname!!} </label>
+                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : {!!$quotation1->latest_lead->firstname ."   ". $quotation1->latest_lead->lastname!!} </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">โทร :  {!!$lead->phone!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">โทร :  {!!$quotation1->latest_lead->phone!!}</label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  {!!$lead->email!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  {!!$quotation1->latest_lead->email!!}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-6 control-label" for="field-1">พนักงานขาย  :  {!!$quotation1->latest_sale->name!!}</label>

@@ -32,25 +32,22 @@ class ContractsignController extends Controller
     }
 
 
-    public function create($id = null, $quo_id = null)
+    public function create($id = null)
     {
         $search = new contract;
-        $search = $search->where('quotation_id', $quo_id);
+        $search = $search->where('quotation_id', $id);
         $search = $search->first();
 
         //dd($search);
 
         if(!empty($search)){
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('id', $quo_id);
+            $quotation1 = $quotation1->where('id', $id);
             $quotation1 = $quotation1->first();
 
-            $lead = new Customer;
-            $lead = $lead->where('id', $id);
-            $lead = $lead->first();
 
             $contract = new contract;
-            $contract = $contract->where('quotation_id', $quo_id);
+            $contract = $contract->where('quotation_id', $id);
             $contract = $contract->first();
 
             //dd($contract);
@@ -64,18 +61,15 @@ class ContractsignController extends Controller
 //            $sing=$singg->max('contract_code');
 
 
-            return view('contract.contract_update')->with(compact('quotation1','lead','quo_id','contract','search'));
+            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search'));
 
         }else{
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('id', $quo_id);
+            $quotation1 = $quotation1->where('id', $id);
             $quotation1 = $quotation1->first();
 
             //dd($quotation1);
 
-            $lead = new Customer;
-            $lead = $lead->where('id', $id);
-            $lead = $lead->first();
 
             $contract = new contract;
 
@@ -89,7 +83,7 @@ class ContractsignController extends Controller
             $sing=$singg->max('contract_code');
 
 
-            return view('contract.contract_form')->with(compact('quotation1','lead','sing','quo_id','contract'));
+            return view('contract.contract_form')->with(compact('quotation1','sing','quo_id','contract'));
         }
 
 

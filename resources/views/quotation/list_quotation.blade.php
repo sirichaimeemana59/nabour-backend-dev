@@ -89,9 +89,9 @@
                                                 {{--@if($row->remark == 0 AND $remark !=1)--}}
                                                 {{--<a href="{!! url('service/contract/sign/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา" target="_blank">--}}
                                                 @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/contract/sign/form/'.$row->lead_id.'/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                        <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                                         @else
-                                                        <a href="{!! url('service/sales/contract/sign/form/'.$row->lead_id.'/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                        <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                                 @endif
                                                     <i class="fa-check"></i>
                                                 </a>
