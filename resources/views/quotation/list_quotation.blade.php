@@ -106,9 +106,9 @@
                                                 </a>
                                                     {{--@else--}}
                                                 @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                        <a href="{!! url('service/quotation/update/form/'.$row->quotation_id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                                                     @else
-                                                        <a href="{!! url('service/sales/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                        <a href="{!! url('service/sales/quotation/update/form/'.$row->quotation_id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                                                  @endif
                                                             <i class="fa-pencil-square-o"></i>
                                                         </a>

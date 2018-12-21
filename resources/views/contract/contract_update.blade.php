@@ -87,7 +87,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">เลขที่สัญญา</label>
                         <div class="col-sm-10">
-                            <input type="hidden" name="id" value="{!! $contract->id !!}">
+                            <input type="hidden" name="id" value="{!! $contract->quotation_id !!}">
                             <input class="form-control" name="contract_code" type="text" readonly value="{!! $contract->contract_code !!}">
                         </div>
                     </div>

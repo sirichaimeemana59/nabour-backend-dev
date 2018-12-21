@@ -22,7 +22,7 @@ class ContractsignController extends Controller
     {
         $quotation = new Quotation;
         //$quotation = $quotation->where('lead_id',$lead_id);
-        $quotation = $quotation->where('quotation_code',$quotation_code);
+        $quotation = $quotation->where('quotation_id',$quotation_code);
         $quotation = $quotation->first();
 
         $p = new Province;
@@ -42,7 +42,7 @@ class ContractsignController extends Controller
 
         if(!empty($search)){
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->where('quotation_id', $quo_id);
             $quotation1 = $quotation1->first();
 
             $lead = new Customer;
@@ -67,7 +67,7 @@ class ContractsignController extends Controller
 
         }else{
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->where('quotation_id', $quo_id);
             $quotation1 = $quotation1->first();
 
             $lead = new Customer;

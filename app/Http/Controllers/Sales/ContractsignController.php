@@ -21,9 +21,10 @@ class ContractsignController extends Controller
     public function index($quotation_code = null , $lead_id = null)
     {
         $quotation = new Quotation;
-        $quotation = $quotation->where('quotation_code',$quotation_code);
+        $quotation = $quotation->where('quotation_id',$quotation_code);
         $quotation = $quotation->first();
 
+        //dd($quotation);
         $p = new Province;
         $provinces = $p->getProvince();
 
@@ -41,7 +42,7 @@ class ContractsignController extends Controller
 
         if(!empty($search)){
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->where('quotation_id', $quo_id);
             $quotation1 = $quotation1->first();
 
             $lead = new Customer;
@@ -67,8 +68,10 @@ class ContractsignController extends Controller
 
         }else{
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('lead_id', $id);
+            $quotation1 = $quotation1->where('quotation_id', $quo_id);
             $quotation1 = $quotation1->first();
+
+            //dd($quotation1);
 
             $lead = new Customer;
             $lead = $lead->where('id', $id);

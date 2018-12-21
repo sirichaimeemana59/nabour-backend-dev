@@ -139,7 +139,7 @@
                     </thead>
                     <tbody>
                     @foreach($quotation_service as $key => $quo)
-                        <input type="hidden" name="_data[{{ $key }}][id]" value="{{$quo->id}}">
+                        <input type="hidden" name="_data[{{ $key }}][id]" value="{{$quo->quotation_id}}">
                         <input type="hidden" name="_data[{{ $key }}][lead_id]" value="{{$quo->lead_id}}">
                         <tr class="item-row">
                             {{--<a href="{{url('root/admin/report_quotation_update/'.$quo->id.'/'.$quo->property_id)}}"><i class="fa-trash"></i></a>--}}
@@ -244,7 +244,8 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Package</label>
                                                     <div class="col-sm-10">
-                                                        <input type="hidden" name="quotation_code" value="{{$quotation->quotation_code}}"/>
+                                                        <input type="hidden" name="quotation_code" value="{{$quotation->quotation_id}}"/>
+                                                        <input type="hidden" name="quotation_code1" value="{{$quotation->quotation_code}}"/>
                                                         <input type="hidden" class="form-control" name="package_id"  readonly value="{!! $quotation->product_id !!}">
                                                         <input type="text" required class="form-control" required name="package" id="package" readonly value="{!! $quotation->lastest_package->name !!}">
                                                         <input type="hidden" class="form-control" name="price1" id="price1" readonly value="{!! $quotation->lastest_package->price !!}">

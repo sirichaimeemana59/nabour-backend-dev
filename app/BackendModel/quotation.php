@@ -7,7 +7,7 @@ class Quotation extends GeneralModel
     protected $table        = 'quotation';
     protected $fillable     = ['product_id','product_amount','product_price_with_vat','product_vat','grand_total_price','quotation_code','month_package','unit_price','discount','invalid_date','remark','sales_id','lead_id','send_email_status','total','status'];
     public $timestamps      = true;
-    public $primaryKey = 'quotation_code';
+    public $primaryKey = 'quotation_id';
 
     public function lastest_package ()
     {

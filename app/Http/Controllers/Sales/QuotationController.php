@@ -99,8 +99,13 @@ class QuotationController extends Controller
         $quotation->save();
 
         //dump($quotation->toArray());
-        $search = Quotation::find(Request::get('quotation_code'));
-        //dd($search);
+
+        //dd(Request::get('quotation_code'));
+        $search = new Quotation;
+        $search = $search->where('quotation_code',Request::get('quotation_code'));
+        $search = $search->first();
+
+
 
         foreach (Request::get('transaction') as $t) {
             $trans = new Quotation_transaction;
@@ -142,11 +147,11 @@ class QuotationController extends Controller
     public function edit($id)
     {
         $quotation = new Quotation;
-        $quotation = $quotation->where('quotation_code', $id);
+        $quotation = $quotation->where('quotation_id', $id);
         $quotation = $quotation->first();
 
         $quotation_service = new Quotation_transaction;
-        $quotation_service = $quotation_service->where('quotation_code', $id);
+        $quotation_service = $quotation_service->where('quotation_id', $id);
         $quotation_service = $quotation_service->get();
 
         $service = new Products;
@@ -183,7 +188,7 @@ class QuotationController extends Controller
             $quotation = $quotation->find(Request::get('quotation_code'));
 
             $quotation->product_id             = Request::get('package_id');
-            $quotation->quotation_code         = Request::get('quotation_code');
+            $quotation->quotation_code         = Request::get('quotation_code1');
             $quotation->product_amount         = Request::get('project_package');
             $quotation->month_package          = Request::get('month_package');
             $quotation->unit_price             = str_replace(',', '',Request::get('unit_package'));
