@@ -134,8 +134,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 {{--{!! Form::open(array('url'=>['root/admin/package/quotation_detail'],'method'=>'post','class'=>'form-horizontal','id'=>'create-invoice-form','autocomplete' => 'off')) !!}--}}
-                {!! Form::model(null,array('url' => array('/service/quotation/add/insert'),'class'=>'form-horizontal','id'=>'create-invoice-form','name'=>'form1')) !!}
-
+                @if(Auth::user()->role !=2)
+                    {!! Form::model(null,array('url' => array('/service/quotation/add/insert'),'class'=>'form-horizontal','id'=>'create-invoice-form','name'=>'form1')) !!}
+                    @else
+                    {!! Form::model(null,array('url' => array('/service/sales/quotation/add/insert'),'class'=>'form-horizontal','id'=>'create-invoice-form','name'=>'form1')) !!}
+                @endif
                 <table class="table table-striped table-condensed" id="itemsTable" style="min-width:600px;">
                     <thead>
                     <tr>

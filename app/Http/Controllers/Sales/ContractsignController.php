@@ -52,6 +52,7 @@ class ContractsignController extends Controller
             $contract = $contract->where('quotation_id', $quo_id);
             $contract = $contract->first();
 
+            //dd($contract);
 
 //            $date=date("Y-m-d");
 //            $cut_date_now=explode("-",$date);
@@ -99,17 +100,22 @@ class ContractsignController extends Controller
         $contract->start_date           = Request::get('start_date');
         $contract->end_date             = Request::get('end_date');
         $contract->contract_type        = Request::get('contract_type');
-        $contract->grand_total_price    = Request::get('price');
+        $contract->grand_total_price    = str_replace(',', '',Request::get('price'));
         $contract->sales_id             = Request::get('sales_id');
         $contract->customer_id          = Request::get('customer_id');
         $contract->payment_term_type    = Request::get('payment_term_type');
         $contract->contract_status      = 0;
-        $contract->quotation_id         = Request::get('quotation_id');
+        $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = Request::get('person_name');
         $contract->save();
 
         //dump($contract->toArray());
-        return redirect('service/quotation/add/'.Request::get('customer_id'));
+
+        if(Auth::user()->role !=2){
+            return redirect('service/quotation/add/'.Request::get('customer_id'));
+        }else{
+            return redirect('service/sales/quotation/add/'.Request::get('customer_id'));
+        }
     }
 
 
@@ -132,16 +138,20 @@ class ContractsignController extends Controller
         $contract->start_date           = Request::get('start_date');
         $contract->end_date             = Request::get('end_date');
         $contract->contract_type        = Request::get('contract_type');
-        $contract->grand_total_price    = Request::get('price');
+        $contract->grand_total_price    = str_replace(',', '',Request::get('price'));
         $contract->sales_id             = Request::get('sales_id');
         $contract->customer_id          = Request::get('customer_id');
         $contract->payment_term_type    = Request::get('payment_term_type');
         $contract->contract_status      = 0;
-        $contract->quotation_id         = Request::get('quotation_id');
+        $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = Request::get('person_name');
         $contract->save();
         //dump($contract->toArray());
-        return redirect('service/quotation/add/'.Request::get('customer_id'));
+        if(Auth::user()->role !=2){
+            //return redirect('service/quotation/add/'.Request::get('customer_id'));
+        }else{
+            return redirect('service/sales/quotation/add/'.Request::get('customer_id'));
+        }
     }
 
 

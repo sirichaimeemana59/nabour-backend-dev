@@ -54,7 +54,7 @@
                                 //dd($quotation1);
                                 $price=$quotation1->grand_total_price==0?$quotation1->grand_total_price:$quotation1->product_price_with_vat;
                                 ?>
-                                <label class="col-sm-6 control-label" for="field-1">ราคาสุทธิ :  {!!number_format($price,2)!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">ราคาสุทธิ :  {!!$price!!}</label>
                             </div>
                             {{--endcontent--}}
                         </div>
@@ -66,7 +66,11 @@
 
     <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$contract->quotation_id.'/'.$quotation1->lead_id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
     {{--content--}}
-    {!! Form::model($contract,array('url' => array('service/contract/sign/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+    @if(Auth::user()->role !=2)
+            {!! Form::model($contract,array('url' => array('service/contract/sign/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+        @else
+            {!! Form::model($contract,array('url' => array('service/sales/contract/sign/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+    @endif
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -91,7 +95,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">เลขที่ใบเสนอราคา</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="quotation_id" type="text" readonly value="{!! $contract->quotation_id !!}">
+                            <input class="form-control" name="quotation_id" type="text" readonly value="{!! $contract->latest_quotation->quotation_code !!}">
+                            <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $contract->quotation_id !!}">
                         </div>
                     </div>
 

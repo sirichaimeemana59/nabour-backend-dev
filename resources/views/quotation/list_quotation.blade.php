@@ -76,7 +76,10 @@
                                         <div class="well">
                                            <p>เลขที่ใบเสนอราคา :  {!!$row->quotation_code!!}</p>
                                             <p>Package : {!!$row->lastest_package->name!!}</p>
-                                            <p>ราคาสุทธิ : {!! number_format($row->product_price_with_vat,2) !!}</p>
+                                            <?php
+                                                $price=$row->product_price_with_vat!=null?$row->product_price_with_vat:$row->grand_total_price
+                                            ?>
+                                            <p>ราคาสุทธิ : {!! number_format($price,2) !!}</p>
                                             @if(!empty($row->latest_contract->contract_code))
                                             <p>เอกสารสัญญา : {!! $row->latest_contract->contract_code !!}</p>
                                             @endif
@@ -85,7 +88,11 @@
                                                 {{--@if($row->status !=1)--}}
                                                 {{--@if($row->remark == 0 AND $remark !=1)--}}
                                                 {{--<a href="{!! url('service/contract/sign/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา" target="_blank">--}}
-                                                <a href="{!! url('service/contract/sign/form/'.$row->lead_id.'/'.$row->quotation_code) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                @if(Auth::user()->role !=2)
+                                                        <a href="{!! url('service/contract/sign/form/'.$row->lead_id.'/'.$row->quotation_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                        @else
+                                                        <a href="{!! url('service/sales/contract/sign/form/'.$row->lead_id.'/'.$row->quotation_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                @endif
                                                     <i class="fa-check"></i>
                                                 </a>
                                                 {{--@endif--}}
@@ -98,7 +105,11 @@
                                                     <i class="fa-print"></i>
                                                 </a>
                                                     {{--@else--}}
+                                                @if(Auth::user()->role !=2)
                                                         <a href="{!! url('service/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                    @else
+                                                        <a href="{!! url('service/sales/quotation/update/form/'.$row->quotation_code) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                 @endif
                                                             <i class="fa-pencil-square-o"></i>
                                                         </a>
                                                         <a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">

@@ -65,7 +65,11 @@
     </div>
 
     {{--content--}}
-    {!! Form::model($contract,array('url' => array('service/contract/sign/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+    @if(Auth::user()->role !=2)
+            {!! Form::model($contract,array('url' => array('service/contract/sign/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+        @else
+            {!! Form::model($contract,array('url' => array('service/sales/contract/sign/add'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
+    @endif
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -122,6 +126,7 @@
                         <label class="col-sm-2 control-label">เลขที่ใบเสนอราคา</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="quotation_id" type="text" readonly value="{!! $quo_id !!}">
+                            <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $quotation1->quotation_id !!}">
                         </div>
                     </div>
 

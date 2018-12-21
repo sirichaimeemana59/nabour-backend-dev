@@ -20,4 +20,8 @@ class contract extends GeneralModel
     public function customer () {
         return $this->hasOne('App\BackendModel\Customer','id','customer_id');
     }
+
+    public function latest_quotation () {
+        return $this->hasOne('App\BackendModel\Quotation','quotation_id','quotation_id');
+    }
 }

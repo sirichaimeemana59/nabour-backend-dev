@@ -80,6 +80,23 @@ Route::any('quotation/list', 'RootAdmin\QuotationController@quotationList');
 Route::any('contract/list', 'RootAdmin\ContractsignController@contractList');
 //End Quotation
 
+//Quotation Sales
+Route::get('service/sales/quotation/add/{id}/{ip?}', 'Sales\QuotationController@index');
+Route::post('service/sales/quotation/add/insert', 'Sales\QuotationController@create');
+Route::get('service/sales/quotation_list', 'Sales\QuotationController@index');
+Route::post('service/sales/quotation/detail', 'Sales\QuotationController@detail');
+Route::get('service/sales/quotation/update/form/{id?}', 'Sales\QuotationController@edit');
+Route::post('service/sales/quotation/update/file', 'Sales\QuotationController@update');
+Route::get('service/sales/quotation/check/quotation/{id?}/{lead_id?}', 'Sales\QuotationController@check');
+Route::get('service/sales/quotation/check_out/quotation/{id?}/{lead_id?}', 'Sales\QuotationController@check_out');
+Route::get('service/sales/quotation/print_quotation/{id?}', 'Sales\QuotationController@print');
+Route::get('service/sales/quotation/success/{id?}', 'Sales\QuotationController@success');
+Route::get('service/sales/quotation/cancel/{id?}', 'Sales\QuotationController@cancel');
+
+Route::any('quotation/sales/list', 'Sales\QuotationController@quotationList');
+Route::any('contract/sales/list', 'Sales\ContractsignController@contractList');
+//End Quotation Sales
+
 //Customer
 Route::any('customer/customer/list', 'RootAdmin\CustomerController@index');
 Route::post('customer/Customer_form/add', 'RootAdmin\CustomerController@create');
@@ -104,6 +121,13 @@ Route::get('service/contract/sign/form/{id?}/{quo_id?}', 'RootAdmin\Contractsign
 Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
 //End Contract
+
+//Contract sign no Sales
+Route::get('service/sales/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'Sales\ContractsignController@index');
+Route::get('service/sales/contract/sign/form/{id?}/{quo_id?}', 'Sales\ContractsignController@create');
+Route::post('service/sales/contract/sign/add', 'Sales\ContractsignController@save');
+Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@update');
+//End Contract Sales
 
 //---------------------------  Nabour officer Route --------------------------------------------//
 

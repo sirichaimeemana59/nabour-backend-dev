@@ -121,8 +121,11 @@
     <section class="bills-env">
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::model(null,array('url' => array('service/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
-
+                @if(Auth::user()->role !=2)
+                        {!! Form::model(null,array('url' => array('service/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
+                    @else
+                        {!! Form::model(null,array('url' => array('service/sales/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
+                @endif
                 <table class="table table-striped table-condensed" id="itemsTable" style="min-width:600px;">
                     <thead>
                     <tr>
@@ -267,7 +270,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">จำนวนหน่วย</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control tunit" required name="unit_package" id="unit_package" value="{!! $quotation->unit_price !!}" id="unit_package" type="text" readonly>
+                                                        <input class="form-control tunit" required name="unit_package" id="unit_package" value="{!! number_format($quotation->unit_price,2) !!}" id="unit_package" type="text" readonly>
                                                     </div>
                                                 </div>
                                                 <?php
@@ -276,7 +279,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">รวมเป็นเงิน</label>
                                                     <div class="col-sm-10">
-                                                        <input class="form-control" name="total_package" id="total_package" type="text" readonly value="{!! $sum_package !!}">
+                                                        <input class="form-control" name="total_package" id="total_package" type="text" readonly value="{!! number_format($sum_package,2) !!}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -321,14 +324,17 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Vat 7%</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" name="vat" id="vat" type="text" value="{!! $quotation->product_vat !!}" readonly>
+                                                    <input class="form-control" name="vat" id="vat" type="text" value="{!! number_format($quotation->product_vat,2) !!}" readonly>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Grand Total</label>
                                                 <div class="col-sm-10">
-                                                    <input class="form-control" value="{!! number_format($quotation->product_price_with_vat,2) !!}" name="grand_total" id="grand_total1" type="text" readonly>
+                                                    <?php
+                                                    $price=$quotation->product_price_with_vat!=null?$quotation->product_price_with_vat:$quotation->grand_total_price
+                                                    ?>
+                                                    <input class="form-control" value="{!! number_format($price,2) !!}" name="grand_total" id="grand_total1" type="text" readonly>
                                                 </div>
                                             </div>
                                         </div>

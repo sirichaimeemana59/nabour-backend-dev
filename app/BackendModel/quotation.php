@@ -31,7 +31,7 @@ class Quotation extends GeneralModel
 
     public function latest_contract ()
     {
-        return $this->hasOne('App\BackendModel\contract','quotation_id','quotation_code');
+        return $this->hasOne('App\BackendModel\contract','quotation_id','quotation_id');
     }
 
 }
