@@ -50,7 +50,14 @@
         <td>{!! $row->latest_sale->name !!}</td>
         <td>{!! $row->start_date !!}</td>
         <td>{!! $row->end_date !!}</td>
-        <td> Action </td>
+        <td>
+            <a href="{!! url('service/contract/sign/form/'.$row->lead_id.'/'.$row->quotation->quotation_code) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
+                <i class="fa-eye"></i>
+            </a>
+            <a href="{!! url('service/quotation/print_quotation/'.$row->quotation->quotation_code) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
+                <i class="fa-print"></i>
+            </a>
+        </td>
     </tr>
     @endforeach
     </tbody>

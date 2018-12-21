@@ -25,7 +25,7 @@
             </li> */ ?>
 
             <li class="@if(Request::is('sales/property/list')) active @endif">
-                <a href="#">
+                <a href="{!! url('sales/property/list') !!}">
                     <i class="fa-home"></i>
                     <span class="title">นิติบุคคลสำหรับทดลองใช้</span>
                 </a>
@@ -56,7 +56,7 @@
         </a>
     </li>
 
-    <li class="{!! (Request::is('service/*') ? 'active' : '') !!}">
+    <li class="{!! (Request::is('service/package/*') ? 'active' : '') !!}">
         <a href="#">
             <i class="fa fa-file-o"></i>
             <span class="title">รายการผลิตภัณฑ์</span>

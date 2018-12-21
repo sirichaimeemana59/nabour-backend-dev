@@ -164,7 +164,7 @@ class ContractsignController extends Controller
     }
 
     public function contractList () {
-        $contracts = contract::where('sales_id',Auth::user()->id);
+        $contracts = contract::with('quotation')->where('sales_id',Auth::user()->id);
 
         if( Request::get('c_no') ) {
             $contracts = $contracts->where('contract_code','like','%'.Request::get('c_no').'%');
@@ -175,6 +175,7 @@ class ContractsignController extends Controller
         }
 
         $contracts = $contracts->orderBy('contract_code','desc')->paginate(25);
+        //dd($contracts->toArray());
         if( Request::ajax() ) {
             return view('contract.list-element')->with(compact('contracts'));
 

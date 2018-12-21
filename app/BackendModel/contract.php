@@ -8,7 +8,7 @@ class contract extends GeneralModel
     protected $connection = 'back_office';
     protected $table = 'contract';
     protected $fillable = ['contract_code','start_date','end_date','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name'];
-    protected  $primaryKey = 'quotation_id';
+    protected  $primaryKey = 'id';
     public $timestamps      = true;
 
 
@@ -21,7 +21,7 @@ class contract extends GeneralModel
         return $this->hasOne('App\BackendModel\Customer','id','customer_id');
     }
 
-    public function latest_quotation () {
-        return $this->hasOne('App\BackendModel\Quotation','id','quotation_id');
+    public function quotation () {
+        return $this->hasOne('App\BackendModel\quotation','id','quotation_id');
     }
 }

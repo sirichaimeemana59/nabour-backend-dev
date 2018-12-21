@@ -83,6 +83,27 @@
         </div>
     </div>
 
+    <div class="modal fade" id="view-quotaion">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">รายละเอียดใบเสนอราคา</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="service-content1" class="form">
+
+                            </div>
+                        </div>
+                    </div>
+                    <span class="v-loading">{{ trans('messages.loading') }}...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
@@ -128,6 +149,26 @@
                 searchPage($(this).val());
             });
 
+            $('#panel-q-list').on('click','.view-quotation' ,function (){
+                var id = $(this).data('q-id');
+                $('.v-loading').show();
+                $('#service-content1').empty();
+                $.ajax({
+                    url : $('#root-url').val()+"/service/quotation/detail",
+                    method : 'post',
+                    dataType: 'html',
+                    data : ({'id':id}),
+                    success: function (r) {
+                        $('.v-loading').hide();
+                        $('#service-content1').html(r);
+                        $(window).resize();
+                    },
+                    error : function () {
+
+                    }
+                })
+            });
+
             function searchPage (page) {
                 var data = $('form').serialize()+'&page='+page;
                 $('#panel-q-list').css('opacity','0.6');
@@ -139,8 +180,7 @@
                     success: function (h) {
                         $('#panel-q-list').html(h);
                         $('#panel-q-list').css('opacity','1');
-                        //$('[data-toggle="tooltip"]').tooltip();
-                        //cbr_replace();
+                        $('[data-toggle="tooltip"]').tooltip();
                     }
                 })
             }
