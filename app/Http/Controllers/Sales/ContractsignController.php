@@ -18,7 +18,7 @@ use App\BackendModel\User as BackendUser;
 class ContractsignController extends Controller
 {
 
-    public function index($quotation_code = null , $lead_id = null)
+    public function index($quotation_code = null)
     {
         $quotation = new Quotation;
         $quotation = $quotation->where('quotation_id',$quotation_code);

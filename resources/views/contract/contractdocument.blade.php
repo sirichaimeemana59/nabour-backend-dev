@@ -87,7 +87,7 @@
             <div style="font-size=18px; font-weight: bold;" align="center">“เนเบอร์”</div>
         </div>
         <br>
-        <div align="right" style="font-size:16px;">สัญญาเลขที่  {!! $quotation->latest_contract->contract_code !!}</div>
+        <div align="right" style="font-size:16px;">สัญญาเลขที่  {!! $quotation->contract_code !!}</div>
         <br>
 
 
@@ -116,7 +116,7 @@
         </div>
     </div>
     {{-- <div style="page-break-after:always;"></div>   --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
             <div class="numberdetail">
@@ -149,7 +149,7 @@
     </div>
     <footer align="center" style="font-size:12px;text-align:center;" id="footer"><span style="margin:0 0 50px 0;" class="a"> คุณ {!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10px;"> บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพ 10110</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="align:right;" class="a"> คุณจินตนา เลิศล้ำยิ่ง </span></footer>
     {{-- <div style="page-break-after:always;"></div> --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="subnode">
             <div>
@@ -192,7 +192,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"><br></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"><br></header>
     <div class="con">
         <div class="numberh">
             <div> 4.  &nbsp;&nbsp;&nbsp;<u>ข้อจำกัดความรับผิดชอบและการรับประกัน</u><br></div>
@@ -230,7 +230,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
             <div> 7.  &nbsp;&nbsp;&nbsp;<u>การส่งมอบ</u><br></div>
@@ -278,7 +278,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
             <div> 9.  &nbsp;&nbsp;&nbsp;<u>การบอกเลิก</u><br></div>
@@ -317,7 +317,7 @@
     </div>
     {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
     {{-- <div style="page-break-after:always;"></div>  --}}
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->latest_contract->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div align="center" style="font-weight: bold;font-size:16px;">เอกสารแนบท้ายสัญญา</div>
         <br><br>
@@ -340,11 +340,11 @@
             </tr>--}}
             <tr>
                 <td width="35%" style="font-size:16px;"><div>วันที่ทำสัญญา</div></td>
-                <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->latest_contract->start_date)!!}</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->start_date)!!}</div></td>
             </tr>
             <tr>
                 <td width="35%" style="font-size:16px;"><div>วันที่หมดัญญา</div></td>
-                <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->latest_contract->end_date)!!}</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->end_date)!!}</div></td>
             </tr>
             <tr>
                 {{--<td width="35%" style="font-size:16px;"><div>วันที่ใช้งานจริง</div></td>--}}
@@ -424,12 +424,12 @@
     <?php /*$package=$property_contract_data['package']==1?"Lite Package (รวมทุก Feature ยกเว้นด้าน การเงิน)ราคา 1,250 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่รวมภาษีมูลค่าเพิ่ม 7%":"Full Package (มีทุก Feature รวมด้านการเงิน) โครงการที่มีจำนวนไม่เกิน 200 ยูนิต ราคา 1,800 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่ร่วมภาษีมูลค่าเพิ่ม 7%"*/?>
     <tr>
         <td width="35%" style="font-size:16px;vertical-align: top;"><div>ค่าบริการรายเดือน</div></td>
-        <td align="left" style="font-size:16px;"><div>: {!!$quotation->lastest_package->name!!} <br> {!!$quotation->lastest_package->description!!}</div> </td>
+        <td align="left" style="font-size:16px;"><div>: {!!$quotation->latest_quotation->lastest_package->name!!} <br> {!!$quotation->latest_quotation->lastest_package->description!!}</div> </td>
     </tr>
 </table><br><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
 <div></div>
-<div align="center" style="font-size:16px;">({!!$quotation->latest_contract->person_name!!})</div>
+<div align="center" style="font-size:16px;">({!!$quotation->person_name!!})</div>
 <br>
 <div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>
 <div align="center" style="font-size:16px;">{!! $quotation->latest_lead->company_name !!}</div><br><br>
@@ -441,7 +441,7 @@
 <div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
 <div></div>
-<div align="center" style="font-size:16px;">({!!$quotation->latest_contract->person_name!!})</div>
+<div align="center" style="font-size:16px;">({!!$quotation->person_name!!})</div>
 <br>
 <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
 </div>

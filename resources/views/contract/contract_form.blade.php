@@ -212,7 +212,7 @@
                     </div>
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
                     <input type="hidden" name="customer_id" value="{!! $quotation1->lead_id !!}">
-                    <input type="hidden" name="quotation_id" value="{!! $quo_id !!}">
+                    {{--<input type="hidden" name="quotation_id" value="{!! $quo_id !!}">--}}
                     <input type="hidden" name="price" value="{!! $price !!}">
 
 

@@ -116,7 +116,7 @@ Route::post('customer/sales/Customer_form/check', 'Sales\CustomerController@chec
 //End Customer Sales
 
 //Contract sign no
-Route::get('service/contract/sign/quotation/{quotation_code?}/{lead_id?}', 'RootAdmin\ContractsignController@index');
+Route::get('service/contract/sign/quotation/{quotation_code?}', 'RootAdmin\ContractsignController@index');
 Route::get('service/contract/sign/form/{id?}/{quo_id?}', 'RootAdmin\ContractsignController@create');
 Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
