@@ -244,7 +244,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Package</label>
                                                     <div class="col-sm-10">
-                                                        <input type="hidden" name="quotation_code" value="{{$quotation->quotation_id}}"/>
+                                                        <input type="hidden" name="quotation_code" value="{{$quotation->id}}"/>
                                                         <input type="hidden" name="quotation_code1" value="{{$quotation->quotation_code}}"/>
                                                         <input type="hidden" class="form-control" name="package_id"  readonly value="{!! $quotation->product_id !!}">
                                                         <input type="text" required class="form-control" required name="package" id="package" readonly value="{!! $quotation->lastest_package->name !!}">

@@ -116,7 +116,7 @@ class QuotationController extends Controller
             $trans->total_package 		= empty($t['total'])?'0':str_replace(',', '',$t['total']);
             $trans->lead_id 		    = Request::get('lead_id');
             $trans->quotation_code 		= Request::get('quotation_code');
-            $trans->quotation_id 		= $search->quotation_id;
+            $trans->quotation_id 		= $search->id;
 
             $trans->save();
             //dd($trans);
@@ -147,7 +147,7 @@ class QuotationController extends Controller
     public function edit($id)
     {
         $quotation = new Quotation;
-        $quotation = $quotation->where('quotation_id', $id);
+        $quotation = $quotation->where('id', $id);
         $quotation = $quotation->first();
 
         $quotation_service = new Quotation_transaction;

@@ -22,7 +22,7 @@ class ContractsignController extends Controller
     {
         $quotation = new Quotation;
         //$quotation = $quotation->where('lead_id',$lead_id);
-        $quotation = $quotation->where('quotation_id',$quotation_code);
+        $quotation = $quotation->where('id',$quotation_code);
         $quotation = $quotation->first();
 
         $p = new Province;
@@ -42,7 +42,7 @@ class ContractsignController extends Controller
 
         if(!empty($search)){
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('quotation_id', $quo_id);
+            $quotation1 = $quotation1->where('id', $quo_id);
             $quotation1 = $quotation1->first();
 
             $lead = new Customer;
@@ -52,22 +52,13 @@ class ContractsignController extends Controller
             $contract = new contract;
             $contract = $contract->where('quotation_id', $quo_id);
             $contract = $contract->first();
-
-
-//            $date=date("Y-m-d");
-//            $cut_date_now=explode("-",$date);
-//
-//            $singg = contract::whereYear('created_at', '=', $cut_date_now[0])
-//                ->whereMonth('created_at', '=', $cut_date_now[1])
-//                ->get();
-//            $sing=$singg->max('contract_code');
-
+    //dd($quotation1);
 
             return view('contract.contract_update')->with(compact('quotation1','lead','quo_id','contract','search'));
 
         }else{
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('quotation_id', $quo_id);
+            $quotation1 = $quotation1->where('id', $quo_id);
             $quotation1 = $quotation1->first();
 
             $lead = new Customer;
@@ -85,7 +76,7 @@ class ContractsignController extends Controller
                 ->get();
             $sing=$singg->max('contract_code');
 
-
+    //dd($quotation1);
             return view('contract.contract_form')->with(compact('quotation1','lead','sing','quo_id','contract'));
         }
 

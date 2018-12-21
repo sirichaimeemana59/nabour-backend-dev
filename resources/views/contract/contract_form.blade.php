@@ -126,7 +126,7 @@
                         <label class="col-sm-2 control-label">เลขที่ใบเสนอราคา</label>
                         <div class="col-sm-10">
                             <input class="form-control" name="quotation_id" type="text" readonly value="{!! $quotation1->quotation_code !!}">
-                            <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $quotation1->quotation_id !!}">
+                            <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $quotation1->id !!}">
                         </div>
                     </div>
 

@@ -112,7 +112,7 @@ class QuotationController extends Controller
             $trans->total_package 		= empty($t['total'])?'0':str_replace(',', '',$t['total']);
             $trans->lead_id 		    = Request::get('lead_id');
             $trans->quotation_code 		= Request::get('quotation_code');
-            $trans->quotation_id 		= $search->quotation_id;
+            $trans->quotation_id 		= $search->id;
 
             $trans->save();
             //dd($trans);
@@ -139,7 +139,7 @@ class QuotationController extends Controller
     public function edit($id)
     {
         $quotation = new Quotation;
-        $quotation = $quotation->where('quotation_id', $id);
+        $quotation = $quotation->where('id', $id);
         $quotation = $quotation->first();
 
         $quotation_service = new Quotation_transaction;
@@ -172,7 +172,7 @@ class QuotationController extends Controller
                 $quotation_service->project_package     = empty($q['project'])?'0':str_replace(',', '',$q['project']);
                 $quotation_service->month_package       = empty($q['price'])?'0':$q['price'];
                 $quotation_service->unit_package        = empty($q['unit_price'])?'0':str_replace(',', '',$q['unit_price']);
-                $quotation_service->total_package       = empty($q['total'])?'0':str_replace(',', '',$q['total']);
+                $quotation_service->total_package       = empty($q['total1'])?'0':str_replace(',', '',$q['total1']);
                 $quotation_service->save();
                 //dump($quotation_service->toArray());
             }
@@ -243,19 +243,19 @@ class QuotationController extends Controller
     public function print($id){
 
         $quotation = new Quotation;
-        $quotation = $quotation->where('quotation_code', $id);
+        $quotation = $quotation->where('id', $id);
         $quotation = $quotation->first();
 
         $p = new Province;
         $provinces = $p->getProvince();
 
         $quotation1 = new Quotation;
-        $quotation1 = $quotation1->where('quotation_code', $id);
+        $quotation1 = $quotation1->where('id', $id);
         $quotation1 = $quotation1->first();
 
         //dump($quotation1->toArray());
         $quotation_service = new Quotation_transaction;
-        $quotation_service = $quotation_service->where('quotation_code', $id);
+        $quotation_service = $quotation_service->where('quotation_id', $id);
         $quotation_service = $quotation_service->get();
 
         return view('report.report_quotation')->with(compact('quotation','provinces','quotation1','quotation_service'));
