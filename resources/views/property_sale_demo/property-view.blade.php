@@ -9,7 +9,7 @@
             <div class="mail-single-header">
                 <h2>
                     ข้อมูลผู้ทดลองใช้
-                    <a href="{!! url('officer/property-list') !!}" class="go-back">
+                    <a href="{!! url('sales/property/list') !!}" class="go-back">
                         <i class="fa-angle-left"></i> ย้อนกลับ
                     </a>
                 </h2>
@@ -195,12 +195,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">{!! trans('messages.AboutProp.location') !!}</label>
-                                     <div id="search-geo-block">
-                                        <input id="address" class="controls" type="text" placeholder="Search Box">
-                                        <input type="button" class="btn btn-primary" id="search-geo-btn" value="SEARCH" />
-                                    </div>
-                                    <div class="col-sm-10"><div id="map" style="height:300px;"></div></div>
+                                    <div class="col-sm-10 col-sm-offset-2"><div id="map" style="height:300px;"></div></div>
                                     {!! Form::hidden('lat',null,array('id'=>'latbox')) !!}
                                     {!! Form::hidden('lng',null,array('id'=>'lngbox')) !!}
                                 </div>
@@ -247,7 +242,7 @@
 		marker = new google.maps.Marker({
 		    position: latlng,
 		    map: map,
-		    draggable: true
+		    //draggable: true
 		});
 
 		google.maps.event.addListener(marker, 'dragend', function (event) {

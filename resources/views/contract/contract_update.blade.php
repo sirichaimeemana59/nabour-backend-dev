@@ -254,7 +254,7 @@
             });
         }
 
-        if($('#p_form').valid() && allGood ) {
+        if($('#p_form').valid() ) {
             $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
             $('#p_form').submit();
         } else {

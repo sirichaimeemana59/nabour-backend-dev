@@ -169,6 +169,7 @@ class ContractsignController extends Controller
         }
 
         $contracts = $contracts->orderBy('contract_code','desc')->paginate(25);
+        //dd($contracts->toArray());
         if( Request::ajax() ) {
             return view('contract.list-element')->with(compact('contracts'));
 
