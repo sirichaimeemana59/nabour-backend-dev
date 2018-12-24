@@ -35,12 +35,12 @@
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th>เลขที่สัญญา</th>
-        <th>ลูกค้า</th>
-        <th>Sales</th>
-        <th>วันที่เริ่ม</th>
-        <th>วันที่สิ้นสุด</th>
-        <th>Action</th>
+        <th width="140px">เลขที่สัญญา</th>
+        <th width="*">ลูกค้า</th>
+        <th width="170px">Sales</th>
+        <th width="150px">วันที่เริ่ม</th>
+        <th width="150px">วันที่สิ้นสุด</th>
+        <th width="90px">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -51,7 +51,7 @@
         <td>{!! $row->latest_sale->name !!}</td>
         <td>{!! $row->start_date !!}</td>
         <td>{!! $row->end_date !!}</td>
-        <td>
+        <td class="action-links">
             <a href="{!! url('service/contract/sign/form/'.$row->quotation_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
                 <i class="fa-eye"></i>
             </a>

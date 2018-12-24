@@ -44,15 +44,18 @@
                     <th width="20%">ชื่อ - สกุล</th>
                     <th width="*">เบอร์โทร</th>
                     <th width="*">พนักงานขาย</th>
+                    <th width="120px">ใบเสนอราคา</th>
                     <th width="180px"></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($_lead as $row)
+                    <?php $doc_count = $row->quotation->count(); ?>
                     <tr>
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
                         <td>{!!$row->phone !!}</td>
                         <td>{!!$row->latest_sale->name!!}</td>
+                        <td class="text-right">{!! $doc_count > 0 ? $doc_count : 'ไม่มีข้อมูล'; !!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
                                 <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>

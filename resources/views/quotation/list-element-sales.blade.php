@@ -34,11 +34,11 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>เลขที่ใบเสนอราคา</th>
-            <th>Leads</th>
-            <th>Sales</th>
-            <th>ราคาสุทธิ</th>
-            <th width="180px">Action</th>
+            <th width="160px">เลขที่ใบเสนอราคา</th>
+            <th width="*">Leads</th>
+            <th width="200px">Sales</th>
+            <th width="180px">ราคาสุทธิ</th>
+            <th width="170px">Action</th>
         </tr>
         </thead>
         <tbody>

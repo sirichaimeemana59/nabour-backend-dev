@@ -34,11 +34,11 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>เลขที่ใบเสนอราคา</th>
-            <th>Leads</th>
-            <th>Sales</th>
-            <th>ราคาสุทธิ</th>
-            <th width="180px">Action</th>
+            <th width="160px">เลขที่ใบเสนอราคา</th>
+            <th width="*">Leads</th>
+            <th width="200px">Sales</th>
+            <th width="180px">ราคาสุทธิ</th>
+            <th width="170px">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -57,9 +57,6 @@
                 </a>
                 <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                     <i class="fa-pencil-square-o"></i>
-                </a>
-                <!--<a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">
-                    <i class="fa-trash"></i> -->
                 </a>
                 <a href="#" class="view-quotation btn btn-info"  data-toggle="modal" data-target="#view-quotaion" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-q-id="{!!$row->quotation_code!!}" >
                     <i class="fa-eye"></i>
