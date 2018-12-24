@@ -60,7 +60,7 @@
                     <div class="tab-pane active" id="member-list">
                         <div id="member-list-content">
                             <div id="panel-q-list">
-                                @include('quotation.list-element')
+                                @include('quotation.list-element-sales')
                             </div>
                         </div>
                     </div>
