@@ -14,21 +14,31 @@ use App\BackendModel\Quotation;
 use App\BackendModel\Customer;
 use App\BackendModel\contract;
 use App\BackendModel\User as BackendUser;
+use App\BackendModel\Quotation_transaction;
+use App\BackendModel\Products;
 
 class ContractsignController extends Controller
 {
 
-    public function index($quotation_code = null)
+    public function index($quotation_code = null,$code = null)
     {
-        $quotation = new Quotation;
-        $quotation = $quotation->where('quotation_id',$quotation_code);
+        $quotation = new contract;
+        //$quotation = $quotation->where('lead_id',$lead_id);
+        $quotation = $quotation->where('id',$quotation_code);
         $quotation = $quotation->first();
 
-        //dd($quotation);
+        $package = new Products;
+        $package = $package->where('status', '1');
+        $package = $package->get();
+
+        $quotation_service = new Quotation_transaction;
+        $quotation_service = $quotation_service->where('quotation_id', $code);
+        $quotation_service = $quotation_service->get();
+
         $p = new Province;
         $provinces = $p->getProvince();
 
-        return view('contract.contractdocument')->with(compact('quotation','provinces'));
+        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package'));
     }
 
 
@@ -68,8 +78,9 @@ class ContractsignController extends Controller
             $quotation1 = $quotation1->where('id', $id);
             $quotation1 = $quotation1->first();
 
-            //dd($quotation1);
-
+            $lead = new Customer;
+            $lead = $lead->where('id', $id);
+            $lead = $lead->first();
 
             $contract = new contract;
 
@@ -82,7 +93,7 @@ class ContractsignController extends Controller
                 ->get();
             $sing=$singg->max('contract_code');
 
-
+            //dd($quotation1);
             return view('contract.contract_form')->with(compact('quotation1','sing','quo_id','contract'));
         }
 
@@ -145,7 +156,7 @@ class ContractsignController extends Controller
         $contract->save();
         //dump($contract->toArray());
         if(Auth::user()->role !=2){
-            //return redirect('service/quotation/add/'.Request::get('customer_id'));
+            return redirect('service/quotation/add/'.Request::get('customer_id'));
         }else{
             return redirect('service/sales/quotation/add/'.Request::get('customer_id'));
         }
