@@ -22,13 +22,7 @@ use Validator;
 class SalesOfficerController extends Controller {
 
     public function __construct () {
-        $this->middleware('auth');
-        //view()->share('active_menu','members');
-        //if( Auth::check() && Auth::user()->role !== 0 ) {
-            //if(Auth::user()->role !== 5) {
-                //Redirect::to('feed')->send();
-            //}
-        //}
+        $this->middleware('admin');
     }
 
     public function salesList() {

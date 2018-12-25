@@ -19,6 +19,9 @@ use App\BackendModel\User as BackendUser;
 
 class QuotationController extends Controller
 {
+    public function __construct () {
+        $this->middleware('admin');
+    }
 
     public function index($id = null,$ip = null)
     {

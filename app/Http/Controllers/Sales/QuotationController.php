@@ -15,10 +15,12 @@ use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
 use App\success;
 use App\BackendModel\Customer;
-use App\BackendModel\User as BackendUser;
 
 class QuotationController extends Controller
 {
+    public function __construct () {
+        $this->middleware('sales');
+    }
 
     public function index($id = null,$ip = null)
     {

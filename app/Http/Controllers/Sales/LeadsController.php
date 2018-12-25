@@ -10,11 +10,14 @@ use Redirect;
 //Model
 use App\BackendModel\User;
 use App\Province;
-use App\BackendModel\LeadTable;
 use App\BackendModel\Customer;
 
 class LeadsController extends Controller
 {
+    public function __construct () {
+        $this->middleware('sales');
+    }
+
     public function index()
     {
         $_lead = new Customer;

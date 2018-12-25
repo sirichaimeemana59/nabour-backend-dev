@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**rootAdminHome
@@ -13,7 +11,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('redirect-user');
     }
 
     /**
@@ -36,5 +34,10 @@ class HomeController extends Controller
 
     public function SalesHome () {
         return view('home');
+    }
+
+    public function login()
+    {
+        return view('auth.login');
     }
 }

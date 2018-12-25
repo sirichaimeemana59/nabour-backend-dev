@@ -13,10 +13,12 @@ use App\BackendModel\service_quotation;
 use App\BackendModel\Quotation;
 use App\BackendModel\Customer;
 use App\BackendModel\contract;
-use App\BackendModel\User as BackendUser;
 
 class ContractsignController extends Controller
 {
+    public function __construct () {
+        $this->middleware('sales');
+    }
 
     public function index($quotation_code = null)
     {

@@ -36,7 +36,6 @@
         <tr>
             <th width="160px">เลขที่ใบเสนอราคา</th>
             <th width="*">Leads</th>
-            <th width="200px">Sales</th>
             <th width="180px">ราคาสุทธิ</th>
             <th width="170px">Action</th>
         </tr>
@@ -46,8 +45,7 @@
         <tr>
             <td>{!! $row->quotation_code !!}</td>
             <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
-            <td>{!! $row->latest_sale->name !!}</td>
-            <td>{!! $row->product_price_with_vat !!}</td>
+            <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
             <td class="action-links">
                 <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>

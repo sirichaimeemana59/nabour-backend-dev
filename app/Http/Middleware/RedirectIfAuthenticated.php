@@ -23,13 +23,13 @@ class RedirectIfAuthenticated
 
             switch ($role) {
                 case '0':
-                    $ru = 'customer/customer/list';
+                    $ru = '/customer/customer/list';
                     break;
                 case '1':
-                    $ru =  '/projects';
+                    $ru =  '/customer/customer/list';
                     break;
                 default:
-                    $ru =  '/home';
+                    $ru =  '/sales/quotation/list';
                     break;
             }
             return redirect($ru);
