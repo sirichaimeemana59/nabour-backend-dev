@@ -16,7 +16,7 @@ class PackageController extends Controller
     public function index()
     {
         $package = new Products;
-        $package = $package->where('status','1');
+        //$package = $package->where('status','1');
         $package = $package->get();
 
         $max_cus = new Products;
@@ -79,7 +79,7 @@ class PackageController extends Controller
     public function index_service()
     {
         $package = new Products;
-        $package = $package->where('status','2');
+        //$package = $package->where('status','2');
         $package = $package->get();
 
         $max_cus = new Products;
@@ -103,8 +103,6 @@ class PackageController extends Controller
             $product->vat               = Request::get('vat_value');
             $product->is_delete         = Request::get('is_delete');
             $product->product_code      = Request::get('product_code');
-            //$product->created_at       ='2018-11-30 05:35:35';
-            //$product->updated_at       ='2018-11-30 05:35:35';
             $product->save();
         }else{
             $product = new Products;
@@ -115,8 +113,6 @@ class PackageController extends Controller
             $product->status            = Request::get('status');
             $product->is_delete         = Request::get('is_delete');
             $product->product_code      = Request::get('product_code');
-            //$product->created_at       ='2018-11-30 05:35:35';
-            //$product->updated_at       ='2018-11-30 05:35:35';
             $product->save();
         }
 

@@ -14,21 +14,31 @@ use App\BackendModel\Quotation;
 use App\BackendModel\Customer;
 use App\BackendModel\contract;
 use App\BackendModel\User as BackendUser;
+use App\BackendModel\Quotation_transaction;
+use App\BackendModel\Products;
 
 class ContractsignController extends Controller
 {
 
-    public function index($quotation_code = null)
+    public function index($quotation_code = null,$code = null)
     {
         $quotation = new contract;
         //$quotation = $quotation->where('lead_id',$lead_id);
         $quotation = $quotation->where('id',$quotation_code);
         $quotation = $quotation->first();
 
+        $package = new Products;
+        $package = $package->where('status', '1');
+        $package = $package->get();
+
+        $quotation_service = new Quotation_transaction;
+        $quotation_service = $quotation_service->where('quotation_id', $code);
+        $quotation_service = $quotation_service->get();
+
         $p = new Province;
         $provinces = $p->getProvince();
 
-        return view('contract.contractdocument')->with(compact('quotation','provinces'));
+        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package'));
     }
 
 

@@ -43,14 +43,14 @@ $(function () {
         e.preventDefault();
         var time = $.now();
         var bath = $('#baht-label').val();
-        var category = '<select name="transaction['+time+'][service]" id="service unit-select">'+ $('#invoice-category-template select').html() + '</select>';
+        var category = '<select name="transaction['+time+'][service]" id="service">'+ $('#invoice-category-template select').html() + '</select>';
         var tRowTmp = [
             '<tr class="item-row">',
             '<td><i class="deleteRow fa-trash"></i></td>',
             '<td>'+category+'</td>',
             '<td><input class="toValidate tQty form-control input-sm" name="transaction['+time+'][project]" type="text"  maxlength="15"/></td>',
-            '<td><input class="toValidate  form-control input-sm" name="transaction['+time+'][price]" type="text" maxlength="15"></div></td>',//.join('');
-            '<td><div class="input-group"><span class="input-group-addon">฿</span>'+'<input   class="toValidate tPrice form-control input-sm" style="text-align: right;" name="transaction['+time+'][unit_price]" type="text"  maxlength="15"/></td>'];
+            '<td></td>',//.join('');
+            '<td><div class="input-group"><span class="input-group-addon">฿</span>'+'<input   class="toValidate tPrice form-control input-sm" style="text-align: right;" name="transaction['+time+'][unit_price]" id="unit_price" type="text"  maxlength="15"/></td>'];
         if($(this).data('vat')) {
             tRowTmp.push('<td><input id="vat-'+time+'"  name="transaction['+time+'][vat]" value="1" class="cbr cbr-replaced cbr-turquoise vat-check" type="checkbox"></td>');
         }
@@ -115,7 +115,7 @@ $(function () {
         calTotal();
     })
 
-    $("#tax,#withholding_tax,#discount").number( true , 2);
+    $("#tax,#withholding_tax,#discount").number( true , 0);
 
     $('#itemsTable').on('change', '.vat-check', function (){
         calTotal();
@@ -124,31 +124,38 @@ $(function () {
 
 function calTotal () {
     var Total = TotalTax = 0;
+
     $('.tLineTotal').each(function () {
         if ( $(this).val() !== "" ) {
             t = Number($(this).val());
             Total += t;
-            chk = $(this).parents('td').prev().find('.vat-check');
-            if(chk.length) {
-                if(chk.prop('checked')) {
-                    TotalTax += t;
-                }
-            }
+            // chk = $(this).parents('td').prev().find('.vat-check');
+            // if(chk.length) {
+            //     if(chk.prop('checked')) {
+            //         TotalTax += t;
+            //     }
+            // }
         }
     })
+
     //console.log(Total);
     var tax;
-    if($('#tax').val() === "" || !$('#tax').length) {
-        tax = 0;
-    } else {
-        tax = Number($('#tax').val());
-    }
-    tax = TotalTax*tax/100;
-    if(tax < 0 ) tax = 0;
-    $('#tax_total').val(tax.toFixed(2));
-    var tax_ = $.number(tax,2);
-    $('#salesTax').html(tax_);
+    var _total_grand = $('#h_total').text();
+    var tax1 = $('#tax').val();
+    tax = (Total*tax1)/100;
+    $('.salesTax').val(tax);
+    // if($('#tax').val() === "" || !$('#tax').length) {
+    //     tax = 0;
+    // } else {
+    //     tax = tax1;
+    // }
 
+    //alert(tax);
+    //if(tax < 0 ) tax = 0;
+    //$('#tax_total').val(tax.toFixed(2));
+    //var tax_ = $.number(tax,2);
+
+    //console.log(tax);
     var h_tax;
     if($('#withholding_tax').val() === "" || !$('#withholding_tax').length) {
         h_tax = 0;
@@ -176,6 +183,7 @@ function calTotal () {
 
     var grandTotal_ = $.number(grandTotal,2);
     $('#grandTotal').html(grandTotal_);
+    $('#h_total').val(grandTotal_);
     $('#form-grand-total').val(grandTotal.toFixed(2));
 
     if($('#unit-balance-input').length && Number($('#unit-balance-input').val()) > 0 ) {
@@ -237,7 +245,7 @@ function validateTransaction () {
 }
 
 function rewokeMask () {
-    $(".tQty").number( true, 3 );
+    $(".tQty").number( true, 0 );
     $(".tPrice").number( true, 3 );
     $(".colTotal").number( true, 2 );
 }

@@ -28,7 +28,7 @@
     </script>
     <div class="page-title">
         <div class="title-env">
-            <h1 class="title">เพิ่ม Package</h1>
+            <h1 class="title">เพิ่มผลิตภัณฑ์</h1>
         </div>
         <div class="breadcrumb-env">
 
@@ -38,18 +38,18 @@
                 </li>
                 <li>Package</li>
                 <li class="active">
-                    <strong>เพิ่ม Package</strong>
+                    <strong>เพิ่มผลิตภัณฑ์</strong>
                 </li>
             </ol>
         </div>
     </div>
 
-    <a href="#" data-toggle="modal" data-target="#add-officer-modal" class="action-float-right create-invoice-btn btn btn-primary">เพิ่ม Package</a>
+    <a href="#" data-toggle="modal" data-target="#add-officer-modal" class="action-float-right create-invoice-btn btn btn-primary">เพิ่มผลิตภัณฑ์</a>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" id="panel-package-list">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Package ของระบบ Nabour</h3>
+                    <h3 class="panel-title">ผลิตภัณฑ์ของระบบ Nabour</h3>
                 </div>
                 @include('product.list_package_element')
             </div>
@@ -61,7 +61,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">เพิ่มข้อมูล Package</h4>
+                    <h4 class="modal-title">เพิ่มข้อมูลผลิตภัณฑ์</h4>
                 </div>
                 {{--content--}}
                 <div class="modal-body">
@@ -89,7 +89,7 @@
                                 ?>
                                 <input type="hidden" name="product_code" value="{!! $cus !!}">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">ชื่อ Package</label>
+                                    <label class="col-sm-2 control-label">ชื่อผลิตภัณฑ์</label>
                                     <div class="col-sm-9">
                                         <input class="form-control" name="name" type="text" required>
                                     </div>
@@ -106,8 +106,14 @@
                                         <input class="form-control" name="price" id="price" type="text" required >
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">ประเภท</label>
+                                    <div class="col-sm-9">
+                                        <input type="radio" name="status" value="1">  :   บริการ <br>
+                                        <input type="radio" name="status" value="2">  :   Package
+                                    </div>
+                                </div>
                                 <input type="hidden" name="is_delete" value="0">
-                                <input type="hidden" name="status" value="1">
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">Vat 7 %</label>
                                         <div class="col-sm-9">

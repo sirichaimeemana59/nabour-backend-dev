@@ -95,7 +95,22 @@
     </div>
 </div>
 <input type="hidden" name="is_delete" value="f">
-<input type="hidden" name="status" value="1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">ประเภท</label>
+    <div class="col-sm-9">
+        <?php
+        if($package->status ==1){
+            $check1="checked"; //package
+            $check2=""; //service
+        }else{
+            $check1="";
+            $check2="checked";
+        }
+        ?>
+        <input type="radio" name="status" value="1" {!! $check2 !!}>  :   บริการ <br>
+        <input type="radio" name="status" value="2" {!! $check1 !!}>  :   Package
+    </div>
+</div>
 
 <div class="form-group">
     <label class="col-sm-2 control-label"></label>

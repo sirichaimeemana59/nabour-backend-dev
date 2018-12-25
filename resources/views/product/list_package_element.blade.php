@@ -4,7 +4,7 @@
             <table cellspacing="0" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th width="20%">ชื่อ Package</th>
+                    <th width="20%">ชื่อผลิตภัณฑ์</th>
                     <th width="*">รายละเอียด</th>
                     <th width="180px">{{ trans('messages.action') }}</th>
                 </tr>

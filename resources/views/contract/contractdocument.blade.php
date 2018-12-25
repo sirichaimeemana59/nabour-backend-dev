@@ -424,7 +424,16 @@
     <?php /*$package=$property_contract_data['package']==1?"Lite Package (รวมทุก Feature ยกเว้นด้าน การเงิน)ราคา 1,250 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่รวมภาษีมูลค่าเพิ่ม 7%":"Full Package (มีทุก Feature รวมด้านการเงิน) โครงการที่มีจำนวนไม่เกิน 200 ยูนิต ราคา 1,800 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่ร่วมภาษีมูลค่าเพิ่ม 7%"*/?>
     <tr>
         <td width="35%" style="font-size:16px;vertical-align: top;"><div>ค่าบริการรายเดือน</div></td>
-        <td align="left" style="font-size:16px;"><div>: {!!$quotation->latest_quotation->lastest_package->name!!} <br> {!!$quotation->latest_quotation->lastest_package->description!!}</div> </td>
+        <td align="left" style="font-size:16px;"><div>:
+            @foreach($quotation_service as $row)
+                @foreach($package as $_row)
+                    @if($row->package_id == $_row->id AND $_row->status == 1)
+                            {!! $_row->name !!}<br>{!! $_row->description !!}
+                    @endif
+                @endforeach
+            @endforeach
+
+            </div> </td>
     </tr>
 </table><br><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>

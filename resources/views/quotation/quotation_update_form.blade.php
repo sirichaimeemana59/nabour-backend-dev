@@ -4,72 +4,7 @@
     /*$lang = App::getLocale();
     $property_type = unserialize(constant('PROPERTY_TYPE_'.strtoupper($lang)));*/
     ?>
-    <script language="javascript">
-        function fnccheck(){
-            var month;/*//เดือน*/
-            var total;/*//รวม*/
-            var unit;/*//ยูนิต*/
-            var price;/*//ราคา*/
 
-
-            month=parseFloat(document.form1.month.value);
-            unit=parseFloat(document.form1.month.value);
-            price=parseFloat(document.form1.service.value);
-
-            total=month*5000;
-
-            document.form1.total.value=total;
-            document.form1.unit.value=unit;
-        }
-
-        function fnccheck_package(){
-            var month_package;/*//เดือน*/
-            var total;/*//รวม*/
-            var project_package;/*//ยูนิต*/
-            var total_package;/*//ราคา*/
-
-
-            month_package=parseFloat(document.form1.month_package.value);
-            project_package=parseFloat(document.form1.project_package.value);
-            total_package=parseFloat(document.form1.price1.value);
-
-            total=(month_package*project_package)*total_package;
-
-            document.form1.total_package.value=total;
-        }
-
-        $(function() {
-
-            $('#month_package').keyup(function() {
-                updateTotal();
-            });
-            $('#project_package').keyup(function() {
-                updateTotal();
-            });
-            $('#discount').keyup(function() {
-                updateTotal();
-            });
-
-
-            var updateTotal = function () {
-                var grandTotal = parseInt($('#grandTotal').text().replace(',',''));
-                var project_package = parseInt($('#project_package').val());
-                var total_package = parseInt($('#total_package').val());
-                var discount = parseInt($('#discount').val());
-
-                var sub_total = parseFloat((grandTotal + total_package) || 0).toFixed(2);
-
-                var vat = parseFloat(((grandTotal + total_package)*(7/100)) || 0).toFixed(2);
-                var vat1 = parseFloat((grandTotal + total_package)*(7/100)) || 0;
-
-                var sumgrand = (sub_total-discount) + vat1;
-
-                $('#sub_total').val(sub_total);
-                $('#vat').val(vat);
-                $('#grand_total1').val(sumgrand).toFixed(2);
-            };
-        });
-    </script>
     <?php
     $sum = 0;
     ?>
@@ -139,38 +74,59 @@
                     </thead>
                     <tbody>
                     @foreach($quotation_service as $key => $quo)
+                        <input type="hidden" name="_data[{{ $key }}][id_]" value="{{$quo->id}}">
                         <input type="hidden" name="_data[{{ $key }}][id]" value="{{$quo->quotation_id}}">
                         <input type="hidden" name="_data[{{ $key }}][lead_id]" value="{{$quo->lead_id}}">
+
+                        <?php
+                            $read=$quo->lastest_package->status==1?"readonly":"";
+                            $id_=$quo->lastest_package->status==1?"unit_price":"";
+                            $t_price=$quo->lastest_package->status==1?"tprice":"";
+                            $t_month=$quo->lastest_package->status==1?"tmonth":"";
+                            $_service=$quo->lastest_package->status==1?"service_":"";
+                        ?>
                         <tr class="item-row">
                             {{--<a href="{{url('root/admin/report_quotation_update/'.$quo->id.'/'.$quo->property_id)}}"><i class="fa-trash"></i></a>--}}
                             <td></td>
                             <td>
-                                <select name="_data[{{ $key }}][service]" id="service" class="toValidate form-control input-sm" required>
-                                    <option value="">กรุณาเลือกค่าบริการ</option>
-                                    @foreach($service as $row)
-                                        <?php
-                                        $select=$row->id==$quo->package_id?"selected":"";
-                                        ?>
-                                        <option value="{{$row->id}}" {{$select}}>{{$row->name}}</option>
-                                    @endforeach
-                                </select>
+                                    @if($quo->lastest_package->status==1)
+                                    <select name="_data[{{ $key }}][service]" id="{!! $_service !!}" class="toValidate form-control input-sm" required OnChange="resutPrice(this.value);">
+                                        <option value="">กรุณาเลือกค่าบริการ</option>
+                                            @foreach($package as $row_)
+                                                <?php
+                                                $select_=$row_->id==$quo->package_id?"selected":"";
+                                                ?>
+                                                <option value="{{$row_->id}}|{!! $row_->price !!}" {{$select_}}>{{$row_->name}}</option>
+                                            @endforeach
+                                    </select>
+                                        @else
+                                        <select name="_data[{{ $key }}][service]" id="service" class="toValidate form-control input-sm" required>
+                                            <option value="">กรุณาเลือกค่าบริการ</option>
+                                            @foreach($service as $row)
+                                                <?php
+                                                $select=$row->id==$quo->package_id?"selected":"";
+                                                ?>
+                                                <option value="{{$row->id}}" {{$select}}>{{$row->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
                             </td>
                             <input type="hidden" name="_data[{{ $key }}][quotation_code]" value="{{$quo->quotation_code}}"/>
-                            <td><input type="text" required name="_data[{{ $key }}][project]" style="text-align: right;" value="{{number_format($quo->project_package,0)}}" class="toValidate form-control  tPrice"/>
+                            <td><input type="text" required name="_data[{{ $key }}][project]" id="{!! $t_price !!}" style="text-align: right;" value="{!!number_format($quo->project_package,0)!!}" class="toValidate form-control  tPrice"/>
                             </td>
                             <td>
-                                <input type="text" required style="text-align: right;" class="toValidate form-control input-sm" name="_data[{{ $key }}][price]" value="{{$quo->month_package}}" maxlength="15"/>
+                                <input type="text" required style="text-align: right;" id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{{ $key }}][price]" value="{{$quo->month_package}}" maxlength="15"/>
 
                             </td>
                             <td><div class="input-group">
                                     <span class="input-group-addon">฿</span>
-                                    <input type="text" style="text-align: right;" required name="_data[{{ $key }}][unit_price]" value="{{number_format($quo->unit_package,2)}}" class="toValidate form-control input-sm tQty"/>
+                                    <input type="text" style="text-align: right;" required name="_data[{{ $key }}][unit_price]" id="{!! $id_ !!}" value="{!!number_format($quo->unit_package,2)!!}" class="toValidate form-control input-sm tQty" {!! $read !!}/>
                                 </div>
                             <td>
                                 <div class="text-right">
-                                    <span class="colTotal">{{number_format($quo->total_package,2)}}</span> บาท
+                                    <span class="colTotal" id="_colTotal">{{number_format($quo->total_package,2)}}</span> บาท
                                 </div>
-                                <input name="_data[{{ $key }}][total1]" required class="tLineTotal" type="hidden" value="{{$quo->total_package}}"/>
+                                <input name="_data[{{ $key }}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{{$quo->total_package}}"/>
                             </td>
                         </tr>
                         <?php
@@ -185,16 +141,51 @@
                         {{--<a href="#" id="addRowBtn" class="btn btn-primary"><i class="fa-plus"></i> {{ trans('messages.feesBills.add_item') }}</a>--}}
                     </div>
                     <div class="col-md-5 text-right">
-                        {{-- <div class="row">
-                             <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.sub_total') }}:</h5></div>
-                             <div class="col-md-4 text-right"><h5><span id="subTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>
-                             </div>
-                         </div>--}}
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }}:</h5></div>
-                            <div class="col-md-4 text-right"><h5><span id="grandTotal">{{number_format($sum,2)}}</span> {{ trans('messages.Report.baht') }}</h5>
+                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.sub_total') }}:</h5></div>
+                            <div class="col-md-4 text-right"><h5><span id="subTotal">{!! $quotation->grand_total_price !!}</span> {{ trans('messages.Report.baht') }}</h5>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.discount') }}: </h5></div>
+                            <div class="col-md-4 text-right">
+                                <input type="text" name="discount" id="discount" maxlength="20" value="{!! $quotation->discount !!}" class="text-right form-control input-sm">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5 col-md-offset-3 text-right">
+                                <div class="input-group">
+                                    <input placeholder="{{ trans('messages.feesBills.vat') }}" type="text" name="tax" id="tax" maxlength="2" value="" class="form-control input-sm">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <input type="text" name="vat" class="text-right form-control input-sm salesTax" value="{!! $quotation->product_vat !!}" readonly style="border: none;">
+                            </div>
+                        </div>
+                        <?php
+                            $grand_total=($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount;
+                        ?>
+                        <div class="row">
+                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }} :</h5></div>
+                            <div class="col-md-4 text-right"><h5><span id="grandTotal">{!! number_format($grand_total,2) !!}</span> {{ trans('messages.Report.baht') }}</h5>
+                                <input type="hidden" id="h_total" name="sub_total">
+                            </div>
+                        </div>
+                        <input name="grand_total_" id="form-grand-total" type="hidden" value="{!! $grand_total !!}"/>
+                        <input type="hidden" name="quotation_code1" value="{{$quo->quotation_code}}">
+                        <input type="hidden" name="quotation_code" value="{{$quo->quotation_id}}">
+                        <input type="hidden" name="sales_id" value="{{$quotation->sales_id}}">
+                        <input type="hidden" name="lead_id" value="{{$quotation->lead_id}}">
+
+
+                        {{--<div class="row">--}}
+                        {{--<div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }}:</h5></div>--}}
+                        {{--<div class="col-md-4 text-right"><h5><span id="_grandTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
+
                         <div class="property-balance" style="display:none;">
                             <hr/>
                             <div class="row">
@@ -221,130 +212,6 @@
                 <input name="grand_total" id="form-grand-total" type="hidden"/>
                 <input name="balance" id="unit-balance-input" type="hidden"/>
                 <input name="total" id="form-total" type="hidden"/>
-
-                {{----}}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Package ของระบบ Nabour</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="tab-pane active" id="member-list">
-                                    <div id="member-list-content">
-                                        {{--content--}}
-                                        <div id="cal_package">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">เลขที่ใบเสนอราคา</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" required name="quotation_number" id="quotation_number" readonly value="{!! $quotation->quotation_code !!}">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Package</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="hidden" name="quotation_code" value="{{$quotation->id}}"/>
-                                                        <input type="hidden" name="quotation_code1" value="{{$quotation->quotation_code}}"/>
-                                                        <input type="hidden" class="form-control" name="package_id"  readonly value="{!! $quotation->product_id !!}">
-                                                        <input type="text" required class="form-control" required name="package" id="package" readonly value="{!! $quotation->lastest_package->name !!}">
-                                                        <input type="hidden" class="form-control" name="price1" id="price1" readonly value="{!! $quotation->lastest_package->price !!}">
-                                                        <input type="hidden" class="form-control" name="sales_id"  readonly value="{!! $quotation->sales_id !!}">
-                                                        <input type="hidden" class="form-control" name="lead_id"  readonly value="{!! $quotation->lead_id !!}">
-                                                        {{--<input type="hidden" class="form-control" name="quotation_id"  readonly value="{!! $quotation->quotation_id !!}">--}}
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">จำนวนโครงการ</label>
-                                                    <div class="col-sm-10">
-                                                        <input class="form-control tpack" required  name="project_package" value="{!! $quotation->product_amount !!}" id="project_package" type="text"  onkeyup="JavaScript:return fnccheck_package();" >
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">จำนวนเดือน</label>
-                                                    <div class="col-sm-10">
-                                                        <input class="form-control tmonth" required name="month_package" id="month_package" type="text"  value="{!! $quotation->month_package !!}" onkeyup="JavaScript:return fnccheck_package();">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">จำนวนหน่วย</label>
-                                                    <div class="col-sm-10">
-                                                        <input class="form-control tunit" required name="unit_package" id="unit_package" value="{!! number_format($quotation->unit_price,2) !!}" id="unit_package" type="text" readonly>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                                    $sum_package=$quotation->product_amount*$quotation->month_package*$quotation->unit_price;
-                                                ?>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">รวมเป็นเงิน</label>
-                                                    <div class="col-sm-10">
-                                                        <input class="form-control" name="total_package" id="total_package" type="text" readonly value="{!! number_format($sum_package,2) !!}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--endcontent--}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{----}}
-                {{---------------------}}
-                <?php
-                    $subtotal=$sum+$sum_package;
-                ?>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">รวมค่าบริการ</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="tab-pane active" id="member-list">
-                                    <div id="member-list-content">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Sub Total</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control"  name="sub_total" id="sub_total" readonly value="{!! number_format($subtotal,2) !!}" onclick="JavaScript:return sum_total();">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Distotal</label>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" name="discount" id="discount" type="text"  value="{!! $quotation->discount !!}">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Vat 7%</label>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" name="vat" id="vat" type="text" value="{!! number_format($quotation->product_vat,2) !!}" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Grand Total</label>
-                                                <div class="col-sm-10">
-                                                    <?php
-                                                    $price=$quotation->product_price_with_vat!=null?$quotation->product_price_with_vat:$quotation->grand_total_price
-                                                    ?>
-                                                    <input class="form-control" value="{!! number_format($price,2) !!}" name="grand_total" id="grand_total1" type="text" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-md-12">
@@ -399,6 +266,7 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/nabour-create-quotation.js')!!}"></script>
@@ -406,7 +274,6 @@
     <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/inputmask/jquery.inputmask.bundle.js')!!}"></script>
     <link rel="stylesheet" href="{!!url('/js/select2/select2.css')!!}">
     <link rel="stylesheet" href="{!!url('/js/select2/select2-bootstrap.css')!!}">
@@ -449,6 +316,55 @@
                 $('#unit-selectSelectBoxIt').removeClass('error');
             }
             return valid;
+        }
+
+        $(function() {
+
+            //$('#tprice').number(true,0);
+            //$('#tmonth').number(true,0);
+            //$('#subTotal').number(true,0);
+
+            $('#tprice').keyup(function() {
+                updatePriceService();
+            });
+
+            $('#tmonth').keyup(function() {
+                updatePriceService();
+            });
+
+            $('#unit_price').keyup(function() {
+                updatePriceService();
+            });
+
+            $('#service_').click(function() {
+                updatePriceService();
+            });
+
+            // $('.service').click(function() {
+            //     updatePriceService();
+            // });
+
+
+            var updatePriceService = function () {
+                var price = parseInt($('#tprice').val());
+                var project_package = parseInt($('#tmonth').val());
+                var month_package = parseInt($('#unit_price').val());
+                //var TotalTax = parseInt($('#tax').val());
+               //alert(project_package);
+                var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
+
+                $('#_colTotal').text(total);
+                $('#_tLineTotal').val(total);
+                calTotal();
+            };
+
+
+        });
+
+        function resutPrice(strCusPrice)
+        {
+            //form1.id_package.value = strCusPrice.split("|")[0];
+            form1.unit_price.value = strCusPrice.split("|")[1];
         }
     </script>
 @endsection

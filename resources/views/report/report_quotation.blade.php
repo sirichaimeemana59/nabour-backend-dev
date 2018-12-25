@@ -154,38 +154,22 @@
                     $total_vat1="( ราคาสุทธิ์ ".number_format($quotation->lastest_package->price,2)." )";
                 }*/
                 ?>
-                <tr>
-                    <td  class="line_table" style="vertical-align: top; padding:0 0 0 5px;">{!!$num !!}</td>
-                    <td colspan="5" class="line_table" style="padding:0 0 0 5px;">
-                        {!! $quotation1->lastest_package->name !!}<br>{!! $quotation1->lastest_package->description !!}</td>
-        </td>
-        <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! number_format($quotation1->product_amount,0) !!}</td>
-        <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! number_format($quotation1->month_package,0) !!}</td>
-        <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! number_format($quotation1->unit_price,2) !!}</td>
-                    <?php
-                        $price=$quotation1->lastest_package->price*$quotation1->product_amount*$quotation1->month_package;
-                        $sum_total=$sum_service+$price;
-                        $vat=($sum_total*7)/100;
-                        $grand=$vat+$sum_total;
-                        ?>
-        <td align="right" style="vertical-align: top; padding:0 5px 0 0;"  class="line_table">{!! number_format($price,2) !!}</td>
-        </tr>
         <tr>
-            <td colspan="7" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($grand) !!}</span></td>
+            <td colspan="7" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
             <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:0 0 0 5px;">Sub Total</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($sum_total,2) !!}</td>
+            <td align="right" style="padding:0 5px 0 0;">{!! number_format($sum_service,2) !!}</td>
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:0 0 0 5px;">Discount</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation1->discount,2) !!}</td>
+            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation->discount,2) !!}</td>
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 0 5px;">Vat 7%</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($vat,2) !!}</td>
+            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation->product_vat,2) !!}</td>
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 0 5px;" >Grand Total</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($grand,2) !!}</td>
+            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation->product_price_with_vat,2) !!}</td>
         </tr>
         </table>
         <br>

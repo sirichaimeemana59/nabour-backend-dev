@@ -4,87 +4,24 @@
    /* $lang = App::getLocale();
     $property_type = unserialize(constant('PROPERTY_TYPE_'.strtoupper($lang)));*/
     ?>
-    <script type='text/javascript' src='//code.jquery.com/jquery-1.11.0.js'></script>
-    <script language="javascript">
-        $(function() {
-
-            $('.tQty').keyup(function() {
-                updateTotal();
-            });
-            $('.tPrice').keyup(function() {
-                updateTotal();
-            });
-
-            /* $('#project_package').keyup(function() {
-                 updateTotal_package();
-             });
-
-             $('#project_package').keyup(function() {
-                 updateTotal();
-             });*/
-
-            $('#month_package').keyup(function() {
-                updateTotal_package();
-            });
-
-            $('#month_package').keyup(function() {
-                updateTotal();
-            });
-
-            $('#discount').keyup(function() {
-                updateTotal();
-            });
-
-            var updateTotal_package = function () {
-                var unit_package = parseInt($('#unit_package').val());
-                var project_package = parseInt($('#project_package').val());
-                var month_package = parseInt($('#month_package').val());
-
-
-
-                var total = parseFloat((month_package*project_package*unit_package) || 0).toFixed(2);
-
-                $('#total_package').val(total);
-            };
-
-
-            var updateTotal = function () {
-                var grandTotal = parseInt($('#grandTotal').text().replace(',',''));
-                var project_package = parseInt($('#project_package').val());
-                var total_package = parseInt($('#total_package').val());
-                var discount = parseInt($('#discount').val());
-                var month_package = parseInt($('#month_package').val());
-
-
-
-                var total = parseFloat(((month_package*project_package)*total_package) || 0).toFixed(2);
-
-                var sub_total = parseFloat((grandTotal + total_package) || 0).toFixed(2);
-
-                var vat = parseFloat(((grandTotal + total_package)*(7/100)) || 0).toFixed(2);
-                var vat1 = parseFloat((grandTotal + total_package)*(7/100)) || 0;
-
-                var sumgrand = (sub_total-discount) + vat1;
-
-                $('#sub_total').val(sub_total);
-                $('#vat').val(vat);
-                $('#grand_total1').val(sumgrand).toFixed(2);
-                $('#total_package').val(project_package).toFixed(2);
-            };
-        });
-
-        function resutPrice(strCusPrice)
-        {
-            //form1.id_package.value = strCusPrice.split("|")[0];
-            form1.unit_package.value = strCusPrice.split("|")[1];
+    <?php
+    if(!empty($max_cus)){
+        $cut_c=substr($max_cus,2);
+        $sum_c=$cut_c+1;
+        $new_id="0000".$sum_c;
+        $count=strlen($new_id);
+        if($count>5){
+            $count_c=$count-5;
+            $cut_new_id=substr($new_id,$count_c);
+            $cus="QU".$cut_new_id;
+        }else{
+            $cus="QU".$new_id;
         }
+    }else{
+        $cus="QU00001";
+    }
+    ?>
 
-        function resutServicePrice(strCusServicePrice)
-        {
-            //form1.id_package.value = strCusServicePrice.split("|")[0];
-            form1.unit_price.value = strCusServicePrice.split("|")[1];
-        }
-    </script>
     <div class="page-title">
         <div class="title-env">
             <h1 class="title">ใบเสนอราคา</h1>
@@ -122,6 +59,12 @@
                             <div class="form-group">
                                 <label class="col-sm-6 control-label" for="field-1">E - mail  :  {{$lead->email}}</label>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="field-1">พนักงานขาย  :  {{$lead->latest_sale->name}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label" for="field-1">เลขที่ใบเสนอราคา  :  {{$cus}}</label>
+                            </div>
                             {{--endcontent--}}
                         </div>
                     </div>
@@ -143,10 +86,10 @@
                     <thead>
                     <tr>
                         <th style="width: 5%"></th>
-                        <th style="width: 25%">ค่าบริการ</th>
-                        <th style="width: 10%">Project</th>
-                        <th style="width: 20%">Month</th>
-                        <th style="width: 20%">Unit_price</th>
+                        <th style="width: 25%">ผลิตภัณฑ์</th>
+                        <th style="width: 10%">โครงการ</th>
+                        <th style="width: 20%">เดือน</th>
+                        <th style="width: 20%">ราคาต่อหน่วย</th>
                         <th style="width: 15%">{{ trans('messages.feesBills.total') }}</th>
                     </tr>
                     </thead>
@@ -154,28 +97,29 @@
                     <tr class="item-row">
                         <td></td>
                         <td>
-                            <select name="transaction[0][service]" id="service unit-select" class="toValidate form-control input-sm" required>
+                            <select name="transaction[0][service]" id="service unit-select" class="toValidate form-control input-sm service" required OnChange="resutPrice(this.value);">
                                 <option value="">กรุณาเลือกค่าบริการ</option>
-                                @foreach($service as $row)
-                                    <option value="{!!$row->id!!}">{!!$row->name!!}</option>
+                                @foreach($package as $row)
+                                    <option value="{!!$row->id!!}|{!! $row->price !!}">{!!$row->name!!}</option>
                                 @endforeach
                             </select>
                         </td>
-                        <td><input type="text" name="transaction[0][project]" class="toValidate form-control  tPrice" required/>
+                        <td><input type="text" name="transaction[0][project]" class="toValidate form-control" required id="tprice" style="text-align:right"/>
                         </td>
                         <td>
-                            <input type="text" class="toValidate form-control input-sm" name="transaction[0][price]" maxlength="15" required/>
+                            <input type="text" class="toValidate form-control input-sm" name="transaction[0][price]" maxlength="15" required id="tmonth" style="text-align:right"/>
 
                         </td>
                         <td><div class="input-group">
                                 <span class="input-group-addon">฿</span>
-                                <input type="text" style="text-align: right;" name="transaction[0][unit_price]" id="unit_price" value="" class="toValidate form-control input-sm tQty"/>
+                                <input type="text" style="text-align: right;" name="transaction[0][unit_price]" id="unit_price" value="" readonly class="toValidate form-control input-sm"/>
                             </div>
+                        </td>
                         <td>
                             <div class="text-right">
-                                <span class="colTotal">0</span> บาท
+                                <span class="colTotal" id="_colTotal">0.00</span> บาท
                             </div>
-                            <input name="transaction[0][total]" class="tLineTotal" type="hidden" value=""/>
+                            <input name="transaction[0][total]" class="tLineTotal" id="_tLineTotal" type="hidden" value=""/>
                         </td>
                     </tr>
                     </tbody>
@@ -185,16 +129,45 @@
                         <a href="#" id="addRowBtn" class="btn btn-primary"><i class="fa-plus"></i> {{ trans('messages.feesBills.add_item') }}</a>
                     </div>
                     <div class="col-md-5 text-right">
-                        {{-- <div class="row">
+                         <div class="row">
                              <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.sub_total') }}:</h5></div>
                              <div class="col-md-4 text-right"><h5><span id="subTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>
                              </div>
-                         </div>--}}
+                         </div>
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }}:</h5></div>
-                            <div class="col-md-4 text-right"><h5><span id="grandTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>
+                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.discount') }}: </h5></div>
+                            <div class="col-md-4 text-right">
+                                <input type="text" name="discount" id="discount" maxlength="20" value="0" class="text-right form-control input-sm">
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-5 col-md-offset-3 text-right">
+                                <div class="input-group">
+                                    <input placeholder="{{ trans('messages.feesBills.vat') }}" type="text" name="tax" id="tax" maxlength="2" value="" class="form-control input-sm">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <input type="text" name="vat" class="text-right form-control input-sm salesTax" value="0" readonly style="border: none;">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }} :</h5></div>
+                            <div class="col-md-4 text-right"><h5><span id="grandTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>
+                                <input type="hidden" id="h_total" name="sub_total">
+                            </div>
+                        </div>
+
+
+
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }}:</h5></div>--}}
+                            {{--<div class="col-md-4 text-right"><h5><span id="_grandTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
                         <div class="property-balance" style="display:none;">
                             <hr/>
                             <div class="row">
@@ -221,9 +194,11 @@
                 <input name="grand_total" id="form-grand-total" type="hidden"/>
                 <input name="balance" id="unit-balance-input" type="hidden"/>
                 <input name="total" id="form-total" type="hidden"/>
-
+                <input type="hidden" class="form-control" name="quotation_code" id="quotation_number" readonly value="{{$cus}}">
+                <input type="hidden" name="lead_id" id="lead_id" value="{!!$id!!}">
+                <input type="hidden" name="sales_id" value="{{$lead->sale_id}}" class="form-control" readonly>
                 {{----}}
-                <div class="row">
+                {{--<div class="row">
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
@@ -232,7 +207,7 @@
                             <div class="panel-body">
                                 <div class="tab-pane active" id="member-list">
                                     <div id="member-list-content">
-                                        {{--content--}}
+                                        --}}{{--content--}}{{--
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">พนักงานขาย</label>
@@ -242,23 +217,7 @@
                                                 </div>
                                             </div>
 
-                                            <?php
-                                            if(!empty($max_cus)){
-                                                $cut_c=substr($max_cus,2);
-                                                $sum_c=$cut_c+1;
-                                                $new_id="0000".$sum_c;
-                                                $count=strlen($new_id);
-                                                if($count>5){
-                                                    $count_c=$count-5;
-                                                    $cut_new_id=substr($new_id,$count_c);
-                                                    $cus="QU".$cut_new_id;
-                                                }else{
-                                                    $cus="QU".$new_id;
-                                                }
-                                            }else{
-                                                $cus="QU00001";
-                                            }
-                                            ?>
+
                                             <input type="hidden" name="lead_id" id="lead_id" value="{!!$id!!}">
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">เลขที่ใบเสนอราคา</label>
@@ -273,12 +232,7 @@
                                                 <div class="col-sm-10">
                                                     <select name="id_package" id="package" class="form-control" OnChange="resutPrice(this.value);" required>
                                                         <option value="">กรุณาเลือก Package</option>
-                                                        <?php
-                                                        foreach ($package as $pac){
-                                                            $price=$pac->price_with_vat!=0?$pac->price_with_vat:$pac->price;
-                                                            echo "<option value='$pac->id|$price'>$pac->name</option>";
-                                                        }
-                                                        ?>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -301,7 +255,7 @@
                                                 <label class="col-sm-2 control-label">จำนวนหน่วย</label>
                                                 <div class="col-sm-10">
                                                     <input class="form-control" required name="unit_package" id="unit_package" type="text" readonly value="">
-                                                    {{-- <input type="hidden" name="id_package" id="id_package">--}}
+                                                    --}}{{-- <input type="hidden" name="id_package" id="id_package">--}}{{--
                                                 </div>
                                             </div>
 
@@ -312,16 +266,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{--endcontent--}}
+                                        --}}{{--endcontent--}}{{--
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 {{----}}
                 {{---------------------}}
-                <div class="row">
+                {{--<div class="row">
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
@@ -358,7 +312,7 @@
                                                 <div class="col-sm-10">
                                                     <input class="form-control" name="grand_total" id="grand_total1" type="text" readonly>
                                                     <br>
-                                                    {{--<input type="text" name="test" id="test">--}}
+                                                    --}}{{--<input type="text" name="test" id="test">--}}{{--
                                                 </div>
                                             </div>
                                         </div>
@@ -368,7 +322,8 @@
                         </div>
                     </div>
                 </div>
-
+--}}
+                {{--<input class="form-control" required name="total_package" id="total_package" type="text" readonly >--}}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel">
@@ -413,7 +368,7 @@
     {!! Form::close() !!}
 
     <div id="invoice-category-template" style="display:none;">
-        <select name="transaction[0][service]" id="service unit-select" class="toValidate form-control input-sm" required>
+        <select name="transaction[0][service]" id="unit-select" class="toValidate form-control input-sm" required>
             <option value="">กรุณาเลือกค่าบริการ</option>
             @foreach($service as $row)
                 <option value="{!!$row->id!!}">{!!$row->name!!}</option>
@@ -422,6 +377,7 @@
     </div>
 @endsection
 @section('script')
+    <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/nabour-create-quotation.js')!!}"></script>
@@ -429,7 +385,6 @@
     <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/inputmask/jquery.inputmask.bundle.js')!!}"></script>
     <link rel="stylesheet" href="{!!url('/js/select2/select2.css')!!}">
     <link rel="stylesheet" href="{!!url('/js/select2/select2-bootstrap.css')!!}">
@@ -464,5 +419,58 @@
                 return valid;
             }
         })
+    </script>
+    <script language="javascript">
+        $(function() {
+
+            $('#tprice').number(true,0);
+            $('#tmonth').number(true,0);
+            //$('#subTotal').number(true,0);
+
+            $('#tprice').keyup(function() {
+                updatePriceService();
+            });
+
+            $('#tmonth').keyup(function() {
+                updatePriceService();
+            });
+
+            $('#unit_price').keyup(function() {
+                updatePriceService();
+            });
+
+            // $('.service').click(function() {
+            //     updatePriceService();
+            // });
+
+
+            var updatePriceService = function () {
+                var price = parseInt($('#tprice').val());
+                var project_package = parseInt($('#tmonth').val());
+                var month_package = parseInt($('#unit_price').val());
+                //var TotalTax = parseInt($('#tax').val());
+
+                var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
+
+                $('#_colTotal').text(total);
+                $('#_tLineTotal').val(total);
+                calTotal();
+            };
+
+
+        });
+
+        function resutPrice(strCusPrice)
+        {
+            //form1.id_package.value = strCusPrice.split("|")[0];
+            form1.unit_price.value = strCusPrice.split("|")[1];
+        }
+
+        function resutServicePrice(strCusServicePrice)
+        {
+            //form1.id_package.value = strCusServicePrice.split("|")[0];
+            form1.unit_price.value = strCusServicePrice.split("|")[1];
+        }
+
     </script>
 @endsection

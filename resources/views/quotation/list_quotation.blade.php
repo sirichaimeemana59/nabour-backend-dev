@@ -75,7 +75,6 @@
                                     <div class="col-sm-4">
                                         <div class="well">
                                            <p>เลขที่ใบเสนอราคา :  {!!$row->quotation_code!!}</p>
-                                            <p>Package : {!!$row->lastest_package->name!!}</p>
                                             <?php
                                                 $price=$row->product_price_with_vat!=null?$row->product_price_with_vat:$row->grand_total_price
                                             ?>
