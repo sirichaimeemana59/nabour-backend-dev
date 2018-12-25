@@ -62,7 +62,7 @@
                         <div id="member-list-content">
                             {{--content--}}
                             <div id="panel-c-list">
-                                @include('contract.list-element')
+                                @include('contract.list-element-sales')
                             </div>
                             {{--endcontent--}}
                         </div>

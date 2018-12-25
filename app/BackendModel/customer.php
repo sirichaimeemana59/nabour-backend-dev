@@ -20,4 +20,14 @@ class Customer extends GeneralModel
     {
         return $this->hasOne('App\BackendModel\User','id','sale_id')->orderBy('created_at','desc');
     }
+
+    public function quotation ()
+    {
+        return $this->hasMany('App\BackendModel\quotation','lead_id','id')->orderBy('created_at','desc');
+    }
+
+    public function contract ()
+    {
+        return $this->hasMany('App\BackendModel\contract','customer_id','id')->orderBy('created_at','desc');
+    }
 }

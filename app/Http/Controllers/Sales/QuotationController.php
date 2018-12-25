@@ -324,7 +324,7 @@ class QuotationController extends Controller
 
         $quotations = $quotations->orderBy('quotation_code','desc')->paginate(2);
         if( Request::ajax() ) {
-            return view('quotation.list-element')->with(compact('quotations'));
+            return view('quotation.list-element-sales')->with(compact('quotations'));
 
         } else {
             $customers = Customer::where('role',1)->select('firstname','lastname','id')->get();

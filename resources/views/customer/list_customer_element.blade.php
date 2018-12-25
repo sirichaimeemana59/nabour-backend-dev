@@ -42,10 +42,11 @@
                 <thead>
                 <tr>
                     <th width="20%">ชื่อ - สกุล</th>
-                    <th width="20%">ชื่อบริษัท</th>
-                    <th width="*">เบอร์โทร</th>
-                    <th width="*">จังหวัด</th>
-                    <th width="*">พนักงานขาย</th>
+                    <th width="*">ชื่อบริษัท</th>
+                    <th width="150px">เบอร์โทร</th>
+                    <th width="150px">จังหวัด</th>
+                    <th width="200px">พนักงานขาย</th>
+                    <th width="80px">สัญญา</th>
                     <th width="180px"></th>
                 </tr>
                 </thead>
@@ -57,6 +58,7 @@
                         <td>{!!$row->phone !!}</td>
                         <td>{!!$provinces[$row->province]!!}</td>
                         <td>{!!$row->latest_sale->name!!}</td>
+                        <td class="text-right">{!! $row->contract->count() !!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
                                 <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>
@@ -81,9 +83,9 @@
                                     @endif
                                     <li>
                                         @if(Auth::user()->role !=2)
-                                                <a href="{!!url('/service/quotation/add/'.$row->id)!!}" >
-                                            @else
-                                                <a href="{!!url('/service/sales/quotation/add/'.$row->id)!!}" >
+                                            <a href="{!!url('/service/quotation/add/'.$row->id)!!}" >
+                                        @else
+                                            <a href="{!!url('/service/sales/quotation/add/'.$row->id)!!}" >
                                         @endif
                                             {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
                                             <i class="fa fa-newspaper-o"></i>ออกใบเสนอราคา
