@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class PropertyFundEditLog extends Model
+
+class PropertyFundEditLog extends GeneralModel
 {
     protected $table = 'property_fund_edit_log';
     public function logEditor()

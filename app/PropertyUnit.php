@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class PropertyUnit extends GeneralModel
 {
     protected $table = 'property_unit';

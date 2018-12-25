@@ -1,6 +1,6 @@
 <?php
 namespace App;
-use App\GeneralModel;
+
 use Illuminate\Foundation\Application;
 class Province extends GeneralModel
 {

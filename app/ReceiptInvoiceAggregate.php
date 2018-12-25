@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class ReceiptInvoiceAggregate extends Model
+
+class ReceiptInvoiceAggregate extends GeneralModel
 {
     protected $table = 'receipt_invoice_aggregate';
     protected $fillable = ['invoice_id','receipt_id'];

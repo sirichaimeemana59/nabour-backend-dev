@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+
 class Success extends GeneralModel
 {
     protected $connection   = 'back_office';

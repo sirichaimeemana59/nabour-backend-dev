@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class Notification extends Model
+
+class Notification extends GeneralModel
 {
     protected $table = 'notification';
     protected $fillable = ['title','description','notification_type','subject_key','from_user_id','to_user_id','read_status'];

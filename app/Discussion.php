@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class Discussion extends GeneralModel
 {
     protected $table = 'discussion';

@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class StatementOfCashFlow extends Model
+
+class StatementOfCashFlow extends GeneralModel
 {
     protected $table = 'statement_of_cash_flow';
     protected $fillable = [

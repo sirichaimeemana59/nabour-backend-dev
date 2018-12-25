@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class PropertyFund extends Model
+
+class PropertyFund extends GeneralModel
 {
     protected $table = 'property_fund_log';
     protected $fillable = ['detail','property_id','creator','payment_date','ref_no'];

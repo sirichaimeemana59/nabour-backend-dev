@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class Like extends GeneralModel
 {
     protected $table = 'likes';
@@ -10,14 +10,6 @@ class Like extends GeneralModel
 	public $timestamps = false;
 	protected $rules = array();
     protected $messages = array();
-
-    public static function boot()
-    {
-        static::creating(function($model)
-        {
-            $model->created_at = $model->freshTimestamp();
-        });
-    }
 
     public function owner () {
     	return $this->hasOne('App\User','id','user_id'); 

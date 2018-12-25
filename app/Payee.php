@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class Payee extends GeneralModel
 {
     protected $table = 'payee';

@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class ComplainAction extends GeneralModel
 {
     protected $table = 'complain_action_stamp';

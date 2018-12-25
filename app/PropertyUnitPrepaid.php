@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class PropertyUnitPrepaid extends Model
+
+class PropertyUnitPrepaid extends GeneralModel
 {
 	protected $table = 'property_unit_prepaid';
     protected $fillable = ['name','amount','payment_date','payment_type','remark','property_unit_id','payee'];

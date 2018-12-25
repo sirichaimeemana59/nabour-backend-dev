@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class PettyCash extends Model
+
+class PettyCash extends GeneralModel
 {
     protected $table = 'property_petty_cash_log';
     protected $fillable = ['detail','get','pay','property_id','invoice_id','creator','payment_date','ref_no'];

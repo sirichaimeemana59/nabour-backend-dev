@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class PropertyUnitBalanceLog extends Model
+
+class PropertyUnitBalanceLog extends GeneralModel
 {
     protected $table = 'property_unit_balance_log';
 }
