@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class Invoice extends Model
+
+class Invoice extends GeneralModel
 {
     protected $table = 'invoice';
     protected $fillable = ['type','name','due_date','grand_total','total','tax','property_id','property_unit_id','payment_type','payment_date','payment_status','ref_no','receiver_address','payee_id','discount','transfer_only','is_retroactive_record','is_common_fee_bill','remark','final_grand_total','sub_from_balance','balance_before'];

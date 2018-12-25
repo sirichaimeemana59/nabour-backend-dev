@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class Vote extends Model
+
+class Vote extends GeneralModel
 {
     protected $table = 'vote';
     protected $fillable = ['property_id','user_id','title','description','start_date','end_date','start_time','end_time'];

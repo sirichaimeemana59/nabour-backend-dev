@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class ReceiptInvoiceLog extends Model
+
+class ReceiptInvoiceLog extends GeneralModel
 {
     protected $table = 'receipt_invoice_log';
     protected $fillable = ['data','receipt_id'];

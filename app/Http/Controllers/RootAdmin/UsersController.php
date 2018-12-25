@@ -17,14 +17,9 @@ class UsersController extends Controller {
 
 	protected $app;
 
-	public function __construct () {
-		$this->middleware('auth',['except' => ['login']]);
-		if( Auth::check() && Auth::user()->role !== 0 ) {
-            if(Auth::user()->role !== 5) {
-                Redirect::to('feed')->send();
-            }
-		}
-	}
+    public function __construct () {
+        $this->middleware('admin');
+    }
 
 	public function newUsers() {
 		$p = new Province;

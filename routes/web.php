@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('auth.login');
-});
+}); */
+Route::get('/','HomeController@login');
 
 Auth::routes();
 
@@ -22,7 +23,7 @@ Route::get('/auth/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/root/admin/property/list', 'RootAdmin\PropertyController@index');
 
-Route::get('/customer/customer/list', 'HomeController@rootAdminHome');
+//Route::get('/customer/customer/list', 'HomeController@rootAdminHome');
 Route::get('/projects', 'HomeController@nabourAdminHome');
 Route::get('/home', 'HomeController@SalesHome');
 

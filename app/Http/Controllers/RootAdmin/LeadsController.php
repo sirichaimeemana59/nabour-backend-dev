@@ -15,6 +15,10 @@ use App\BackendModel\Customer;
 
 class LeadsController extends Controller
 {
+    public function __construct () {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $_lead = new Customer;

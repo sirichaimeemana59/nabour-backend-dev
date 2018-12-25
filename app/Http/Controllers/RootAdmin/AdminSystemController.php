@@ -20,11 +20,7 @@ use Validator;
 class AdminSystemController extends Controller {
 
     public function __construct () {
-        $this->middleware('auth');
-        //view()->share('active_menu','members');
-        if( Auth::check() && Auth::user()->role !== 0 ) {
-                Redirect::to('feed')->send();
-        }
+        $this->middleware('super-admin');
     }
 
     public function adminList() {

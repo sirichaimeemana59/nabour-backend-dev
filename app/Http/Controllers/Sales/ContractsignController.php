@@ -19,6 +19,9 @@ use App\BackendModel\Products;
 
 class ContractsignController extends Controller
 {
+    public function __construct () {
+        $this->middleware('sales');
+    }
 
     public function index($quotation_code = null,$code = null)
     {

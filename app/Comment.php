@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class Comment extends GeneralModel
 {
     protected $table = 'comments';

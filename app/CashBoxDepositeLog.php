@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class CashBoxDepositeLog extends Model
+
+class CashBoxDepositeLog extends GeneralModel
 {
     protected $table = 'cash_box_deposite_log';
     public $timestamps = true;

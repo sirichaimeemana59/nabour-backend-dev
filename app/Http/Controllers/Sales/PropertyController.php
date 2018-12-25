@@ -31,10 +31,7 @@ use App\CommonFeesRef;
 class PropertyController extends Controller {
 
     public function __construct () {
-        $this->middleware('auth',['except' => ['login']]);
-        if( Auth::check() && Auth::user()->role !== 2 ) {
-            Redirect::to('customer/leads/list')->send();
-        }
+        $this->middleware('sales');
     }
 
     public function index(){

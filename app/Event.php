@@ -1,8 +1,8 @@
 <?php
 
 namespace App;
-use Illuminate\Database\Eloquent\Model;
-class Event extends Model
+
+class Event extends GeneralModel
 {
     protected $table = 'event';
     protected $fillable = ['property_id','user_id','title','description','join_count','maybe_count','cantgo_count','location','start_date_time','end_date_time'];

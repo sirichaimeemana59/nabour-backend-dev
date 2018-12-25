@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 use Request;
 use Auth;
 class InvoiceFile extends GeneralModel

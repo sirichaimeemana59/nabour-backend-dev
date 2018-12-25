@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class PropertyForm extends GeneralModel
 {
     protected $table = 'property_form';

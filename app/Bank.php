@@ -1,10 +1,9 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
 use Request;
 use Auth;
-use App;
+
 class Bank extends GeneralModel
 {
     protected $table = 'property_bank_account';

@@ -37,7 +37,6 @@
     <tr>
         <th width="140px">เลขที่สัญญา</th>
         <th width="*">ลูกค้า</th>
-        <th width="170px">Sales</th>
         <th width="150px">วันที่เริ่ม</th>
         <th width="150px">วันที่สิ้นสุด</th>
         <th width="90px">Action</th>
@@ -48,14 +47,13 @@
     <tr>
         <td>{!! $row->contract_code !!}</td>
         <td>{!! $row->customer->company_name !!}</td>
-        <td>{!! $row->latest_sale->name !!}</td>
         <td>{!! localDate($row->start_date) !!}</td>
         <td>{!! localDate($row->end_date) !!}</td>
         <td class="action-links">
             <a href="{!! url('service/sales/contract/sign/form/'.$row->quotation_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
                 <i class="fa-eye"></i>
             </a>
-            <a href="{!! url('service/contract/sign/quotation/'.$row->quotation_id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
+            <a href="{!! url('service/contract/sign/quotation/'.$row->id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
                 <i class="fa-print"></i>
             </a>
         </td>

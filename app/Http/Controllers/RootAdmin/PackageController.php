@@ -8,10 +8,13 @@ use Redirect;
 use App\Http\Controllers\Controller;
 use App\BackendModel\User;
 use App\Province;
-use App\BackendModel\LeadTable;
 use App\BackendModel\Products;
 class PackageController extends Controller
 {
+
+    public function __construct () {
+        $this->middleware('admin');
+    }
 
     public function index()
     {

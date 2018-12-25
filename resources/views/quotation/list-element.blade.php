@@ -47,7 +47,7 @@
             <td>{!! $row->quotation_code !!}</td>
             <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
             <td>{!! $row->latest_sale->name !!}</td>
-            <td>{!! $row->product_price_with_vat !!}</td>
+            <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
             <td class="action-links">
                 <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>

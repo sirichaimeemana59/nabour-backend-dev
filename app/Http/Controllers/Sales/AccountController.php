@@ -42,7 +42,7 @@ use App\CashBoxDepositeLogFile;
 class AccountController extends Controller {
 
     public function __construct () {
-        
+        $this->middleware('sales');
     }
     
     
@@ -174,7 +174,7 @@ class AccountController extends Controller {
     }
 
     function clearPost($property_id){
-        $post_list = Post::where('property_id',$property_id)->get();
+        $post_list = Post::with('likes')->where('property_id',$property_id)->get();
         foreach ($post_list as $post) {
             if(!$post->postFile->isEmpty()) {
                 foreach ($post->postFile as $file) {

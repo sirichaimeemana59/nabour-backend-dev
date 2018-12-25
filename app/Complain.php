@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\GeneralModel;
+
 class Complain extends GeneralModel
 {
     protected $table = 'complain';
