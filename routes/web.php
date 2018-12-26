@@ -1,31 +1,18 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-/*Route::get('/', function () {
-    return view('auth.login');
-}); */
-Route::get('/','HomeController@login');
-
 Auth::routes();
+Route::get('/','HomeController@login');
 
 Route::get('/auth/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/root/admin/property/list', 'RootAdmin\PropertyController@index');
+//User settings
+Route::any('settings', 'SettingsController@index');
+Route::any('settings/password', 'SettingsController@password');
+Route::any('settings/language', 'SettingsController@language');
 
-//Route::get('/customer/customer/list', 'HomeController@rootAdminHome');
-Route::get('/projects', 'HomeController@nabourAdminHome');
-Route::get('/home', 'HomeController@SalesHome');
+//File route...
+Route::any('upload-file', 'FileController@upload');
+Route::any('upload-profile-pic', 'FileController@uploadProfileImg');
 
 //Leads
 Route::any('customer/leads/list', 'RootAdmin\LeadsController@index');
