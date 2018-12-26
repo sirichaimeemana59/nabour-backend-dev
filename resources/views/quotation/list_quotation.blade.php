@@ -116,9 +116,15 @@
                                                 <a href="{!! url('service/quotation/check_out/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-danger"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ยกเลิกใบเสนอราคา">
                                                    <i class="fa-close"></i>
                                                 </a>--}}
-                                                <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
-                                                    <i class="fa-print"></i>
-                                                </a>
+                                                @if(Auth::user()->role !=2)
+                                                        <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                                                            <i class="fa-print"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                                                            <i class="fa-print"></i>
+                                                        </a>
+                                                @endif
                                                     {{--@else--}}
                                                 @if(empty($row->latest_contract->quotation_id))
                                                     @if(Auth::user()->role !=2)
