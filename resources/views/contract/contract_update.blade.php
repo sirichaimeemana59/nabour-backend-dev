@@ -54,7 +54,7 @@
                                 //dd($quotation1);
                                 $price=$quotation1->grand_total_price==0?$quotation1->grand_total_price:$quotation1->product_price_with_vat;
                                 ?>
-                                <label class="col-sm-6 control-label" for="field-1">ราคาสุทธิ :  {!!$price!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">ราคาสุทธิ :  {!!number_format($price,2)!!}</label>
                             </div>
                             {{--endcontent--}}
                         </div>
@@ -63,7 +63,84 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h3 class="panel-title">รายละเอียดบริการ</h3>
+                </div>
+                <div class="panel-body member-list-content">
+                    <div class="tab-pane active" id="member-list">
+                        <div id="member-list-content">
+                            {{--content--}}
+                            <div class="form-group">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>บริการ</th>
+                                        <th>โครงการ</th>
+                                        <th>จำนวนหน่วย</th>
+                                        <th>ราคา</th>
+                                        <th>รวม</th>
+                                    </tr>
+                                    <?php
+                                    $_total=0;
+                                    ?>
+                                    @foreach($quotation_service as $row)
+                                        <tr>
+                                            <td>{!! $row->lastest_package->name !!}</td>
+                                            <td style="text-align: center;">{!! number_format($row->project_package,0)!!}</td>
+                                            <td style="text-align: center;">{!! number_format($row->month_package,0)!!}</td>
+                                            <td style="text-align: center;">{!! number_format($row->unit_package,0)!!}</td>
+                                            <td style="text-align: center;">{!! number_format($row->total_package,0)!!}</td>
+                                        </tr>
+                                        <?php
+                                        $_total += $row->total_package;
+                                        ?>
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="4" style="font-weight: bold;">รวม</td>
+                                        <td style="text-align: right;">{!! number_format($_total,2) !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="font-weight: bold;">ส่วนลด</td>
+                                        <td style="text-align: right;">{!! number_format($quotation->discount,2) !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="font-weight: bold;">Vat</td>
+                                        <td style="text-align: right;">{!! number_format($quotation->product_vat,2)!!}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="font-weight: bold;">รวมสุทธิ์</td>
+                                        <td style="text-align: right;">{!! number_format($quotation->product_price_with_vat,2)!!}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            {{--endcontent--}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if($contract->status != 1 AND $count <1 AND $count_<1)
+        <a href="#" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#approved" onclick="mate_approved('{!!$contract->id!!}','{!!$contract->latest_quotation->id !!}')"><i class="fa fa-check"> </i>  อนุมัติสัญญา</button></a>
+    @endif
     <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$contract->id.'/'.$contract->latest_quotation->id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
+
+        <?php
+                if($contract->status == 1){
+                    $read='readonly';
+                    $disabled='disabled';
+                }else{
+                    $read='';
+                    $disabled='';
+                }
+
+        ?>
+
     {{--content--}}
     @if(Auth::user()->role !=2)
             {!! Form::model($contract,array('url' => array('service/contract/sign/update'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form_add')) !!}
@@ -102,21 +179,21 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ประเภทสัญญา</label>
                         <div class="col-sm-10">
-                            {!! Form::select('contract_type',unserialize(constant('CONTRACT_TYPE')),null,array('class'=>'form-control','required','value'=>'1')) !!}
+                            {!! Form::select('contract_type',unserialize(constant('CONTRACT_TYPE')),null,array('class'=>'form-control','required','value'=>'1',$disabled)) !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">รูปแบบการชำระเงิน</label>
                         <div class="col-sm-10">
-                            {!! Form::select('payment_term_type',unserialize(constant('PAYMENT_TERM_TYPE')),null,array('class'=>'form-control','required')) !!}
+                            {!! Form::select('payment_term_type',unserialize(constant('PAYMENT_TERM_TYPE')),null,array('class'=>'form-control','required',$disabled)) !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่ทำสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required value="{!! $contract->start_date !!}" >
+                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required value="{!! $contract->start_date !!}" {!! $disabled !!}>
                         </div>
                     </div>
                     {{--<div class="form-group">
@@ -158,7 +235,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" value="{!! $contract->end_date !!}" >
+                            <input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date" type="text" value="{!! $contract->end_date !!}" >
                         </div>
                     </div>
                     {{--<div class="form-group">
@@ -176,7 +253,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ผู้ทำสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="person_name" type="text" required value="{!! $contract->person_name !!}" >
+                            <input class="form-control" name="person_name" {!! $read !!} type="text" required value="{!! $contract->person_name !!}" >
                         </div>
                     </div>
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
@@ -231,6 +308,44 @@
     {!! Form::close(); !!}
     {{--endcontent--}}
 
+    {{--Approved--}}
+    <div class="modal fade" id="approved">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">อนุมัติสัญญา</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role ==2)
+                                    {!! Form::model(null,array('url' => array('customer/sales/contract/approved'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/contract/approved'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+
+                                @endif
+                                <br>
+                                <input type="hidden" name="id2" id="id2">
+                                    <input type="hidden" name="quo_id" id="quo_id">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn4.iconfinder.com/data/icons/social-messaging-productivity/64/x-14-512.png" alt="" width="50%">
+                                    <br><br> <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ยืนยัน</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end Approved--}}
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
@@ -262,6 +377,11 @@
             if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
             else top_ = $('#prop_list').offset().top;
             $('html,body').animate({scrollTop: top_-100}, 1000);
+        }
+
+        function mate_approved(id,quo_id) {
+            document.getElementById("id2").value = id;
+            document.getElementById("quo_id").value = quo_id;
         }
     </script>
 @endsection

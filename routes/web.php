@@ -122,16 +122,18 @@ Route::post('customer/sales/Customer_form/check', 'Sales\CustomerController@chec
 
 //Contract sign no
 Route::get('service/contract/sign/quotation/{quotation_code?}/{code?}', 'RootAdmin\ContractsignController@index');
-Route::get('service/contract/sign/form/{id?}', 'RootAdmin\ContractsignController@create');
+Route::get('service/contract/sign/form/{id?}/{customer_id?}', 'RootAdmin\ContractsignController@create');
 Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
+Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@approved');
 //End Contract
 
 //Contract sign no Sales
 Route::get('service/sales/contract/sign/quotation/{quotation_code?}/{code?}', 'Sales\ContractsignController@index');
-Route::get('service/sales/contract/sign/form/{id?}', 'Sales\ContractsignController@create');
+Route::get('service/sales/contract/sign/form/{id?}/{customer_id?}', 'Sales\ContractsignController@create');
 Route::post('service/sales/contract/sign/add', 'Sales\ContractsignController@save');
 Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@update');
+Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');
 //End Contract Sales
 
 //---------------------------  Nabour officer Route --------------------------------------------//

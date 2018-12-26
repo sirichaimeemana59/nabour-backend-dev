@@ -45,7 +45,7 @@ class ContractsignController extends Controller
     }
 
 
-    public function create($id = null)
+    public function create($id = null,$customer_id = null)
     {
         $search = new contract;
         $search = $search->where('quotation_id', $id);
@@ -58,23 +58,28 @@ class ContractsignController extends Controller
             $quotation1 = $quotation1->where('id', $id);
             $quotation1 = $quotation1->first();
 
-
             $contract = new contract;
             $contract = $contract->where('quotation_id', $id);
             $contract = $contract->first();
 
-            //dd($contract);
+            $count = new contract;
+            $count = $count->where('quotation_id', $id)->where('status','=',1);
+            $count = $count->count();
 
-//            $date=date("Y-m-d");
-//            $cut_date_now=explode("-",$date);
-//
-//            $singg = contract::whereYear('created_at', '=', $cut_date_now[0])
-//                ->whereMonth('created_at', '=', $cut_date_now[1])
-//                ->get();
-//            $sing=$singg->max('contract_code');
+            $count_ = new contract;
+            $count_ = $count_->where('customer_id', $customer_id)->where('status','=',1);
+            $count_ = $count_->count();
+
+            $quotation = new Quotation;
+            $quotation = $quotation->where('id', $id);
+            $quotation = $quotation->first();
+
+            $quotation_service = new Quotation_transaction;
+            $quotation_service = $quotation_service->where('quotation_id', $id);
+            $quotation_service = $quotation_service->get();
 
 
-            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search'));
+            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count_','quotation','quotation_service','count'));
 
         }else{
             $quotation1 = new Quotation;
@@ -166,9 +171,19 @@ class ContractsignController extends Controller
     }
 
 
-    public function destroy($id)
+    public function approved()
     {
-        //
+        $contract = contract::find(Request::get('id2'));
+        $contract->status = 1;
+        $contract->save();
+
+        $quotation = Quotation::find(Request::get('quo_id'));
+        $quotation->status = 1;
+        $quotation->save();
+        //dd($quotation);
+        return redirect('contract/list');
+        //return (Request::get('id2'));
+        //return (Request::get('quo_id'));
     }
 
     public function contractList () {

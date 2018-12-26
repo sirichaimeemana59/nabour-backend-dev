@@ -15,6 +15,7 @@ use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
 use App\success;
 use App\BackendModel\Customer;
+use App\BackendModel\contract;
 
 class QuotationController extends Controller
 {
@@ -70,9 +71,12 @@ class QuotationController extends Controller
             $lead = $lead->first();
             //dd($status);
 
+            $count_ = new contract;
+            $count_ = $count_->where('customer_id', $id)->where('status','=',1);
+            $count_ = $count_->count();
 
             //dump($quotation1->toArray());
-            return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status','lead'));
+            return view('quotation.list_quotation')->with(compact('lead','quotation1','id','remark','status','lead','count_'));
         }
         //return ($id);
     }

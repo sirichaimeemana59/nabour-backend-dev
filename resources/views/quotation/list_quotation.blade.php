@@ -54,15 +54,13 @@
         </div>
     </div>
 
-    @if($status->status ==0)
-        @if(Auth::user()->role !=2)
+    @if($status->status ==0 AND $count_ <1)
+        @if(Auth::user()->role !=2 )
                 <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
             @else
                 <a href="{!!url('/service/sales/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
         @endif
-        <a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>
-    @else
-        <a href="{!!url('/service/quotation/cancel/'.$id)!!}" ><button type="button" class="btn btn-danger action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ยกเลิกใบเสนอราคา</button></a>
+        {{--<a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>--}}
     @endif
     <div class="row">
         <div class="col-md-12">
@@ -70,98 +68,99 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">ใบเสนอราคา</h3>
                 </div>
-                <div class="panel-body member-list-content">
-                    <div class="tab-pane active" id="member-list">
-                        <div id="member-list-content">
-                            {{--content--}}
-                            <div class="row" id="panel-package-list">
-                                @foreach($quotation1 as $row)
-                                    <div class="col-sm-4">
-                                        <div class="well">
-                                           <p>เลขที่ใบเสนอราคา :  {!!$row->quotation_code!!}</p>
-                                            <?php
-                                                $price=$row->product_price_with_vat!=null?$row->product_price_with_vat:$row->grand_total_price
-                                            ?>
-                                            <p>ราคาสุทธิ : {!! number_format($price,2) !!}</p>
-                                            @if(!empty($row->latest_contract->contract_code))
-                                            <p>เอกสารสัญญา : {!! $row->latest_contract->contract_code !!}</p>
-                                            @endif
-                                            <br>
-                                            <div style="text-align: right;">
-                                                {{--@if($row->status !=1)--}}
-                                                {{--@if($row->remark == 0 AND $remark !=1)--}}
-                                                {{--<a href="{!! url('service/contract/sign/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา" target="_blank">--}}
-                                                @if(empty($row->latest_contract->quotation_id))
-                                                        @if(Auth::user()->role !=2)
-                                                                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                                @else
-                                                                <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                        @endif
-                                                                <i class="fa-check"></i>
-                                                                </a>
-                                                    @else
-                                                         @if(Auth::user()->role !=2)
-                                                                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                                        <i class="fa-eye"></i>
-                                                                </a>
-                                                             @else
-                                                                <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                                        <i class="fa-eye"></i>
-                                                                </a>
-                                                         @endif
-                                                @endif
-                                                {{--@endif--}}
 
-                                                {{--@if($row->remark == 1)
-                                                <a href="{!! url('service/quotation/check_out/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-danger"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ยกเลิกใบเสนอราคา">
-                                                   <i class="fa-close"></i>
-                                                </a>--}}
-                                                @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
-                                                            <i class="fa-print"></i>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th width="160px">เลขที่ใบเสนอราคา</th>
+                        <th width="160px">เอกสารสัญญา</th>
+                        <th width="180px">ราคาสุทธิ</th>
+                        <th width="160px">สถานะ</th>
+                        <th width="215px">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($quotation1 as $row)
+                        <tr>
+                            <td>{!! $row->quotation_code !!}</td>
+                            @if(!empty($row->latest_contract->contract_code))
+                                    <td>เอกสารสัญญา : {!! $row->latest_contract->contract_code !!}</td>
+                                @else
+                                    <td>ไม่พบข้อมูล</td>
+                            @endif
+                            <?php
+                            $price=$row->product_price_with_vat!=null?$row->product_price_with_vat:$row->grand_total_price
+                            ?>
+                            <td class="text-right">{!! number_format($price,2) !!}</td>
+                            @if(!empty($row->latest_contract->status))
+                                    @if($row->latest_contract->status ==1)
+                                        <td>อนุมัติแล้ว</td>
+                                    @endif
+                                @else
+                                    <td>ไม่พบข้อมูล</td>
+                            @endif
+                            <td class="action-links">
+                                @if(empty($row->latest_contract->quotation_id) AND $count_ <1)
+                                    @if(Auth::user()->role !=2)
+                                        <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                            @else
+                                                <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                    @endif
+                                                    <i class="fa-check"></i>
+                                                </a>
+                                                @else
+                                                    @if(Auth::user()->role !=2)
+                                                        <a href="{!! url('service/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                            <i class="fa-eye"></i>
                                                         </a>
                                                     @else
-                                                        <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
-                                                            <i class="fa-print"></i>
+                                                        <a href="{!! url('service/sales/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                            <i class="fa-eye"></i>
                                                         </a>
+                                                    @endif
                                                 @endif
-                                                    {{--@else--}}
+                                                @if(Auth::user()->role !=2)
+                                                    <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                                                        <i class="fa-print"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                                                        <i class="fa-print"></i>
+                                                    </a>
+                                                @endif
                                                 @if(empty($row->latest_contract->quotation_id))
                                                     @if(Auth::user()->role !=2)
-                                                            <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
-                                                        @else
-                                                            <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
-                                                     @endif
-                                                                <i class="fa-pencil-square-o"></i>
+                                                        <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                            @else
+                                                                <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                                    @endif
+                                                                    <i class="fa-pencil-square-o"></i>
+                                                                </a>
+                                                            @endif
+
+                                                            @if(empty($row->latest_contract->quotation_id))
+                                                                <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
+                                                                    <i class="fa-trash"></i>
+                                                                </a>
+                                                            @endif
+
+                                                            <?php
+                                                            if(Auth::user()->role !=2){
+                                                                $class='edit-service';
+                                                            }   else{
+                                                                $class='edit-service-detail';
+                                                            }
+                                                            ?>
+
+                                                            <a href="#" class="edit {!! $class !!} btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
+                                                                <i class="fa-eye"></i>
                                                             </a>
-                                                @endif
-
-                                                 @if(empty($row->latest_contract->quotation_id))
-                                                        <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
-                                                            <i class="fa-trash"></i>
-                                                        </a>
-                                                 @endif
-
-                                                 <?php
-                                                        if(Auth::user()->role !=2){
-                                                            $class='edit-service';
-                                                        }   else{
-                                                            $class='edit-service-detail';
-                                                        }
-                                                 ?>
-
-                                                    <a href="#" class="edit {!! $class !!} btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
-                                                        <i class="fa-eye"></i>
-                                                    </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            {{--endcontent--}}
-                        </div>
-                    </div>
-                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

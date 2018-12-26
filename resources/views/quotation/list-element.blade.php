@@ -38,6 +38,7 @@
             <th width="*">Leads</th>
             <th width="200px">Sales</th>
             <th width="180px">ราคาสุทธิ</th>
+            <th width="180px">เลขที่สัญญา</th>
             <th width="215px">Action</th>
         </tr>
         </thead>
@@ -48,6 +49,11 @@
             <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
             <td>{!! $row->latest_sale->name !!}</td>
             <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
+            @if(!empty($row->latest_contract->id))
+                    <td>{!! $row->latest_contract->contract_code !!}</td>
+                @else
+                    <td>ไม่มีข้อมูลสัญญา</td>
+            @endif
             <td class="action-links">
                 <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>
@@ -58,11 +64,12 @@
                 <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                     <i class="fa-pencil-square-o"></i>
                 </a>
+                @if(empty($row->latest_contract->quotation_id))
                 <a href="#" class="view-quotation btn btn-info"  data-toggle="modal" data-target="#view-quotaion" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-q-id="{!!$row->quotation_code!!}" >
                     <i class="fa-eye"></i>
                 </a>
                 {{--@if($row->deleted_at == null)--}}
-                @if(empty($row->latest_contract->quotation_id))
+
                         <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}')" >
                             <i class="fa-trash"></i>
                         </a>

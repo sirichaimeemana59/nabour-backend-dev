@@ -5,6 +5,7 @@
     $to     = (($contracts->currentPage()-1)*$contracts->perPage())+$contracts->perPage();
     $to     = ($to > $contracts->total()) ? $contracts->total() : $to;
     $allpage 	= $contracts->lastPage();
+
 ?>
 
 <div class="row">
@@ -40,6 +41,7 @@
         <th width="170px">Sales</th>
         <th width="150px">วันที่เริ่ม</th>
         <th width="150px">วันที่สิ้นสุด</th>
+        <th width="150px">สถานะ</th>
         <th width="90px">Action</th>
     </tr>
     </thead>
@@ -51,10 +53,18 @@
         <td>{!! $row->latest_sale->name !!}</td>
         <td>{!! $row->start_date !!}</td>
         <td>{!! $row->end_date !!}</td>
+        <?php
+            if($row->status == 1 AND $row->latest_quotation->status == 1){
+                $status = "อนุมัติ";
+            }else{
+                $status = "ไม่อนุมัติ";
+            }
+        ?>
+        <td>{!! $status !!}</td>
         <td class="action-links">
-            <a href="{!! url('service/contract/sign/form/'.$row->quotation_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
-                <i class="fa-eye"></i>
-            </a>
+                <a href="{!! url('service/contract/sign/form/'.$row->quotation_id.'/'.$row->customer_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
+                    <i class="fa-eye"></i>
+                </a>
             <a href="{!! url('service/contract/sign/quotation/'.$row->id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
                 <i class="fa-print"></i>
             </a>

@@ -37,6 +37,7 @@
             <th width="160px">เลขที่ใบเสนอราคา</th>
             <th width="*">Leads</th>
             <th width="180px">ราคาสุทธิ</th>
+            <th width="160px">สถานะ</th>
             <th width="215px">Action</th>
         </tr>
         </thead>
@@ -46,6 +47,11 @@
             <td>{!! $row->quotation_code !!}</td>
             <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
             <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
+            @if(!empty($row->latest_contract->id))
+                <td>{!! $row->latest_contract->contract_code !!}</td>
+            @else
+                <td>ไม่มีข้อมูลสัญญา</td>
+            @endif
             <td class="action-links">
                 <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>
@@ -53,9 +59,7 @@
                 <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                     <i class="fa-print"></i>
                 </a>
-                <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
-                    <i class="fa-pencil-square-o"></i>
-                </a>
+
                 {{--<a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">--}}
                     {{--<i class="fa-trash"></i>--}}
                 {{--</a>--}}
@@ -63,6 +67,9 @@
                     <i class="fa-eye"></i>
                 </a>
                 @if(empty($row->latest_contract->quotation_id))
+                    <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                        <i class="fa-pencil-square-o"></i>
+                    </a>
                     <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}')" >
                         <i class="fa-trash"></i>
                     </a>

@@ -192,7 +192,7 @@
                 $('.v-loading').show();
                 $('#service-content1').empty();
                 $.ajax({
-                    url : $('#root-url').val()+"/service/quotation/detail",
+                    url : $('#root-url').val()+"/service/sales/quotation/detail",
                     method : 'post',
                     dataType: 'html',
                     data : ({'id':id}),
