@@ -74,10 +74,10 @@
                     <thead>
                     <tr>
                         <th width="160px">เลขที่ใบเสนอราคา</th>
-                        <th width="160px">เอกสารสัญญา</th>
-                        <th width="180px">ราคาสุทธิ</th>
-                        <th width="160px">สถานะ</th>
-                        <th width="215px">Action</th>
+                        <th width="200px">เอกสารสัญญา</th>
+                        <th width="80px">ราคาสุทธิ</th>
+                        <th width="60px">สถานะ</th>
+                        <th width="110px">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,7 +85,7 @@
                         <tr>
                             <td>{!! $row->quotation_code !!}</td>
                             @if(!empty($row->latest_contract->contract_code))
-                                    <td>เอกสารสัญญา : {!! $row->latest_contract->contract_code !!}</td>
+                                    <td>{!! $row->latest_contract->contract_code !!}</td>
                                 @else
                                     <td>ไม่พบข้อมูล</td>
                             @endif
