@@ -120,13 +120,15 @@
                                                     <i class="fa-print"></i>
                                                 </a>
                                                     {{--@else--}}
-                                                @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
-                                                    @else
-                                                        <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
-                                                 @endif
-                                                            <i class="fa-pencil-square-o"></i>
-                                                        </a>
+                                                @if(empty($row->latest_contract->quotation_id))
+                                                    @if(Auth::user()->role !=2)
+                                                            <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                        @else
+                                                            <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                     @endif
+                                                                <i class="fa-pencil-square-o"></i>
+                                                            </a>
+                                                @endif
 
                                                  @if(empty($row->latest_contract->quotation_id))
                                                         <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
