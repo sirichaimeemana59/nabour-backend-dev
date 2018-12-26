@@ -70,7 +70,7 @@
                 </div>
 
 
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped" id="panel-package-list">
                     <thead>
                     <tr>
                         <th width="160px">เลขที่ใบเสนอราคา</th>
