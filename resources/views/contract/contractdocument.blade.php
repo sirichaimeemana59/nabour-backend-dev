@@ -343,7 +343,7 @@
                 <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->start_date)!!}</div></td>
             </tr>
             <tr>
-                <td width="35%" style="font-size:16px;"><div>วันที่หมดัญญา</div></td>
+                <td width="35%" style="font-size:16px;"><div>วันที่หมดสัญญา</div></td>
                 <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->end_date)!!}</div></td>
             </tr>
             <tr>

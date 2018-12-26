@@ -104,6 +104,80 @@
         </div>
     </div>
 
+    {{--delete--}}
+    <div class="modal fade" id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ลบใบเสนอราคา</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                {{--@if(Auth::user()->role ==2)--}}
+                                    {{--{!! Form::model(null,array('url' => array('service/sales/quotation/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}--}}
+                                {{--@else--}}
+                                    {!! Form::model(null,array('url' => array('service/quotation/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+
+                                {{--@endif--}}
+                                <br>
+                                <input type="hidden" name="id2" id="id2">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
+                                    <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ลบ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end delete--}}
+
+    {{--Check--}}
+    <div class="modal fade" id="check">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ยกเลิกการลบใบเสนอราคา</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role ==2)
+                                    {!! Form::model(null,array('url' => array('service/sales/quotation/check'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('service/quotation/check'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+
+                                @endif
+                                <br>
+                                <input type="hidden" name="id3" id="id3">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn1.iconfinder.com/data/icons/jetflat-multimedia-vol-4/90/0042_089_check_well_ready_okey-512.png" alt="" width="50%">
+                                    <br><br><br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ยืนยัน</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end Check--}}
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
@@ -185,6 +259,13 @@
                 })
             }
         })
+        function mate_del(id) {
+            document.getElementById("id2").value = id;
+        }
+
+        function mate_check(id) {
+            document.getElementById("id3").value = id;
+        }
     </script>
 
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">

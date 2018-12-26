@@ -38,7 +38,7 @@
             <th width="*">Leads</th>
             <th width="200px">Sales</th>
             <th width="180px">ราคาสุทธิ</th>
-            <th width="170px">Action</th>
+            <th width="215px">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -61,6 +61,17 @@
                 <a href="#" class="view-quotation btn btn-info"  data-toggle="modal" data-target="#view-quotaion" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-q-id="{!!$row->quotation_code!!}" >
                     <i class="fa-eye"></i>
                 </a>
+                {{--@if($row->deleted_at == null)--}}
+                @if(empty($row->latest_contract->quotation_id))
+                        <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}')" >
+                            <i class="fa-trash"></i>
+                        </a>
+                @endif
+                    {{--@else--}}
+                        {{--<a href="#" class="view-quotation btn btn-warning"  data-toggle="modal" data-target="#check" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_check('{!!$row->id!!}')" >--}}
+                            {{--<i class="fa-check"></i>--}}
+                        {{--</a>--}}
+                {{--@endif--}}
             </td>
         </tr>
         @endforeach

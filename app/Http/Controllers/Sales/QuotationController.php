@@ -91,7 +91,7 @@ class QuotationController extends Controller
         $quotation->quotation_code         = Request::get('quotation_code');
         $quotation->product_price_with_vat = str_replace(',', '',Request::get('grand_total'));
         $quotation->product_vat            = str_replace(',', '',Request::get('vat'));
-        $quotation->grand_total_price      = $total;
+        $quotation->grand_total_price      = str_replace(',', '',$total);
         $quotation->discount               = str_replace(',', '',Request::get('discount'));
         $quotation->invalid_date           = Request::get('invalid_date');
         $quotation->remark                 = 0;
@@ -194,9 +194,9 @@ class QuotationController extends Controller
             $quotation = $quotation->find(Request::get('quotation_code'));
 
             $quotation->quotation_code         = Request::get('quotation_code1');
-            $quotation->product_price_with_vat = Request::get('grand_total_');
+            $quotation->product_price_with_vat = str_replace(',', '',Request::get('grand_total_'));
             $quotation->product_vat            = str_replace(',', '',Request::get('vat'));
-            $quotation->grand_total_price      = $_total;
+            $quotation->grand_total_price      = str_replace(',', '',$_total);
             $quotation->discount               = str_replace(',', '',Request::get('discount'));
             $quotation->invalid_date           = Request::get('invalid_date');
             $quotation->remark                 = 0;
@@ -217,10 +217,19 @@ class QuotationController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $quotation = Quotation::find(Request::get('id2'))->delete();
+
+        if(Request::get('page') == 1){
+            return redirect('service/sales/quotation/add/'.Request::get('lead_id'));
+        }else{
+            return redirect('sales/quotation/list');
+        }
+        //return redirect('sales/quotation/list');
+        //return Request::get('id2');
     }
+
     public function check($id = null , $lead_id = null)
     {
         $quotation = Quotation::find($id);
@@ -324,7 +333,7 @@ class QuotationController extends Controller
             $quotations = $quotations->where('lead_id',Request::get('leads_id'));
         }
 
-        $quotations = $quotations->orderBy('quotation_code','desc')->paginate(2);
+        $quotations = $quotations->orderBy('quotation_code','desc')->paginate(500);
         if( Request::ajax() ) {
             return view('quotation.list-element-sales')->with(compact('quotations'));
 

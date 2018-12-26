@@ -55,7 +55,11 @@
     </div>
 
     @if($status->status ==0)
-        <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+        @if(Auth::user()->role !=2)
+                <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+            @else
+                <a href="{!!url('/service/sales/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+        @endif
         <a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>
     @else
         <a href="{!!url('/service/quotation/cancel/'.$id)!!}" ><button type="button" class="btn btn-danger action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ยกเลิกใบเสนอราคา</button></a>
@@ -87,13 +91,25 @@
                                                 {{--@if($row->status !=1)--}}
                                                 {{--@if($row->remark == 0 AND $remark !=1)--}}
                                                 {{--<a href="{!! url('service/contract/sign/quotation/'.$row->quotation_code.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา" target="_blank">--}}
-                                                @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                        @else
-                                                        <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                @if(empty($row->latest_contract->quotation_id))
+                                                        @if(Auth::user()->role !=2)
+                                                                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                                @else
+                                                                <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                        @endif
+                                                                <i class="fa-check"></i>
+                                                                </a>
+                                                    @else
+                                                         @if(Auth::user()->role !=2)
+                                                                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                                        <i class="fa-eye"></i>
+                                                                </a>
+                                                             @else
+                                                                <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                                        <i class="fa-eye"></i>
+                                                                </a>
+                                                         @endif
                                                 @endif
-                                                    <i class="fa-check"></i>
-                                                </a>
                                                 {{--@endif--}}
 
                                                 {{--@if($row->remark == 1)
@@ -111,13 +127,22 @@
                                                  @endif
                                                             <i class="fa-pencil-square-o"></i>
                                                         </a>
-                                                        <a href="#" class="btn btn-danger view-member"  data-toggle="tooltip" data-placement="top" data-original-title="ลบ">
+
+                                                 @if(empty($row->latest_contract->quotation_id))
+                                                        <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
                                                             <i class="fa-trash"></i>
                                                         </a>
-                                                {{--@endif--}}
+                                                 @endif
 
-                                                {{--@endif--}}
-                                                    <a href="#" class="edit edit-service btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
+                                                 <?php
+                                                        if(Auth::user()->role !=2){
+                                                            $class='edit-service';
+                                                        }   else{
+                                                            $class='edit-service-detail';
+                                                        }
+                                                 ?>
+
+                                                    <a href="#" class="edit {!! $class !!} btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
                                                         <i class="fa-eye"></i>
                                                     </a>
                                             </div>
@@ -155,6 +180,44 @@
         </div>
     </div>
     {{--end update --}}
+
+    {{--delete--}}
+    <div class="modal fade" id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ลบใบเสนอราคา</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role ==2)
+                                        {!! Form::model(null,array('url' => array('service/sales/quotation/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                    @else
+                                        {!! Form::model(null,array('url' => array('service/quotation/delete'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @endif
+                                <br>
+                                    <input type="hidden" name="id2" id="id2">
+                                    <input type="hidden" name="page" id="page">
+                                    <input type="hidden" name="lead_id" id="lead_id">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
+                                    <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ลบ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end delete--}}
 
 @endsection
 @section('script')
@@ -201,7 +264,7 @@
             }
         })
 
-        //update
+        //detail
         $('#panel-package-list').on('click','.edit-service' ,function (){
             var id = $(this).data('vehicle-id');
             $('.v-loading').show();
@@ -220,7 +283,34 @@
                 }
             })
         });
-        //end update
+        //end detail
+
+        //detail sales
+        $('#panel-package-list').on('click','.edit-service-detail' ,function (){
+            var id = $(this).data('vehicle-id');
+            $('.v-loading').show();
+            $('#service-content1').empty();
+            $.ajax({
+                url : $('#root-url').val()+"/service/sales/quotation/detail",
+                method : 'post',
+                dataType: 'html',
+                data : ({'id':id}),
+                success: function (r) {
+                    $('.v-loading').hide();
+                    $('#service-content1').html(r);
+                },
+                error : function () {
+
+                }
+            })
+        });
+        //end detail sales
+
+        function mate_del(id,lead_id) {
+            document.getElementById("id2").value = id;
+            document.getElementById("page").value = 1;
+            document.getElementById("lead_id").value = lead_id;
+        }
 
     </script>
 @endsection

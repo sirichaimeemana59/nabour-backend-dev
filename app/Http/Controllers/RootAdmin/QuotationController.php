@@ -16,6 +16,7 @@ use App\BackendModel\Products;
 use App\success;
 use App\BackendModel\Customer;
 use App\BackendModel\User as BackendUser;
+use DB;
 
 class QuotationController extends Controller
 {
@@ -92,7 +93,7 @@ class QuotationController extends Controller
         $quotation->quotation_code         = Request::get('quotation_code');
         $quotation->product_price_with_vat = str_replace(',', '',Request::get('grand_total'));
         $quotation->product_vat            = str_replace(',', '',Request::get('vat'));
-        $quotation->grand_total_price      = $total;
+        $quotation->grand_total_price      = str_replace(',', '',$total);
         $quotation->discount               = str_replace(',', '',Request::get('discount'));
         $quotation->invalid_date           = Request::get('invalid_date');
         $quotation->remark                 = 0;
@@ -192,9 +193,9 @@ class QuotationController extends Controller
             $quotation = $quotation->find(Request::get('quotation_code'));
 
             $quotation->quotation_code         = Request::get('quotation_code1');
-            $quotation->product_price_with_vat = Request::get('grand_total_');
+            $quotation->product_price_with_vat = str_replace(',', '',Request::get('grand_total_'));
             $quotation->product_vat            = str_replace(',', '',Request::get('vat'));
-            $quotation->grand_total_price      = $_total;
+            $quotation->grand_total_price      = str_replace(',', '',$_total);
             $quotation->discount               = str_replace(',', '',Request::get('discount'));
             $quotation->invalid_date           = Request::get('invalid_date');
             $quotation->remark                 = 0;
@@ -211,10 +212,25 @@ class QuotationController extends Controller
         return redirect('service/quotation/add/'.Request::get('lead_id'));
     }
 
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $quotation = Quotation::find(Request::get('id2'))->delete();
+
+        if(Request::get('page') == 1){
+            return redirect('service/quotation/add/'.Request::get('lead_id'));
+        }else{
+            return redirect('quotation/list');
+        }
+
+        //return Request::get('page');
     }
+
+//    public function restore()
+//    {
+//        //$quotation = Quotation::withTrashed()->find(Request::get('id3'))->restore();
+//        return Request::get('id3');
+//    }
+
     public function check($id = null , $lead_id = null)
     {
         $quotation = Quotation::find($id);
@@ -244,7 +260,7 @@ class QuotationController extends Controller
             $quotation_service = $quotation_service->where('quotation_code', Request::get('id'));
             $quotation_service = $quotation_service->get();
 
-            //dd($quotation);
+            //dd($quotation_service);
             return view('quotation.quotation_detail')->with(compact('quotation','quotation_service'));
         }
     }
@@ -324,7 +340,8 @@ class QuotationController extends Controller
             $quotations = $quotations->where('sales_id',Request::get('sale_id'));
         }
 
-        $quotations = $quotations->orderBy('quotation_code','desc')->paginate(1);
+        $quotations = $quotations->orderBy('quotation_code','desc')->paginate(500);
+
         if( Request::ajax() ) {
             return view('quotation.list-element')->with(compact('quotations'));
 

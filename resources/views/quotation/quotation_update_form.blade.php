@@ -112,7 +112,7 @@
                                     @endif
                             </td>
                             <input type="hidden" name="_data[{{ $key }}][quotation_code]" value="{{$quo->quotation_code}}"/>
-                            <td><input type="text" required name="_data[{{ $key }}][project]" id="{!! $t_price !!}" style="text-align: right;" value="{!!number_format($quo->project_package,0)!!}" class="toValidate form-control  tPrice"/>
+                            <td><input type="text" required name="_data[{{ $key }}][project]" id="{!! $t_price !!}" style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control  tPrice"/>
                             </td>
                             <td>
                                 <input type="text" required style="text-align: right;" id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{{ $key }}][price]" value="{{$quo->month_package}}" maxlength="15"/>
@@ -120,11 +120,11 @@
                             </td>
                             <td><div class="input-group">
                                     <span class="input-group-addon">฿</span>
-                                    <input type="text" style="text-align: right;" required name="_data[{{ $key }}][unit_price]" id="{!! $id_ !!}" value="{!!number_format($quo->unit_package,2)!!}" class="toValidate form-control input-sm tQty" {!! $read !!}/>
+                                    <input type="text" style="text-align: right;" required name="_data[{{ $key }}][unit_price]" id="{!! $id_ !!}" value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tQty" {!! $read !!}/>
                                 </div>
                             <td>
                                 <div class="text-right">
-                                    <span class="colTotal" id="_colTotal">{{number_format($quo->total_package,2)}}</span> บาท
+                                    <span class="colTotal" id="_colTotal">{{$quo->total_package}}</span> บาท
                                 </div>
                                 <input name="_data[{{ $key }}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{{$quo->total_package}}"/>
                             </td>
@@ -169,7 +169,7 @@
                         ?>
                         <div class="row">
                             <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.grand_total') }} :</h5></div>
-                            <div class="col-md-4 text-right"><h5><span id="grandTotal">{!! number_format($grand_total,2) !!}</span> {{ trans('messages.Report.baht') }}</h5>
+                            <div class="col-md-4 text-right"><h5><span id="grandTotal">{!! $grand_total !!}</span> {{ trans('messages.Report.baht') }}</h5>
                                 <input type="hidden" id="h_total" name="sub_total">
                             </div>
                         </div>
