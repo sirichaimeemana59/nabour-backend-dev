@@ -64,7 +64,14 @@
                                 <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>
                                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span> </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="#" class="edit edit-customer" data-toggle="modal" data-target="#edit-customer" data-vehicle-id="{!!$row->id!!}">
+                                    <?php
+                                    if(Auth::user()->role !=2){
+                                        $class='edit-customer';
+                                    }   else{
+                                        $class='edit-customer-detail';
+                                    }
+                                    ?>
+                                    <li><a href="#" class="edit {!! $class !!}" data-toggle="modal" data-target="#edit-customer" data-vehicle-id="{!!$row->id!!}">
                                             <i class="fa-pencil-square-o"></i>แก้ไข
                                         </a>
                                     </li>

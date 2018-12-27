@@ -336,6 +336,28 @@
         });
         //end update
 
+        //update sale
+        $('#panel-lead-list').on('click','.edit-customer-detail' ,function (){
+            var id = $(this).data('vehicle-id');
+            $('.v-loading').show();
+            $('#lead-content2').empty();
+            //console.log();
+            $.ajax({
+                url : $('#root-url').val()+"/customer/sales/list_update_customer",
+                method : 'post',
+                dataType: 'html',
+                data : ({'id':id}),
+                success: function (r) {
+                    $('.v-loading').hide();
+                    $('#lead-content2').html(r);
+                },
+                error : function () {
+
+                }
+            })
+        });
+        //end update sale
+
         if($('#p_form').valid() && allGood ) {
             $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
             $('#p_form').submit();
