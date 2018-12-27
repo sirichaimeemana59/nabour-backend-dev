@@ -10,9 +10,9 @@
 	<table cellspacing="0" class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th width="50%">{!!  __('messages.user') !!}</th>
-				<th width="25%">{!!  __('messages.Member.account_status') !!}</th>
-				<th width="*">{!!  __('messages.action') !!}</th>
+				<th width="*">{!!  __('messages.user') !!}</th>
+				<th width="160px">{!!  __('messages.Member.account_status') !!}</th>
+				<th width="130px">{!!  __('messages.action') !!}</th>
 			</tr>
 		</thead>
 		<tbody>

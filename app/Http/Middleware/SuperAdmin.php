@@ -16,10 +16,7 @@ class SuperAdmin
      */
     public function handle($request, Closure $next)
     {
-        //return redirect('/sales/contract/list');
-        //dd(Auth::user());
-        //dd(Auth::guest());
-        if( Auth::check() && Auth::user()->role !== 0 ) {
+        if(  Auth::guest() || (Auth::check() && Auth::user()->role !== 0)) {
             return redirect('/');
         }
         return $next($request);

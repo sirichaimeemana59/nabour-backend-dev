@@ -51,8 +51,8 @@
         <td>{!! $row->contract_code !!}</td>
         <td>{!! $row->customer->company_name !!}</td>
         <td>{!! $row->latest_sale->name !!}</td>
-        <td>{!! $row->start_date !!}</td>
-        <td>{!! $row->end_date !!}</td>
+        <td>{!! localDate($row->start_date) !!}</td>
+        <td>{!! localDate($row->end_date) !!}</td>
         <?php
             if($row->status == 1 AND $row->latest_quotation->status == 1){
                 $status = "เซ็นสัญญาแล้ว";

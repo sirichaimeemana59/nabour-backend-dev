@@ -16,7 +16,7 @@ class Sales
      */
     public function handle($request, Closure $next)
     {
-        if( Auth::check() && Auth::user()->role !== 2) {
+        if(  Auth::guest() || (Auth::check() && Auth::user()->role !== 2)) {
             return redirect('/');
         }
         return $next($request);

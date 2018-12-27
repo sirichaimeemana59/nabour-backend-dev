@@ -10,9 +10,9 @@
 	<table cellspacing="0" class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th width="50%">{!! trans('messages.user') !!}</th>
-				<th width="25%">{!! trans('messages.Member.account_status') !!}</th>
-				<th width="*">{!! trans('messages.action') !!}</th>
+				<th width="*">{!! trans('messages.user') !!}</th>
+				<th width="160px">{!! trans('messages.Member.account_status') !!}</th>
+				<th width="170px">{!! trans('messages.action') !!}</th>
 			</tr>
 		</thead>
 		<tbody>
