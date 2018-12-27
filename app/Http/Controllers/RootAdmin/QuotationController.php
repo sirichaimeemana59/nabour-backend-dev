@@ -131,7 +131,7 @@ class QuotationController extends Controller
         }
 
 
-        return redirect('service/quotation/add/'.Request::get('lead_id'));
+        return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
 
 
         //dump($quotation->toArray());
@@ -214,7 +214,7 @@ class QuotationController extends Controller
 
 
 
-        return redirect('service/quotation/add/'.Request::get('lead_id'));
+        return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
     }
 
     public function destroy()
@@ -313,7 +313,7 @@ class QuotationController extends Controller
         //$customer->save();
         //dump($customer->toArray());
             //dd($quotation);
-       return redirect('service/quotation/add/'.$id);
+       return redirect('customer/service/quotation/add/'.$id);
 
     }
 
@@ -324,7 +324,7 @@ class QuotationController extends Controller
         $quotation->save();
 
         //dd($quotation);
-        return redirect('service/quotation/add/'.$id);
+        return redirect('customer/service/quotation/add/'.$id);
 
     }
 

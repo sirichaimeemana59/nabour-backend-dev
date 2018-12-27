@@ -37,5 +37,10 @@ class Quotation extends GeneralModel
         return $this->hasOne('App\BackendModel\contract','quotation_id','id');
     }
 
+    public function latest_property ()
+    {
+        return $this->hasOne('App\BackendModel\Property','id','property_id');
+    }
+
 
 }

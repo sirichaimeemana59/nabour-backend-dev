@@ -55,14 +55,14 @@
         <td>{!! $row->end_date !!}</td>
         <?php
             if($row->status == 1 AND $row->latest_quotation->status == 1){
-                $status = "อนุมัติ";
+                $status = "เซ็นสัญญาแล้ว";
             }else{
-                $status = "ไม่อนุมัติ";
+                $status = "ยังไม่เซ็นสัญญา";
             }
         ?>
         <td>{!! $status !!}</td>
         <td class="action-links">
-                <a href="{!! url('service/contract/sign/form/'.$row->quotation_id.'/'.$row->customer_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
+                <a href="{!! url('customer/service/contract/sign/form/'.$row->quotation_id.'/'.$row->customer_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
                     <i class="fa-eye"></i>
                 </a>
             <a href="{!! url('service/contract/sign/quotation/'.$row->id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">

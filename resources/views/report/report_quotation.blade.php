@@ -42,41 +42,37 @@
         <div class="title_herder">
             <table style="border: 1px solid black; color: black;" width="100%">
                 <tr>
-                    <td style="padding:0 0 0 5px;">Attention</td>
-                    <td style="padding:0 0 0 5px;">:</td>
-                    <td style="padding:0 0 0 5px; border-right: 1px solid black;" colspan="6">{!! $quotation->latest_lead->firstname !!}</td>
-                    <td style="padding:0 0 0 5px;">No : </td>
-                    <td style="padding:0 0 0 5px;"> {!! $quotation->quotation_code !!}</td>
+                    <td style="padding:5px 0 0 5px;">Attention</td>
+                    <td style="padding:5px 0 0 5px;">:</td>
+                    <td style="padding:5px 0 0 5px; border-right: 1px solid black;" colspan="6">{!! $quotation->latest_lead->firstname !!}</td>
+                    <td style="padding:5px 0 0 5px;">No : </td>
+                    <td style="padding:5px 0 0 5px;"> {!! $quotation->quotation_code !!}</td>
                 </tr>
                 <tr>
                     <?php
                     $date=date("Y-m-d");
                     ?>
-                    <td colspan="8" style="border-right: 1px solid black; color: black; padding:0 0 0 5px;"></td>
-                    <td style="color: black; padding:0 0 0 5px;">Date : </td>
-                    <td style="color: black; padding:0 0 0 5px;">{{localDate($date)}}</td>
-                </tr>
-                <tr>
                     <td style="color: black; padding:0 0 0 5px; width: 10%">Address</td>
                     <td style="color: black; padding:0 0 0 5px;">:</td>
                     <td colspan="6" style="color: black; padding:0 0 0 5px; border-right: 1px solid black;">{!! $quotation->latest_lead->address ." ". $provinces[$quotation['province']] ." ". $quotation->latest_lead->postcode!!}</td>
-                    <td style="color: black; padding:0 0 0 5px;">Salesperson : </td>
-                    <td style="color: black; padding:0 0 0 5px;">{!! $quotation->latest_sale->name !!}</td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                    <td colspan="5" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
-                    <td colspan="2"></td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                    <td colspan="5" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
-                    <td colspan="2"></td>
+                    <td style="color: black; padding:0 0 0 5px;">Date : </td>
+                    <td style="color: black; padding:0 0 0 5px;">{{localDate($date)}}</td>
                 </tr>
                 <tr>
                     <td style="color: black; padding:0 0 0 5px; width: 10%">Taxes ID</td>
                     <td style="color: black; padding:0 0 0 5px;">:</td>
                     <td colspan="6" style="color: black; padding:0 0 0 5px; border-right: 1px solid black;"> -</td>
+                    <td style="color: black; padding:0 0 0 5px;">Salesperson : </td>
+                    <td style="color: black; padding:0 0 0 5px;border-right: 1px solid black;">{!! $quotation->latest_sale->name !!}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="5" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="5" style="border-right: 1px solid black;"><span style="color: black;"></span></td>
                     <td colspan="2"></td>
                 </tr>
                 <tr>
@@ -89,14 +85,14 @@
                     <td style="color: black; padding:0 0 0 5px;">{!! $quotation->latest_sale->phone !!}</td>
                 </tr>
                 <tr>
-                    <td style="border-bottom: 1px solid black; width: 10%; padding:0 0 0 5px;">contact</td>
-                    <td style="border-bottom: 1px solid black; padding:0 0 0 5px;">:</td>
-                    <td style="border-bottom: 1px solid black; width: 10%; padding:0 0 0 5px;">คุณทรงสิทธิ์</td>
+                    <td style="border-bottom: 1px solid black; width: 10%; padding:0 0 5px 5px;">contact</td>
+                    <td style="border-bottom: 1px solid black; padding:0 0 5px 5px;">:</td>
+                    <td style="border-bottom: 1px solid black; width: 10%; padding:0 0 5px 5px;">คุณทรงสิทธิ์</td>
                     {{--<td style="border-bottom: 1px solid black;"><span style="color: black;"></span></td>--}}
-                    <td colspan="3" style="border-bottom: 1px solid black; padding:0 0 0 5px;">Email : </td>
-                    <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black; padding:0 0 0 5px;"> afmanager@stms.co.th</td>
-                    <td style="color: black; padding:0 0 0 5px;">Email : </td>
-                    <td style="color: black; padding:0 0 0 5px;">{!! $quotation->latest_sale->email !!}</td>
+                    <td colspan="3" style="border-bottom: 1px solid black; padding:0 0 5px 5px;">Email : </td>
+                    <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black; padding:0 0 5px 5px;"> afmanager@stms.co.th</td>
+                    <td style="color: black; padding:0 0 5px 5px;">Email : </td>
+                    <td style="color: black; padding:0 0 5px 5px;">{!! $quotation->latest_sale->email !!}</td>
                 </tr>
                 <tr>
                     <td colspan="4" style="color: black; padding:0 0 0 5px;">payment(การชำระเงิน)</td>
@@ -117,18 +113,18 @@
             <table style="border: 1px solid black;" width="100%" class="line_table styletable">
                 <tr style="background-color: #d4d4d6">
                     <th align="left" class="line_table" style="padding:0 0 0 5px;">No.</th>
-                    <th colspan="5" align="left" class="line_table" style="padding:0 0 0 5px;">Description</th>
-                    <th class="line_table" style="text-align: center; width: 8px;">Project</th>
-                    <th class="line_table" style="text-align: center; width: 8px;">Month</th>
-                    <th class="line_table" style="text-align: center; width: 9px;">Unit Price</th>
-                    <th class="line_table" style="text-align: center; width: 9px;">Total</th>
+                    <th align="left" class="line_table" style="padding:0 0 0 5px; width: 100px;">Description</th>
+                    <th class="line_table" style="text-align: center; width: 50px;">Project</th>
+                    <th class="line_table" style="text-align: center; width: 50px;">Month</th>
+                    <th class="line_table" style="text-align: center; width: 60px;">Unit Price</th>
+                    <th class="line_table" style="text-align: center; width: 60px;">Total</th>
                 </tr>
                 <?php $i=1;
                 $sum_service=0;?>
                 @foreach($quotation_service as $row)
                     <tr>
                         <td class="line_table" style="vertical-align: top; padding:0 0 0 5px;">{!! $i !!}</td>
-                        <td colspan="5" class="line_table" width="65%" style="padding:0 0 0 5px;">
+                        <td class="line_table" width="65%" style="padding:0 0 0 5px;">
                             {!! $row->lastest_package->name !!}<br>{!! $row->lastest_package->description !!}</td>
                         </td>
                         <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! number_format($row->project_package,0) !!}</td>
@@ -155,7 +151,7 @@
                 }*/
                 ?>
         <tr>
-            <td colspan="7" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
+            <td colspan="3" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
             <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:0 0 0 5px;">Sub Total</td>
             <td align="right" style="padding:0 5px 0 0;">{!! number_format($sum_service,2) !!}</td>
         </tr>

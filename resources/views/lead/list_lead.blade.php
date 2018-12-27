@@ -49,7 +49,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-sm-3 text-right">
+                            <div class="col-sm-6 text-right">
                                 <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
                                 <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
                             </div>
@@ -95,77 +95,80 @@
                     @endif
 
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">ชื่อ</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">ชื่อ</label>
+                        <div class="col-sm-4">
                             <input class="form-control" name="firstname" id="firstname" type="text" required>
                         </div>
 
-                        <label class="col-sm-1 control-label">นามสกุล</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">นามสกุล</label>
+                        <div class="col-sm-4">
                             <input class="form-control" name="lastname" type="text" required>
-                        </div>
-
-                        <label class="col-sm-1 control-label">เบอร์โทร</label>
-                        <div class="col-sm-2">
-                            <input class="form-control" name="phone" type="text" required>
-                        </div>
-
-                        <label class="col-sm-1 control-label">E-Mail</label>
-                        <div class="col-sm-2">
-                            <input class="form-control" name="email" type="text" required>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">เบอร์โทร</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="phone" type="text" required>
+                            </div>
 
-                        <label class="col-sm-1 control-label">แหล่งที่มา</label>
-                        <div class="col-sm-2">
+                            <label class="col-sm-2 control-label">E-Mail</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="email" type="text" required>
+                            </div>
+                        </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">แหล่งที่มา</label>
+                        <div class="col-sm-4">
                             {!! Form::select('channel',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','required')) !!}
                         </div>
-                        <label class="col-sm-1 control-label">ประเภท</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">ประเภท</label>
+                        <div class="col-sm-4">
                             {!! Form::select('type',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
                         </div>
+                    </div>
 
-                        <label class="col-sm-1 control-label">พนักงานขาย</label>
-                        <div class="col-sm-2">
+                        <div class="form-group">
+                           <label class="col-sm-2 control-label">พนักงานขาย</label>
+                            <div class="col-sm-4">
 
                                 @if(Auth::user()->role !=2)
-                                <select name="sale_id" id="" class="form-control" required>
-                                    <option value="">กรุณาเลือกพนักงานขาย</option>
-                                    @foreach($sale as $srow)
-                                        <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
-                                    @endforeach
-                                </select>
+                                    <select name="sale_id" id="" class="form-control" required>
+                                        <option value="">กรุณาเลือกพนักงานขาย</option>
+                                        @foreach($sale as $srow)
+                                            <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                                        @endforeach
+                                    </select>
                                 @else
-                                <select name="sale_id" id="" class="form-control"  disabled="true">
-                                    <option value="">กรุณาเลือกพนักงานขาย</option>
-                                    @foreach($sale as $_srow)
-                                        <?php
+                                    <select name="sale_id" id="" class="form-control"  disabled="true">
+                                        <option value="">กรุณาเลือกพนักงานขาย</option>
+                                        @foreach($sale as $_srow)
+                                            <?php
                                             $select=$_srow->id==Auth::user()->id?"selected":"";
-                                        ?>
-                                        <option value="{!!$_srow->id!!}" {!! $select !!}>{!!$_srow->name!!}</option>
-                                    @endforeach
-                                </select>
+                                            ?>
+                                            <option value="{!!$_srow->id!!}" {!! $select !!}>{!!$_srow->name!!}</option>
+                                        @endforeach
+                                    </select>
                                 @endif
 
 
+                            </div>
+                            <input type="hidden" name="sales_status" value="0">
+                            <label class="col-sm-2 control-label">ชื่อบริษัท</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="company_name" type="text" required>
+                            </div>
                         </div>
-                        <input type="hidden" name="sales_status" value="0">
-                        <label class="col-sm-1 control-label">ชื่อบริษัท</label>
-                        <div class="col-sm-2">
-                            <input class="form-control" name="company_name" type="text" required>
-                        </div>
-                    </div>
 
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">ที่อยู่</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">ที่อยู่</label>
+                        <div class="col-sm-4">
                             <input class="form-control" name="address" type="text" required>
                         </div>
 
-                        <label class="col-sm-1 control-label">จังหวัด</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-2 control-label">จังหวัด</label>
+                        <div class="col-sm-4">
                             <select name="province" id="" class="form-control" required>
                                 <option value="">กรุณาเลือกจังหวัด</option>
                                 @foreach($provinces as $row)
@@ -173,12 +176,14 @@
                                 @endforeach
                             </select>
                         </div>
-
-                        <label class="col-sm-1 control-label">รหัสไปรษณีย์</label>
-                        <div class="col-sm-2">
-                            <input class="form-control" name="postcode" type="text" required>
-                        </div>
                     </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">รหัสไปรษณีย์</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="postcode" type="text" required>
+                            </div>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>

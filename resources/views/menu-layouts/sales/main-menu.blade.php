@@ -56,26 +56,13 @@
         </a>
     </li>
 
-    <li class="{!! (Request::is('service/package/*') ? 'active' : '') !!}">
-        <a href="#">
+    <li class="{!! (Request::is('service/package/add') ? 'active' : '') !!}">
+        <a href="{!! url('service/package/add')!!}">
             <i class="fa fa-file-o"></i>
             <span class="title">รายการผลิตภัณฑ์</span>
         </a>
-        <ul style="{!!  (Request::is('service/*') ? 'display:block;' : '') !!}">
-            <li class="{!!  (Request::is('service/package/add') ? 'active' : '') !!}">
-                <a href="{!! url('service/package/add')!!}">
-                    <i class="fa fa-car"></i>
-                    <span class="title">ผลิตภัณฑ์</span>
-                </a>
-            </li>
-            {{--<li class="{!!  (Request::is('service/package/service/add') ? 'active' : '') !!}">--}}
-                {{--<a href="{!!url('service/package/service/add')!!}">--}}
-                    {{--<i class="fa fa-car"></i>--}}
-                    {{--<span class="title">ค่าบริการ</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
-        </ul>
     </li>
+
     <li>
         <a href="{!! url('auth/logout') !!}">
             <i class="fa-power-off"></i>

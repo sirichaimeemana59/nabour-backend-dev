@@ -54,8 +54,16 @@
                 @else
                     <td>ไม่มีข้อมูลสัญญา</td>
             @endif
+
+            <?php
+            if(!empty($row->latest_contract->quotation_id)){
+                $disable='disabled';
+            }else{
+                $disable='';
+            }
+            ?>
             <td class="action-links">
-                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>
                 </a>
                 <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
@@ -64,21 +72,12 @@
                 <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                     <i class="fa-pencil-square-o"></i>
                 </a>
-                @if(empty($row->latest_contract->quotation_id))
-                <a href="#" class="view-quotation btn btn-info"  data-toggle="modal" data-target="#view-quotaion" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-q-id="{!!$row->quotation_code!!}" >
-                    <i class="fa-eye"></i>
+                <a href="#" class="view-quotation btn btn-info" {!! $disable !!}  data-toggle="modal"  data-target="#view-quotaion" data-placement="top" data-q-id="{!!$row->quotation_code!!}" title="ดูใบเสนอราคา">
+                     <i class="fa-eye"></i>
                 </a>
-                {{--@if($row->deleted_at == null)--}}
-
-                        <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}')" >
-                            <i class="fa-trash"></i>
-                        </a>
-                @endif
-                    {{--@else--}}
-                        {{--<a href="#" class="view-quotation btn btn-warning"  data-toggle="modal" data-target="#check" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_check('{!!$row->id!!}')" >--}}
-                            {{--<i class="fa-check"></i>--}}
-                        {{--</a>--}}
-                {{--@endif--}}
+                <a href="#" class="view-quotation btn btn-danger" {!! $disable !!}  data-toggle="modal" data-target="#delete" data-placement="top"  onclick="mate_del('{!!$row->id!!}')" title="{!! trans('messages.delete') !!}">
+                    <i class="fa-trash"></i>
+                </a>
             </td>
         </tr>
         @endforeach

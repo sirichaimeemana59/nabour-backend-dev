@@ -83,9 +83,9 @@
                                     @endif
                                     <li>
                                         @if(Auth::user()->role !=2)
-                                            <a href="{!!url('/service/quotation/add/'.$row->id)!!}" >
+                                            <a href="{!!url('/customer/service/quotation/add/'.$row->id)!!}" >
                                         @else
-                                            <a href="{!!url('/service/sales/quotation/add/'.$row->id)!!}" >
+                                            <a href="{!!url('/customer/service/sales/quotation/add/'.$row->id)!!}" >
                                         @endif
                                             {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
                                             <i class="fa fa-newspaper-o"></i>ออกใบเสนอราคา

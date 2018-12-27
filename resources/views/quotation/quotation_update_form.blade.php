@@ -90,7 +90,7 @@
                             <td></td>
                             <td>
                                     @if($quo->lastest_package->status==1)
-                                    <select name="_data[{{ $key }}][service]" id="{!! $_service !!}" class="toValidate form-control input-sm" required OnChange="resutPrice(this.value);">
+                                    <select name="_data[{{ $key }}][service]" id="{!! $_service !!}" class="toValidate form-control input-sm unit-select-project" required OnChange="resutPrice(this.value);">
                                         <option value="">กรุณาเลือกค่าบริการ</option>
                                             @foreach($package as $row_)
                                                 <?php
@@ -318,11 +318,7 @@
             return valid;
         }
 
-        $(function() {
-
-            //$('#tprice').number(true,0);
-            //$('#tmonth').number(true,0);
-            //$('#subTotal').number(true,0);
+        $(function () {
 
             $('#tprice').keyup(function() {
                 updatePriceService();
@@ -340,9 +336,9 @@
                 updatePriceService();
             });
 
-            // $('.service').click(function() {
-            //     updatePriceService();
-            // });
+            $('.unit-select-project').click(function() {
+                updatePriceService();
+            });
 
 
             var updatePriceService = function () {

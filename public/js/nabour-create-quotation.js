@@ -43,14 +43,14 @@ $(function () {
         e.preventDefault();
         var time = $.now();
         var bath = $('#baht-label').val();
-        var category = '<select name="transaction['+time+'][service]" id="service">'+ $('#invoice-category-template select').html() + '</select>';
+        var category = '<select name="transaction['+time+'][service]">'+ $('#invoice-category-template select').html() + '</select>';
         var tRowTmp = [
             '<tr class="item-row">',
             '<td><i class="deleteRow fa-trash"></i></td>',
             '<td>'+category+'</td>',
             '<td><input class="toValidate tQty form-control input-sm" name="transaction['+time+'][project]" type="text"  maxlength="15"/></td>',
             '<td></td>',//.join('');
-            '<td><div class="input-group"><span class="input-group-addon">฿</span>'+'<input   class="toValidate tPrice form-control input-sm" style="text-align: right;" name="transaction['+time+'][unit_price]" id="unit_price" type="text"  maxlength="15"/></td>'];
+            '<td><div class="input-group"><span class="input-group-addon">฿</span>'+'<input   class="toValidate tPrice form-control input-sm" style="text-align: right;" name="transaction['+time+'][unit_price]"  type="text"  maxlength="15"/></td>'];
         if($(this).data('vat')) {
             tRowTmp.push('<td><input id="vat-'+time+'"  name="transaction['+time+'][vat]" value="1" class="cbr cbr-replaced cbr-turquoise vat-check" type="checkbox"></td>');
         }

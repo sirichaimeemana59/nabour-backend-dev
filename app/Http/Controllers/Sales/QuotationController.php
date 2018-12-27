@@ -128,9 +128,9 @@ class QuotationController extends Controller
         }
 
         if(Auth::user()->role !=2){
-            return redirect('service/quotation/add/'.Request::get('lead_id'));
+            return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
         }else{
-            return redirect('service/sales/quotation/add/'.Request::get('lead_id'));
+            return redirect('customer/service/sales/quotation/add/'.Request::get('lead_id'));
         }
 
 
@@ -215,9 +215,9 @@ class QuotationController extends Controller
 
         //dump($quotation->toArray());
         if(Auth::user()->role !=2){
-            return redirect('service/quotation/add/'.Request::get('lead_id'));
+            return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
         }else{
-            return redirect('service/sales/quotation/add/'.Request::get('lead_id'));
+            return redirect('customer/service/sales/quotation/add/'.Request::get('lead_id'));
         }
     }
 
@@ -226,7 +226,7 @@ class QuotationController extends Controller
         $quotation = Quotation::find(Request::get('id2'))->delete();
 
         if(Request::get('page') == 1){
-            return redirect('service/sales/quotation/add/'.Request::get('lead_id'));
+            return redirect('customer/service/sales/quotation/add/'.Request::get('lead_id'));
         }else{
             return redirect('sales/quotation/list');
         }
@@ -310,7 +310,7 @@ class QuotationController extends Controller
         //$customer->save();
         //dump($customer->toArray());
             //dd($quotation);
-       return redirect('service/quotation/add/'.$id);
+       return redirect('customer/service/quotation/add/'.$id);
 
     }
 

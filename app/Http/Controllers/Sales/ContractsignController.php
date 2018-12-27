@@ -78,8 +78,10 @@ class ContractsignController extends Controller
             $quotation_service = $quotation_service->where('quotation_id', $id);
             $quotation_service = $quotation_service->get();
 
+            $property = new Property;
+            $property = $property->get();
 
-            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count_','quotation','quotation_service','count'));
+            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count_','quotation','quotation_service','count','property'));
 
         }else{
             $quotation1 = new Quotation;
@@ -101,8 +103,11 @@ class ContractsignController extends Controller
                 ->get();
             $sing=$singg->max('contract_code');
 
+            $property = new Property;
+            $property = $property->get();
+
             //dd($quotation1);
-            return view('contract.contract_form')->with(compact('quotation1','sing','quo_id','contract'));
+            return view('contract.contract_form')->with(compact('quotation1','sing','quo_id','contract','property'));
         }
 
 
@@ -123,14 +128,15 @@ class ContractsignController extends Controller
         $contract->contract_status      = 0;
         $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = Request::get('person_name');
+        $contract->property_id          = Request::get('property_id');
         $contract->save();
 
         //dump($contract->toArray());
 
         if(Auth::user()->role !=2){
-            return redirect('service/quotation/add/'.Request::get('customer_id'));
+            return redirect('customer/service/quotation/add/'.Request::get('customer_id'));
         }else{
-            return redirect('service/sales/quotation/add/'.Request::get('customer_id'));
+            return redirect('customer/service/sales/quotation/add/'.Request::get('customer_id'));
         }
     }
 
@@ -161,12 +167,13 @@ class ContractsignController extends Controller
         $contract->contract_status      = 0;
         $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = Request::get('person_name');
+        $contract->property_id          = Request::get('property_id');
         $contract->save();
         //dump($contract->toArray());
         if(Auth::user()->role !=2){
-            return redirect('service/quotation/add/'.Request::get('customer_id'));
+            return redirect('customer/service/quotation/add/'.Request::get('customer_id'));
         }else{
-            return redirect('service/sales/quotation/add/'.Request::get('customer_id'));
+            return redirect('customer/service/sales/quotation/add/'.Request::get('customer_id'));
         }
     }
 
@@ -180,10 +187,12 @@ class ContractsignController extends Controller
         $quotation = Quotation::find(Request::get('quo_id'));
         $quotation->status = 1;
         $quotation->save();
-        //dd($quotation);
+
+        $customer = Customer::find(Request::get('customer_id'));
+        $customer->role = 0;
+        $customer->save();
+
         return redirect('contract/list');
-        //return (Request::get('id2'));
-        //return (Request::get('quo_id'));
     }
 
     public function contractList () {

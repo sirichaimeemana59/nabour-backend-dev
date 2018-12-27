@@ -97,7 +97,7 @@
                     <tr class="item-row">
                         <td></td>
                         <td>
-                            <select name="transaction[0][service]" id="service unit-select" class="toValidate form-control input-sm service" required OnChange="resutPrice(this.value);">
+                            <select name="transaction[0][service]"  class="toValidate form-control input-sm  unit-select-project" required OnChange="resultPrice(this.value);">
                                 <option value="">กรุณาเลือกค่าบริการ</option>
                                 @foreach($package as $row)
                                     <option value="{!!$row->id!!}|{!! $row->price !!}">{!!$row->name!!}</option>
@@ -368,7 +368,7 @@
     {!! Form::close() !!}
 
     <div id="invoice-category-template" style="display:none;">
-        <select name="transaction[0][service]" id="unit-select" class="toValidate form-control input-sm" required>
+        <select name="transaction[0][service]"  class="toValidate form-control input-sm" required>
             <option value="">กรุณาเลือกค่าบริการ</option>
             @foreach($service as $row)
                 <option value="{!!$row->id!!}">{!!$row->name!!}</option>
@@ -425,7 +425,6 @@
 
             $('#tprice').number(true,0);
             $('#tmonth').number(true,0);
-            //$('#subTotal').number(true,0);
 
             $('#tprice').keyup(function() {
                 updatePriceService();
@@ -439,37 +438,30 @@
                 updatePriceService();
             });
 
-            // $('.service').click(function() {
-            //     updatePriceService();
-            // });
-
-
-            var updatePriceService = function () {
-                var price = parseInt($('#tprice').val());
-                var project_package = parseInt($('#tmonth').val());
-                var month_package = parseInt($('#unit_price').val());
-                //var TotalTax = parseInt($('#tax').val());
-
-                var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
-
-                $('#_colTotal').text(total);
-                $('#_tLineTotal').val(total);
-                calTotal();
-            };
-
+            $('.unit-select-project').click(function() {
+                updatePriceService();
+            })
 
         });
 
-        function resutPrice(strCusPrice)
+        var updatePriceService = function () {
+            var price = parseInt($('#tprice').val());
+            var project_package = parseInt($('#tmonth').val());
+            var month_package = parseInt($('#unit_price').val());
+            //var TotalTax = parseInt($('#tax').val());
+
+            var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
+
+            $('#_colTotal').text(total);
+            $('#_tLineTotal').val(total);
+            calTotal();
+        };
+
+        function resultPrice(strCusPrice)
         {
             //form1.id_package.value = strCusPrice.split("|")[0];
             form1.unit_price.value = strCusPrice.split("|")[1];
-        }
-
-        function resutServicePrice(strCusServicePrice)
-        {
-            //form1.id_package.value = strCusServicePrice.split("|")[0];
-            form1.unit_price.value = strCusServicePrice.split("|")[1];
+            updatePriceService();
         }
 
     </script>

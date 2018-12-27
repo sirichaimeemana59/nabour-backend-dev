@@ -65,11 +65,11 @@ Route::post('service/package/delete_service_open', 'RootAdmin\PackageController@
 //End Product
 
 //Quotation
-Route::get('service/quotation/add/{id}/{ip?}', 'RootAdmin\QuotationController@index');
+Route::get('customer/service/quotation/add/{id}/{ip?}', 'RootAdmin\QuotationController@index');
 Route::post('service/quotation/add/insert', 'RootAdmin\QuotationController@create');
 Route::get('service/quotation_list', 'RootAdmin\QuotationController@index');
 Route::post('service/quotation/detail', 'RootAdmin\QuotationController@detail');
-Route::get('service/quotation/update/form/{id?}', 'RootAdmin\QuotationController@edit');
+Route::get('customer/service/quotation/update/form/{id?}', 'RootAdmin\QuotationController@edit');
 Route::post('service/quotation/update/file', 'RootAdmin\QuotationController@update');
 Route::get('service/quotation/check/quotation/{id?}/{lead_id?}', 'RootAdmin\QuotationController@check');
 Route::get('service/quotation/check_out/quotation/{id?}/{lead_id?}', 'RootAdmin\QuotationController@check_out');
@@ -84,11 +84,11 @@ Route::any('contract/list', 'RootAdmin\ContractsignController@contractList');
 //End Quotation
 
 //Quotation Sales
-Route::get('service/sales/quotation/add/{id}/{ip?}', 'Sales\QuotationController@index');
+Route::get('customer/service/sales/quotation/add/{id}/{ip?}', 'Sales\QuotationController@index');
 Route::post('service/sales/quotation/add/insert', 'Sales\QuotationController@create');
 Route::get('service/sales/quotation_list', 'Sales\QuotationController@index');
 Route::post('service/sales/quotation/detail', 'Sales\QuotationController@detail');
-Route::get('service/sales/quotation/update/form/{id?}', 'Sales\QuotationController@edit');
+Route::get('customer/service/sales/quotation/update/form/{id?}', 'Sales\QuotationController@edit');
 Route::post('service/sales/quotation/update/file', 'Sales\QuotationController@update');
 Route::get('service/sales/quotation/check/quotation/{id?}/{lead_id?}', 'Sales\QuotationController@check');
 Route::get('service/sales/quotation/check_out/quotation/{id?}/{lead_id?}', 'Sales\QuotationController@check_out');
@@ -122,7 +122,7 @@ Route::post('customer/sales/Customer_form/check', 'Sales\CustomerController@chec
 
 //Contract sign no
 Route::get('service/contract/sign/quotation/{quotation_code?}/{code?}', 'RootAdmin\ContractsignController@index');
-Route::get('service/contract/sign/form/{id?}/{customer_id?}', 'RootAdmin\ContractsignController@create');
+Route::get('customer/service/contract/sign/form/{id?}/{customer_id?}', 'RootAdmin\ContractsignController@create');
 Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
 Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@approved');
@@ -130,7 +130,7 @@ Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@appr
 
 //Contract sign no Sales
 Route::get('service/sales/contract/sign/quotation/{quotation_code?}/{code?}', 'Sales\ContractsignController@index');
-Route::get('service/sales/contract/sign/form/{id?}/{customer_id?}', 'Sales\ContractsignController@create');
+Route::get('customer/service/sales/contract/sign/form/{id?}/{customer_id?}', 'Sales\ContractsignController@create');
 Route::post('service/sales/contract/sign/add', 'Sales\ContractsignController@save');
 Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@update');
 Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');

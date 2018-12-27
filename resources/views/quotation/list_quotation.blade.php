@@ -54,14 +54,12 @@
         </div>
     </div>
 
-    @if($status->status ==0 AND $count_ <1)
         @if(Auth::user()->role !=2 )
-                <a href="{!!url('/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+                <a href="{!!url('/customer/service/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
             @else
-                <a href="{!!url('/service/sales/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
+                <a href="{!!url('/customer/service/sales/quotation/add/'.$id.'/'.$ip=1)!!}" ><button type="button" class="btn btn-info  action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> สร้างใบเสนอราคาใหม่</button></a>
         @endif
         {{--<a href="{!!url('/service/quotation/success/'.$id)!!}" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-check"> </i>  ทำรายการเสร็จสิ้น</button></a>--}}
-    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -73,9 +71,10 @@
                 <table class="table table-bordered table-striped" id="panel-package-list">
                     <thead>
                     <tr>
-                        <th width="160px">เลขที่ใบเสนอราคา</th>
-                        <th width="200px">เอกสารสัญญา</th>
-                        <th width="80px">ราคาสุทธิ</th>
+                        <th width="120px">เลขที่ใบเสนอราคา</th>
+                        <th width="120px">เอกสารสัญญา</th>
+                        <th width="200px">นิติบุคคล</th>
+                        <th width="120px">ราคาสุทธิ</th>
                         <th width="60px">สถานะ</th>
                         <th width="110px">Action</th>
                     </tr>
@@ -92,30 +91,37 @@
                             <?php
                             $price=$row->product_price_with_vat!=null?$row->product_price_with_vat:$row->grand_total_price
                             ?>
+
+                            @if(!empty($row->latest_contract->property_id))
+                                <td>{!!$row->latest_contract->latest_property->property_name_th !!}</td>
+                            @else
+                                <td>ไม่พบข้อมูล</td>
+                            @endif
+
                             <td class="text-right">{!! number_format($price,2) !!}</td>
                             @if(!empty($row->latest_contract->status))
                                     @if($row->latest_contract->status ==1)
-                                        <td>อนุมัติแล้ว</td>
+                                        <td>เซ็นสัญญาแล้ว</td>
                                     @endif
                                 @else
-                                    <td>ไม่พบข้อมูล</td>
+                                    <td>ยังไม่เซ็นสัญญา</td>
                             @endif
                             <td class="action-links">
                                 @if(empty($row->latest_contract->quotation_id) AND $count_ <1)
                                     @if(Auth::user()->role !=2)
-                                        <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                             @else
-                                                <a href="{!! url('service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                                     @endif
                                                     <i class="fa-check"></i>
                                                 </a>
                                                 @else
                                                     @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                                             <i class="fa-eye"></i>
                                                         </a>
                                                     @else
-                                                        <a href="{!! url('service/sales/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                        <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                                                             <i class="fa-eye"></i>
                                                         </a>
                                                     @endif
@@ -131,16 +137,16 @@
                                                 @endif
                                                 @if(empty($row->latest_contract->quotation_id))
                                                     @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                        <a href="{!! url('customer/service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                                                             @else
-                                                                <a href="{!! url('service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                                                                <a href="{!! url('customer/service/sales/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                                                                     @endif
                                                                     <i class="fa-pencil-square-o"></i>
                                                                 </a>
                                                             @endif
 
                                                             @if(empty($row->latest_contract->quotation_id))
-                                                                <a href="#" class="view-quotation btn btn-danger"  data-toggle="modal" data-target="#delete" data-placement="top" data-original-title="{{ trans('messages.delete') }}" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
+                                                                <a href="#" class="view-quotation btn btn-danger" data-toggle="modal" data-target="#delete" data-placement="top" title="ลบใบเสนอราคา" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
                                                                     <i class="fa-trash"></i>
                                                                 </a>
                                                             @endif
@@ -153,7 +159,7 @@
                                                             }
                                                             ?>
 
-                                                            <a href="#" class="edit {!! $class !!} btn btn-info view-member"  data-toggle="modal" data-target="#edit-package" data-placement="top" data-original-title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
+                                                            <a href="#" class="edit {!! $class !!} btn btn-info view-member"   data-toggle="modal" data-target="#edit-package" data-placement="top" title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
                                                                 <i class="fa-eye"></i>
                                                             </a>
                             </td>

@@ -7,7 +7,7 @@ class contract extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'contract';
-    protected $fillable = ['contract_code','start_date','end_date','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name'];
+    protected $fillable = ['contract_code','start_date','end_date','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','property_id'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 
@@ -32,5 +32,10 @@ class contract extends GeneralModel
     public function lastest_package ()
     {
         return $this->hasOne('App\BackendModel\Products','id','product_id');
+    }
+
+    public function latest_property ()
+    {
+        return $this->hasOne('App\BackendModel\Property','id','property_id');
     }
 }

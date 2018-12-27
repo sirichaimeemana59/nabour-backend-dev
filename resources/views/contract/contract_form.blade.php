@@ -86,14 +86,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">เลขที่สัญญา</label>
                         <div class="col-sm-10">
-                            {{--@foreach ($sing as $row)--}}
-                            {{-- {{$row->max}} --}}
                             <?php
                             $cut_id=substr($sing,9);
                             $cut_y=substr($sing,3,4);
                             $cut_m=substr($sing,7,2);
                             ?>
-                            {{--@endforeach--}}
                             <?php
                             $date1=date("Y-m-d");
                             $cut_ym=explode("-",$date1);
@@ -107,7 +104,6 @@
                                 if($sum_sing>4){
                                     $cal=$sum_sing-4;
                                     $cut_sing=substr($new_sign,$cal);
-                                    //echo $new_sign;
                                 }else{
                                     $cut_sing=$new_sign;
                                     }
@@ -116,7 +112,6 @@
                                 $newdate=$cut[0]."".$cut[1];
                                 $sing_id="OKC".$newdate."".$cut_sing;
                                 }
-                                //  echo $cut_y."//".$cut_ym[0];
                             ?>
                             <input class="form-control" name="contract_code" type="text" readonly value="{!! $sing_id !!}">
                         </div>
@@ -127,6 +122,18 @@
                         <div class="col-sm-10">
                             <input class="form-control" name="quotation_id" type="text" readonly value="{!! $quotation1->quotation_code !!}">
                             <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $quotation1->id !!}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">นิติบุคคล</label>
+                        <div class="col-sm-10">
+                            <select name="property_id" id="property_id" class="form-control">
+                                <option value="">กรุณาเลือกนิติบุคคล</option>
+                                @foreach($property as $prow)
+                                    <option value="{!! $prow['id'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -150,60 +157,12 @@
                             <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required>
                         </div>
                     </div>
-                    {{--<div class="form-group">
-                        <label class="col-sm-2 control-label">ระยะเวลาสัญญา</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="contract[contract_length]">
-                                <option value="1">1 เดือน</option>
-                                <option value="2">2 เดือน</option>
-                                <option value="3">3 เดือน</option>
-                                <option value="4">4 เดือน</option>
-                                <option value="5">5 เดือน</option>
-                                <option value="6">6 เดือน</option>
-                                <option value="7">7 เดือน</option>
-                                <option value="8">8 เดือน</option>
-                                <option value="9">9 เดือน</option>
-                                <option value="10">10 เดือน</option>
-                                <option value="11">11 เดือน</option>
-                                <option value="12">1 ปี</option>
-                            </select>
-                        </div>
-                    </div>--}}
-                    {{--<div class="form-group">
-                        <label class="col-sm-2 control-label">แพ็กเกจ</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="contract[package]">
-                                <option value="">กรุณาเลือก Package</option>
-                                --}}{{--@foreach($package as $pac)--}}{{--
-                                --}}{{--<option value="{{$pac->id}}">{{$pac->name}}</option>--}}{{--
-                                --}}{{--@endforeach--}}{{--
-                            </select>
-                        </div>
-                    </div>--}}
-                   {{-- <div class="form-group">
-                        <label class="col-sm-2 control-label">ระยะเวลาแถมฟรี</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" name="contract[free]"><option value="0">ไม่มีการแถม</option><option value="1">1 เดือน</option><option value="2">2 เดือน</option><option value="3">3 เดือน</option><option value="4">4 เดือน</option><option value="5">5 เดือน</option><option value="6">6 เดือน</option><option value="7">7 เดือน</option><option value="8">8 เดือน</option><option value="9">9 เดือน</option><option value="10">10 เดือน</option><option value="11">11 เดือน</option><option value="12">1 ปี</option></select>
-                        </div>
-                    </div>--}}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
                         <div class="col-sm-10">
                             <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text">
                         </div>
                     </div>
-                    {{--<div class="form-group">
-                        <label class="col-sm-2 control-label">วันที่ส่งมอบข้อมูล login</label>
-                        <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy/mm/dd" name="contract[info_delivery_date]" type="text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">วันที่ใช้งานจริง</label>
-                        <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy/mm/dd" name="contract[info_used_date]" type="text">
-                        </div>
-                    </div>--}}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ผู้ทำสัญญา</label>
                         <div class="col-sm-10">
@@ -212,11 +171,8 @@
                     </div>
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
                     <input type="hidden" name="customer_id" value="{!! $quotation1->lead_id !!}">
-                    {{--<input type="hidden" name="quotation_id" value="{!! $quo_id !!}">--}}
                     <input type="hidden" name="price" value="{!! $price !!}">
 
-
-                    {{--@foreach ($max_cus as $row)--}}
                     <?php
                     if(!empty($max_cus)){
                         $cut_c=substr($max_cus,2);
@@ -234,15 +190,6 @@
                         $cus="NB00001";
                         }
                         ?>
-                    {{--@endforeach--}}
-                    {{--{{$cus}}--}}
-                    {{--<input type="text" name="contract[customer_id]" value="{{$cus}}">--}}
-                    {{--<div class="form-group">
-                        <label class="col-sm-2 control-label">ข้อมูลเพิ่มเติม</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" name="contract[remark]" cols="50" rows="10"></textarea>
-                        </div>
-                    </div>--}}
 
                         <div style="text-align: right">
                             <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
@@ -252,15 +199,6 @@
             </div>
         </div>
     </div>
-
-   {{-- <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default text-right">
-                <a class="btn btn-gray" href="{{url('root/admin/property/list')}}">Cancel</a>
-                {!! Form::button('Create Property',['class'=>'btn btn-primary','id'=>'submit-form']) !!}
-            </div>
-        </div>
-    </div>--}}
     {!! Form::close(); !!}
     {{--endcontent--}}
 
@@ -277,6 +215,14 @@
     <script type="text/javascript" src="{!!url('/js/nabour-search-form.js')!!}"></script>
     <script type="text/javascript">
         // Override
+        $(function () {
+            $("#property_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
         function validateForm () {
             $("#p_form").validate({
                 rules: {
@@ -297,4 +243,6 @@
             $('html,body').animate({scrollTop: top_-100}, 1000);
         }
     </script>
+    <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
 @endsection
