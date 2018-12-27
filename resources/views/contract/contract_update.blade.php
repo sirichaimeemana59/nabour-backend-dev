@@ -124,7 +124,7 @@
         </div>
     </div>
 
-    @if($contract->status != 1 AND $count <1 AND $count_<1)
+    @if($contract->status != 1 AND $count <1)
         <a href="#" ><button type="button" class="btn btn-success action-float-right" data-toggle="modal" data-target="#approved" onclick="mate_approved('{!!$contract->id!!}','{!!$contract->latest_quotation->id !!}','{!! $contract->customer_id  !!}')"><i class="fa fa-check"> </i>  อนุมัติสัญญา</button></a>
     @endif
     <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$contract->id.'/'.$contract->latest_quotation->id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>

@@ -5,46 +5,53 @@
 @endif
 <div class="form-group">
     <input type="hidden" name="customer_id" value="{!!$customer->id!!}">
-    <label class="col-sm-1 control-label">ชื่อ</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">ชื่อ</label>
+    <div class="col-sm-4">
         <input class="form-control" name="firstname" id="firstname" type="text" required value="{!!$customer->firstname!!}">
     </div>
 
-    <label class="col-sm-1 control-label">นามสกุล</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">นามสกุล</label>
+    <div class="col-sm-4">
         <input class="form-control" name="lastname" type="text" required value="{!!$customer->lastname!!}">
     </div>
+</div>
 
-    <label class="col-sm-1 control-label">เบอร์โทร</label>
-    <div class="col-sm-2">
+<div class="form-group">
+    <label class="col-sm-2 control-label">เบอร์โทร</label>
+    <div class="col-sm-4">
         <input class="form-control" name="phone" type="text" required value="{!!$customer->phone!!}">
     </div>
 
-    <label class="col-sm-1 control-label">E-Mail</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">E-Mail</label>
+    <div class="col-sm-4">
         <input class="form-control" name="email" type="text" required value="{!!$customer->email!!}">
     </div>
 </div>
 
 <div class="form-group">
 
-    <label class="col-sm-1 control-label">แหล่งที่มา</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">แหล่งที่มา</label>
+    <div class="col-sm-4">
         {!! Form::select('channel',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','required')) !!}
     </div>
 
-    <label class="col-sm-1 control-label">ประเภท</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">ประเภท</label>
+    <div class="col-sm-4">
         {!! Form::select('type',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
     </div>
+</div>
 
-    <label class="col-sm-1 control-label">พนักงานขาย</label>
-    <div class="col-sm-2">
+<div class="form-group">
+    <label class="col-sm-2 control-label">พนักงานขาย</label>
+    <div class="col-sm-4">
         @if(Auth::user()->role !=2)
             <select name="sale_id" id="" class="form-control" required>
                 <option value="">กรุณาเลือกพนักงานขาย</option>
                 @foreach($sale as $srow)
-                    <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                    <?php
+                    $_select=$srow->id==$customer->sale_id?"selected":"";
+                    ?>
+                    <option value="{!!$srow->id!!}" {!! $_select !!}>{!!$srow->name!!}</option>
                 @endforeach
             </select>
         @else
@@ -60,20 +67,20 @@
         @endif
     </div>
 
-    <label class="col-sm-1 control-label">ชื่อบริษัท</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">ชื่อบริษัท</label>
+    <div class="col-sm-4">
         <input class="form-control" name="company_name" type="text" required value="{!! $customer->company_name !!}">
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-1 control-label">ที่อยู่</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">ที่อยู่</label>
+    <div class="col-sm-4">
         <input class="form-control" name="address" type="text" required value="{!!$customer->address !!}">
     </div>
 
-    <label class="col-sm-1 control-label">จังหวัด</label>
-    <div class="col-sm-2">
+    <label class="col-sm-2 control-label">จังหวัด</label>
+    <div class="col-sm-4">
         <select name="province" id="" class="form-control">
             <option value="">กรุณาเลือกจังหวัด</option>
             @foreach($provinces as $row)
@@ -84,14 +91,17 @@
             @endforeach
         </select>
     </div>
+</div>
 
-    <label class="col-sm-1 control-label">รหัสไปรษณีย์</label>
-    <div class="col-sm-2">
+<div class="form-group">
+    <label class="col-sm-2 control-label">รหัสไปรษณีย์</label>
+    <div class="col-sm-4">
         <input class="form-control" name="postcode" type="text" required value="{!!$customer->postcode !!}">
     </div>
     <input type="hidden" name="company_id" value="{!! $customer->company_id !!}">
     <input type="hidden" name="role" value="{!! $customer->role !!}">
 </div>
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-white" data-dismiss="modal">{!!trans('messages.cancel')!!}</button>

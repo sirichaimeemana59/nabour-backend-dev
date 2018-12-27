@@ -142,12 +142,12 @@
                     </div>
                     <div class="col-md-5 text-right">
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.sub_total') }}:</h5></div>
-                            <div class="col-md-4 text-right"><h5><span id="subTotal">{!! $quotation->grand_total_price !!}</span> {{ trans('messages.Report.baht') }}</h5>
+                            <div class="col-md-8 text-right">{{ trans('messages.feesBills.sub_total') }}:</div>
+                            <div class="col-md-4 text-right"><span id="subTotal">{!! number_format($quotation->grand_total_price,2) !!}</span> {{ trans('messages.Report.baht') }}
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.discount') }}: </h5></div>
+                            <div class="col-md-8 text-right">{{ trans('messages.feesBills.discount') }}: </div>
                             <div class="col-md-4 text-right">
                                 <input type="text" name="discount" id="discount" maxlength="20" value="{!! $quotation->discount !!}" class="text-right form-control input-sm">
                             </div>

@@ -130,12 +130,12 @@
                     </div>
                     <div class="col-md-5 text-right">
                          <div class="row">
-                             <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.sub_total') }}:</h5></div>
-                             <div class="col-md-4 text-right"><h5><span id="subTotal">0.00</span> {{ trans('messages.Report.baht') }}</h5>
+                             <div class="col-md-8 text-right">{{ trans('messages.feesBills.sub_total') }}:</div>
+                             <div class="col-md-4 text-right"><span id="subTotal">0.00</span> {{ trans('messages.Report.baht') }}
                              </div>
                          </div>
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{{ trans('messages.feesBills.discount') }}: </h5></div>
+                            <div class="col-md-8 text-right">{{ trans('messages.feesBills.discount') }}:</div>
                             <div class="col-md-4 text-right">
                                 <input type="text" name="discount" id="discount" maxlength="20" value="0" class="text-right form-control input-sm">
                             </div>

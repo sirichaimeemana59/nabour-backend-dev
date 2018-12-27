@@ -63,16 +63,16 @@
             }
             ?>
             <td class="action-links">
-                <a href="{!! url('service/contract/sign/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                <a href="{!! url('customer/service/contract/sign/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>
                 </a>
-                <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                     <i class="fa-print"></i>
                 </a>
-                <a href="{!! url('service/quotation/update/form/'.$row->id) !!}" class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
+                <a href="{!! url('customer/service/quotation/update/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
                     <i class="fa-pencil-square-o"></i>
                 </a>
-                <a href="#" class="view-quotation btn btn-info" {!! $disable !!}  data-toggle="modal"  data-target="#view-quotaion" data-placement="top" data-q-id="{!!$row->quotation_code!!}" title="ดูใบเสนอราคา">
+                <a href="#" class="view-quotation btn btn-info"  data-toggle="modal"  data-target="#view-quotaion" data-placement="top" data-q-id="{!!$row->quotation_code!!}" title="ดูใบเสนอราคา">
                      <i class="fa-eye"></i>
                 </a>
                 <a href="#" class="view-quotation btn btn-danger" {!! $disable !!}  data-toggle="modal" data-target="#delete" data-placement="top"  onclick="mate_del('{!!$row->id!!}')" title="{!! trans('messages.delete') !!}">
