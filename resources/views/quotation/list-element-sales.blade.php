@@ -60,7 +60,6 @@
                     $disable='';
                 }
             ?>
-            ?>
             <td class="action-links">
                 <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>

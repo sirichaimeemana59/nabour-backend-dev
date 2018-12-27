@@ -16,6 +16,7 @@ use App\BackendModel\contract;
 use App\BackendModel\User as BackendUser;
 use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
+use App\BackendModel\Property;
 
 class ContractsignController extends Controller
 {
