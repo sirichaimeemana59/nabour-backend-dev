@@ -8,12 +8,7 @@ use App\Http\Controllers\PushNotificationController;
 # Model
 use DB;
 use App\PropertyMember;
-use App\PropertyUnit;
-use App\BackendModel\User;
-use App\Province;
-use App\Property;
-use App\SalePropertyDemo;
-use App\PropertyFeature;
+use App\BackendModel\User as BackendUser;
 use Validator;
 
 
@@ -25,7 +20,7 @@ class AdminSystemController extends Controller {
 
     public function adminList() {
         $officer = [];
-        $officers = User::where('id','!=',Auth::user()->id)
+        $officers = BackendUser::where('id','!=',Auth::user()->id)
             ->where('role','=',1)
             //
             ->orderBy('active','DESC')
@@ -58,7 +53,7 @@ class AdminSystemController extends Controller {
 
     public function createAccount($name,$email,$phone,$password){
         try{
-            $user_create = User::create([
+            $user_create = BackendUser::create([
                 'name' => $name,
                 'email' => $email,
                 'phone' => $phone,
