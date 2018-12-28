@@ -82,6 +82,7 @@
 
                         <?php
                             $read=$quo->lastest_package->status==1?"readonly":"";
+                            $_read=$quo->lastest_package->status!=1?"readonly":"";
                             $id_=$quo->lastest_package->status==1?"unit_price":"";
                             $t_price=$quo->lastest_package->status==1?"tprice":"";
                             $t_month=$quo->lastest_package->status==1?"tmonth":"";
@@ -113,10 +114,9 @@
                                     @endif
                             </td>
                             <input type="hidden" name="_data[{!! $key !!}][quotation_code]" value="{!!$quo->quotation_code!!}"/>
-                            <td><input type="text" required name="_data[{!! $key !!}][project]" id="{!! $t_price !!}" style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control  tPrice"/>
-                            </td>
+                                <td><input type="text" required name="_data[{!! $key !!}][project]" id="{!! $t_price !!}"  style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control  tPrice"/></td>
                             <td>
-                                <input type="text" required style="text-align: right;" id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{!! $key !!}][price]" value="{!!$quo->month_package!!}" maxlength="15"/>
+                                <input type="text" required style="text-align: right;" {!! $_read !!} id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{!! $key !!}][price]" value="{!!$quo->month_package!!}" maxlength="15"/>
 
                             </td>
                             <td><div class="input-group">
@@ -239,14 +239,14 @@
     </div>
     {!! Form::close() !!}
 
-    <div id="invoice-category-template" style="display:none;">
-        <select name="transaction[0][service]" id="service" class="toValidate form-control input-sm">
-            <option value="">กรุณาเลือกค่าบริการ</option>
-            @foreach($service as $row)
-                <option value="{!!$row->id!!}">{!!$row->name!!}</option>
-            @endforeach
-        </select>
-    </div>
+    {{--<div id="invoice-category-template" style="display:none;">--}}
+        {{--<select name="transaction[0][service]" id="service" class="toValidate form-control input-sm">--}}
+            {{--<option value="">กรุณาเลือกค่าบริการ</option>--}}
+            {{--@foreach($service as $row)--}}
+                {{--<option value="{!!$row->id!!}">{!!$row->name!!}</option>--}}
+            {{--@endforeach--}}
+        {{--</select>--}}
+    {{--</div>--}}
 @endsection
 
 @section('script')

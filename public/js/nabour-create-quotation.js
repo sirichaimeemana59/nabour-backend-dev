@@ -246,7 +246,7 @@ function validateTransaction () {
 
 function rewokeMask () {
     $(".tQty").number( true, 0 );
-    $(".tPrice").number( true, 3 );
+    $(".tPrice").number( true, 0 );
     $(".colTotal").number( true, 2 );
 }
 
