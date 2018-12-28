@@ -64,7 +64,7 @@
                 <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>
                 </a>
-                <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                     <i class="fa-print"></i>
                 </a>
                     <a href="{!! url('customer/service/sales/quotation/update/form/'.$row->id) !!}" {!! $disable !!}  class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
