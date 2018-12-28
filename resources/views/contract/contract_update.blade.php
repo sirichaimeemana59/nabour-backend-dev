@@ -74,13 +74,13 @@
                         <div id="member-list-content">
                             {{--content--}}
                             <div class="form-group">
-                                <table class="table table-hover">
+                                <table class="table table-bordered table-striped">
                                     <tr>
-                                        <th>บริการ</th>
-                                        <th>โครงการ</th>
-                                        <th>จำนวนหน่วย</th>
-                                        <th>ราคา</th>
-                                        <th>รวม</th>
+                                        <th style="text-align: center;">บริการ</th>
+                                        <th style="text-align: center;">โครงการ</th>
+                                        <th style="text-align: center;">จำนวนหน่วย</th>
+                                        <th style="text-align: center;">ราคา</th>
+                                        <th style="text-align: center;">รวม</th>
                                     </tr>
                                     <?php
                                     $_total=0;
@@ -88,10 +88,10 @@
                                     @foreach($quotation_service as $row)
                                         <tr>
                                             <td>{!! $row->lastest_package->name !!}</td>
-                                            <td style="text-align: center;">{!! number_format($row->project_package,0)!!}</td>
-                                            <td style="text-align: center;">{!! number_format($row->month_package,0)!!}</td>
-                                            <td style="text-align: center;">{!! number_format($row->unit_package,0)!!}</td>
-                                            <td style="text-align: center;">{!! number_format($row->total_package,0)!!}</td>
+                                            <td style="text-align: right;">{!! number_format($row->project_package,0)!!}</td>
+                                            <td style="text-align: right;">{!! number_format($row->month_package,0)!!}</td>
+                                            <td style="text-align: right;">{!! number_format($row->unit_package,2)!!}</td>
+                                            <td style="text-align: right;">{!! number_format($row->total_package,2)!!}</td>
                                         </tr>
                                         <?php
                                         $_total += $row->total_package;
@@ -99,23 +99,22 @@
                                     @endforeach
                                     <tr>
                                         <td colspan="4" style="font-weight: bold;">รวม</td>
-                                        <td style="text-align: right;">{!! number_format($_total,2) !!}</td>
+                                        <td style="text-align: right;">{!! number_format($_total,2) !!}  บาท</td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" style="font-weight: bold;">ส่วนลด</td>
-                                        <td style="text-align: right;">{!! number_format($quotation->discount,2) !!}</td>
+                                        <td class="border;" style="text-align: right;">{!! number_format($quotation->discount,2) !!}  บาท</td>
                                     </tr>
                                     <tr>
                                         <td colspan="4" style="font-weight: bold;">Vat</td>
-                                        <td style="text-align: right;">{!! number_format($quotation->product_vat,2)!!}</td>
+                                        <td style="text-align: right;">{!! number_format($quotation->product_vat,2)!!}  บาท</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" style="font-weight: bold;">รวมสุทธิ์</td>
-                                        <td style="text-align: right;">{!! number_format($quotation->product_price_with_vat,2)!!}</td>
+                                        <td colspan="4" style="font-weight: bold;">รวมสุทธิ</td>
+                                        <td style="text-align: right;">{!! number_format($quotation->product_price_with_vat,2)!!}  บาท</td>
                                     </tr>
                                 </table>
                             </div>
-
                             {{--endcontent--}}
                         </div>
                     </div>

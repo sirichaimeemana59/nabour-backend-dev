@@ -21,6 +21,7 @@ use App\SalePropertyDemo;
 use App\package;
 use App\quotation;
 use Validator;
+use App\BackendModel\contract;
 
 use DB;
 class PropertyController extends Controller {
@@ -315,15 +316,7 @@ class PropertyController extends Controller {
 
         $package = $quotation = array();
 
-        //$package = new package;
-        //$package = $package->where('status','1');
-        //$package = $package->get();
 
-
-        //$quotation = new quotation;
-        //$quotation = $quotation->get();
-
-        //dd($quotation);
 
         if(!Request::ajax()) {
             $property_list = array(''=> trans('messages.Signup.select_property') );

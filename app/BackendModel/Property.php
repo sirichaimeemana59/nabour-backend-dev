@@ -7,4 +7,9 @@ class Property extends GeneralModel
     protected $table        = 'property';
     protected $fillable     = ['id','property_name_th','property_name_en'];
 	public $timestamps      = true;
+
+    public function latest_contract ()
+    {
+        return $this->hasOne('App\BackendModel\contract','property_id','id');
+    }
 }
