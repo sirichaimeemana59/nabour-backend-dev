@@ -25,7 +25,12 @@
             </ol>
         </div>
     </div>
-    <a href="{!!url('root/admin/property/print_quotation')!!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
+    @if(Auth::user()->role !=2)
+            <a href="{!! url('service/quotation/print_quotation/'.$quotation->id) !!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
+        @else
+            <a href="{!! url('service/sales/quotation/print_quotation/'.$quotation->id) !!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
+    @endif
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
