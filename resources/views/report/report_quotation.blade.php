@@ -112,25 +112,25 @@
         <div class="table_content">
             <table style="border: 1px solid black;" width="100%" class="line_table styletable">
                 <tr style="background-color: #d4d4d6">
-                    <th align="left" class="line_table" style="padding:0 0 0 5px;">No.</th>
-                    <th align="left" class="line_table" style="padding:0 0 0 5px; width: 100px;">Description</th>
-                    <th class="line_table" style="text-align: center; width: 50px;">Project</th>
-                    <th class="line_table" style="text-align: center; width: 50px;">Month</th>
-                    <th class="line_table" style="text-align: center; width: 60px;">Unit Price</th>
-                    <th class="line_table" style="text-align: center; width: 60px;">Total</th>
+                    <th class="line_table" style="text-align: center; padding:0 0 0 5px; padding: 5px 0 5px 0;">No.</th>
+                    <th class="line_table" style="text-align: center; padding:0 0 0 5px; width: 100px; padding: 5px 0 5px 0;">Description</th>
+                    <th class="line_table" style="text-align: center; width: 50px; padding: 5px 0 5px 0;">Project</th>
+                    <th class="line_table" style="text-align: center; width: 50px; padding: 5px 0 5px 0;">Month</th>
+                    <th class="line_table" style="text-align: center; width: 60px; padding: 5px 0 5px 0;">Unit Price</th>
+                    <th class="line_table" style="text-align: center; width: 60px; padding: 5px 0 5px 0;">Total</th>
                 </tr>
                 <?php $i=1;
                 $sum_service=0;?>
                 @foreach($quotation_service as $row)
                     <tr>
-                        <td class="line_table" style="vertical-align: top; padding:0 0 0 5px;">{!! $i !!}</td>
-                        <td class="line_table" width="65%" style="padding:0 0 0 5px;">
+                        <td class="line_table" style="vertical-align: top; padding:5px 0 5px 5px;">{!! $i !!}</td>
+                        <td class="line_table" width="65%" style="padding:5px 0 5px 5px;">
                             {!! $row->lastest_package->name !!}<br>{!! $row->lastest_package->description !!}</td>
                         </td>
-                        <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! number_format($row->project_package,0) !!}</td>
-                        <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! $row->month_package !!}</td>
-                        <td style="vertical-align: top; text-align: right; padding:0 5px 0 0;"  class="line_table">{!! $row->unit_package !!}</td>
-                        <td align="right" style="vertical-align: top; padding:0 5px 0 0;"  class="line_table">{!! number_format($row->total_package,2) !!}</td>
+                        <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->project_package,0) !!}</td>
+                        <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! $row->month_package !!}</td>
+                        <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->unit_package,2) !!}</td>
+                        <td align="right" style="vertical-align: top; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->total_package,2) !!}</td>
                     </tr>
                     <?php $i++;
                     $num = $i;
@@ -151,21 +151,21 @@
                 }*/
                 ?>
         <tr>
-            <td colspan="3" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
-            <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:0 0 0 5px;">Sub Total</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($sum_service,2) !!}</td>
+            <td colspan="2" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
+            <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:5px 0 0 5px;">Sub Total</td>
+            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($sum_service,2) !!}  บาท</td>
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:0 0 0 5px;">Discount</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation->discount,2) !!}</td>
+            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->discount,2) !!}  บาท</td>
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 0 5px;">Vat 7%</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation->product_vat,2) !!}</td>
+            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->product_vat,2) !!}  บาท</td>
         </tr>
         <tr>
-            <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 0 5px;" >Grand Total</td>
-            <td align="right" style="padding:0 5px 0 0;">{!! number_format($quotation->product_price_with_vat,2) !!}</td>
+            <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 5px 5px;" >Grand Total</td>
+            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->product_price_with_vat,2) !!}  บาท</td>
         </tr>
         </table>
         <br>
