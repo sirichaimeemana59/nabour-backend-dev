@@ -41,18 +41,25 @@
             <table cellspacing="0" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th width="20%">ชื่อ - สกุล</th>
-                    <th width="*">ชื่อบริษัท</th>
-                    <th width="150px">เบอร์โทร</th>
-                    <th width="150px">จังหวัด</th>
-                    <th width="200px">พนักงานขาย</th>
-                    <th width="80px">สัญญา</th>
-                    <th width="180px"></th>
+                    <th width="6%">เลขที่</th>
+                    <th width="8%">วันที่สร้าง</th>
+                    <th width="15%">ชื่อ - สกุล</th>
+                    <th width="10%">ชื่อบริษัท</th>
+                    <th width="10%">เบอร์โทร</th>
+                    <th width="10%">จังหวัด</th>
+                    <th width="10%">พนักงานขาย</th>
+                    <th width="8%">สัญญา</th>
+                    <th width="15%">การจัดการ</th>
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                    $i=1;
+                ?>
                 @foreach($customer as $row)
                     <tr>
+                        <td style="text-align: center;">{!!$i!!}</td>
+                        <td>{!!localDate($row->created_at)!!}</td>
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
                         <td>{!!$row->company_name !!}</td>
                         <td>{!!$row->phone !!}</td>
@@ -102,6 +109,9 @@
                             </div>
                         </td>
                     </tr>
+                    <?php
+                        $i++;
+                    ?>
                 @endforeach
                 </tbody>
             </table>

@@ -44,7 +44,7 @@ class CustomerController extends Controller
         }
 
         $customer = $customer->where('role','=',0)->where('sale_id','=',Auth::user()->id);
-        $customer = $customer->get();
+        $customer = $customer->orderBy('created_at','desc')->get();
 
         //dd($customer);
 

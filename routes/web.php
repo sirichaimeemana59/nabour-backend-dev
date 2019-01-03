@@ -89,7 +89,7 @@ Route::any('quotation/sales/list', 'Sales\QuotationController@quotationList');
 Route::any('contract/sales/list', 'Sales\ContractsignController@contractList');
 //End Quotation Sales
 
-//Customer
+//Customerservice/package/add
 Route::any('customer/customer/list', 'RootAdmin\CustomerController@index');
 Route::post('customer/Customer_form/add', 'RootAdmin\CustomerController@create');
 Route::post('customer/list_update_customer', 'RootAdmin\CustomerController@edit');

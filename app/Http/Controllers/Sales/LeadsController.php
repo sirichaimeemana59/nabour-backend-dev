@@ -40,7 +40,7 @@ class LeadsController extends Controller
 
 
         $_lead = $_lead->where('role','=',1)->where('sale_id','=',Auth::user()->id);
-        $_lead = $_lead->get();
+        $_lead = $_lead->orderBy('created_at','desc')->get();
 
         //dump($sale->toArray());
 

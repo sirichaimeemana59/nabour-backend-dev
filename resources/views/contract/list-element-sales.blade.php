@@ -35,6 +35,7 @@
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
+        <th width="7%">เลขที่</th>
         <th width="140px">เลขที่สัญญา</th>
         <th width="*">ลูกค้า</th>
         <th width="150px">วันที่เริ่ม</th>
@@ -44,8 +45,12 @@
     </tr>
     </thead>
     <tbody>
+    <?php
+        $i=1;
+    ?>
     @foreach($contracts as $row)
     <tr>
+        <td>{!! $i; !!}</td>
         <td>{!! $row->contract_code !!}</td>
         <td>{!! $row->customer->company_name !!}</td>
         <td>{!! localDate($row->start_date) !!}</td>
@@ -67,6 +72,9 @@
             </a>
         </td>
     </tr>
+        <?php
+            $i++;
+        ?>
     @endforeach
     </tbody>
 </table>
