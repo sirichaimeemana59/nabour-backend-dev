@@ -177,7 +177,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
                         <div class="col-sm-10">
-                            <select name="property_id" id="property_id" class="form-control" {!! $disabled !!}>
+                            <select name="property_id" id="property_id" class="form-control" {!! $disabled !!} required>
                                 <option value="">กรุณาเลือกนิติบุคคล</option>
                                 @foreach($property as $prow)
                                     <?php
