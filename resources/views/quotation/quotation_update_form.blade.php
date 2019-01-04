@@ -87,12 +87,13 @@
                             $t_price=$quo->lastest_package->status==1?"tprice":"";
                             $t_month=$quo->lastest_package->status==1?"tmonth":"";
                             $_service=$quo->lastest_package->status==1?"service_":"";
+                            $_unitprice=$quo->lastest_package->status==2?"unitprice":"";
                         ?>
                         <tr class="item-row">
                             <td></td>
                             <td>
                                     @if($quo->lastest_package->status==1)
-                                    <select name="_data[{!! $key !!}][service]" id="{!! $_service !!}" class="toValidate form-control input-sm unit-select-project" required OnChange="resutPrice(this.value);">
+                                    <select name="_data[{!! $key !!}][service]" id="{!! $_service !!}" class="toValidate form-control input-sm unit-select-project" required OnChange="resultPrice(this.value);">
                                         <option value="">กรุณาเลือกค่าบริการ</option>
                                             @foreach($package as $row_)
                                                 <?php
@@ -102,26 +103,26 @@
                                             @endforeach
                                     </select>
                                         @else
-                                        <select name="_data[{!! $key !!}][service]" id="service" class="toValidate form-control input-sm" required>
+                                        <select name="_data[{!! $key !!}][service]" id="service" class="toValidate form-control input-sm" required OnChange="result_Price(this);">
                                             <option value="">กรุณาเลือกค่าบริการ</option>
                                             @foreach($service as $row)
                                                 <?php
                                                 $select=$row->id==$quo->package_id?"selected":"";
                                                 ?>
-                                                <option value="{!!$row->id!!}" {!!$select!!}>{!!$row->name!!}</option>
+                                                <option value="{!!$row->id!!}|{!! $row->price !!}" {!!$select!!}>{!!$row->name!!}</option>
                                             @endforeach
                                         </select>
                                     @endif
                             </td>
                             <input type="hidden" name="_data[{!! $key !!}][quotation_code]" value="{!!$quo->quotation_code!!}"/>
-                                <td><input type="text" required name="_data[{!! $key !!}][project]" id="{!! $t_price !!}"  style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control  tPrice"/></td>
+                                <td><input type="text" required name="_data[{!! $key !!}][project]" id="{!! $t_price !!}"  style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control tQty"/></td>
                             <td>
                                 <input type="text" required style="text-align: right;" {!! $_read !!} id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{!! $key !!}][price]" value="{!!$quo->month_package!!}" maxlength="15"/>
 
                             </td>
                             <td><div class="input-group">
                                     <span class="input-group-addon">฿</span>
-                                    <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]" id="{!! $id_ !!}" value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tQty" {!! $read !!}/>
+                                    <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]" id="{!! $id_ !!}{!! $_unitprice !!}" value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tPrice" readonly/>
                                 </div>
                             <td>
                                 <div class="text-right">
@@ -341,10 +342,18 @@
 
         });
 
-        function resutPrice(strCusPrice)
+        function resultPrice(strCusPrice)
         {
             //form1.id_package.value = strCusPrice.split("|")[0];
             form1.unit_price.value = strCusPrice.split("|")[1];
+        }
+
+        function result_Price(strPrice)
+        {
+            var price = strPrice.value;
+            price = price.split("|")[1];
+            $(strPrice).parents('tr').find('.tPrice').val(price);
+            calTotal();
         }
     </script>
 @endsection

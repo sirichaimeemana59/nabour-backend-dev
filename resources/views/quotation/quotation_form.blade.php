@@ -117,9 +117,9 @@
                         </td>
                         <td>
                             <div class="text-right">
-                                <span class="colTotal" id="_colTotal">0.00</span> บาท
+                                <span id="_colTotal">0.00</span> บาท
                             </div>
-                            <input name="transaction[0][total]" class="tLineTotal" id="_tLineTotal" type="hidden" value=""/>
+                            <input name="transaction[0][total]"  id="_tLineTotal" type="hidden" value=""/>
                         </td>
                     </tr>
                     </tbody>
@@ -230,10 +230,10 @@
     {!! Form::close() !!}
 
     <div id="invoice-category-template" style="display:none;">
-        <select name="transaction[0][service]"  class="toValidate form-control input-sm" required>
+        <select name="transaction[0][service]"  class="toValidate form-control input-sm"  required OnChange="result_Price(this);">
             <option value="">กรุณาเลือกค่าบริการ</option>
-            @foreach($service as $row)
-                <option value="{!!$row->id!!}">{!!$row->name!!}</option>
+            @foreach($service as $_row)
+                <option value="{!!$_row->id!!}|{!! $_row->price !!}">{!!$_row->name!!}</option>
             @endforeach
         </select>
     </div>
@@ -302,7 +302,7 @@
 
             $('.unit-select-project').click(function() {
                 updatePriceService();
-            })
+            });
 
         });
 
@@ -319,11 +319,22 @@
             calTotal();
         };
 
+
         function resultPrice(strCusPrice)
         {
             //form1.id_package.value = strCusPrice.split("|")[0];
             form1.unit_price.value = strCusPrice.split("|")[1];
             updatePriceService();
+        }
+
+        function result_Price(strPrice)
+        {
+            var price = strPrice.value;
+            price = price.split("|")[1];
+            $(strPrice).parents('tr').find('.tPrice').val(price);
+            // ต้นหา input ใน row เดียวกัน โดยการอ้างอิงจาก class
+            // ส่ง strPrice ไปหา Parents <tr> แล้วให้ find หา class tPrice
+            calTotal();
         }
 
     </script>

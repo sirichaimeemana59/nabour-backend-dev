@@ -54,7 +54,7 @@ class QuotationController extends Controller
 
             $quotation1 = new Quotation;
             $quotation1 = $quotation1->where('lead_id', $id);
-            $quotation1 = $quotation1->get();
+            $quotation1 = $quotation1->orderBy('quotation_code','DESC')->get();
 
 
             $remark = new Quotation;
