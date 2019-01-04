@@ -42,7 +42,7 @@ $(function () {
         e.preventDefault();
         var time = $.now();
         var bath = $('#baht-label').val();
-        var category = '<select name="transaction['+time+'][service]" OnChange="result_Price(this);">'+ $('#invoice-category-template select').html() + '</select>';
+        var category = '<select name="transaction['+time+'][service]" class="price_service" OnChange="result_Price(this);">'+ $('#invoice-category-template select').html() + '</select>';
         var tRowTmp = [
             '<tr class="item-row">',
             '<td><i class="deleteRow fa-trash"></i></td>',
@@ -96,19 +96,9 @@ $(function () {
     })
 
     $('#itemsTable').on('keyup','.tQty,.tPrice', function () {
-        var pt = $(this).parents('.item-row');
-        var amnt = pt.find('.tQty').val();
-        var prc = pt.find('.tPrice').val();
-        var rTotal = pt.find('.tLineTotal');
-        var cTotal = pt.find('.colTotal');
-        if (!isNaN(amnt) && !isNaN(prc) ) {
-            var total = Number(prc)*Number(amnt);
-            var total_ = $.number(total,2);
-            rTotal.val(total);
-            cTotal.html(total_);
-            calTotal();
-        }
-    })
+        calRowTotal ($(this));
+    });
+
     $('#tax,#withholding_tax,#discount').on('keyup',function() {
         calTotal();
     })
@@ -119,6 +109,21 @@ $(function () {
         calTotal();
     });
 });
+
+function calRowTotal ($obj) {
+    var pt = $obj.parents('.item-row');
+    var amnt = pt.find('.tQty').val();
+    var prc = pt.find('.tPrice').val();
+    var rTotal = pt.find('.tLineTotal');
+    var cTotal = pt.find('.colTotal');
+    if (!isNaN(amnt) && !isNaN(prc) ) {
+        var total = Number(prc)*Number(amnt);
+        var total_ = $.number(total,2);
+        rTotal.val(total);
+        cTotal.html(total_);
+        calTotal();
+    }
+}
 
 function calTotal () {
     var Total = TotalTax = 0;

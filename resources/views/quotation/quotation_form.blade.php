@@ -230,7 +230,7 @@
     {!! Form::close() !!}
 
     <div id="invoice-category-template" style="display:none;">
-        <select name="transaction[0][service]"  class="toValidate form-control input-sm"  required OnChange="result_Price(this);">
+        <select name="transaction[0][service]"  class="toValidate form-control input-sm price_service"  required OnChange="result_Price(this);">
             <option value="">กรุณาเลือกค่าบริการ</option>
             @foreach($service as $_row)
                 <option value="{!!$_row->id!!}|{!! $_row->price !!}">{!!$_row->name!!}</option>
@@ -318,6 +318,10 @@
             $('#_tLineTotal').val(total);
             calTotal();
         };
+
+        $('#itemsTable').on('change','.price_service', function () {
+            calRowTotal ($(this));
+        });
 
 
         function resultPrice(strCusPrice)
