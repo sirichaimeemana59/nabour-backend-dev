@@ -2,7 +2,7 @@
 <style>
     .title_left{
         text-align:left;
-        margin:0 0 0 25px;
+        margin:0;
     }
     .line_table{
         border: 1px solid black;
@@ -14,11 +14,11 @@
     .content{
         font-size: 12px;
         color: #0c0c0c;
-        font-family: 'thonburi';
+        /*font-family: 'thonburi';*/
     }
     table ,tr,td,th{
         padding: 5px;
-        font-family: 'thonburi';
+        /*font-family: 'thonburi';*/
         font-size: 12px;
         /*border: 1px solid black;*/
     }
@@ -29,12 +29,11 @@
         <div class="title_left">
             <table>
                 <tr>
-                    <td width="20%"><img src="{{asset('images/logo1.png')}}" alt="" width="100%"></td>
-                    <td style="padding: 5px;">บริษัท โอกาสพลัส จำกัด<br>428 ชั้น6 ซอยเอกมัย 26 ถ.สุขุมวิท63<br>แขวงคลองตันเหนือ เขตวัฒนา กทม 10110<br>สาขา สำนักงานใหญ่<br>โทร 02-1183440 อีเมล : admin@o-kaatdivlus.com<br>เลขที่ประจำตัวผู้เสียภาษี 0105561013024<br></td>
+                    <td width="20%"><img src="{{asset('images/logo1.png')}}" alt="" width="90px"></td>
+                    <td style="padding: 5px;">บริษัท โอกาสพลัส จำกัด<br>428 ชั้น 6 ซอยเอกมัย 26 ถ.สุขุมวิท 63<br>แขวงคลองตันเหนือ เขตวัฒนา กทม 10110<br>สาขา สำนักงานใหญ่<br>โทร 02-1183440 อีเมล : admin@o-kaatdivlus.com<br>เลขที่ประจำตัวผู้เสียภาษี 0105561013024<br></td>
                 </tr>
             </table>
         </div>
-        <br>
 
        <div style="text-align: center;">ใบเสนอราคา/ใบสั่งซื้อ
         <br>Quaotation/Purchase Order</div>

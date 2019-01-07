@@ -117,9 +117,9 @@
                         </td>
                         <td>
                             <div class="text-right">
-                                <span id="_colTotal">0.00</span> บาท
+                                <span id="_colTotal" class="colTotal">0.00</span> บาท
                             </div>
-                            <input name="transaction[0][total]"  id="_tLineTotal" type="hidden" value=""/>
+                            <input name="transaction[0][total]"  id="_tLineTotal" class="tLineTotal" type="hidden" value=""/>
                         </td>
                     </tr>
                     </tbody>
@@ -316,6 +316,7 @@
 
             $('#_colTotal').text(total);
             $('#_tLineTotal').val(total);
+            //console.log(total);
             calTotal();
         };
 
