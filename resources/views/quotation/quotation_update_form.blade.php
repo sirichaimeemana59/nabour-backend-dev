@@ -129,7 +129,7 @@
                                 </div>
                             <td>
                                 <div class="text-right">
-                                    <span class="colTotal" id="_colTotal">{!!number_format($quo->total_package)!!}</span> บาท
+                                    <span class="colTotal" id="_colTotal">{!!number_format($quo->total_package,2)!!}</span> บาท
                                 </div>
                                 <input name="_data[{!! $key !!}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{!!$quo->total_package!!}"/>
                             </td>
@@ -171,8 +171,8 @@
                             $grand_total=($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount;
                         ?>
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{!! trans('messages.feesBills.grand_total') !!} :</h5></div>
-                            <div class="col-md-4 text-right"><h5><span id="grandTotal">{!! number_format($grand_total,2) !!}</span> {!! trans('messages.Report.baht') !!}</h5>
+                            <div class="col-md-6 text-right"><h5>{!! trans('messages.feesBills.grand_total') !!} :</h5></div>
+                            <div class="col-md-6 text-right"><h5><span id="grandTotal">{!! number_format($grand_total,2) !!}</span> {!! trans('messages.Report.baht') !!}</h5>
                                 <input type="hidden" id="h_total" name="sub_total">
                             </div>
                         </div>
@@ -330,14 +330,18 @@
 
 
             var updatePriceService = function () {
+                $('#unit_price').number(true,2);
+
                 var price = parseInt($('#tprice').val());
                 var project_package = parseInt($('#tmonth').val());
-                var month_package = parseInt($('#unit_price').val());
+                var month_package = parseFloat($('#unit_price').val());
                 //var TotalTax = parseInt($('#tax').val());
                //alert(project_package);
                 var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
 
-                $('#_colTotal').text(total);
+                var _total = $.number(total,2);
+
+                $('#_colTotal').text(_total);
                 $('#_tLineTotal').val(total);
                 calTotal();
             };

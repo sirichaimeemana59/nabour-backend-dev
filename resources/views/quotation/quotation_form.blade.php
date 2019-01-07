@@ -154,8 +154,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-8 text-right"><h5>{!! trans('messages.feesBills.grand_total') !!} :</h5></div>
-                            <div class="col-md-4 text-right"><h5><span id="grandTotal">0.00</span> {!! trans('messages.Report.baht') !!}</h5>
+                            <div class="col-md-6 text-right"><h5>{!! trans('messages.feesBills.grand_total') !!} :</h5></div>
+                            <div class="col-md-6 text-right"><h5><span id="grandTotal">0.00</span> {!! trans('messages.Report.baht') !!}</h5>
                                 <input type="hidden" id="h_total" name="sub_total">
                             </div>
                         </div>
@@ -169,8 +169,8 @@
                                 <div class="col-md-4 text-right"><h5><span class="current-balance">0.00</span> {!! trans('messages.Report.baht') !!}</h5></div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8 text-right"><h5>{!! trans('messages.Prepaid.added_pay') !!}:</h5></div>
-                                <div class="col-md-4 text-right"><h5><span id="final-balance">0.00</span> {!! trans('messages.Report.baht') !!}</h5></div>
+                                <div class="col-md-6 text-right"><h5>{!! trans('messages.Prepaid.added_pay') !!}:</h5></div>
+                                <div class="col-md-6 text-right"><h5><span id="final-balance">0.00</span> {!! trans('messages.Report.baht') !!}</h5></div>
                             </div>
                         </div>
                     </div>
@@ -287,6 +287,7 @@
 
             $('#tprice').number(true,0);
             $('#tmonth').number(true,0);
+            $('#unit_price').number(true,2);
 
             $('#tprice').keyup(function() {
                 updatePriceService();
@@ -307,16 +308,19 @@
         });
 
         var updatePriceService = function () {
+            $('#unit_price').number(true,2);
+
             var price = parseInt($('#tprice').val());
             var project_package = parseInt($('#tmonth').val());
-            var month_package = parseInt($('#unit_price').val());
+            var month_package = parseFloat($('#unit_price').val());
             //var TotalTax = parseInt($('#tax').val());
 
             var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
+            var _total = $.number(total,2);
 
-            $('#_colTotal').text(total);
+            $('#_colTotal').text(_total);
             $('#_tLineTotal').val(total);
-            //console.log(total);
+            //console.log(month_package);
             calTotal();
         };
 

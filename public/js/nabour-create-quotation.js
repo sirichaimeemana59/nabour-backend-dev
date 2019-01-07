@@ -146,7 +146,8 @@ function calTotal () {
     var _total_grand = $('#h_total').text();
     var tax1 = $('#tax').val();
     tax = (Total*tax1)/100;
-    $('.salesTax').val(tax);
+    var _tax = $.number(tax,2);
+    $('.salesTax').val(_tax);
     // if($('#tax').val() === "" || !$('#tax').length) {
     //     tax = 0;
     // } else {

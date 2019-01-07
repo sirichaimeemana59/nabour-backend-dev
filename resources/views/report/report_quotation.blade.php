@@ -164,7 +164,7 @@
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 5px 5px;" >Grand Total</td>
-            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->product_price_with_vat,2) !!}  บาท</td>
+            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format(($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount,2) !!}  บาท</td>
         </tr>
         </table>
         <br>
