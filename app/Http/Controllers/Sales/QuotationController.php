@@ -88,7 +88,11 @@ class QuotationController extends Controller
         $id_package = Request::get('id_package');
         $cut_id = explode("|",$id_package);
 
-        $total =  (Request::get('grand_total')+Request::get('discount'))-Request::get('vat');
+        $grand_total   =str_replace(',','',Request::get('grand_total'));
+        $vat            =str_replace(',','',Request::get('vat'));
+        $discount       =str_replace(',','',Request::get('discount'));
+
+        $total =  ($grand_total+$discount)-$vat;
 
         //dd($total);
 
