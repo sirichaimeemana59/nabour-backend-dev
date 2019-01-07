@@ -128,7 +128,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
                         <div class="col-sm-10">
-                            <select name="property_id" id="property_id" class="form-control">
+                            <select name="property_id" id="property_id" class="form-control" required>
                                 <option value="">กรุณาเลือกนิติบุคคล</option>
                                 @foreach($property as $prow)
                                     <option value="{!! $prow['id'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
@@ -160,7 +160,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text">
+                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" required>
                         </div>
                     </div>
                     <div class="form-group">

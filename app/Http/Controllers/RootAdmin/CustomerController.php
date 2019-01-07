@@ -44,7 +44,7 @@ class CustomerController extends Controller
         }
 
         $customer = $customer->where('role','=',0);
-        $customer = $customer->get();
+        $customer = $customer->orderBy('created_at','desc')->get();
 
         $p = new Province;
         $provinces = $p->getProvince();

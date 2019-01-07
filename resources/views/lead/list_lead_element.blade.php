@@ -41,17 +41,24 @@
             <table cellspacing="0" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th width="6%">เลขที่</th>
+                    <th width="15%">วันที่สร้าง</th>
                     <th width="20%">ชื่อ - สกุล</th>
                     <th width="*">เบอร์โทร</th>
                     <th width="*">พนักงานขาย</th>
                     <th width="120px">ใบเสนอราคา</th>
-                    <th width="180px"></th>
+                    <th width="180px">การจัดการ</th>
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                $i=1;
+                ?>
                 @foreach($_lead as $row)
                     <?php $doc_count = $row->quotation->count(); ?>
                     <tr>
+                        <td style="text-align: center;">{!!$i!!}</td>
+                        <td>{!!localDate($row->created_at)!!}</td>
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
                         <td>{!!$row->phone !!}</td>
                         <td>{!!$row->latest_sale->name!!}</td>
@@ -91,6 +98,9 @@
                             </div>
                         </td>
                     </tr>
+                    <?php
+                    $i++;
+                    ?>
                 @endforeach
                 </tbody>
             </table>

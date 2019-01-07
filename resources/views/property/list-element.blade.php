@@ -37,6 +37,7 @@
 				<th width="*">รายชื่อนิติบุคคล</th>
 				<th width="15%">จังหวัด</th>
 				<th width="180px">กลุ่มผู้บริหารนิติบุคคล</th>
+				<th width="180px">เลขที่เอกสารสัญญา</th>
 				<th width="180px">การจัดการ</th>
 			</tr>
 			</thead>
@@ -52,6 +53,11 @@
 						อื่นๆ
 					@endif
 				</td>
+				@if(!empty($row->latest_contract->property_id))
+						<td>{!! $row->latest_contract->contract_code !!}</td>
+					@else
+						<td>ไม่พบข้อมูลสัญญา</td>
+				@endif
 				<td>
 					<div class="btn-group left-dropdown">
 						<button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>
@@ -111,13 +117,25 @@
 							<li><a href="#" class="add-unit-link" data-toggle="modal" data-target="#edit-unit-csv-modal" data-pid="{!! $row->id !!}">
 									<i class="fa-home"></i> แก้ไขข้อมูลที่พักอาศัยโดยใช้ ID
 								</a></li> */?>
-							<li><a href="#" class="view-sign" data-toggle="tooltip" data-pid="{!! $row->id !!}">
-									<i class="fa-file-o"></i> ดู/แก้ไขสัญญา Nabour
-								</a></li>
-							<li><a href="#" target="_bank">
-									<i class="fa-print"></i> พิมพ์ใบสัญญา
-								</a>
-							</li>
+							@if(!empty($row->latest_contract->property_id))
+								@if(Auth::user()->role !=2)
+										<li><a href="{!! url('customer/service/contract/sign/form/'.$row->latest_contract->quotation_id) !!}">
+												<i class="fa-file-o"></i> ดู/แก้ไขสัญญา Nabour
+											</a></li>
+										<li><a href="{!! url('service/contract/sign/quotation/'.$row->latest_contract->id.'/'.$row->latest_contract->quotation_id) !!}" target="_bank">
+												<i class="fa-print"></i> พิมพ์ใบสัญญา
+											</a>
+										</li>
+									@else
+										<li><a href="{!! url('customer/service/sales/contract/sign/form/'.$row->latest_contract->quotation_id) !!}">
+												<i class="fa-file-o"></i> ดู/แก้ไขสัญญา Nabour
+											</a></li>
+										<li><a href="{!! url('service/contract/sign/quotation/'.$row->latest_contract->id.'/'.$row->latest_contract->quotation_id) !!}" target="_bank">
+												<i class="fa-print"></i> พิมพ์ใบสัญญา
+											</a>
+										</li>
+								@endif
+							@endif
 						</ul>
 					</div>
 

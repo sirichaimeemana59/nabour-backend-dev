@@ -28,6 +28,8 @@ use App\Invoice;
 use App\Payee;
 use App\Vehicle;
 use App\CommonFeesRef;
+
+
 class PropertyController extends Controller {
 
     public function __construct () {

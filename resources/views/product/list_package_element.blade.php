@@ -4,6 +4,7 @@
             <table cellspacing="0" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th width="10%">เลขที่</th>
                     <th width="20%">ชื่อผลิตภัณฑ์</th>
                     <th width="*">รายละเอียด</th>
                     <th width="180px">{{ trans('messages.action') }}</th>
@@ -12,12 +13,9 @@
                 <tbody>
                 @foreach($package as $row)
                         <tr>
-                        <td>
-                            {!!$row->name!!}
-                        </td>
-                        <td>
-                            {!!$row->description!!}
-                        </td>
+                        <td>{!!$row->product_code!!}</td>
+                        <td>{!!$row->name!!}</td>
+                        <td>{!!$row->description!!}</td>
                             @if($row->is_delete == 1)
                         <td class="action-links">
                             {{--<a href="#" class="btn btn-success"  data-toggle="modal" data-target="#add-officer-update" data-original-title="{{ trans('messages.edit') }}" onclick="mate('{{$row->id}}','{{$row->name}}','{{$row->detail}}','{{$row->price}}','{{$row->status}}','{{$row->vat}}')">

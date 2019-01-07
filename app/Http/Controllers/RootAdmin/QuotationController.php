@@ -56,7 +56,7 @@ class QuotationController extends Controller
 
             $quotation1 = new Quotation;
             $quotation1 = $quotation1->where('lead_id', $id);
-            $quotation1 = $quotation1->get();
+            $quotation1 = $quotation1->orderBy('quotation_code','DESC')->get();
 
 
             $remark = new Quotation;
@@ -91,7 +91,11 @@ class QuotationController extends Controller
         $id_package = Request::get('id_package');
         $cut_id = explode("|",$id_package);
 
-        $total =  (Request::get('grand_total')+Request::get('discount'))-Request::get('vat');
+        $grand_total   =str_replace(',','',Request::get('grand_total'));
+        $vat            =str_replace(',','',Request::get('vat'));
+        $discount       =str_replace(',','',Request::get('discount'));
+
+        $total =  ($grand_total+$discount)-$vat;
 
         //dd($total);
 
@@ -183,7 +187,7 @@ class QuotationController extends Controller
                 $quotation_service->lead_id             = $q['lead_id'];
                 $quotation_service->package_id          = $service_id[0];
                 $quotation_service->project_package     = empty($q['project'])?'0':str_replace(',', '',$q['project']);
-                $quotation_service->month_package       = empty($q['price'])?'0':$q['price'];
+                $quotation_service->month_package       = empty($q['price'])?'0':str_replace(',', '',$q['price']);
                 $quotation_service->unit_package        = empty($q['unit_price'])?'0':str_replace(',', '',$q['unit_price']);
                 $quotation_service->total_package       = empty($q['total1'])?'0':str_replace(',', '',$q['total1']);
                 $quotation_service->save();
@@ -191,9 +195,12 @@ class QuotationController extends Controller
 
             }
 
+            $grand_total_   =str_replace(',','',Request::get('grand_total_'));
+            $vat            =str_replace(',','',Request::get('vat'));
+            $discount       =str_replace(',','',Request::get('discount'));
 
-            $_total =  (Request::get('grand_total_')- Request::get('vat'))+Request::get('discount');
-
+            $_total =  ($grand_total_- $vat)+$discount;
+            //dd($_total);
             $quotation = new Quotation;
             $quotation = $quotation->find(Request::get('quotation_code'));
 

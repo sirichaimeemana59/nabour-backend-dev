@@ -20,7 +20,7 @@ class PackageController extends Controller
     {
         $package = new Products;
         //$package = $package->where('status','1');
-        $package = $package->get();
+        $package = $package->orderBy('product_code','asc')->get();
 
         $max_cus = new Products;
         $max_cus = $max_cus->max('product_code');

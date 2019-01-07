@@ -39,18 +39,17 @@ $(function () {
     })
 
     $('#addRowBtn').on('click', function (e){
-
         e.preventDefault();
         var time = $.now();
         var bath = $('#baht-label').val();
-        var category = '<select name="transaction['+time+'][service]">'+ $('#invoice-category-template select').html() + '</select>';
+        var category = '<select name="transaction['+time+'][service]" class="price_service" OnChange="result_Price(this);">'+ $('#invoice-category-template select').html() + '</select>';
         var tRowTmp = [
             '<tr class="item-row">',
             '<td><i class="deleteRow fa-trash"></i></td>',
             '<td>'+category+'</td>',
             '<td><input class="toValidate tQty form-control input-sm" name="transaction['+time+'][project]" type="text"  maxlength="15"/></td>',
             '<td></td>',//.join('');
-            '<td><div class="input-group"><span class="input-group-addon">฿</span>'+'<input   class="toValidate tPrice form-control input-sm" style="text-align: right;" name="transaction['+time+'][unit_price]"  type="text"  maxlength="15"/></td>'];
+            '<td><div class="input-group"><span class="input-group-addon">฿</span>'+'<input   class="toValidate tPrice form-control input-sm" style="text-align: right;" name="transaction['+time+'][unit_price]"  type="text"  maxlength="15"  readonly/></td>'];
         if($(this).data('vat')) {
             tRowTmp.push('<td><input id="vat-'+time+'"  name="transaction['+time+'][vat]" value="1" class="cbr cbr-replaced cbr-turquoise vat-check" type="checkbox"></td>');
         }
@@ -67,7 +66,6 @@ $(function () {
             cbr_replace();
         }
         rewokeMask ();
-
     });
 
 
@@ -98,19 +96,9 @@ $(function () {
     })
 
     $('#itemsTable').on('keyup','.tQty,.tPrice', function () {
-        var pt = $(this).parents('.item-row');
-        var amnt = pt.find('.tQty').val();
-        var prc = pt.find('.tPrice').val();
-        var rTotal = pt.find('.tLineTotal');
-        var cTotal = pt.find('.colTotal');
-        if (!isNaN(amnt) && !isNaN(prc) ) {
-            var total = Number(prc)*Number(amnt);
-            var total_ = $.number(total,2);
-            rTotal.val(total);
-            cTotal.html(total_);
-            calTotal();
-        }
-    })
+        calRowTotal ($(this));
+    });
+
     $('#tax,#withholding_tax,#discount').on('keyup',function() {
         calTotal();
     })
@@ -121,6 +109,21 @@ $(function () {
         calTotal();
     });
 });
+
+function calRowTotal ($obj) {
+    var pt = $obj.parents('.item-row');
+    var amnt = pt.find('.tQty').val();
+    var prc = pt.find('.tPrice').val();
+    var rTotal = pt.find('.tLineTotal');
+    var cTotal = pt.find('.colTotal');
+    if (!isNaN(amnt) && !isNaN(prc) ) {
+        var total = Number(prc)*Number(amnt);
+        var total_ = $.number(total,2);
+        rTotal.val(total);
+        cTotal.html(total_);
+        calTotal();
+    }
+}
 
 function calTotal () {
     var Total = TotalTax = 0;
@@ -143,7 +146,8 @@ function calTotal () {
     var _total_grand = $('#h_total').text();
     var tax1 = $('#tax').val();
     tax = (Total*tax1)/100;
-    $('.salesTax').val(tax);
+    var _tax = $.number(tax,2);
+    $('.salesTax').val(_tax);
     // if($('#tax').val() === "" || !$('#tax').length) {
     //     tax = 0;
     // } else {
@@ -246,7 +250,8 @@ function validateTransaction () {
 
 function rewokeMask () {
     $(".tQty").number( true, 0 );
-    $(".tPrice").number( true, 3 );
+    $(".tPrice").number( true, 2 );
+    $("#unitprice").number(true,2);
     $(".colTotal").number( true, 2 );
 }
 
@@ -279,3 +284,6 @@ function calFinalGrandTotal () {
     var f = $.number(Math.abs(final),2);
     $('#final-balance,.remaining-grand-total').html(f);
 }
+
+
+

@@ -34,6 +34,7 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
+            <th width="7%">เลขที่</th>
             <th width="160px">เลขที่ใบเสนอราคา</th>
             <th width="*">Leads</th>
             <th width="180px">ราคาสุทธิ</th>
@@ -42,8 +43,12 @@
         </tr>
         </thead>
         <tbody>
+        <?php
+                $i=1;
+        ?>
         @foreach($quotations as $row)
         <tr>
+            <td>{!! $i; !!}</td>
             <td>{!! $row->quotation_code !!}</td>
             <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
             <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
@@ -64,7 +69,7 @@
                 <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
                     <i class="fa-check"></i>
                 </a>
-                <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" {!! $disable !!} class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                     <i class="fa-print"></i>
                 </a>
                     <a href="{!! url('customer/service/sales/quotation/update/form/'.$row->id) !!}" {!! $disable !!}  class="edit edit-service btn btn-warning"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="แก้ไข">
@@ -78,6 +83,9 @@
                     </a>
             </td>
         </tr>
+            <?php
+                $i++;
+            ?>
         @endforeach
         </tbody>
     </table>

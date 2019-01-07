@@ -109,8 +109,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">ประเภท</label>
                                     <div class="col-sm-9">
-                                        <input type="radio" name="status" value="1">  :   บริการ <br>
-                                        <input type="radio" name="status" value="2">  :   Package
+                                        <input type="radio" name="status" value="2">  :   บริการ <br>
+                                        <input type="radio" name="status" value="1">  :   Package
                                     </div>
                                 </div>
                                 <input type="hidden" name="is_delete" value="0">

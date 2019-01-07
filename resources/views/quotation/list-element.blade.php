@@ -34,6 +34,7 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
+            <th width="7%">เลขที่</th>
             <th width="160px">เลขที่ใบเสนอราคา</th>
             <th width="*">Leads</th>
             <th width="200px">Sales</th>
@@ -43,8 +44,12 @@
         </tr>
         </thead>
         <tbody>
+        <?php
+            $i=1;
+        ?>
         @foreach($quotations as $row)
         <tr>
+            <td>{!! $i; !!}</td>
             <td>{!! $row->quotation_code !!}</td>
             <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
             <td>{!! $row->latest_sale->name !!}</td>
@@ -80,6 +85,9 @@
                 </a>
             </td>
         </tr>
+            <?php
+                $i++;
+            ?>
         @endforeach
         </tbody>
     </table>

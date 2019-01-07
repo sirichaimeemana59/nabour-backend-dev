@@ -107,8 +107,8 @@
             $check2="checked";
         }
         ?>
-        <input type="radio" name="status" value="1" {!! $check2 !!}>  :   บริการ <br>
-        <input type="radio" name="status" value="2" {!! $check1 !!}>  :   Package
+        <input type="radio" name="status" value="2" {!! $check2 !!}>  :   บริการ <br>
+        <input type="radio" name="status" value="1" {!! $check1 !!}>  :   Package
     </div>
 </div>
 
