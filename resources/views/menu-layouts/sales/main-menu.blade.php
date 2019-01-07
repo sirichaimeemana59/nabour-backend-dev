@@ -1,4 +1,10 @@
 <ul id="main-menu" class="main-menu">
+    <li>
+        <a href="{!!  url('sales/demo-property/list-property') !!}">
+            <i class="fa fa-list"></i>
+            <span class="title">แบบฟอร์มนิติบุคคล</span>
+        </a>
+    </li>
     <li class="has-sub {!! (Request::is('customer/*') || Request::is('sales/property/*') ? 'active expanded' : '') !!}">
         <a href="">
             <i class="fa fa-group"></i>

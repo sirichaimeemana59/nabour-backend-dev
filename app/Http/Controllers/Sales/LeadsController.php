@@ -11,6 +11,7 @@ use Redirect;
 use App\BackendModel\User;
 use App\Province;
 use App\BackendModel\Customer;
+use App\BackendModel\Property;
 
 class LeadsController extends Controller
 {
@@ -23,7 +24,7 @@ class LeadsController extends Controller
         $_lead = new Customer;
 
         if(Request::get('name')) {
-            $_lead = $_lead->where('firstname','=',Request::get('name'));
+            $_lead = $_lead->where('firstname','like',"%".Request::get('name')."%");
         }
 
         if(Request::get('sale_id')) {
@@ -48,10 +49,13 @@ class LeadsController extends Controller
         $p_rows = $p_rows->where('role','=',1)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
+        $property = new Property;
+        $property = $property->get();
+
         if(!Request::ajax()) {
-            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows'));
+            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property'));
         }else{
-            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows'));
+            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows','property'));
         }
     }
 

@@ -28,7 +28,7 @@ class CustomerController extends Controller
 
 
         if(Request::get('name')) {
-            $customer = $customer->where('firstname','=',Request::get('name'));
+            $customer = $customer->where('firstname','like',"%".Request::get('name')."%");
         }
 
         if(Request::get('company_name')) {

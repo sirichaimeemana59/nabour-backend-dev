@@ -59,7 +59,11 @@
                         <div class="row">
                             <div class="col-sm-12 text-right">
                                 <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
-                                <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
+                                @if(Auth::user()->role !=2)
+                                    <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
+                                @else
+                                    <button type="button" class="btn btn-secondary p-search-property-sale">{!! trans('messages.search') !!}</button>
+                                @endif
                             </div>
                         </div>
 
@@ -314,6 +318,10 @@
             propertyPage (1);
         });
 
+        $('.p-search-property-sale').on('click',function () {
+            propertyPageSale (1);
+        });
+
         //update
         $('#panel-lead-list').on('click','.edit-customer' ,function (){
             var id = $(this).data('vehicle-id');
@@ -383,6 +391,20 @@
             $('#landing-property-list').css('opacity','0.6');
             $.ajax({
                 url     : $('#root-url').val()+"/customer/customer/list",
+                data    : data,
+                dataType: "html",
+                method: 'post',
+                success: function (h) {
+                    $('#landing-property-list').css('opacity','1').html(h);
+                }
+            })
+        }
+
+        function propertyPageSale (page) {
+            var data = $('#search-form').serialize()+'&page='+page;
+            $('#landing-property-list').css('opacity','0.6');
+            $.ajax({
+                url     : $('#root-url').val()+"/customer/sales/customer/list",
                 data    : data,
                 dataType: "html",
                 method: 'post',

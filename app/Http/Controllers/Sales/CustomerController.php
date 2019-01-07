@@ -26,9 +26,8 @@ class CustomerController extends Controller
     {
         $customer = new Customer;
 
-
         if(Request::get('name')) {
-            $customer = $customer->where('firstname','=',Request::get('name'));
+            $customer = $customer->where('firstname','like',"%".Request::get('name')."%");
         }
 
         if(Request::get('company_name')) {
@@ -59,6 +58,8 @@ class CustomerController extends Controller
         $p_rows = new Customer;
         $p_rows = $p_rows->where('role','=',0)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
+
+
 
        // dd($p_rows);
         //dd($p_rows);

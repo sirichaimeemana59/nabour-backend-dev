@@ -123,6 +123,11 @@ Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@
 Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');
 //End Contract Sales
 
+//Demo Property
+Route::any('sales/demo-property/list-property','Sales\PropertyFormController@index');
+Route::post('sales/demo-property/add','Sales\PropertyFormController@create');
+
+
 //---------------------------  Nabour officer Route --------------------------------------------//
 
 // Admin

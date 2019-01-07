@@ -24,7 +24,7 @@ class LeadsController extends Controller
         $_lead = new Customer;
 
         if(Request::get('name')) {
-            $_lead = $_lead->where('firstname','=',Request::get('name'));
+            $_lead = $_lead->where('firstname','like',"%".Request::get('name')."%");
         }
 
         if(Request::get('sale_id')) {
