@@ -28,6 +28,7 @@ use App\Invoice;
 use App\Payee;
 use App\Vehicle;
 use App\CommonFeesRef;
+use App\BackendModel\SalePropertyForm;
 
 
 class PropertyController extends Controller {
@@ -37,14 +38,17 @@ class PropertyController extends Controller {
     }
 
     public function index(){
-        $list_property_data = SalePropertyDemo::with('property')->where('sale_id','=',Auth::user()->id)->get();
+        //$list_property_data = SalePropertyDemo::with('property')->where('sale_id','=',Auth::user()->id)->get();
+
+        $list_property_data = SalePropertyForm::with('latest_property')->where('sales_id','=',Auth::user()->id)->get();
+
 
         foreach ($list_property_data as &$item){
             if($item->trial_expire != null) {
                 $expire = Carbon::createFromFormat('Y-m-d H:i:s', $item->trial_expire);
                 $datetime_now = Carbon::now();
                 $result_cal_trial = $datetime_now->diffInDays($expire, false);
-                $temp_name = $item->property->property_name_en;
+                $temp_name = $item->latest_property->property_name_en;
                 $item['property_name'] = $temp_name;
 
                 if ($result_cal_trial >= 0) {
@@ -53,7 +57,7 @@ class PropertyController extends Controller {
                     $item['isExpire'] = 1;
                 }
             }else{
-                $temp_name = $item->property->property_name_en;
+                $temp_name = $item->latest_property->property_name_en;
                 $item['property_name'] = $temp_name;
                 $item['isExpire'] = 0;
             }
@@ -68,8 +72,8 @@ class PropertyController extends Controller {
         $p = new Province;
         $provinces = $p->getProvince();
 
-        $property_demo = SalePropertyDemo::find($id);
-        $property_data = Property::find($property_demo->property->id);
+        $property_demo = SalePropertyForm::find($id);
+        $property_data = Property::find($property_demo->latest_property->id);
         //$user = $property->property_admin;
         $property = $property_data->toArray();
         //$demo_data = $property_demo->toArray();

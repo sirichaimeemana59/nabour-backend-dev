@@ -123,10 +123,6 @@ Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@
 Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');
 //End Contract Sales
 
-//Demo Property
-Route::any('sales/demo-property/list-property','Sales\PropertyFormController@index');
-Route::post('sales/demo-property/add','Sales\PropertyFormController@create');
-
 
 //---------------------------  Nabour officer Route --------------------------------------------//
 
@@ -188,3 +184,9 @@ Route::post('sales/property/reset', 'Sales\PropertyController@reset');
 Route::post('sales/property/assign', 'Sales\PropertyController@assignDemoProperty');
 Route::post('sales/property/disable', 'Sales\PropertyController@disablePropertyDemo');
 Route::post('sales/property/enable', 'Sales\PropertyController@enablePropertyDemo');
+
+//Demo Property
+Route::any('sales/demo-property/list-property', 'Sales\PropertyFormController@index');
+Route::post('sales/demo-property/add','Sales\PropertyFormController@create');
+Route::any('home/code', 'Sales\PropertyFormController@code');
+Route::any('home/form', 'Sales\PropertyFormController@form');

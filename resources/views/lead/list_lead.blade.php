@@ -272,8 +272,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row form-group">
-                            <label class="control-label col-md-4">ชื่อ</label>
-                            <div class="col-md-8">{!! Form::text('name',null,['class'=>'form-control']) !!} </div>
+                            <label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
+                            <div class="col-md-8">{!! Form::text('name',null,['class'=>'form-control','required']) !!} </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <label class="control-label col-md-4">ชื่อนิติบุคคลทดลองใช้</label>
+                            <div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control','required']) !!} </div>
                         </div>
                     </div>
                 </div>
@@ -296,7 +303,13 @@
                     <div class="col-md-12">
                         <div class="row form-group">
                             <label class="control-label col-md-4">อีเมล</label>
-                            <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control']) !!} </div>
+                            <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control','required']) !!} </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <label class="control-label col-md-4">เบอร์โทร</label>
+                            <div class="col-md-8">{!! Form::text('tel_contact',null,['class'=>'form-control','required']) !!} </div>
                         </div>
                     </div>
                 </div>
@@ -468,6 +481,35 @@
                 }
             })
         }
+
+        $("#assign-demo-form").validate({
+            ignore:'',
+            rules: {
+                name : 'required',
+                property_name: 'required',
+                email : 'required'
+            },
+            messages: {
+                title: {
+                    required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
+                },
+                detail: {
+                    required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
+                },
+                complain_category_id: {
+                    required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
+                }
+            }
+        });
+
+        $('#submit-assign-demo').on('click', function () {
+            if( $("#assign-demo-form").valid() ) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $('#assign-demo-form').submit();
+            } else {
+                $(window).resize();
+            }
+        });
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

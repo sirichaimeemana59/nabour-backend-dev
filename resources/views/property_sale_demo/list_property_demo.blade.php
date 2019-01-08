@@ -80,6 +80,7 @@
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript">
+
         $('.p-search-property').on('click',function () {
             propertyPage (1);
         });
@@ -102,6 +103,7 @@
                 method: 'post',
                 success: function (h) {
                     $('#landing-property-list').css('opacity','1').html(h);
+                    //alert('555');
                 }
             })
         }

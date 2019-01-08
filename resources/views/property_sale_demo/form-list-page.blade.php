@@ -16,7 +16,7 @@
             @foreach($list_property as $row)
                 <tr>
                     <td>
-                        {!!$row->property->property_name_th!!}
+                        {!!$row->latest_property->property_name_th!!}
                         @if($row->status == 0 && $row->isExpire != 1)
                             <div class="label label-success">ว่าง</div>
                         @elseif($row->status == 1 && $row->isExpire != 1)
@@ -27,7 +27,7 @@
                             <div class="label label-danger">ระงับการใช้งาน</div>
                         @endif
                     </td>
-                    <td>{!!$row->default_password!!}</td>
+                    <td>{!!$row->form_code!!}</td>
                     <td>{!! ($row->trial_expire != null) ? date('Y/m/d', strtotime($row->trial_expire)) : "ไม่มีกำหนด"!!}</td>
                     <td>
                         @if($row->property_test_name)
