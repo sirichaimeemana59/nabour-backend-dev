@@ -16,7 +16,7 @@
             @foreach($list_property as $row)
                 <tr>
                     <td>
-                        {!!$row->latest_property->property_name_th!!}
+                        {!!$row->property->property_name_th!!}
                         @if($row->status == 0 && $row->isExpire != 1)
                             <div class="label label-success">ว่าง</div>
                         @elseif($row->status == 1 && $row->isExpire != 1)

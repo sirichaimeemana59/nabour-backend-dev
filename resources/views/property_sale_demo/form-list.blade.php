@@ -123,7 +123,7 @@
 
 		$(".reset-data-button").click(function(){
 			var demoId = $(this).attr("data-demo-id");
-            //console.log(demoId);
+           //console.log(demoId);
 			swal({
 				title: "คุณต้องการ Reset ข้อมูลสำหรับหมู่บ้านทดลองใช้นี้ ใช่หรือไม่?",
 				text: "การ Reset ข้อมูลอาจใช้เวลาในการประมวลผล กรุณารอซักครู่",

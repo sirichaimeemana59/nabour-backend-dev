@@ -9,7 +9,7 @@ class SalePropertyForm extends GeneralModel
     protected $table = 'sale_property_demo';
     public $timestamps = true;
     protected $fillable = ['default_password','status','property_test_name','province','email','sales_id','lead_id','property_id','tel_contact','contact_name','trial_expire','lasted_login_at','login_counter','detail'];
-
+    protected $primaryKey = 'id';
     public function latest_property ()
     {
         return $this->hasOne('App\BackendModel\Property','id','property_id');

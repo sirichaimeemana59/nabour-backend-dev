@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers\Sales;
+<?php
+namespace App\Http\Controllers\Sales;
 use Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Pagination\Paginator;
@@ -10,12 +11,15 @@ use Storage;
 use League\Flysystem\AwsS3v2\AwsS3Adapter;
 use Carbon\Carbon;
 # Model
+use App\PropertyForm;
 use App\Province;
 use App\User;
 use App\Property;
+use App\PropertyUnit;
 use App\SalePropertyDemo;
 use App\Notification;
 use App\PostReport;
+use App\PostReportDetail;
 use App\Post;
 use App\Event;
 use App\Vote;
@@ -28,27 +32,24 @@ use App\Invoice;
 use App\Payee;
 use App\Vehicle;
 use App\CommonFeesRef;
-use App\BackendModel\SalePropertyForm;
-
-
 class PropertyController extends Controller {
 
     public function __construct () {
-        $this->middleware('sales');
+        $this->middleware('auth',['except' => ['login']]);
+        if( Auth::check() && Auth::user()->role !== 4 ) {
+            Redirect::to('officer/property-list')->send();
+        }
     }
 
     public function index(){
-        //$list_property_data = SalePropertyDemo::with('property')->where('sale_id','=',Auth::user()->id)->get();
-
-        $list_property_data = SalePropertyForm::with('latest_property')->where('sales_id','=',Auth::user()->id)->get();
-
+        $list_property_data = SalePropertyDemo::with('property')->where('sale_id','=',Auth::user()->id)->get();
 
         foreach ($list_property_data as &$item){
             if($item->trial_expire != null) {
                 $expire = Carbon::createFromFormat('Y-m-d H:i:s', $item->trial_expire);
                 $datetime_now = Carbon::now();
                 $result_cal_trial = $datetime_now->diffInDays($expire, false);
-                $temp_name = $item->latest_property->property_name_en;
+                $temp_name = $item->property->property_name_en;
                 $item['property_name'] = $temp_name;
 
                 if ($result_cal_trial >= 0) {
@@ -57,7 +58,7 @@ class PropertyController extends Controller {
                     $item['isExpire'] = 1;
                 }
             }else{
-                $temp_name = $item->latest_property->property_name_en;
+                $temp_name = $item->property->property_name_en;
                 $item['property_name'] = $temp_name;
                 $item['isExpire'] = 0;
             }
@@ -72,8 +73,8 @@ class PropertyController extends Controller {
         $p = new Province;
         $provinces = $p->getProvince();
 
-        $property_demo = SalePropertyForm::find($id);
-        $property_data = Property::find($property_demo->latest_property->id);
+        $property_demo = SalePropertyDemo::find($id);
+        $property_data = Property::find($property_demo->property->id);
         //$user = $property->property_admin;
         $property = $property_data->toArray();
         //$demo_data = $property_demo->toArray();
@@ -86,10 +87,9 @@ class PropertyController extends Controller {
     }
 
     public function reset(){
-        //dd(Request::get('id'));
         // reset sale_property_demo table data
         $id = Request::get('id');
-        $property_demo = SalePropertyForm::find($id);
+        $property_demo = SalePropertyDemo::find($id);
         $property_demo->status = 0;
         $property_demo->trial_expire = null;
         $property_demo->email_contact = null;
@@ -164,6 +164,20 @@ class PropertyController extends Controller {
         $account->clearPropertyPettyCash($property_id);
         $account->clearPropertyFund($property_id);
 
+        /*$this->clearPostReport($property_id);
+        $this->clearPost($property_id);
+        $this->clearEvent($property_id);
+        $this->clearVote($property_id);
+        $this->clearDiscussion($property_id);
+        $this->clearComplain($property_id);
+        $this->clearCommonFeeRef($property_id);
+        $this->clearTransaction($property_id);
+        $this->clearPostParcel($property_id);
+        $this->clearMessage($property_id);
+        $this->clearInvoice($property_id);
+        $this->clearPayee($property_id);
+        $this->clearVehicle($property_id);*/
+
         // TODO: reset data in other table
 
         $data = [
@@ -171,7 +185,7 @@ class PropertyController extends Controller {
         ];
         return $data;
     }
-    
+
     function clearPropertyData($id){
         $property_demo = SalePropertyDemo::find($id);
         $property_demo->status = 0;
@@ -180,7 +194,7 @@ class PropertyController extends Controller {
         $property_demo->property_test_name = null;
         $property_demo->contact_name = null;
         $property_demo->save();
-        
+
         return true;
     }
 
@@ -415,11 +429,11 @@ class PropertyController extends Controller {
         $property_demo->property_test_name = $data['property_name'];
         $property_demo->default_password = $new_password;
         $property_demo->save();
-        
+
         $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
         $this->mail_assign_demo_property($id,$property_demo->default_password);
 
-        return redirect('sales/property/list');
+        return redirect('officer/property-list');
     }
 
     function setUpUserAccountForDemo($property_id,$default_password){
@@ -467,7 +481,7 @@ class PropertyController extends Controller {
 
         return true;
     }
-    
+
     function mail_account_created ($name,$property_name,$email,$password) {
         Mail::send('emails.property_account_created', [
             'name'			=> $name,
