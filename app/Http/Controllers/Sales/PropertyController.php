@@ -86,9 +86,10 @@ class PropertyController extends Controller {
     }
 
     public function reset(){
+        //dd(Request::get('id'));
         // reset sale_property_demo table data
         $id = Request::get('id');
-        $property_demo = SalePropertyDemo::find($id);
+        $property_demo = SalePropertyForm::find($id);
         $property_demo->status = 0;
         $property_demo->trial_expire = null;
         $property_demo->email_contact = null;

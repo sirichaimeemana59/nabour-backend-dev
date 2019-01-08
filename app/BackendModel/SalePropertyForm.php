@@ -8,7 +8,7 @@ class SalePropertyForm extends GeneralModel
     protected $connection = 'back_office';
     protected $table = 'sale_property_demo';
     public $timestamps = true;
-    protected $fillable = ['form_code','status','property_test_name','province','email','sales_id','lead_id','property_id','tel_contact','contact_name','trial_expire','lasted_login_at','login_counter','detail'];
+    protected $fillable = ['default_password','status','property_test_name','province','email','sales_id','lead_id','property_id','tel_contact','contact_name','trial_expire','lasted_login_at','login_counter','detail'];
 
     public function latest_property ()
     {

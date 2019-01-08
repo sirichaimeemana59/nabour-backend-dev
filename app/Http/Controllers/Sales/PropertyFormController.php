@@ -60,7 +60,7 @@ class PropertyFormController extends Controller
         $code 	= $this->generateCode();
 
         $property_demo = new SalePropertyForm;
-        $property_demo->form_code          = $code;
+        $property_demo->default_password   = $code;
         $property_demo->status             = 0;
         $property_demo->contact_name       = Request::get('name');
         $property_demo->property_test_name = Request::get('property_test_name');

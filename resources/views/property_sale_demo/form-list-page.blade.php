@@ -27,7 +27,7 @@
                             <div class="label label-danger">ระงับการใช้งาน</div>
                         @endif
                     </td>
-                    <td>{!!$row->form_code!!}</td>
+                    <td>{!!$row->default_password!!}</td>
                     <td>{!! ($row->trial_expire != null) ? date('Y/m/d', strtotime($row->trial_expire)) : "ไม่มีกำหนด"!!}</td>
                     <td>
                         @if($row->property_test_name)
