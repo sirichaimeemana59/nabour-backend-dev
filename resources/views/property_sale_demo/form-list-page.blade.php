@@ -53,21 +53,21 @@
                         <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button> 
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <span class="caret"></span> </button> 
                         <ul class="dropdown-menu dropdown-green" role="menu"> 
-                            <li><a href="{!! url('sales/property/view/'.$row->id) !!}">
+                            <li><a href="{!! url('sales/property/view/'.$row->property_id) !!}">
                                 ดูรายละเอียด
                             </a></li>
-                            <li><a href="#" data-demo-id="{!! $row->id !!}" class="reset-data-button">
+                            <li><a href="#" data-demo-id="{!! $row->property_id !!}" class="reset-data-button">
                                 ทำการลบข้อมูลทั้งหมด
                             </a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo" data-id="{!! $row->id !!}">
+                            <li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo" data-id="{!! $row->property_id !!}">
                                 ส่งให้นิติบุคคลอื่นทดลองใช้
                             </a></li>
                             @if($row->status != 3)
-                            <li><a href="#" class="disable-data-button" data-demo-id="{!! $row->id !!}">
+                            <li><a href="#" class="disable-data-button" data-demo-id="{!! $row->property_id !!}">
                                 ระงับการใช้งาน
                             </a></li>
                             @else
-                            <li><a href="#" class="enable-data-button" data-demo-id="{!! $row->id !!}">
+                            <li><a href="#" class="enable-data-button" data-demo-id="{!! $row->property_id !!}">
                                 เปิดให้ใช้งาน
                             </a></li>
                             @endif
