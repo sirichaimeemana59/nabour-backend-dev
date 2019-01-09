@@ -44,9 +44,9 @@
             </tr>
             </thead>
             <tbody class="middle-align">
-            @foreach($property_demo as $row)
+            @foreach($_form as $row)
                 <tr>
-                    <td>{!!$row->property_test_name!!}</td>
+                    <td>{!!$row->name!!}</td>
                     <td>{!!$provinces[$row->province]!!}</td>
                     <td>{!!$row->form_code!!}</td>
                     <td>{!! trans('messages.PropertyForm.status_'.$row->status) !!}</td>
@@ -54,7 +54,7 @@
                     <td>{!!date('d M Y H:i',strtotime($row->updated_at))!!}</td>
                     <td class="action-links">
                         @if($row->status == 1)
-                            <a href="{!! url('officer/property-form/view/'.$row->id) !!}" class="btn btn-success btn-sm btn-icon icon-left">
+                            <a href="{!! url('sales/property-form/view/'.$row->id) !!}" class="btn btn-success btn-sm btn-icon icon-left">
                                 <i class="fa-eye"></i>
                             </a>
                         @else

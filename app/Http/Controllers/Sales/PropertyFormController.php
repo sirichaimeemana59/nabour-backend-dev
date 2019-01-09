@@ -13,6 +13,7 @@ use App\SalePropertyDemo;
 use App\Province;
 use App\PropertyContract;
 use App\Property;
+use App\PropertyForm;
 
 class PropertyFormController extends Controller
 {
@@ -22,35 +23,28 @@ class PropertyFormController extends Controller
 
     public function index()
     {
-        $property_demo = new SalePropertyDemo;
-
-        if(Request::get('name')) {
-            $property_demo = $property_demo->where('property_test_name','like',"%".Request::get('name')."%");
-        }
-
-        if(Request::get('status')) {
-            $property_demo = $property_demo->where('status','=',Request::get('status'));
-        }
-
-        if(Request::get('province')) {
-            $property_demo = $property_demo->where('province','=',Request::get('province'));
-        }
-
-        $property_demo = $property_demo->get();
-
-
-        $_form = new SalePropertyDemo;
-        $_form = $_form->orderBy('created_at','desc')->paginate(50);
-
         $p = new Province;
         $provinces = $p->getProvince();
+        $_form = new PropertyForm;
+        if(Request::ajax()) {
+            if(Request::get('name')) {
+                $_form = $_form->where('name','like',"%".Request::get('name')."%");
+            }
 
+            if(Request::get('province')) {
+                $_form = $_form->where('province',Request::get('province'));
+            }
 
-        if(!Request::ajax()) {
-            return view('property_sale_demo.list_property_demo')->with(compact('property_demo','_form','provinces'));
-        }else{
-           // dd($property_demo);
+            if(Request::get('status') != '-') {
+                $_form = $_form->where('status',Request::get('status'));
+            }
+        }
+        //$_form = $_form->where('user_id','=',Auth::user()->id)->orderBy('created_at','desc')->paginate(30);
+        $_form = $_form->orderBy('created_at','desc')->paginate(30);
+        if(Request::ajax()) {
             return view('property_sale_demo.list_property_demo_element')->with(compact('property_demo','_form','provinces'));
+        } else {
+            return view('property_sale_demo.list_property_demo')->with(compact('property_demo','_form','provinces'));
         }
 
     }
@@ -83,29 +77,26 @@ class PropertyFormController extends Controller
         return redirect('sales/demo-property/list-property');
     }
 
-    public function store(Request $request)
-    {
-        //
+    function delete_form () {
+        $form = PropertyForm::find(Request::get('form_id'));
+        if($form) {
+            $form->delete();
+        }
+        return redirect('sales/demo-property/list-property');
     }
 
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+    public function view_form ($id) {
+        $b_form = $_form = PropertyForm::find($id);
+        if($_form->detail){
+            $_form = $_form->toArray();
+            $_form = json_decode($_form['detail'],true);
+            $_form['id'] = $id;
+            $_form['user']['name'] = $b_form->name;
+            $_form['user']['email'] = $b_form->email;
+        }
+        $p = new Province;
+        $provinces = $p->getProvince();
+        return view('property_form.view-form')->with(compact('_form','provinces'));
     }
 
     function generateCode() {

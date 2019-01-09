@@ -51,7 +51,7 @@
     <div class="modal fade" id="delete-form">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'officer/property-form/delete','id'=>'delete-form-form']) !!}
+                {!! Form::open(['url'=>'sales/property-form/delete','id'=>'delete-form-form']) !!}
                 {!! Form::hidden('form_id',null,['id'=>'form-id']) !!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

@@ -190,3 +190,5 @@ Route::any('sales/demo-property/list-property', 'Sales\PropertyFormController@in
 Route::post('sales/demo-property/add','Sales\PropertyFormController@create');
 Route::any('home/code', 'Sales\PropertyFormController@code');
 Route::any('home/form', 'Sales\PropertyFormController@form');
+Route::post('sales/property-form/delete','Sales\PropertyFormController@delete_form');
+Route::get('sales/property-form/view/{id}', 'Sales\PropertyFormController@view_form');
