@@ -273,7 +273,7 @@
                     <div class="col-md-12">
                         <div class="row form-group">
                             <label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
-                            <div class="col-md-8">{!! Form::text('name',null,['class'=>'form-control','required']) !!} </div>
+                            <div class="col-md-8">{!! Form::text('contact_name',null,['class'=>'form-control','required']) !!} </div>
                         </div>
                     </div>
 

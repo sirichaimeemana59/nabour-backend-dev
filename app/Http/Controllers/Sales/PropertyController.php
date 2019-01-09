@@ -433,7 +433,7 @@ class PropertyController extends Controller {
         $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
         $this->mail_assign_demo_property($id,$property_demo->default_password);
 
-        return redirect('officer/property-list');
+        return redirect('sales/property/list');
     }
 
     function setUpUserAccountForDemo($property_id,$default_password){

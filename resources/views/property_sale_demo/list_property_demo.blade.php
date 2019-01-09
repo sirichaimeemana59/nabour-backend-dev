@@ -95,6 +95,7 @@
 
         function propertyPage (page) {
             var data = $('#search-form').serialize()+'&page='+page;
+            //console.log(data);
             $('#landing-property-list').css('opacity','0.6');
             $.ajax({
                 url     : $('#root-url').val()+"/sales/demo-property/list-property",

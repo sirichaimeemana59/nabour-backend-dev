@@ -7,7 +7,7 @@ use Auth;
 class SalePropertyDemo extends GeneralModel
 {
     protected $table = 'sale_property_demo';
-    protected $fillable = ['sale_id','property_id','trial_expire','status','email_contact','property_test_name','contact_name','default_password','lasted_login_at','login_counter'];
+    protected $fillable = ['sale_id','property_id','trial_expire','status','email_contact','property_test_name','contact_name','default_password','lasted_login_at','login_counter','province','lead_id'];
     public $timestamps = true;
     public function property()
     {

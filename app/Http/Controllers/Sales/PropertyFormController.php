@@ -25,7 +25,7 @@ class PropertyFormController extends Controller
         $property_demo = new SalePropertyDemo;
 
         if(Request::get('name')) {
-            $property_demo = $property_demo->where('name','like',"%".Request::get('name')."%");
+            $property_demo = $property_demo->where('property_test_name','like',"%".Request::get('name')."%");
         }
 
         if(Request::get('status')) {
@@ -49,7 +49,7 @@ class PropertyFormController extends Controller
         if(!Request::ajax()) {
             return view('property_sale_demo.list_property_demo')->with(compact('property_demo','_form','provinces'));
         }else{
-            //dd($property_demo);
+           // dd($property_demo);
             return view('property_sale_demo.list_property_demo_element')->with(compact('property_demo','_form','provinces'));
         }
 
@@ -62,7 +62,7 @@ class PropertyFormController extends Controller
         $property_demo = new SalePropertyDemo;
         $property_demo->default_password   = $code;
         $property_demo->status             = 0;
-        $property_demo->contact_name       = Request::get('name');
+        $property_demo->contact_name       = Request::get('contact_name');
         $property_demo->property_test_name = Request::get('property_test_name');
         $property_demo->province           = Request::get('province');
         $property_demo->email_contact      = Request::get('email');
