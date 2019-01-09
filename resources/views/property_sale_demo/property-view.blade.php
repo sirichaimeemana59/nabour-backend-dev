@@ -30,7 +30,7 @@
 							<span class="input-group-addon">
 								<i class="linecons-mail"></i>
 							</span>
-                            {!! Form::text('demo_data[email]',null,array('class' => 'form-control', "data-validate" => "email", 'readonly' => 'true')) !!}
+                            {!! Form::text('demo_data[email_contact]',null,array('class' => 'form-control', "data-validate" => "email", 'readonly' => 'true')) !!}
                         </div>
                         <?php echo $errors->first('email','<span id="name-error" class="validate-has-error email-error">:message</span>'); ?>
                     </div>

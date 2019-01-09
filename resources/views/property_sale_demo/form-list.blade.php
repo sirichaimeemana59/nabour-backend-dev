@@ -182,6 +182,7 @@
 
 		$(".disable-data-button").click(function(){
 			var demoId = $(this).attr("data-demo-id");
+			//console.log(demoId);
 			swal({
 				title: "คุณต้องการ Disable ข้อมูลสำหรับหมู่บ้านทดลองใช้นี้ ใช่หรือไม่?",
 				text: "ข้อมูลอาจใช้เวลาในการประมวลผล กรุณารอซักครู่",
@@ -193,7 +194,7 @@
 				showLoaderOnConfirm: true
 			}, function(){
 				$.ajax({
-					url : 'property/disable',
+                    url : '{!! url('sales/property/disable') !!}',
 					type: 'post',
 					cache: false,
 					dataType: 'json',
@@ -250,7 +251,7 @@
 				showLoaderOnConfirm: true
 			}, function(){
 				$.ajax({
-					url : 'property/enable',
+					url : '{!! url('sales/property/enable') !!}',
 					type: 'post',
 					cache: false,
 					dataType: 'json',

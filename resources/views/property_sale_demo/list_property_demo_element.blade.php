@@ -46,7 +46,7 @@
             <tbody class="middle-align">
             @foreach($property_demo as $row)
                 <tr>
-                    <td>{!!$row->latest_property->property_name_th!!}</td>
+                    <td>{!!$row->property->property_name_th!!}</td>
                     <td>{!!$provinces[$row->province]!!}</td>
                     <td>{!!$row->form_code!!}</td>
                     <td>{!! trans('messages.PropertyForm.status_'.$row->status) !!}</td>

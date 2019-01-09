@@ -9,10 +9,10 @@ use Redirect;
 use Mail;
 
 //Model
-use App\BackendModel\SalePropertyForm;
+use App\SalePropertyDemo;
 use App\Province;
 use App\PropertyContract;
-use App\BackendModel\Property;
+use App\Property;
 
 class PropertyFormController extends Controller
 {
@@ -22,7 +22,7 @@ class PropertyFormController extends Controller
 
     public function index()
     {
-        $property_demo = new SalePropertyForm;
+        $property_demo = new SalePropertyDemo;
 
         if(Request::get('name')) {
             $property_demo = $property_demo->where('name','like',"%".Request::get('name')."%");
@@ -39,7 +39,7 @@ class PropertyFormController extends Controller
         $property_demo = $property_demo->get();
 
 
-        $_form = new SalePropertyForm;
+        $_form = new SalePropertyDemo;
         $_form = $_form->orderBy('created_at','desc')->paginate(50);
 
         $p = new Province;
@@ -59,17 +59,16 @@ class PropertyFormController extends Controller
     {
         $code 	= $this->generateCode();
 
-        $property_demo = new SalePropertyForm;
+        $property_demo = new SalePropertyDemo;
         $property_demo->default_password   = $code;
         $property_demo->status             = 0;
         $property_demo->contact_name       = Request::get('name');
         $property_demo->property_test_name = Request::get('property_test_name');
         $property_demo->province           = Request::get('province');
-        $property_demo->email              = Request::get('email');
+        $property_demo->email_contact      = Request::get('email');
         $property_demo->property_id        = Request::get('property');
-        $property_demo->email              = Request::get('email');
         $property_demo->lead_id            = Request::get('lead_id');
-        $property_demo->sales_id           = Request::get('sales_id');
+        $property_demo->sale_id            = Request::get('sales_id');
         $property_demo->tel_contact        = Request::get('tel_contact');
         $property_demo->save();
 
@@ -140,7 +139,7 @@ class PropertyFormController extends Controller
         $p = new Province;
         $provinces = $p->getProvince();
         if(Request::ajax()) {
-            $_form = SalePropertyForm::where('form_code',trim(Request::get('code')))->first();
+            $_form = SalePropertyDemo::where('form_code',trim(Request::get('code')))->first();
             if($_form) {
                 if($_form->status == 0) {
                     Request::session()->put('form_code', Request::get('code'));
@@ -160,7 +159,7 @@ class PropertyFormController extends Controller
         $provinces = $p->getProvince();
         if(Request::isMethod('post')) {
             $data = Request::except('id','_token');
-            $_form = SalePropertyForm::find(Request::get('id'));
+            $_form = SalePropertyDemo::find(Request::get('id'));
             $data['unit_size'] = count($data['unit']);
             $_form->detail = json_encode($data);
             $_form->status = ($data['save-type'] == "draft") ? 0 : 1;
@@ -171,7 +170,7 @@ class PropertyFormController extends Controller
             else return redirect('home/code');
         } else {
             if(Request::session()->get('form_code')) {
-                $_form = SalePropertyForm::where('form_code',Request::session()->get('form_code'))->first();
+                $_form = SalePropertyDemo::where('form_code',Request::session()->get('form_code'))->first();
                 if($_form || $_form->status == 0) {
                     $id = $_form->id;
                     $p  = $_form->province;

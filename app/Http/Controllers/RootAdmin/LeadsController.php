@@ -12,6 +12,7 @@ use App\BackendModel\User;
 use App\Province;
 use App\BackendModel\LeadTable;
 use App\BackendModel\Customer;
+use App\BackendModel\Property;
 
 class LeadsController extends Controller
 {
@@ -49,10 +50,13 @@ class LeadsController extends Controller
         $p_rows = $p_rows->where('role','=',1);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
+        $property = new Property;
+        $property = $property->get();
+
         if(!Request::ajax()) {
-            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows'));
+            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property'));
         }else{
-            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows'));
+            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows','property'));
         }
     }
 
