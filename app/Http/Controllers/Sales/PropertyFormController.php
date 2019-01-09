@@ -52,10 +52,11 @@ class PropertyFormController extends Controller
     public function create()
     {
         $code 	= $this->generateCode();
+        //dd(Request::get('property'));
+        $property_demo = SalePropertyDemo::find(Request::get('property'));
 
-        $property_demo = new SalePropertyDemo;
         $property_demo->default_password   = $code;
-        $property_demo->status             = 0;
+        $property_demo->status             = 1;
         $property_demo->contact_name       = Request::get('contact_name');
         $property_demo->property_test_name = Request::get('property_test_name');
         $property_demo->province           = Request::get('province');
@@ -64,7 +65,7 @@ class PropertyFormController extends Controller
         $property_demo->lead_id            = Request::get('lead_id');
         $property_demo->sale_id            = Request::get('sales_id');
         $property_demo->tel_contact        = Request::get('tel_contact');
-        $property_demo->save();
+       $property_demo->save();
 
         $property = new Property;
         $property = $property->where('id', Request::get('property'));
@@ -74,7 +75,7 @@ class PropertyFormController extends Controller
         $this->mail_form_created(Request::get('name'), Request::get('email'),$property->property_name_th,$code);
 
         //dump($property_demo->toArray());
-        return redirect('sales/demo-property/list-property');
+        return redirect('sales/property/list');
     }
 
     function delete_form () {

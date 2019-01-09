@@ -12,6 +12,7 @@ use App\BackendModel\User;
 use App\Province;
 use App\BackendModel\Customer;
 use App\Property;
+use App\SalePropertyDemo;
 
 class LeadsController extends Controller
 {
@@ -49,9 +50,7 @@ class LeadsController extends Controller
         $p_rows = $p_rows->where('role','=',1)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
-        $property = new Property;
-        $property = $property->where('is_demo','=','t');
-        $property = $property->get();
+        $property = SalePropertyDemo::with('property')->where('sale_id','=',Auth::user()->id)->where('status','=',0)->get();
 
         if(!Request::ajax()) {
             return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property'));

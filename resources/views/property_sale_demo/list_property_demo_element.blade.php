@@ -54,8 +54,8 @@
                     <td>{!!date('d M Y H:i',strtotime($row->updated_at))!!}</td>
                     <td class="action-links">
                         @if($row->status == 1)
-                            <a href="{!! url('sales/property-form/view/'.$row->id) !!}" class="btn btn-success btn-sm btn-icon icon-left">
-                                <i class="fa-eye"></i>
+                            <a href="{!! url('sales/property-form/view/'.$row->id) !!}" class="btn btn-success btn-sm icon-left">
+                                <i class="fa fa-eye"></i>
                             </a>
                         @else
                             <a href="#" data-toggle="modal" data-target="#delete-form" data-form-id="{!! $row->id !!}" class="btn-delete-form btn btn-danger btn-sm">

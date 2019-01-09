@@ -291,8 +291,8 @@
                             <div class="col-md-8">
                                 <select name="property" id="property_id" class="form-control" required>
                                     <option value="">กรุณาเลือกนิติบุคคล</option>
-                                    @foreach($property as $prow)
-                                        <option value="{!! $prow['id'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
+                                    @foreach($property as &$prow)
+                                        <option value="{!! $prow->property['id'] !!}">{!! $prow->property['property_name_th']." ".$prow->property['property_name_en'] !!}</option>
                                     @endforeach
                                 </select>
                             </div>

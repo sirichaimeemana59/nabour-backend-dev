@@ -32,6 +32,7 @@ use App\Invoice;
 use App\Payee;
 use App\Vehicle;
 use App\CommonFeesRef;
+
 class PropertyController extends Controller {
 
     public function __construct () {
@@ -43,13 +44,13 @@ class PropertyController extends Controller {
 
     public function index(){
         $list_property_data = SalePropertyDemo::with('property')->where('sale_id','=',Auth::user()->id)->get();
-
         foreach ($list_property_data as &$item){
             if($item->trial_expire != null) {
                 $expire = Carbon::createFromFormat('Y-m-d H:i:s', $item->trial_expire);
                 $datetime_now = Carbon::now();
                 $result_cal_trial = $datetime_now->diffInDays($expire, false);
                 $temp_name = $item->property->property_name_en;
+
                 $item['property_name'] = $temp_name;
 
                 if ($result_cal_trial >= 0) {
