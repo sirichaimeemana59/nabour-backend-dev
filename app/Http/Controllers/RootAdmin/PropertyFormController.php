@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Sales;
+namespace App\Http\Controllers\RootAdmin;
 use App\Http\Controllers\Controller;
 
 use Request;
