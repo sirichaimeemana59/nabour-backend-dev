@@ -156,7 +156,7 @@ Route::post('root/admin/property/expense/import','RootAdmin\feesBillsController@
 
 // Property
 Route::any('customer/property/list', 'RootAdmin\PropertyController@index');
-Route::get('customer/property/demo/list', 'RootAdmin\PropertyController@demoList');
+Route::any('customer/property/demo/list', 'RootAdmin\PropertyController@demoList');
 Route::any('customer/property/edit/{id}', 'RootAdmin\PropertyController@edit');
 Route::any('customer/property/view/{id}', 'RootAdmin\PropertyController@view');
 Route::any('customer/property/add', 'RootAdmin\PropertyController@add');
@@ -185,10 +185,20 @@ Route::post('sales/property/assign', 'Sales\PropertyController@assignDemoPropert
 Route::post('sales/property/disable', 'Sales\PropertyController@disablePropertyDemo');
 Route::post('sales/property/enable', 'Sales\PropertyController@enablePropertyDemo');
 
-//Demo Property
+//Demo Property sales
 Route::any('sales/demo-property/list-property', 'Sales\PropertyFormController@index');
 Route::post('sales/demo-property/add','Sales\PropertyFormController@create');
 Route::any('home/code', 'Sales\PropertyFormController@code');
 Route::any('home/form', 'Sales\PropertyFormController@form');
 Route::post('sales/property-form/delete','Sales\PropertyFormController@delete_form');
 Route::get('sales/property-form/view/{id}', 'Sales\PropertyFormController@view_form');
+
+//Demo Property admint
+Route::any('admin/demo-property/list-property', 'RootAdmin\PropertyFormController@index');
+Route::post('admin/demo-property/add','RootAdmin\PropertyController@create_demo');
+//Route::any('admin/home/code', 'RootAdmin\PropertyFormController@code');
+//Route::any('admin/home/form', 'RootAdmin\PropertyFormController@form');
+//Route::post('admin/property-form/delete','RootAdmin\PropertyFormController@delete_form');
+//Route::get('admin/property-form/view/{id}', 'RootAdmin\PropertyFormController@view_form');
+Route::post('admin/property/reset', 'RootAdmin\PropertyController@reset');
+Route::post('admin/property/assign', 'RootAdmin\PropertyController@assignDemoProperty');

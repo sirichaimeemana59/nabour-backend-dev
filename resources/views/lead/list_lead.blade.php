@@ -259,8 +259,8 @@
     </div>
     {{--end delete--}}
 
-    {{--Demo Property--}}
-    <div class="modal fade" id="demo">
+    {{--Demo Property_sales--}}
+    <div class="modal fade" id="demo_sale">
         <div class="modal-dialog">
             <div class="modal-content">
                 {!! Form::open(['url'=>'sales/demo-property/add','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
@@ -289,7 +289,7 @@
                         <div class="row form-group">
                             <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
                             <div class="col-md-8">
-                                <select name="property" id="property_id" class="form-control" required>
+                                <select name="property" id="property_id_sale" class="form-control" required>
                                     <option value="">กรุณาเลือกนิติบุคคล</option>
                                     @foreach($property as &$prow)
                                         <option value="{!! $prow->property['id'] !!}">{!! $prow->property['property_name_th']." ".$prow->property['property_name_en'] !!}</option>
@@ -318,7 +318,7 @@
                         <div class="row form-group">
                             <label class="control-label col-md-4">จังหวัด</label>
                             <div class="col-md-8">
-                                <select name="province" id="province_id" class="form-control" required>
+                                <select name="province" id="province_id_sale" class="form-control" required>
                                     <option value="">กรุณาเลือกจังหวัด</option>
                                     @foreach($provinces as $row)
                                         <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
@@ -339,7 +339,91 @@
             </div>
         </div>
     </div>
+    {{--end Demo Property_sales--}}
+
+    @if(Auth::user()->role !=2)
+    {{--Demo Property--}}
+    <div class="modal fade" id="demo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'admin/demo-property/add','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">สร้างแบบฟอร์มนิติบุคคลใหม่</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
+                                <div class="col-md-8">{!! Form::text('contact_name',null,['class'=>'form-control','required']) !!} </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อนิติบุคคลทดลองใช้</label>
+                                <div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control','required']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
+                                <div class="col-md-8">
+                                    <select name="property" id="property_id" class="form-control" required>
+                                        <option value="">กรุณาเลือกนิติบุคคล</option>
+                                        @foreach($property_demo as &$_prow)
+                                            <option value="{!! $_prow->property['id'] !!}">{!! $_prow->property['property_name_th']." ".$_prow->property['property_name_en'] !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">อีเมล</label>
+                                <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control','required']) !!} </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">เบอร์โทร</label>
+                                <div class="col-md-8">{!! Form::text('tel_contact',null,['class'=>'form-control','required']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">จังหวัด</label>
+                                <div class="col-md-8">
+                                    <select name="province" id="province_id" class="form-control" required>
+                                        <option value="">กรุณาเลือกจังหวัด</option>
+                                        @foreach($provinces as $row)
+                                            <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="lead_id" id="lead_id1">
+                        <input type="hidden" name="sales_id" id="sales_id1">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="botton" class="btn btn-default" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                        <button type="botton" class="btn btn-primary click-load" id="submit-assign-demo">{{ trans('messages.save') }}</button>
+                    </div>
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
     {{--end Demo Property--}}
+    @endif
 @endsection
 
 @section('script')
@@ -357,6 +441,14 @@
     <script type="text/javascript">
 
         $(function () {
+            $("#property_id_sale").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
             $("#property_id").select2({
                 placeholder: "{{ trans('messages.unit_number') }}",
                 allowClear: true,
@@ -366,6 +458,14 @@
 
         $(function () {
             $("#province_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#province_id_sale").select2({
                 placeholder: "{{ trans('messages.unit_number') }}",
                 allowClear: true,
                 dropdownAutoWidth: true
@@ -449,9 +549,14 @@
             document.getElementById("id2").value = id;
         }
 
-        function mate_demo(lead_id,sales_id) {
+        function mate_demo_sale(lead_id,sales_id) {
             document.getElementById("lead_id").value = lead_id;
             document.getElementById("sales_id").value = sales_id;
+        }
+
+        function mate_demo(lead_id,sales_id) {
+            document.getElementById("lead_id1").value = lead_id;
+            document.getElementById("sales_id1").value = sales_id;
         }
 
         function propertyPage (page) {

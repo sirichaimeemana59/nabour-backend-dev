@@ -44,7 +44,11 @@
 		@foreach($p_rows as $row)
 		<tr>
 			<td class="name">{!!$row->property_name_th!!}</td>
-			<td>{!!$row->sale_property->default_password!!}</td>
+			@if(!empty($row->sale_property->default_password))
+				<td>{!!$row->sale_property->default_password!!}</td>
+			@else
+				<td>-</td>
+			@endif
 			<td>
 			@if($row->sale_property && $row->sale_property->property_test_name)
 				{!!$row->sale_property->property_test_name!!}
@@ -78,6 +82,12 @@
 							<i class="fa-edit"></i> แก้ไข
 						</a>
 						</li>
+						<li><a href="#" data-demo-id="{!! $row->id !!}" class="reset-data-button">
+								<i class="fa-trash-o"></i>ทำการลบข้อมูลทั้งหมด
+							</a></li>
+						<li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo" data-id="{!! $row->id !!}">
+								<i class="fa-send-o"></i>ส่งให้นิติบุคคลอื่นทดลองใช้
+							</a></li>
 						<?php /* <li><a href="#" class="edit-property-feature" data-status="1" data-pid="{!! $row->id !!}">
 							<i class="fa-cogs"></i> แก้ไขเมนูของนิติบุคคล
 						</a></li>

@@ -290,6 +290,58 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="modal-assign-property-demo">
+		{!! Form::open(['url'=>'admin/property/assign','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
+		{!! Form::hidden('property_assign_id', null, array('id' => 'property_assign_id')) !!}
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title"><i class="fa fa-paper-plane"></i> ส่งข้อมูลให้นิติบุคคลทดลองใช้งาน </h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row form-group">
+								<label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
+								<div class="col-md-8">{!! Form::text('name',null,['class'=>'form-control']) !!} </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row form-group">
+								<label class="control-label col-md-4">หมู่บ้านที่สนใจทดลองใช้</label>
+								<div class="col-md-8">{!! Form::text('property_name',null,['class'=>'form-control']) !!} </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row form-group">
+								<label class="control-label col-md-4">อีเมลผู้ติดต่อ</label>
+								<div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control']) !!} </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row form-group">
+								<label class="control-label col-md-4">เบอร์โทรผู้ติดต่อ</label>
+								<div class="col-md-8">{!! Form::text('tel',null,['class'=>'form-control']) !!} </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default" data-dismiss="modal">{!! trans('messages.cancel') !!}</button>
+					<button type="botton" class="btn btn-primary click-load" id="submit-assign-demo">{!! trans('messages.save') !!}</button>
+				</div>
+			</div>
+		</div>
+		{!! Form::close() !!}
+	</div>
+
 @endsection
 @section('script')
 	<script type="text/javascript" src="{!! url('/') !!}/js/datatables/js/jquery.dataTables.min.js"></script>
@@ -301,9 +353,21 @@
 	<script type="text/javascript" src="{!! url('/') !!}/js/selectboxit/jquery.selectBoxIt.min.js"></script>
 	<script type="text/javascript" src="{!! url('/') !!}/js/nabour-search-form.js"></script>
 	<script type="text/javascript" src="{!! url('/') !!}/js/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="{!!url('/')!!}/js/jquery-validate/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="{!!url('/')!!}/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/sweetalert/dist/sweetalert.css">
 	<script>
         var target_prop;
         $(function () {
+            $('a[data-toggle=modal], button[data-toggle=modal]').click(function () {
+                var data_id = '';
+                if (typeof $(this).data('id') !== 'undefined') {
+
+                    data_id = $(this).data('id');
+                }
+                $('#property_assign_id').val(data_id);
+            });
+
             $('.panel-body').on('click','.p-paginate-link', function (e){
                 e.preventDefault();
                 propertyDemoPage($(this).attr('data-page'));
@@ -345,6 +409,27 @@
                     $('#modal-active').modal('show');
                 }
             });
+            $("#assign-demo-form").validate({
+                ignore:'',
+                rules: {
+                    name : 'required',
+                    property_name: 'required',
+                    email : 'required',
+                    tel : 'required'
+                },
+                messages: {
+                    title: {
+                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
+                    },
+                    detail: {
+                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
+                    },
+                    complain_category_id: {
+                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
+                    }
+                }
+            });
+
 
             $('.change-active-status-btn').on('click', function () {
                 $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
@@ -365,6 +450,15 @@
                         $('#edit-feature-modal').modal('show');
                     }
                 });
+            });
+
+            $('#submit-assign-demo').on('click', function () {
+                if( $("#assign-demo-form").valid() ) {
+                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                    $('#assign-demo-form').submit();
+                } else {
+                    $(window).resize();
+                }
             });
 			{{-- setting function user --}}
             $('#landing-property-list').on('click', '.edit-property-feature-user', function (e){
@@ -631,6 +725,7 @@
 
         function propertyDemoPage (page) {
             var data = $('#search-form').serialize()+'&page='+page;
+            //console.log(data);
             $('#landing-property-list').css('opacity','0.6');
             $.ajax({
                 url     : $('#root-url').val()+"/customer/property/demo/list",
@@ -644,6 +739,7 @@
         }
 
         function changeActiveStatus (pid,flag) {
+            //console.log(pid);
             $.ajax({
                 url     : $('#root-url').val()+"/customer/property/status",
                 method	: "POST",
@@ -656,6 +752,66 @@
                 }
             });
         }
+
+        $(".reset-data-button").click(function(){
+            var demoId = $(this).attr("data-demo-id");
+            //console.log(demoId);
+            swal({
+                title: "คุณต้องการ Reset ข้อมูลสำหรับหมู่บ้านทดลองใช้นี้ ใช่หรือไม่?",
+                text: "การ Reset ข้อมูลอาจใช้เวลาในการประมวลผล กรุณารอซักครู่",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function(){
+                $.ajax({
+                    url : '{!! url('admin/property/reset') !!}',
+                    type: 'post',
+                    cache: false,
+                    dataType: 'json',
+                    data    : {
+                        id: demoId
+                    },
+                    success: function(data) {
+                        //alert(JSON.stringify(data));
+                        if(data.msg == "success") {
+                            swal({
+                                title: "Success",
+                                text: "ทำการ Reset ข้อมูลเรียบร้อยแล้ว",
+                                type: "success",
+                                showCancelButton: false,
+                                confirmButtonText: "OK",
+                                closeOnConfirm: false
+                            }, function(){
+                                window.location.href = "{!! url('customer/property/demo/list') !!}";
+                            });
+                            /*swal("Success", "ทำการ Reset ข้อมูลเรียบร้อยแล้ว");
+                            window.location.href = "{!! url('customer/property/demo/list') !!}";*/
+                        } else {
+                            swal("Fail", "ไม่สร้างลบข้อมูลได้ กรุณาติดต่อทีมงานเนเบอร์่");
+                            window.location.href = "{!! url('customer/property/demo/list') !!}";
+                        }
+                    },
+                    error: function(xhr, textStatus, thrownError) {
+                        //alert('3Something went to wrong.Please Try again later...');
+                        $(".errors-container").html('<div class="alert alert-danger">\
+												<button type="button" class="close" data-dismiss="alert">\
+													<span aria-hidden="true">&times;</span>\
+													<span class="sr-only">Close</span>\
+												</button>\
+												' + data.msg + '\
+											</div>');
+
+
+                        $(".errors-container .alert").hide().slideDown();
+                        $(form).find('#passwd').select();
+                    }
+                });
+            });
+        });
+
 	</script>
 	<link rel="stylesheet" href="{!!url('/')!!}/js/select2/select2.css">
 	<link rel="stylesheet" href="{!!url('/')!!}/js/select2/select2-bootstrap.css">

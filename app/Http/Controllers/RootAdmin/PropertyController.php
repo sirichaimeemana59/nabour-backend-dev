@@ -2,6 +2,7 @@
 use Request;
 use Auth;
 use Redirect;
+use Mail;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\MessageBag;
 # Model
@@ -22,6 +23,7 @@ use App\package;
 use App\quotation;
 use Validator;
 use App\BackendModel\contract;
+use App\Notification;
 
 use DB;
 class PropertyController extends Controller {
@@ -356,15 +358,17 @@ class PropertyController extends Controller {
     public function status () {
         if(Request::ajax()) {
             $property   = Property::find(Request::get('pid'));
-            $_property  = BackendProperty::find(Request::get('pid'));
+            //$_property  = BackendProperty::find(Request::get('pid'));
 
             if($property) {
-                $property->active_status = $_property->active_status = Request::get('status');
+                //$property->active_status = $_property->active_status = Request::get('status');
+                $property->active_status = Request::get('status');
+
                 if($property->active_status == 0) {
                     $property->last_inactive_date = date('Y-m-d H:i:s');
                 }
                 $property->save();
-                $_property->save();
+               // $_property->save();
                 return response()->json(['result'=>true]);
             }
         }
@@ -891,4 +895,231 @@ class PropertyController extends Controller {
         $_property->save();
     }
 
+    public function create_demo()
+    {
+        $code 	= $this->generateCode();
+        //dd(Request::get('property'));
+        $property_demo = SalePropertyDemo::find(Request::get('property'));
+
+        $property_demo->default_password   = $code;
+        $property_demo->status             = 1;
+        $property_demo->contact_name       = Request::get('contact_name');
+        $property_demo->property_test_name = Request::get('property_test_name');
+        $property_demo->province           = Request::get('province');
+        $property_demo->email_contact      = Request::get('email');
+        $property_demo->property_id        = Request::get('property');
+        $property_demo->lead_id            = Request::get('lead_id');
+        $property_demo->sale_id            = Request::get('sales_id');
+        $property_demo->tel_contact        = Request::get('tel_contact');
+        $property_demo->save();
+
+        $property = new Property;
+        $property = $property->where('id', Request::get('property'));
+        $property = $property->first();
+
+        //dd($property_demo);
+        $this->mail_form_created(Request::get('name'), Request::get('email'),$property->property_name_th,$code);
+
+        //dump($property_demo->toArray());
+        return redirect('customer/property/demo/list');
+    }
+
+    function generateCode() {
+        $chars = "abcdefghijkmnpqrstuvwxyz123456789";
+        $i = 0;
+        $pass = '' ;
+        while ($i < 5) {
+            $num = rand() % 33;
+            $tmp = substr($chars, $num, 1);
+            $pass = $pass . $tmp;
+            $i++;
+        }
+        return $pass;
+    }
+
+    function mail_form_created ($name,$email,$property_name,$code) {
+        Mail::send('emails.property_form_created', [
+            'name'			=> $name,
+            'property_name' => $property_name,
+            'code'		=> $code
+
+        ], function ($message) use($email) {
+            $message->subject('รหัสแบบฟอร์มสำหรับข้อมูลนิติบุคคล');
+            $message->from('noreply@nabour.me', 'Nabour');
+            $message->to($email);
+        });
+    }
+
+    public function reset(){
+        // reset sale_property_demo table data
+        $id = Request::get('id');
+        $property_demo = SalePropertyDemo::find($id);
+        $property_demo->status = 0;
+        $property_demo->trial_expire = null;
+        $property_demo->email_contact = null;
+        $property_demo->property_test_name = null;
+        $property_demo->contact_name = null;
+        $property_demo->tel_contact = null;
+        $property_demo->default_password = "demo1234";
+        $property_demo->save();
+
+        // TODO: reset password account -> user table
+        $property_id = $property_demo->property_id;
+        $property = Property::find($property_id);
+        $property->invoice_counter = 0;
+        $property->post_parcel_counter = 0;
+        $property->receipt_counter = 0;
+        $property->expense_counter = 0;
+        $property->payee_counter = 0;
+        $property->withdrawal_slip_counter = 0;
+        $property->petty_cash_balance = 0;
+        $property->prepaid_slip_counter = 0;
+        $property->fund_balance = 0;
+
+
+
+        // Restore Basic Data
+        $user_admin_demo = User::where('property_id',$property_id)->first();
+        //admin_nb029@nabour.me
+        $email_admin_demo = $user_admin_demo->email;
+        $prefix_email = explode("@",$email_admin_demo);
+        $prefix_property = explode("_",$prefix_email[0]);
+        $prefix_demo_name = strtoupper($prefix_property[1]);
+
+        $property->property_name_th = "หมู่บ้าน " . $prefix_demo_name;
+        $property->property_name_en = "Demo " . $prefix_demo_name;
+        $property->juristic_person_name_th = "หมู่บ้าน " . $prefix_demo_name;
+        $property->juristic_person_name_en = "Demo " . $prefix_demo_name;
+        $property->area_size = "300";
+        $property->unit_size = 20;
+        $property->construction_by = "Nabour Construction";
+        $property->address_th = "ต.สุเทพ อ.เมือง";
+        $property->street_th = "ถนนศิริมังคลาจารย์ ซอย 7";
+        $property->province = 50;
+        $property->postcode = "50200";
+        $property->lat = "18.795263983660067";
+        $property->lng = "98.97235203995058";
+        $property->address_en = "T.Suthep A.Mueang";
+        $property->street_en = "Siri Mangkalajarn Road Soi 7";
+        $property->property_type = "1";
+        $property->address_no = "17/1";
+
+        $property->save();
+
+        $this->clearUserAccountForDemo($property_id);
+
+        $account = new AccountController();
+
+        $account->clearPostReport($property_id);
+        $account->clearPost($property_id);
+        $account->clearEvent($property_id);
+        $account->clearVote($property_id);
+        $account->clearDiscussion($property_id);
+        $account->clearComplain($property_id);
+        $account->clearCommonFeeRef($property_id);
+        $account->clearTransaction($property_id);
+        $account->clearPostParcel($property_id);
+        $account->clearMessage($property_id);
+        $account->clearInvoice($property_id);
+        //$account->clearPayee($property_id);
+        $account->clearVehicle($property_id);
+        $account->resetBankBalance($property_id);
+        $account->resetPropertyUnitBalance($property_id);
+        $account->clearPropertyPettyCash($property_id);
+        $account->clearPropertyFund($property_id);
+
+
+        $data = [
+            'msg' => 'success'
+        ];
+        return $data;
+    }
+
+    public function assignDemoProperty(){
+        $data = Request::all();
+        $id = $data['property_assign_id'];
+        $new_password = $this->generatePassword();
+        $property_demo = SalePropertyDemo::find($id);
+        $property_demo->status = 1;
+        //$property_demo->trial_expire = Carbon::today()->addDays(7)->toDateTimeString();
+        $property_demo->contact_name = $data['name'];
+        $property_demo->email_contact = $data['email'];
+        $property_demo->tel_contact = $data['tel'];
+        $property_demo->property_test_name = $data['property_name'];
+        $property_demo->default_password = $new_password;
+        $property_demo->save();
+        //dump($property_demo->toArray());
+        $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
+        $this->mail_assign_demo_property($id,$property_demo->default_password);
+
+        return redirect('customer/property/demo/list');
+    }
+
+    function generatePassword() {
+        $chars = "abcdefghijkmnpqrstuvwxyz123456789";
+        $i = 0;
+        $pass = '' ;
+        while ($i < 6) {
+            $num = rand() % 33;
+            $tmp = substr($chars, $num, 1);
+            $pass = $pass . $tmp;
+            $i++;
+        }
+        return $pass;
+    }
+
+    function setUpUserAccountForDemo($property_id,$default_password){
+        $user_demo = User::where('property_id',$property_id)->get();
+        $encode_pass = bcrypt($default_password);
+        foreach ($user_demo as $item){
+            $item->password = $encode_pass;
+            $item->remember_token = null;
+            //$item->expire_trial = Carbon::today()->addDays(7)->toDateTimeString();
+            $item->active = true;
+
+            // Delete notification
+            $this->clearNotificationForDemo($item->id);
+
+            $item->save();
+        }
+
+        return true;
+    }
+
+    function mail_assign_demo_property($id,$default_password){
+        $property_demo = SalePropertyDemo::find($id);
+        $property_data = Property::find($property_demo->property->id);
+        //$user = $property->property_admin;
+        $property = $property_data->toArray();
+        $admin_demo = User::where('property_id',$property_demo->property->id)->where('role','=',1)->first();
+        $committee_demo = User::where('property_id',$property_demo->property->id)->where('is_chief','=',true)->first();
+        $user_demo = User::where('property_id',$property_demo->property->id)->where('is_chief','=',false)->where('role','=',2)->get()->toArray();
+
+        $email = $property_demo->email_contact;
+        Mail::send('emails.demo_property_assign', [
+            'property_demo'	=> $property_demo,
+            'property' => $property,
+            'admin_demo'		=> $admin_demo,
+            'committee_demo'		=> $committee_demo,
+            'user_demo'		=> $user_demo,
+            'password'		=> $default_password
+
+        ], function ($message) use($email) {
+            $message->subject('ทดลองใช้งานการใช้งานระบบเนเบอร์');
+            $message->from(env('MAIL_USERNAME'),'Nabour');
+            $message->bcc(env('MAIL_BCC'));
+            $message->to($email);
+        });
+
+        return true;
+    }
+
+    function clearNotificationForDemo($user_id){
+        $notification_list = Notification::where('to_user_id',$user_id)->get();
+        foreach ($notification_list as $item){
+            $item->delete();
+        }
+
+        return true;
+    }
 }

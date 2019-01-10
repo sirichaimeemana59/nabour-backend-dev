@@ -12,7 +12,9 @@ use App\BackendModel\User;
 use App\Province;
 use App\BackendModel\LeadTable;
 use App\BackendModel\Customer;
-use App\BackendModel\Property;
+use App\BackendModel\Property as BackendProperty;
+use App\SalePropertyDemo;
+use App\Property;
 
 class LeadsController extends Controller
 {
@@ -50,13 +52,22 @@ class LeadsController extends Controller
         $p_rows = $p_rows->where('role','=',1);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
-        $property = new Property;
+        $property = new BackendProperty;
         $property = $property->get();
 
+//        $property_demo = new Property;
+//        $property_demo = $property_demo->where('is_demo','=','t');
+//        $property_demo = $property_demo->get();
+
+        $property_demo = SalePropertyDemo::where('status','=',0)->get();
+
+
+        //dump($property_demo->toArray());
+
         if(!Request::ajax()) {
-            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property'));
+            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property','property_demo'));
         }else{
-            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows','property'));
+            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows','property','property_demo'));
         }
     }
 
