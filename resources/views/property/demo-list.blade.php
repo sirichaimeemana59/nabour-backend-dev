@@ -753,7 +753,8 @@
             });
         }
 
-        $(".reset-data-button").click(function(){
+        $("body").on('click','.reset-data-button', function(e){
+            e.preventDefault();
             var demoId = $(this).attr("data-demo-id");
             //console.log(demoId);
             swal({
