@@ -55,6 +55,7 @@
         $(function () {
 
             $('#verify-btn').on('click',function () {
+                //console.log($('#input-code').val());
                 if($('#input-code').val() != "" && $('#input-email').val() != "") {
                     var $btn = $(this);
                     $btn.attr('disabled','disabled');

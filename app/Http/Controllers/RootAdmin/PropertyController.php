@@ -24,6 +24,7 @@ use App\quotation;
 use Validator;
 use App\BackendModel\contract;
 use App\Notification;
+use App\PropertyForm;
 
 use DB;
 class PropertyController extends Controller {
@@ -897,28 +898,45 @@ class PropertyController extends Controller {
 
     public function create_demo()
     {
-        $code 	= $this->generateCode();
-        //dd(Request::get('property'));
-        $property_demo = SalePropertyDemo::find(Request::get('property'));
+        if( Request::isMethod('post') ) {
+            $p = new PropertyForm;
+            $p->fill(Request::all());
 
-        $property_demo->default_password   = $code;
-        $property_demo->status             = 1;
-        $property_demo->contact_name       = Request::get('contact_name');
-        $property_demo->property_test_name = Request::get('property_test_name');
-        $property_demo->province           = Request::get('province');
-        $property_demo->email_contact      = Request::get('email');
-        $property_demo->property_id        = Request::get('property');
-        $property_demo->lead_id            = Request::get('lead_id');
-        $property_demo->sale_id            = Request::get('sales_id');
-        $property_demo->tel_contact        = Request::get('tel_contact');
-        $property_demo->save();
+            //$count = -1;
+            $code 	= $this->generateCode();
+            $count 	= PropertyForm::where('form_code', $code)->count();
+            while($count > 0) {
+                $code 	= $this->generateCode();
+                $count 	= PropertyForm::where('form_code', $code)->count();
+            }
+            $p->status 		= 0;
+            $p->form_code 	= $code;
+            $p->user_id = Auth::user()->id;
+            $p->save();
 
-        $property = new Property;
-        $property = $property->where('id', Request::get('property'));
-        $property = $property->first();
+            //dd(Request::get('property'));
+            $property_demo = SalePropertyDemo::find(Request::get('property'));
 
-        //dd($property_demo);
-        $this->mail_form_created(Request::get('name'), Request::get('email'),$property->property_name_th,$code);
+            $property_demo->default_password   = $code;
+            $property_demo->status             = 1;
+            $property_demo->contact_name       = Request::get('contact_name');
+            $property_demo->property_test_name = Request::get('property_test_name');
+            $property_demo->province           = Request::get('province');
+            $property_demo->email_contact      = Request::get('email');
+            $property_demo->property_id        = Request::get('property');
+            $property_demo->lead_id            = Request::get('lead_id');
+            $property_demo->sale_id            = Request::get('sales_id');
+            $property_demo->tel_contact        = Request::get('tel_contact');
+            $property_demo->save();
+
+            $property = new Property;
+            $property = $property->where('id', Request::get('property'));
+            $property = $property->first();
+
+            //dd($property_demo);
+            $this->mail_form_created(Request::get('name'), Request::get('email'),$property->property_name_th,$code);
+
+        }
 
         //dump($property_demo->toArray());
         return redirect('customer/property/demo/list');
