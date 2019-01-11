@@ -382,6 +382,7 @@
                 if (typeof $(this).data('id') !== 'undefined') {
 
                     data_id = $(this).data('id');
+                    //console.log(data_id);
                 }
                 $('#property_assign_id').val(data_id);
             });

@@ -86,7 +86,7 @@
 								<i class="fa-trash-o"></i>ทำการลบข้อมูลทั้งหมด
 							</a></li>
 						@if($row->sale_property && $row->sale_property->status !=1)
-						<li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo">
+						<li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo" data-id="{!! $row->id !!}">
 								<i class="fa-send-o"></i>ส่งให้นิติบุคคลอื่นทดลองใช้
 							</a></li>
 						@endif
