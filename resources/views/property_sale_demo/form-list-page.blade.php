@@ -31,7 +31,11 @@
                     <td>{!! ($row->trial_expire != null) ? date('Y/m/d', strtotime($row->trial_expire)) : "ไม่มีกำหนด"!!}</td>
                     <td>
                         @if(!empty($row->lead_id))
-                            {!!$row->latest_lead->firstname!!}  {!!$row->latest_lead->lastname!!}
+                            @if(!empty($row->latest_lead->firstname) && !empty($row->latest_lead->lastname))
+                                {!!$row->latest_lead->firstname!!}  {!!$row->latest_lead->lastname!!}
+                                @else
+                                <span style="color:#b3b3b3;">-</span>
+                            @endif
                         @else
                             <span style="color:#b3b3b3;">ยังไม่มีการใช้งาน</span>
                         @endif
