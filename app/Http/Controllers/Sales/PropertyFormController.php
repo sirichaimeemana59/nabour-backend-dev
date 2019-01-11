@@ -18,7 +18,7 @@ use App\PropertyForm;
 class PropertyFormController extends Controller
 {
     public function __construct () {
-        //$this->middleware('sales');
+        $this->middleware('sales');
     }
 
     public function index()
