@@ -39,8 +39,8 @@ class PropertyFormController extends Controller
                 $_form = $_form->where('status',Request::get('status'));
             }
         }
-        //$_form = $_form->where('user_id','=',Auth::user()->id)->orderBy('created_at','desc')->paginate(30);
-        $_form = $_form->orderBy('created_at','desc')->paginate(30);
+        $_form = $_form->where('user_id','=',Auth::user()->id)->where('status','=',1)->orderBy('created_at','desc')->paginate(30);
+        //$_form = $_form->orderBy('created_at','desc')->paginate(30);
         if(Request::ajax()) {
             return view('property_sale_demo.list_property_demo_element')->with(compact('property_demo','_form','provinces'));
         } else {
