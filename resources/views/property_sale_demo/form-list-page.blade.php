@@ -30,7 +30,7 @@
                     <td>{!!$row->default_password!!}</td>
                     <td>{!! ($row->trial_expire != null) ? date('Y/m/d', strtotime($row->trial_expire)) : "ไม่มีกำหนด"!!}</td>
                     <td>
-                        @if($row->lead_id)
+                        @if(!empty($row->lead_id))
                             {!!$row->latest_lead->firstname!!}  {!!$row->latest_lead->lastname!!}
                         @else
                             <span style="color:#b3b3b3;">ยังไม่มีการใช้งาน</span>
