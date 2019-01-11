@@ -261,109 +261,20 @@
 
     {{--Demo Property_sales--}}
     <div class="modal fade" id="demo_sale">
+        {!! Form::open(['url'=>'sales/property/assign','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
+        {!! Form::hidden('lead_id', null, array('id' => 'lead_id')) !!}
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'sales/demo-property/add','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">สร้างแบบฟอร์มนิติบุคคลใหม่</h4>
-                </div>
-                <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
-                            <div class="col-md-8">{!! Form::text('contact_name',null,['class'=>'form-control','required']) !!} </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <label class="control-label col-md-4">ชื่อนิติบุคคลทดลองใช้</label>
-                            <div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control','required']) !!} </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
-                            <div class="col-md-8">
-                                <select name="property" id="property_id_sale" class="form-control" required>
-                                    <option value="">กรุณาเลือกนิติบุคคล</option>
-                                    @foreach($property as &$prow)
-                                        <option value="{!! $prow->property['id'] !!}">{!! $prow->property['property_name_th']." ".$prow->property['property_name_en'] !!}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <label class="control-label col-md-4">อีเมล</label>
-                            <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control','required']) !!} </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <label class="control-label col-md-4">เบอร์โทร</label>
-                            <div class="col-md-8">{!! Form::text('tel_contact',null,['class'=>'form-control','required']) !!} </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <label class="control-label col-md-4">จังหวัด</label>
-                            <div class="col-md-8">
-                                <select name="province" id="province_id_sale" class="form-control" required>
-                                    <option value="">กรุณาเลือกจังหวัด</option>
-                                    @foreach($provinces as $row)
-                                        <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="lead_id" id="lead_id">
-                    <input type="hidden" name="sales_id" id="sales_id">
-                </div>
-                    <div class="modal-footer">
-                        <button type="botton" class="btn btn-default" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
-                        <button type="botton" class="btn btn-primary click-load" id="submit-assign-demo">{{ trans('messages.save') }}</button>
-                    </div>
-            </div>
-                {!! Form::close(); !!}
-            </div>
-        </div>
-    </div>
-    {{--end Demo Property_sales--}}
-
-    @if(Auth::user()->role !=2)
-    {{--Demo Property--}}
-    <div class="modal fade" id="demo">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                {!! Form::open(['url'=>'admin/demo-property/add','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">สร้างแบบฟอร์มนิติบุคคลใหม่</h4>
+                    <h4 class="modal-title"><i class="fa fa-paper-plane"></i> ส่งข้อมูลให้นิติบุคคลทดลองใช้งาน </h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row form-group">
                                 <label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
-                                <div class="col-md-8">{!! Form::text('contact_name',null,['class'=>'form-control','required']) !!} </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="row form-group">
-                                <label class="control-label col-md-4">ชื่อนิติบุคคลทดลองใช้</label>
-                                <div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control','required']) !!} </div>
+                                <div class="col-md-8">{!! Form::text('name',null,['class'=>'form-control']) !!} </div>
                             </div>
                         </div>
                     </div>
@@ -373,6 +284,68 @@
                                 <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
                                 <div class="col-md-8">
                                     <select name="property" id="property_id" class="form-control" required>
+                                        <option value="">กรุณาเลือกนิติบุคคล</option>
+                                        @foreach($property as &$prow)
+                                            <option value="{!! $prow->property['id'] !!}">{!! $prow->property['property_name_th']." ".$prow->property['property_name_en'] !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">อีเมลผู้ติดต่อ</label>
+                                <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">เบอร์โทรผู้ติดต่อ</label>
+                                <div class="col-md-8">{!! Form::text('tel',null,['class'=>'form-control']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="botton" class="btn btn-default" data-dismiss="modal">{!! trans('messages.cancel') !!}</button>
+                    <button type="botton" class="btn btn-primary click-load" id="">{!! trans('messages.save') !!}</button>
+                </div>
+            </div>
+        </div>
+        {!! Form::close() !!}
+    </div>
+    {{--end Demo Property_sales--}}
+
+    @if(Auth::user()->role !=2)
+    {{--Demo Property--}}
+    <div class="modal fade" id="demo">
+        {!! Form::open(['url'=>'admin/property/assign','class'=>'form-horizontal','id'=>'assign-demo-form1']) !!}
+        {!! Form::hidden('lead_id', null, array('id' => 'lead_id1')) !!}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-paper-plane"></i> ส่งข้อมูลให้นิติบุคคลทดลองใช้งาน </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อผู้ติดต่อ</label>
+                                <div class="col-md-8">{!! Form::text('name',null,['class'=>'form-control']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
+                                <div class="col-md-8">
+                                    <select name="property" id="property_id1" class="form-control" required>
                                         <option value="">กรุณาเลือกนิติบุคคล</option>
                                         @foreach($property_demo as &$_prow)
                                             <option value="{!! $_prow->property['id'] !!}">{!! $_prow->property['property_name_th']." ".$_prow->property['property_name_en'] !!}</option>
@@ -385,42 +358,27 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row form-group">
-                                <label class="control-label col-md-4">อีเมล</label>
-                                <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control','required']) !!} </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row form-group">
-                                <label class="control-label col-md-4">เบอร์โทร</label>
-                                <div class="col-md-8">{!! Form::text('tel_contact',null,['class'=>'form-control','required']) !!} </div>
+                                <label class="control-label col-md-4">อีเมลผู้ติดต่อ</label>
+                                <div class="col-md-8">{!! Form::text('email',null,['class'=>'form-control']) !!} </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row form-group">
-                                <label class="control-label col-md-4">จังหวัด</label>
-                                <div class="col-md-8">
-                                    <select name="province" id="province_id" class="form-control" required>
-                                        <option value="">กรุณาเลือกจังหวัด</option>
-                                        @foreach($provinces as $row)
-                                            <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <label class="control-label col-md-4">เบอร์โทรผู้ติดต่อ</label>
+                                <div class="col-md-8">{!! Form::text('tel',null,['class'=>'form-control']) !!} </div>
                             </div>
                         </div>
-                        <input type="hidden" name="lead_id" id="lead_id1">
-                        <input type="hidden" name="sales_id" id="sales_id1">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="botton" class="btn btn-default" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
-                        <button type="botton" class="btn btn-primary click-load" id="submit-assign-demo">{{ trans('messages.save') }}</button>
                     </div>
                 </div>
-                {!! Form::close(); !!}
+                <div class="modal-footer">
+                    <button type="botton" class="btn btn-default" data-dismiss="modal">{!! trans('messages.cancel') !!}</button>
+                    <button type="botton" class="btn btn-primary click-load" id="">{!! trans('messages.save') !!}</button>
+                </div>
             </div>
         </div>
+        {!! Form::close() !!}
     </div>
     {{--end Demo Property--}}
     @endif
@@ -440,8 +398,81 @@
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript">
 
+            $('a[data-toggle=modal], button[data-toggle=modal]').click(function () {
+                var data_id = '';
+                if (typeof $(this).data('id') !== 'undefined') {
+
+                    data_id = $(this).data('id');
+                    console.log(data_id);
+                }
+
+                $('#lead_id').val(data_id);
+                $('#lead_id1').val(data_id);
+            });
+
+            $("#assign-demo-form").validate({
+                ignore:'',
+                rules: {
+                    name : 'required',
+                    property_name: 'required',
+                    email : 'required',
+                    tel : 'required'
+                },
+                messages: {
+                    title: {
+                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
+                    },
+                    detail: {
+                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
+                    },
+                    complain_category_id: {
+                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
+                    }
+                }
+            });
+
+            $('#submit-assign-demo').on('click', function () {
+                if( $("#assign-demo-form").valid() ) {
+                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                    $('#assign-demo-form').submit();
+                } else {
+                    $(window).resize();
+                }
+            });
+
+            $("#assign-demo-form1").validate({
+                ignore:'',
+                rules: {
+                    name : 'required',
+                    property_name: 'required',
+                    email : 'required',
+                    tel : 'required'
+                },
+                messages: {
+                    title: {
+                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
+                    },
+                    detail: {
+                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
+                    },
+                    complain_category_id: {
+                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
+                    }
+                }
+            });
+
+            $('#submit-assign-demo1').on('click', function () {
+                if( $("#assign-demo-form1").valid() ) {
+                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                    $('#assign-demo-form1').submit();
+                } else {
+                    $(window).resize();
+                }
+            });
+
+
         $(function () {
-            $("#property_id_sale").select2({
+            $("#property_id1").select2({
                 placeholder: "{{ trans('messages.unit_number') }}",
                 allowClear: true,
                 dropdownAutoWidth: true
@@ -549,10 +580,10 @@
             document.getElementById("id2").value = id;
         }
 
-        function mate_demo_sale(lead_id,sales_id) {
-            document.getElementById("lead_id").value = lead_id;
-            document.getElementById("sales_id").value = sales_id;
-        }
+        // function mate_demo_sale(lead_id,sales_id) {
+        //     document.getElementById("lead_id").value = lead_id;
+        //     document.getElementById("sales_id").value = sales_id;
+        // }
 
         function mate_demo(lead_id,sales_id) {
             document.getElementById("lead_id1").value = lead_id;
@@ -586,35 +617,6 @@
                 }
             })
         }
-
-        $("#assign-demo-form").validate({
-            ignore:'',
-            rules: {
-                name : 'required',
-                property_name: 'required',
-                email : 'required'
-            },
-            messages: {
-                title: {
-                    required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
-                },
-                detail: {
-                    required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
-                },
-                complain_category_id: {
-                    required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
-                }
-            }
-        });
-
-        $('#submit-assign-demo').on('click', function () {
-            if( $("#assign-demo-form").valid() ) {
-                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-                $('#assign-demo-form').submit();
-            } else {
-                $(window).resize();
-            }
-        });
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

@@ -25,6 +25,7 @@ use Validator;
 use App\BackendModel\contract;
 use App\Notification;
 use App\PropertyForm;
+use App\BackendModel\Customer;
 
 use DB;
 class PropertyController extends Controller {
@@ -347,11 +348,16 @@ class PropertyController extends Controller {
         $p_rows = $props->orderBy('juristic_person_name_th')->paginate(50);
         $p = new Province;
         $provinces = $p->getProvince();
+
+        $_lead = new Customer;
+        $_lead = $_lead->where('role','=',1);
+        $_lead = $_lead->orderBy('created_at','desc')->get();
+
         if(!Request::ajax()) {
             $property_list = array(''=> trans('messages.Signup.select_property') );
-            return view('property.demo-list')->with(compact('p_rows','provinces','property_list','demo'));
+            return view('property.demo-list')->with(compact('p_rows','provinces','property_list','demo','_lead'));
         } else {
-            return view('property.demo-list-element')->with(compact('p_rows','provinces'));
+            return view('property.demo-list-element')->with(compact('p_rows','provinces','_lead'));
         }
 
     }
@@ -1054,23 +1060,42 @@ class PropertyController extends Controller {
     }
 
     public function assignDemoProperty(){
-        $data = Request::all();
-        $id = $data['property_assign_id'];
-        $new_password = $this->generatePassword();
-        $property_demo = SalePropertyDemo::find($id);
-        $property_demo->status = 1;
-        //$property_demo->trial_expire = Carbon::today()->addDays(7)->toDateTimeString();
-        $property_demo->contact_name = $data['name'];
-        $property_demo->email_contact = $data['email'];
-        $property_demo->tel_contact = $data['tel'];
-        $property_demo->property_test_name = $data['property_name'];
-        $property_demo->default_password = $new_password;
-        $property_demo->save();
-        //dump($property_demo->toArray());
-        $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
-        $this->mail_assign_demo_property($id,$property_demo->default_password);
+        $assign_form_list = Request::get('assign_form_list');
 
-        return redirect('customer/property/demo/list');
+        if($assign_form_list!=1){
+            $data = Request::all();
+            $id = $data['lead_id'];
+            $property_id=Request::get('property');
+            $new_password = $this->generatePassword();
+            $property_demo = SalePropertyDemo::find(Request::get('property'));
+            $property_demo->status = 1;
+            $property_demo->contact_name = $data['name'];
+            $property_demo->email_contact = $data['email'];
+            $property_demo->tel_contact = $data['tel'];
+            $property_demo->default_password = $new_password;
+            $property_demo->lead_id = $id;
+            $property_demo->save();
+            // dump($property_demo->toArray());
+
+            $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
+            $this->mail_assign_demo_property($property_id,$property_demo->default_password);
+        }else{
+            $data = Request::all();
+            $id = $data['property_assign_id'];
+            $new_password = $this->generatePassword();
+            $property_demo = SalePropertyDemo::find($id);
+            $property_demo->status = 1;
+            $property_demo->contact_name = $data['name'];
+            $property_demo->email_contact = $data['email'];
+            $property_demo->tel_contact = $data['tel'];
+            $property_demo->default_password = $new_password;
+            $property_demo->lead_id = Request::get('lead_id');
+            $property_demo->save();
+            //dump($property_demo->toArray());
+            $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
+            $this->mail_assign_demo_property($id,$property_demo->default_password);
+        }
+            return redirect('customer/property/demo/list');
     }
 
     function generatePassword() {

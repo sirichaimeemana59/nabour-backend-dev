@@ -50,11 +50,11 @@
 				<td>-</td>
 			@endif
 			<td>
-			@if($row->sale_property && $row->sale_property->property_test_name)
-				{!!$row->sale_property->property_test_name!!}
-			@else
-				<span style="color:#b3b3b3;">ยังไม่มีการใช้งาน</span>
-			@endif
+				@if($row->sale_property && $row->sale_property->lead_id)
+					{!!$row->sale_property->latest_lead->firstname!!}  {!!$row->sale_property->latest_lead->lastname!!}
+				@else
+					<span style="color:#b3b3b3;">ยังไม่มีการใช้งาน</span>
+				@endif
 			</td>
 			<td>
 			@if($row->sale_property && $row->sale_property->contact_name)
@@ -85,9 +85,11 @@
 						<li><a href="#" data-demo-id="{!! $row->id !!}" class="reset-data-button">
 								<i class="fa-trash-o"></i>ทำการลบข้อมูลทั้งหมด
 							</a></li>
-						<li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo" data-id="{!! $row->id !!}">
+						@if($row->sale_property && $row->sale_property->status !=1)
+						<li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo">
 								<i class="fa-send-o"></i>ส่งให้นิติบุคคลอื่นทดลองใช้
 							</a></li>
+						@endif
 						<?php /* <li><a href="#" class="edit-property-feature" data-status="1" data-pid="{!! $row->id !!}">
 							<i class="fa-cogs"></i> แก้ไขเมนูของนิติบุคคล
 						</a></li>

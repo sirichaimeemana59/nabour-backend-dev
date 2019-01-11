@@ -15,4 +15,9 @@ class SalePropertyDemo extends GeneralModel
     {
         return $this->hasOne('App\Property','id','property_id');
     }
+
+    public function latest_lead ()
+    {
+        return $this->hasOne('App\BackendModel\Customer','id','lead_id');
+    }
 }

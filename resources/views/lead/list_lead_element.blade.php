@@ -93,12 +93,12 @@
                                             {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
                                             <i class="fa fa-newspaper-o"></i>ออกใบเสนอราคา
                                         @if(Auth::user()->role==2)
-                                            <li><a href="#"  data-toggle="modal" data-target="#demo_sale" data-original-title="" onclick="mate_demo_sale('{!!$row->id!!}','{!! $row->sale_id !!}')">
+                                            <li><a href="#"  data-toggle="modal" data-target="#demo_sale" data-original-title="" data-id="{!! $row->id !!}">
                                                     <i class="fa-pencil-square-o"></i>นิติบุคคลทดลองใช้
                                                 </a>
                                             </li>
                                         @else
-                                            <li><a href="#"  data-toggle="modal" data-target="#demo" data-original-title="" onclick="mate_demo('{!!$row->id!!}','{!! $row->sale_id !!}')">
+                                            <li><a href="#"  data-toggle="modal" data-target="#demo" data-original-title="" data-id="{!! $row->id !!}">
                                                     <i class="fa-pencil-square-o"></i>นิติบุคคลทดลองใช้
                                                 </a>
                                             </li>

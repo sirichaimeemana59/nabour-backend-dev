@@ -42,11 +42,26 @@
 						</div>
 					</div>
 				</div>
+				{{--<div class="row">--}}
+					{{--<div class="col-md-12">--}}
+						{{--<div class="row form-group">--}}
+							{{--<label class="control-label col-md-4">หมู่บ้านที่สนใจทดลองใช้</label>--}}
+							{{--<div class="col-md-8">{!! Form::text('property_name',null,['class'=>'form-control']) !!} </div>--}}
+						{{--</div>--}}
+					{{--</div>--}}
+				{{--</div>--}}
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row form-group">
-							<label class="control-label col-md-4">หมู่บ้านที่สนใจทดลองใช้</label>
-							<div class="col-md-8">{!! Form::text('property_name',null,['class'=>'form-control']) !!} </div>
+							<label class="control-label col-md-4">Lead</label>
+							<div class="col-md-8">
+								<select name="lead_id" id="lead_id" class="form-control" required>
+									<option value="">กรุณาเลือก Lead</option>
+									@foreach($_lead as $row)
+										<option value="{!! $row['id'] !!}">{!! $row['firstname']." ".$row['lastname'] !!}</option>
+									@endforeach
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -65,6 +80,7 @@
 							<div class="col-md-8">{!! Form::text('tel',null,['class'=>'form-control']) !!} </div>
 						</div>
 					</div>
+					<input type="hidden" name="assign_form_list" value="1">
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -81,6 +97,8 @@
 	<script type="text/javascript" src="{!!url('/')!!}/js/jquery-validate/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="{!!url('/')!!}/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/sweetalert/dist/sweetalert.css">
+	<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
+	<script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
 	<script type="text/javascript">
 	$(function (){
 		$('a[data-toggle=modal], button[data-toggle=modal]').click(function () {
@@ -295,5 +313,15 @@
 			});
 		});
 	});
+
+    $(function () {
+        $("#lead_id").select2({
+            placeholder: "{{ trans('messages.unit_number') }}",
+            allowClear: true,
+            dropdownAutoWidth: true
+        });
+    });
 	</script>
+	<link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
+	<link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
 @endsection

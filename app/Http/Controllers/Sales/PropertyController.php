@@ -32,6 +32,7 @@ use App\Invoice;
 use App\Payee;
 use App\Vehicle;
 use App\CommonFeesRef;
+use App\BackendModel\Customer;
 
 class PropertyController extends Controller {
 
@@ -65,9 +66,13 @@ class PropertyController extends Controller {
             }
         }
 
+        $_lead = new Customer;
+        $_lead = $_lead->where('role','=',1)->where('sale_id','=',Auth::user()->id);
+        $_lead = $_lead->orderBy('created_at','desc')->get();
+
         $list_property = $this->subval_sort($list_property_data,'property_name');
 
-        return view('property_sale_demo.form-list')->with(compact('list_property'));
+        return view('property_sale_demo.form-list')->with(compact('list_property','_lead'));
     }
 
     public function view ($id) {
@@ -418,22 +423,41 @@ class PropertyController extends Controller {
     }
 
     public function assignDemoProperty(){
-        $data = Request::all();
-        $id = $data['property_assign_id'];
-        $new_password = $this->generatePassword();
-        $property_demo = SalePropertyDemo::find($id);
-        $property_demo->status = 1;
-        //$property_demo->trial_expire = Carbon::today()->addDays(7)->toDateTimeString();
-        $property_demo->contact_name = $data['name'];
-        $property_demo->email_contact = $data['email'];
-        $property_demo->tel_contact = $data['tel'];
-        $property_demo->property_test_name = $data['property_name'];
-        $property_demo->default_password = $new_password;
-        $property_demo->save();
+        $assign_form_list = Request::get('assign_form_list');
 
-        $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
-        $this->mail_assign_demo_property($id,$property_demo->default_password);
+        if($assign_form_list!=1){
+            $data = Request::all();
+            $id = $data['lead_id'];
+            $property_id=Request::get('property');
+            $new_password = $this->generatePassword();
+            $property_demo = SalePropertyDemo::find(Request::get('property'));
+            $property_demo->status = 1;
+            $property_demo->contact_name = $data['name'];
+            $property_demo->email_contact = $data['email'];
+            $property_demo->tel_contact = $data['tel'];
+            $property_demo->default_password = $new_password;
+            $property_demo->lead_id = $id;
+            $property_demo->save();
+            // dump($property_demo->toArray());
 
+            $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
+            $this->mail_assign_demo_property($property_id,$property_demo->default_password);
+        }else{
+            $data = Request::all();
+            $id = $data['property_assign_id'];
+            $new_password = $this->generatePassword();
+            $property_demo = SalePropertyDemo::find($id);
+            $property_demo->status = 1;
+            $property_demo->contact_name = $data['name'];
+            $property_demo->email_contact = $data['email'];
+            $property_demo->tel_contact = $data['tel'];
+            $property_demo->default_password = $new_password;
+            $property_demo->lead_id = Request::get('lead_id');
+            $property_demo->save();
+            //dump($property_demo->toArray());
+            $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
+            $this->mail_assign_demo_property($id,$property_demo->default_password);
+        }
         return redirect('sales/property/list');
     }
 

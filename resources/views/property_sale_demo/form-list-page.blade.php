@@ -30,8 +30,8 @@
                     <td>{!!$row->default_password!!}</td>
                     <td>{!! ($row->trial_expire != null) ? date('Y/m/d', strtotime($row->trial_expire)) : "ไม่มีกำหนด"!!}</td>
                     <td>
-                        @if($row->property_test_name)
-                            {!!$row->property_test_name!!}
+                        @if($row->lead_id)
+                            {!!$row->latest_lead->firstname!!}  {!!$row->latest_lead->lastname!!}
                         @else
                             <span style="color:#b3b3b3;">ยังไม่มีการใช้งาน</span>
                         @endif
@@ -59,9 +59,11 @@
                             <li><a href="#" data-demo-id="{!! $row->property_id !!}" class="reset-data-button">
                                 ทำการลบข้อมูลทั้งหมด
                             </a></li>
+                            @if($row->status != 1)
                             <li><a href="#" data-toggle="modal" data-target="#modal-assign-property-demo" data-id="{!! $row->property_id !!}">
                                 ส่งให้นิติบุคคลอื่นทดลองใช้
                             </a></li>
+                            @endif
                             @if($row->status != 3)
                             <li><a href="#" class="disable-data-button" data-demo-id="{!! $row->property_id !!}">
                                 ระงับการใช้งาน
