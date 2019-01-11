@@ -345,7 +345,7 @@ class PropertyController extends Controller {
                     ->orWhere('property_name_en','like',"%".Request::get('name')."%");
             });
         }
-        $p_rows = $props->orderBy('juristic_person_name_th')->paginate(50);
+        $p_rows = $props->with('sale_property')->orderBy('updated_at','DESC')->paginate(50);
         $p = new Province;
         $provinces = $p->getProvince();
 
