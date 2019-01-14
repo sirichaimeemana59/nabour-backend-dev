@@ -43,6 +43,7 @@
                 <tr>
                     <th width="6%">เลขที่</th>
                     <th width="8%">วันที่สร้าง</th>
+                    <th width="8%">Convert</th>
                     <th width="15%">ชื่อ - สกุล</th>
                     <th width="10%">ชื่อบริษัท</th>
                     <th width="10%">เบอร์โทร</th>
@@ -58,8 +59,20 @@
                 ?>
                 @foreach($customer as $row)
                     <tr>
+                        <?php
+                        $created_at = new DateTime($row->created_at);
+                        $convert_date = new DateTime($row->convert_date);
+                        $count_date = $created_at->diff($convert_date);// count date
+                        $days = $count_date->format('%a');//out put to number
+                        //dd($interval);
+                        ?>
                         <td style="text-align: center;">{!!$i!!}</td>
                         <td>{!!localDate($row->created_at)!!}</td>
+                        @if(!empty($row->convert_date))
+                            <td>{!!$days!!} วัน</td>
+                        @else
+                            <td>-</td>
+                        @endif
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
                         <td>{!!$row->company_name !!}</td>
                         <td>{!!$row->phone !!}</td>

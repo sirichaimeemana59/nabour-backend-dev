@@ -189,8 +189,10 @@ class ContractsignController extends Controller
         $quotation->status = 1;
         $quotation->save();
 
+        $date =date('Y-m-d');
         $customer = Customer::find(Request::get('customer_id'));
         $customer->role = 0;
+        $customer->convert_date = $date;
         $customer->save();
 
         return redirect('contract/list');

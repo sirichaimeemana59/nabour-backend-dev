@@ -123,6 +123,12 @@ Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@
 Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');
 //End Contract Sales
 
+//Report Quotation
+Route::any('report_quotation', 'RootAdmin\QuotationreportController@index');
+Route::get('report_quotation/view/{id?}', 'RootAdmin\QuotationreportController@view');
+Route::post('report_quotation/detail', 'RootAdmin\QuotationreportController@detail');
+//End Report Quotation
+
 
 //---------------------------  Nabour officer Route --------------------------------------------//
 
