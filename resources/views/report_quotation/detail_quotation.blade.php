@@ -73,11 +73,11 @@
                             $sum += $row->product_price_with_vat;
                             ?>
                         @endforeach
-                        <tr>
-                            <td colspan="4" style="text-align: right; font-weight: bold;">รวม</td>
-                            <td style="text-align: right; font-weight: bold;">{!! number_format($sum,2) !!}</td>
-                            <td style="font-weight: bold;">บาท</td>
-                        </tr>
+                        {{--<tr>--}}
+                            {{--<td colspan="4" style="text-align: right; font-weight: bold;">รวม</td>--}}
+                            {{--<td style="text-align: right; font-weight: bold;">{!! number_format($sum,2) !!}</td>--}}
+                            {{--<td style="font-weight: bold;">บาท</td>--}}
+                        {{--</tr>--}}
                         </tbody>
                     </table>
                 </div>

@@ -14,9 +14,11 @@
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <th style="text-align: center;">ชื่อ - สกุล</th>
+                                    <th style="text-align: center;">ใบเสนอราคา</th>
                                     <th style="text-align: center;">รวม</th>
                                     <th style="text-align: center;">VAT</th>
                                     <th style="text-align: center;">รวมสุทธิ</th>
+                                    <th style="text-align: center;" width="*">Action</th>
                                 </tr>
                                 <?php
                                     $total =0;
@@ -24,18 +26,26 @@
                                 @foreach($quotation as $row)
                                     <tr>
                                         <td>{!! $row->latest_lead->firstname !!}  {!! $row->latest_lead->lastname !!}</td>
+                                        <td style="text-align: right;">{!! $row->count !!} ใบ</td>
                                         <td style="text-align: right;">{!! number_format($row->sum_total,2) !!} บาท</td>
                                         <td style="text-align: right;">{!! number_format($row->sum_vat,2) !!} บาท</td>
                                         <td style="text-align: right;">{!! number_format($row->sum,2) !!} บาท</td>
+                                        <td class="action-links">
+                                            <a href="{!! url('report_quotation/view/'.$row->lead_id) !!}" class="view-quotation btn btn-success"   title="ดูรายละเอียด">
+                                                <i class="fa-eye"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php
                                         $total += $row->sum;
                                     ?>
                                 @endforeach
                                 <tr>
-                                    <td colspan="3" style="font-weight: bold;">รวมสุทธิ</td>
+                                    <td colspan="4" style="font-weight: bold;">รวมสุทธิ</td>
                                     <td style="text-align: right; font-weight: bold;">{!! number_format($total,2) !!} บาท</td>
+                                    <td></td>
                                 </tr>
+
                             </table>
                         </div>
                         {{--endcontent--}}

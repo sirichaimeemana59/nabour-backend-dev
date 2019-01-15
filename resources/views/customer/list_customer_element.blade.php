@@ -50,7 +50,7 @@
                     <th width="10%">จังหวัด</th>
                     <th width="10%">พนักงานขาย</th>
                     <th width="8%">สัญญา</th>
-                    <th width="15%">การจัดการ</th>
+                    <th width="*">การจัดการ</th>
                 </tr>
                 </thead>
                 <tbody>

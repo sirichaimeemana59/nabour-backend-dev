@@ -47,7 +47,7 @@
                     <th width="*">เบอร์โทร</th>
                     <th width="*">พนักงานขาย</th>
                     <th width="120px">ใบเสนอราคา</th>
-                    <th width="180px">การจัดการ</th>
+                    <th width="*">การจัดการ</th>
                 </tr>
                 </thead>
                 <tbody>
