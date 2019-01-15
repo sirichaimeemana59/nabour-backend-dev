@@ -1,6 +1,9 @@
 @extends('base-admin')
 @section('content')
-<div class="row">
+
+    <a href="{!! url('report_quotation_excel') !!}"><button type="button" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button></a>
+
+    <div class="row">
     <div class="col-md-12">
         <div class="panel">
             <div class="panel-heading">

@@ -20,6 +20,7 @@ use App\BackendModel\Products;
 use App\BackendModel\User;
 use App\BackendModel\Property;
 use DB;
+use Excel;
 
 class QuotationreportController extends Controller
 {
@@ -92,6 +93,20 @@ class QuotationreportController extends Controller
         //return($quotation);
         //dd($customer);
         return view('report_quotation.report_quotation_detail')->with(compact('quotation'));
+
+    }
+
+    public function excel()
+    {
+
+        $quotation = Quotation::selectRaw('lead_id,SUM(product_price_with_vat) as sum,SUM(grand_total_price) as sum_total,SUM(product_vat) as sum_vat,count(quotation_code) as count')->where('status','=',1)
+            ->groupBy('lead_id')->get();
+
+        $filename = "รายงานใบเสนอราคาที่ออกจากระบบ";
+
+        //return($quotation);
+        //dd($customer);
+        return view('report_quotation.report_quotation_excel')->with(compact('quotation','filename'));
 
     }
 

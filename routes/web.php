@@ -130,6 +130,7 @@ Route::post('report_quotation/detail', 'RootAdmin\QuotationreportController@deta
 
 
 Route::get('report_quotation/report_count', 'RootAdmin\QuotationreportController@report');
+Route::get('report_quotation_excel', 'RootAdmin\QuotationreportController@excel');
 
 //End Report Quotation
 
