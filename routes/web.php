@@ -127,6 +127,10 @@ Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@ap
 Route::any('report_quotation', 'RootAdmin\QuotationreportController@index');
 Route::get('report_quotation/view/{id?}', 'RootAdmin\QuotationreportController@view');
 Route::post('report_quotation/detail', 'RootAdmin\QuotationreportController@detail');
+
+
+Route::get('report_quotation/report_count', 'RootAdmin\QuotationreportController@report');
+
 //End Report Quotation
 
 

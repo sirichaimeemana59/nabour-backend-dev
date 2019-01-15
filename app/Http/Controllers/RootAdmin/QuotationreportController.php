@@ -19,6 +19,7 @@ use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
 use App\BackendModel\User;
 use App\BackendModel\Property;
+use DB;
 
 class QuotationreportController extends Controller
 {
@@ -82,9 +83,16 @@ class QuotationreportController extends Controller
         }
     }
 
-    public function show($id)
+    public function report()
     {
-        //
+
+        $quotation = Quotation::selectRaw('lead_id,SUM(product_price_with_vat) as sum,SUM(grand_total_price) as sum_total,SUM(product_vat) as sum_vat')->where('status','=',1)
+            ->groupBy('lead_id')->get();
+
+        //return($quotation);
+        //dd($customer);
+        return view('report_quotation.report_quotation_detail')->with(compact('quotation'));
+
     }
 
     public function edit($id)

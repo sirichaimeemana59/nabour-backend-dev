@@ -111,8 +111,9 @@
             <span class="title">รายงาน Quotation</span>
         </a>
         <ul {!! (Request::is('report_quotation') ? 'style="display:block;"' : '') !!}>
-            <li class="{!! (Request::is('report_quotation') ? 'active' : '') !!}">
-                <a href="{!! url('report_quotation') !!}">
+            {{--report_quotation--}}
+            <li class="{!! (Request::is('report_quotation/report_count') ? 'active' : '') !!}">
+                <a href="{!! url('report_quotation/report_count') !!}">
                     <span class="title">Quotaiton ออกจากระบบ</span>
                 </a>
             </li>
