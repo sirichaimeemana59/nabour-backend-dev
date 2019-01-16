@@ -110,9 +110,42 @@ class QuotationreportController extends Controller
 
     }
 
-    public function edit($id)
+    public function ratio()
     {
-        //
+
+        $p_rows = new Customer;
+        if(Request::isMethod('post')) {
+            $from = str_replace('/','-',Request::get('from-date'));
+            $to = str_replace('/','-',Request::get('to-date'));
+
+            $date = array($from." 00:00:00", $to." 00:00:00");
+
+            //dd($date);
+            $p_rows = $p_rows->whereBetween('created_at',$date)->where('active_status','=','t')->paginate(50);
+
+           // dd($p_rows);
+            $status=1;
+            return view('report_quotation.report_quotation_ratio_list')->with(compact('p_rows','status','from','to'));
+        }else{
+            return view('report_quotation.report_quotation_ratio_list');
+        }
+    }
+
+    public function excel_ration($from = null , $to = null)
+    {
+
+        $date = array($from." 00:00:00", $to." 00:00:00");
+
+        $p_rows = new Customer;
+        $p_rows = $p_rows->whereBetween('created_at',$date)->where('active_status','=','t')->paginate(50);
+
+
+        $filename = "สถิติการเปลี่ยนจาก Leads เป็นลูกค้า";
+
+        //return($quotation);
+        //dd($customer);
+        return view('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename'));
+
     }
 
 

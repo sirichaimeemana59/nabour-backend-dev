@@ -49,13 +49,13 @@
                                 </select>
                             </div>
 
-                            <div class="col-sm-3">
-                                {!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}
-                            </div>
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}--}}
+                            {{--</div>--}}
 
-                            <div class="col-sm-3">
-                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}
-                            </div>
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}--}}
+                            {{--</div>--}}
                         </div>
 
                         <div class="row">
