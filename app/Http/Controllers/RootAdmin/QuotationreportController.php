@@ -115,17 +115,30 @@ class QuotationreportController extends Controller
 
         $p_rows = new Customer;
         if(Request::isMethod('post')) {
+
             $from = str_replace('/','-',Request::get('from-date'));
             $to = str_replace('/','-',Request::get('to-date'));
+            $channel = Request::get('channel_id');
+            $type = Request::get('type_id');
 
-            $date = array($from." 00:00:00", $to." 00:00:00");
+            if(Request::get('from-date')){
+                $date = array($from." 00:00:00", $to." 00:00:00");
+                //dd($date);
+                $p_rows = $p_rows->whereBetween('created_at',$date)->where('active_status','=','t')->paginate(50);
+            }
 
-            //dd($date);
-            $p_rows = $p_rows->whereBetween('created_at',$date)->where('active_status','=','t')->paginate(50);
+            if (Request::get('channel_id')) {
+                $p_rows = $p_rows->where('channel', '=', Request::get('channel_id'))->where('active_status','=','t')->paginate(50);
+            }
+
+            if (Request::get('type_id')) {
+                $p_rows = $p_rows->where('type', '=', Request::get('type_id'))->where('active_status','=','t')->paginate(50);
+            }
+
 
            // dd($p_rows);
             $status=1;
-            return view('report_quotation.report_quotation_ratio_list')->with(compact('p_rows','status','from','to'));
+            return view('report_quotation.report_quotation_ratio_list')->with(compact('p_rows','status','from','to','channel','type'));
         }else{
             return view('report_quotation.report_quotation_ratio_list');
         }
@@ -133,12 +146,27 @@ class QuotationreportController extends Controller
 
     public function excel_ration($from = null , $to = null)
     {
-
-        $date = array($from." 00:00:00", $to." 00:00:00");
-
         $p_rows = new Customer;
-        $p_rows = $p_rows->whereBetween('created_at',$date)->where('active_status','=','t')->paginate(50);
 
+        if(Request::isMethod('post')) {
+
+            $from = str_replace('/', '-', Request::get('from-date'));
+            $to = str_replace('/', '-', Request::get('to-date'));
+
+            if (Request::get('from-date')) {
+                $date = array($from . " 00:00:00", $to . " 00:00:00");
+                //dd($date);
+                $p_rows = $p_rows->whereBetween('created_at', $date)->where('active_status', '=', 't')->paginate(50);
+            }
+
+            if (Request::get('channel_id')) {
+                $p_rows = $p_rows->where('channel', '=', Request::get('channel_id'))->where('active_status', '=', 't')->paginate(50);
+            }
+
+            if (Request::get('type_id')) {
+                $p_rows = $p_rows->where('type', '=', Request::get('type_id'))->where('active_status', '=', 't')->paginate(50);
+            }
+        }
 
         $filename = "สถิติการเปลี่ยนจาก Leads เป็นลูกค้า";
 

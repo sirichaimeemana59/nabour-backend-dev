@@ -29,18 +29,30 @@
                 <div class="panel-body search-form">
                     <form method="POST" id="search-form" action="{!! url('report_quotation/ratio/report') !!}" accept-charset="UTF-8" class="form-horizontal">
                         <div class="row">
-                            <label class="col-sm-1 control-label">{{ trans('messages.Report.from_date') }}</label>
+                            <label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>
                             <div class="col-sm-3">
                                 {!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','data-language'=>App::getLocale())); !!}
                             </div>
-                            <label class="col-sm-1 control-label">{{ trans('messages.Report.to_date') }}</label>
+                            <label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>
                             <div class="col-sm-3">
                                 {!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','data-language'=>App::getLocale())); !!}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <label class="col-sm-1 control-label">แหล่งที่มา</label>
+                            <div class="col-sm-3">
+                                {!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}
+                            </div>
+                            <label class="col-sm-1 control-label">ประเภท</label>
+                            <div class="col-sm-3">
+                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-12 text-right">
+                                    <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
                                     <button type="submit" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
                             </div>
                         </div>
@@ -53,8 +65,15 @@
     {{--<input type="hidden" name="from" value="{!! $from !!}">--}}
     {{--<input type="hidden" name="to" value="{!! $to !!}">--}}
     @if(!empty($status))
-        <a href="{!! url('report_quotation_ratio_excel/'.$from.'/'.$to) !!}"><button type="button" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button></a>
 
+        <form method="POST" id="search-form" action="{!! url('report_quotation_ratio_excel') !!}" accept-charset="UTF-8" class="form-horizontal">
+            <input type="hidden" name="from" value="{!! $from !!}">
+            <input type="hidden" name="to" value="{!! $to !!}">
+            <input type="hidden" name="channel_id" value="{!! $channel !!}">
+            <input type="hidden" name="type_id" value="{!! $type !!}">
+
+            <button type="submit" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button>
+        </form>
         {{--content--}}
     <div class="row">
         <div class="col-md-12">
