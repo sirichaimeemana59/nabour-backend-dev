@@ -61,7 +61,7 @@ $allpage=0;
                             <td>{!! localDate($row->created_at) !!}</td>
                             <td>{!! $row->firstname !!}  {!! $row->lastname !!}</td>
                             <?php
-                                $status_=$row->role==1?"Customer":"-";
+                                $status_=$row->role==1?"Customer":"Leads";
                                 if($row->role==1){
                                     $count++;
                                 }

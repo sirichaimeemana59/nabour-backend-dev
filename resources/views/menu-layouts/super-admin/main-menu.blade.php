@@ -110,7 +110,7 @@
             <i class="fa fa-area-chart"></i>
             <span class="title">รายงาน Quotation</span>
         </a>
-        <ul {!! (Request::is('report_quotation') ? 'style="display:block;"' : '') !!}>
+        <ul {!! (Request::is('report_quotation/*') ? 'style="display:block;"' : '') !!}>
             {{--report_quotation--}}
             <li class="{!! (Request::is('report_quotation/report_count') ? 'active' : '') !!}">
                 <a href="{!! url('report_quotation/report_count') !!}">

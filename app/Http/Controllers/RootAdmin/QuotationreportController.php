@@ -144,16 +144,16 @@ class QuotationreportController extends Controller
         }
     }
 
-    public function excel_ration($from = null , $to = null)
+    public function excel_ratio()
     {
         $p_rows = new Customer;
 
         if(Request::isMethod('post')) {
 
-            $from = str_replace('/', '-', Request::get('from-date'));
-            $to = str_replace('/', '-', Request::get('to-date'));
+            $from = Request::get('from');
+            $to = Request::get('to');
 
-            if (Request::get('from-date')) {
+            if (Request::get('from')) {
                 $date = array($from . " 00:00:00", $to . " 00:00:00");
                 //dd($date);
                 $p_rows = $p_rows->whereBetween('created_at', $date)->where('active_status', '=', 't')->paginate(50);
