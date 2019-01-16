@@ -1,7 +1,8 @@
 @extends('excel')
 @section('content')
     <?php
-    //    $vehicle_type = unserialize(constant('VEHICLE_TYPE_'.strtoupper(App::getLocale())));
+    $channel1=unserialize(constant('LEADS_SOURCE'));
+    $type1=unserialize(constant('LEADS_TYPE'));
     ?>
     <style>
         table {
@@ -24,6 +25,35 @@
     <tr>
         <td colspan="5" style="text-align:center;font-size:20px">สถิติการเปลี่ยนจาก Leads เป็นลูกค้า</td>
     </tr>
+
+    <tr>
+        <td colspan="5" style="text-align:center;font-size:20px">
+    @if(!empty($from))
+        <h4 class="panel-title">ผลการค้นหาระหว่างวันที่ {!! localDate($from) !!}  ถึง  {!! localDate($to) !!}</h4>
+    @endif
+
+    @if(!empty($channel))
+        <h4 class="panel-title">ผลการค้นหาจากแหล่งที่มา :
+            @foreach ($channel1 as $key => $value)
+                @if($channel == $key)
+                    {!! $value !!}
+                @endif
+            @endforeach
+        </h4>
+    @endif
+
+    @if(!empty($type))
+        <h4 class="panel-title">ผลการค้นหาจากประเภท :
+            @foreach ($type1 as $key => $value)
+                @if($type == $key)
+                    {!! $value !!}
+                @endif
+            @endforeach
+        </h4>
+    @endif
+        </td>
+    </tr>
+
     <table cellspacing="0" class="table table-bordered table-striped">
         <thead>
         <tr>

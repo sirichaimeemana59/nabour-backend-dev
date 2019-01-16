@@ -152,6 +152,8 @@ class QuotationreportController extends Controller
 
             $from = Request::get('from');
             $to = Request::get('to');
+            $channel = Request::get('channel_id');
+            $type = Request::get('type_id');
 
             if (Request::get('from')) {
                 $date = array($from . " 00:00:00", $to . " 00:00:00");
@@ -172,7 +174,7 @@ class QuotationreportController extends Controller
 
         //return($quotation);
         //dd($customer);
-        return view('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename'));
+        return view('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename','from','to','channel','type'));
 
     }
 
