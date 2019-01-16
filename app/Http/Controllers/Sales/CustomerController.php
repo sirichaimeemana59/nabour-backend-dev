@@ -24,28 +24,35 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customer = new Customer;
+        $p_rows = new Customer;
 
-        if(Request::get('name')) {
-            $customer = $customer->where('firstname','like',"%".Request::get('name')."%");
+        if(Request::ajax()) {
+            if (Request::get('name')) {
+                $p_rows = $p_rows->where('firstname', 'like', "%" . Request::get('name') . "%")
+                    ->orWhere('lastname', 'like', "%" . Request::get('name') . "%");
+            }
+
+            if (Request::get('company_name')) {
+                $p_rows = $p_rows->where('company_name', '=', Request::get('company_name'));
+            }
+
+            if (Request::get('sale_id')) {
+                $p_rows = $p_rows->where('sale_id', '=', Request::get('sale_id'));
+            }
+
+            if (Request::get('province')) {
+                $p_rows = $p_rows->where('province', '=', Request::get('province'));
+            }
+
+            if (Request::get('channel_id')) {
+                $p_rows = $p_rows->where('channel', '=', Request::get('channel_id'));
+            }
+
+            if (Request::get('type_id')) {
+                $p_rows = $p_rows->where('type', '=', Request::get('type_id'));
+            }
         }
 
-        if(Request::get('company_name')) {
-            $customer = $customer->where('company_name','=',Request::get('company_name'));
-        }
-
-        if(Request::get('sale_id')) {
-            $customer = $customer->where('sale_id','=',Request::get('sale_id'));
-        }
-
-        if(Request::get('province')) {
-            $customer = $customer->where('province','=',Request::get('province'));
-        }
-
-        $customer = $customer->where('role','=',0)->where('sale_id','=',Auth::user()->id);
-        $customer = $customer->orderBy('created_at','desc')->get();
-
-        //dd($customer);
 
         $p = new Province;
         $provinces = $p->getProvince();
@@ -55,7 +62,7 @@ class CustomerController extends Controller
         $sale = $sale->get();
 
 
-        $p_rows = new Customer;
+        //$p_rows = new Customer;
         $p_rows = $p_rows->where('role','=',0)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 

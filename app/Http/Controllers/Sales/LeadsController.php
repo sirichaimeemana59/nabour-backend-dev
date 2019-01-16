@@ -22,14 +22,26 @@ class LeadsController extends Controller
 
     public function index()
     {
-        $_lead = new Customer;
+        $p_rows = new Customer;
 
-        if(Request::get('name')) {
-            $_lead = $_lead->where('firstname','like',"%".Request::get('name')."%");
-        }
+        if(Request::ajax()) {
+            if (Request::get('name')) {
+                $p_rows = $p_rows->where('firstname', 'like', "%" . Request::get('name') . "%")
+                    ->orWhere('lastname', 'like', "%" . Request::get('name') . "%");
+            }
 
-        if(Request::get('sale_id')) {
-            $_lead = $_lead->where('sale_id','=',Request::get('sale_id'));
+            if (Request::get('sale_id')) {
+                $p_rows = $p_rows->where('sale_id', '=', Request::get('sale_id'));
+            }
+
+            if (Request::get('channel_id')) {
+                $p_rows = $p_rows->where('channel', '=', Request::get('channel_id'));
+            }
+
+            if (Request::get('type_id')) {
+                $p_rows = $p_rows->where('type', '=', Request::get('type_id'));
+            }
+            //dd(Request::get('channel_id'));
         }
 
         $p = new Province;
@@ -41,12 +53,12 @@ class LeadsController extends Controller
 
 
 
-        $_lead = $_lead->where('role','=',1)->where('sale_id','=',Auth::user()->id);
-        $_lead = $_lead->orderBy('created_at','desc')->get();
+//        $_lead = $_lead->where('role','=',1)->where('sale_id','=',Auth::user()->id);
+//        $_lead = $_lead->orderBy('created_at','desc')->get();
 
         //dump($sale->toArray());
 
-        $p_rows = new Customer;
+//        $p_rows = new Customer;
         $p_rows = $p_rows->where('role','=',1)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 

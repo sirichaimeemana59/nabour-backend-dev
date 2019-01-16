@@ -57,7 +57,7 @@
                 <?php
                     $i=1;
                 ?>
-                @foreach($customer as $row)
+                @foreach($p_rows as $row)
                     <tr>
                         <?php
                         $created_at = new DateTime($row->created_at);

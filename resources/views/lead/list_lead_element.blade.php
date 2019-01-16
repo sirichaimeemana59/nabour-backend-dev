@@ -54,7 +54,7 @@
                 <?php
                 $i=1;
                 ?>
-                @foreach($_lead as $row)
+                @foreach($p_rows as $row)
                     <?php $doc_count = $row->quotation->count(); ?>
                     <tr>
                         <td style="text-align: center;">{!!$i!!}</td>

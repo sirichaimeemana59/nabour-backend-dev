@@ -56,6 +56,16 @@
                                 {!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                {!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}
+                            </div>
+
+                            <div class="col-sm-3">
+                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-12 text-right">
                                 <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
