@@ -31,11 +31,11 @@
                         <div class="row">
                             <label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>
                             <div class="col-sm-3">
-                                {!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','data-language'=>App::getLocale())); !!}
+                                {!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}
                             </div>
                             <label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>
                             <div class="col-sm-3">
-                                {!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','data-language'=>App::getLocale())); !!}
+                                {!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}
                             </div>
                         </div>
                         <br>

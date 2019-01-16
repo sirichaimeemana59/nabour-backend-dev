@@ -154,13 +154,13 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่ทำสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required>
+                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" autocomplete="off"   required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" required>
+                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" required autocomplete="off"  >
                         </div>
                     </div>
                     <div class="form-group">
