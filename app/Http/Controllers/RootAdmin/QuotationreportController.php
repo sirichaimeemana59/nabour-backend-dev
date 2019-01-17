@@ -105,9 +105,25 @@ class QuotationreportController extends Controller
 
         $filename = "รายงานใบเสนอราคาที่ออกจากระบบ";
 
+        Excel::create($filename, function ($excel) use ($filename,$quotation) {
+            $excel->sheet("Quotation_Output", function ($sheet) use ($quotation) {
+                $sheet->setWidth(array(
+                    'A' => 50,
+                    'B' => 20,
+                    'C' => 30,
+                    'D' => 30,
+                    'E' => 30,
+                ));
+                //$sheet->setBorder('A1', 'thin');
+                // $sheet->setBorder('A1:F10', 'thin');
+                //$sheet->setBorder('A1:E17', 'thin');
+                $sheet->loadView('report_quotation.report_quotation_excel')->with(compact('quotation', 'filename'));
+            });
+        })->download('xls');
+
         //return($quotation);
         //dd($customer);
-        return view('report_quotation.report_quotation_excel')->with(compact('quotation','filename'));
+        //return view('report_quotation.report_quotation_excel')->with(compact('quotation','filename'));
 
     }
 
@@ -149,7 +165,7 @@ class QuotationreportController extends Controller
     {
         $p_rows = new Customer;
 
-        if(Request::isMethod('post')) {
+        if (Request::isMethod('post')) {
 
             $from = Request::get('from');
             $to = Request::get('to');
@@ -173,30 +189,24 @@ class QuotationreportController extends Controller
 
         $filename = "สถิติการเปลี่ยนจาก Leads เป็นลูกค้า";
 
-//        try {
-//            Excel::create($filename, function ($excel) use ($filename,$p_rows,$from,$to,$channel,$type) {
-//                $excel->sheet("property unit", function ($sheet) use ($p_rows,$from,$to,$channel,$type) {
-//                    $sheet->setWidth(array(
-//                        'B' => 20,
-//                        'C' => 30,
-//                        'D' => 50,
-//                        'E' => 30,
-//                        'F' => 50,
-//                    ));
-//                    $sheet->loadView('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename','from','to','channel','type'));
-//                });
-//
-//                $excel->setCreator('Nabour Application');
-//                $excel->setKeywords('Nabour PropertyUnit utility settings');
-//            })->export('xls');
-//        }catch (LaravelExcelException $ex){
-//            $error= $ex;
-//        }
-
+            Excel::create($filename, function ($excel) use ($filename, $p_rows, $from, $to, $channel, $type) {
+                $excel->sheet("Quotation_ration", function ($sheet) use ($p_rows, $from, $to, $channel, $type) {
+                    $sheet->setWidth(array(
+                        'B' => 20,
+                        'C' => 50,
+                        'D' => 20,
+                        'E' => 30,
+                    ));
+                    //$sheet->setBorder('A1', 'thin');
+                    // $sheet->setBorder('A1:F10', 'thin');
+                    //$sheet->setBorder('A1:E17', 'thin');
+                    $sheet->loadView('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows', 'filename', 'from', 'to', 'channel', 'type'));
+                });
+            })->download('xls');
 
         //return($quotation);
         //dd($customer);
-        return view('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename','from','to','channel','type'));
+        //return view('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename','from','to','channel','type'));
 
     }
 
