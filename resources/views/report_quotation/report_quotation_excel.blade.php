@@ -1,30 +1,12 @@
-@extends('excel')
+@extends('blank')
 @section('content')
-    <?php
-//    $vehicle_type = unserialize(constant('VEHICLE_TYPE_'.strtoupper(App::getLocale())));
-    ?>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        table, td, th {
-            border: 1px solid black;
-        }
-        td{
-            text-align: right;
-            font-size: 16px;
-        }
-        .head{
-            text-align: center;
-            font-size: 18px;
-        }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
     <tr>
-        <td colspan="5" style="text-align:center;font-size:20px">รายงานยานพาหนะ</td>
+        <td colspan="5" style="text-align: center;font-weight: bold;"><h3>รายงานใบเสนอราคาที่ออกจากระบบ</h3></td>
     </tr>
-    <table class="table table-bordered table-striped">
+    <table>
         <tr>
             <th style="text-align: center;">ชื่อ - สกุล</th>
             <th style="text-align: center;">ใบเสนอราคา</th>
@@ -48,11 +30,8 @@
             ?>
         @endforeach
         <tr>
-            <td colspan="4" style="font-weight: bold;">รวมสุทธิ</td>
+            <td colspan="4" style="font-weight: bold;text-align: right;">รวมสุทธิ</td>
             <td style="text-align: right; font-weight: bold;">{!! number_format($total,2) !!} บาท</td>
         </tr>
     </table>
 @endsection
-
-
-
