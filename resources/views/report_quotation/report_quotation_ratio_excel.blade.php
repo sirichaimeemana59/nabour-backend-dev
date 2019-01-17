@@ -1,4 +1,4 @@
-@extends('excel')
+@extends('blank')
 @section('content')
     <?php
     $channel1=unserialize(constant('LEADS_SOURCE'));
