@@ -1,3 +1,11 @@
+<form method="POST" action="{!! url('report_quotation_ratio_excel') !!}" accept-charset="UTF-8" class="form-horizontal">
+    <input type="hidden" name="from" value="{!! $from !!}">
+    <input type="hidden" name="to" value="{!! $to !!}">
+    <input type="hidden" name="channel_id" value="{!! $channel !!}">
+    <input type="hidden" name="type_id" value="{!! $type !!}">
+
+    <button type="submit" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button>
+</form>
 <?php
 $from=0;
 $to=0;
@@ -21,26 +29,25 @@ $allpage=0;
                         </div>
                     </div>
 
-                    @if($allpage > 1)
-                        <div class="col-md-6 text-right">
-                            <div class="dataTables_paginate paging_simple_numbers" >
-                                @if($p_rows->currentPage() > 1)
-                                    <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()-1 !!}">{!! trans('messages.prev') !!}</a>
-                                @endif
-                                @if($p_rows->lastPage() > 1)
-                                    <?php
-                                        echo Form::selectRange('page', 1, $p_rows->lastPage(),$p_rows->currentPage(),['class'=>'form-control p-paginate-select paginate-select']);
-                                        ?>
-                                @endif
-                                @if($p_rows->hasMorePages())
-                                    <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()+1 !!}">{!! trans('messages.next') !!}</a>
-                                @endif
+                        @if($allpage > 1)
+                            <div class="col-md-6 text-right">
+                                <div class="dataTables_paginate paging_simple_numbers" >
+                                    @if($p_rows->currentPage() > 1)
+                                        <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()-1 !!}">{!! trans('messages.prev') !!}</a>
+                                    @endif
+                                    @if($p_rows->lastPage() > 1)
+                                        <?php
+                                            echo Form::selectRange('page', 1, $p_rows->lastPage(),$p_rows->currentPage(),['class'=>'form-control p-paginate-select paginate-select']);
+                                            ?>
+                                    @endif
+                                    @if($p_rows->hasMorePages())
+                                        <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()+1 !!}">{!! trans('messages.next') !!}</a>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    @endif
-                    @endif
-                </div>
-                <table cellspacing="0" class="table table-bordered table-striped">
+                        @endif
+               </div>
+               <table cellspacing="0" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th width="6%">เลขที่</th>
@@ -118,3 +125,6 @@ $allpage=0;
             </div>
         </div>
     </div>
+@else
+    <div class="col-sm-12 text-center">ไม่พบข้อมูล</div><div class="clearfix"></div>
+@endif

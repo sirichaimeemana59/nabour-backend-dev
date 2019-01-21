@@ -173,23 +173,21 @@ class PropertyController extends Controller {
     public function edit($id) {
         $p = new Province;
         $provinces = $p->getProvince();
+        //$request=null;
         if (Request::isMethod('post'))
         {
-            $property = Request::all();
-            //$num_id = Request::input('num_id');
-           // echo print_r($property['contract']);
-            //$prop = new Property();
-            //$vp = $prop->validate($property);
 
+            $property = Request::all();
 
             $rules = ['name' => 'required|max:255'];
-            if(!empty($request['password'])) {
+
+            if(!empty($property['password'])) {
                 $rules += [
                     'password' => 'alpha_num|min:6|required',
                     'password_confirm' => 'alpha_num|min:6|required|same:password'
                 ];
             }
-            $vu = Validator::make($request, $rules);
+            $vu = Validator::make($property['user'], $rules);
 
             $vp = Validator::make($property, [
                 'property_name_th'          => 'required',

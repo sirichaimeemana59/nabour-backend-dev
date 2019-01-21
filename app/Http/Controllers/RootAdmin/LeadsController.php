@@ -55,20 +55,13 @@ class LeadsController extends Controller
 
 
 
-//        $_lead = $_lead->where('role','=',1);
-//        $_lead = $_lead->orderBy('created_at','desc')->get();
-
-        //dump($sale->toArray());
-
         $p_rows = $p_rows->where('role','=',1);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
         $property = new BackendProperty;
         $property = $property->get();
 
-//        $property_demo = new Property;
-//        $property_demo = $property_demo->where('is_demo','=','t');
-//        $property_demo = $property_demo->get();
+
 
         $property_demo = SalePropertyDemo::where('status','=',0)->get();
 

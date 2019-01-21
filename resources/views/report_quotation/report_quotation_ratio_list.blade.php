@@ -27,7 +27,7 @@
                     <h3 class="panel-title">{!! trans('messages.search') !!}</h3>
                 </div>
                 <div class="panel-body search-form">
-                    <form method="POST" id="search-form" action="{!! url('report_quotation/ratio/report') !!}" accept-charset="UTF-8" class="form-horizontal">
+                    <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
                         <div class="row">
                             <label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>
                             <div class="col-sm-3">
@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col-sm-12 text-right">
                                     <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
-                                    <button type="submit" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
+                                    <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
                             </div>
                         </div>
                     </form>
@@ -62,19 +62,7 @@
         </div>
     </div>
     {{--end search--}}
-    {{--<input type="hidden" name="from" value="{!! $from !!}">--}}
-    {{--<input type="hidden" name="to" value="{!! $to !!}">--}}
-    @if(!empty($status))
 
-        <form method="POST" id="search-form" action="{!! url('report_quotation_ratio_excel') !!}" accept-charset="UTF-8" class="form-horizontal">
-            <input type="hidden" name="from" value="{!! $from !!}">
-            <input type="hidden" name="to" value="{!! $to !!}">
-            <input type="hidden" name="channel_id" value="{!! $channel !!}">
-            <input type="hidden" name="type_id" value="{!! $type !!}">
-
-            <button type="submit" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button>
-        </form>
-        {{--content--}}
 <?php
     $channel1=unserialize(constant('LEADS_SOURCE'));
     $type1=unserialize(constant('LEADS_TYPE'));
@@ -118,7 +106,7 @@
         </div>
     </div>
     {{--end content--}}
-    @endif
+    {{--@endif--}}
 @endsection
 
 @section('script')
@@ -138,10 +126,12 @@
 
         $('.p-search-property').on('click',function () {
             propertyPage (1);
+            //alert('aaa');
         });
 
         function propertyPage (page) {
             var data = $('#search-form').serialize()+'&page='+page;
+           //alert(data);
             $('#landing-property-list').css('opacity','0.6');
             $.ajax({
                 url     : $('#root-url').val()+"/report_quotation/ratio/report",
