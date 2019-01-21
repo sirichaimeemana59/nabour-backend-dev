@@ -117,8 +117,8 @@
                     <span class="title">Quotaiton ออกจากระบบ</span>
                 </a>
             </li>
-            <li class="{!! (Request::is('report_quotation/ratio') ? 'active' : '') !!}">
-                <a href="{!! url('report_quotation/ratio') !!}">
+            <li class="{!! (Request::is('report_quotation/ratio/report') ? 'active' : '') !!}">
+                <a href="{!! url('report_quotation/ratio/report') !!}">
                     <span class="title">Quotaiton Ratio</span>
                 </a>
             </li>

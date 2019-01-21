@@ -21,7 +21,7 @@
                 <h4 class="panel-title">ผลการค้นหาระหว่างวันที่ {!! localDate($from) !!}  ถึง  {!! localDate($to) !!}</h4>
             @endif
 
-            @if(!empty($channel))
+            @if($channel != null)
                 <h4 class="panel-title">ผลการค้นหาจากแหล่งที่มา :
                     @foreach ($channel1 as $key => $value)
                         @if($channel == $key)
@@ -31,7 +31,7 @@
                 </h4>
             @endif
 
-            @if(!empty($type))
+            @if($type != null)
                 <h4 class="panel-title">ผลการค้นหาจากประเภท :
                     @foreach ($type1 as $key => $value)
                         @if($type == $key)
