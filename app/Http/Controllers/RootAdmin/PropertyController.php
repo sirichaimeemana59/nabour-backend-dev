@@ -76,9 +76,11 @@ class PropertyController extends Controller {
 
                 $new_prop->max_price = str_replace(',', '', $new_prop->max_price);
                 if(empty($new_prop->max_price)) $new_prop->max_price = 0;
+                $new_prop->property_no_label = Request::get('number');
                 $new_prop->save();
                 //dd($new_prop);
                 $this->updateBackendProperty ($new_prop);
+                //dd($this);
                 User::create([
                     'name' => $property['user']['name'],
                     'email' => $property['user']['email'],
@@ -159,7 +161,12 @@ class PropertyController extends Controller {
         $pmg = new ManagementGroup;
         $pmg = $pmg->get();
 
-        return view('property.add')->with(compact('property','provinces','pmg'));
+
+            $_props = new BackendProperty;
+            $max_cus = $_props->max('number');
+
+
+        return view('property.add')->with(compact('property','provinces','pmg','max_cus'));
         //dd($pmg);
     }
 
@@ -273,6 +280,10 @@ class PropertyController extends Controller {
         $props = new BackendProperty;
         //$props = $props->where('is_demo',false);
 
+        if(Request::get('customer')) {
+            $props = $props->where('property_no_label','=',Request::get('customer'));
+        }
+
         if(Request::get('province')) {
             $props = $props->where('province','=',Request::get('province'));
         }
@@ -295,23 +306,21 @@ class PropertyController extends Controller {
             });
         }//Join table
 
-        if(Request::get('customer')){
-            $props = $props->whereHas('lastest_contract', function ($q) {
-                $q ->where('customer_id','=',Request::get('customer'));
-            });
-        }//Join table
+//        if(Request::get('customer')){
+//            $props = $props->whereHas('lastest_contract', function ($q) {
+//                $q ->where('customer_id','=',Request::get('customer'));
+//            });
+//        }//Join table
 
         if(Request::get('name')) {
-            $props = $props->with('lastest_contract')->where(function ($q) {
-                $q ->where('property_name_th','like',"%".Request::get('name')."%")
+            $props = $props->where('property_name_th','like',"%".Request::get('name')."%")
                     ->orWhere('property_name_en','like',"%".Request::get('name')."%");
-            });
         }
 
         
 
 
-        $p_rows = $props->orderBy('created_at','desc')->paginate(50);
+        $p_rows = $props->orderBy('property_no_label','desc')->paginate(50);
         $p = new Province;
         $provinces = $p->getProvince();
 
@@ -899,7 +908,9 @@ class PropertyController extends Controller {
         $_property->property_name_en        = $property->property_name_en;
         $_property->developer_group_id      = $property->developer_group_id;
         $_property->id                      = $property->id;
+        $_property->property_no_label                  = $property->number;
         $_property->save();
+        //dd($_property);
     }
 
     public function create_demo()

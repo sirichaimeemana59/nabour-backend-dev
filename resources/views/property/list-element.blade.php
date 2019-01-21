@@ -43,7 +43,7 @@
 			</thead>
 			<tbody class="middle-align">
 			@foreach($p_rows as $key => $row)
-				<td>NB00000</td>
+				<td>{!! $row->property_no_label !!}</td>
 				<td class="name">{!!$row->property_name_th." / ".$row->property_name_en!!}</td>
 				<td>{!!$provinces[$row->province]!!}</td>
 				<td class="text-center">

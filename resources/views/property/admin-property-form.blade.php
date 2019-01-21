@@ -8,7 +8,26 @@
                 <div class="row">
 
                     <div class="col-sm-12">
+                        <?php
 
+                                    if(!empty($max_cus)){
+                                        $cut_c=substr($max_cus,2);
+                                        $sum_c=$cut_c+1;
+                                        $new_id="0000".$sum_c;
+                                        $count=strlen($new_id);
+                                        if($count>=5){
+                                            $count_c=$count-5;
+                                            $cut_new_id=substr($new_id,$count_c);
+                                            $cus="NB".$cut_new_id;
+                                        }else{
+                                            $cus="NB".$new_id;
+                                        }
+                                    }else{
+                                        $cus="NB00001";
+                                    }
+
+                        ?>
+                        <input type="hidden" name="number" value="{!! $cus !!}">
                         <div class="form-group @if($errors->has('property_name_th') || $errors->has('property_name_en')) validate-has-error @endif">
                             <label class="col-sm-2 control-label" for="field-1">{!! trans('messages.AboutProp.property_name') !!} (th)</label>
                             <div class="col-sm-4">

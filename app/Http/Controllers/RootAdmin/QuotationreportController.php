@@ -22,6 +22,7 @@ use App\BackendModel\Property;
 use DB;
 use Excel;
 use View;
+use PHPExcel_Style_Border;
 
 class QuotationreportController extends Controller
 {
@@ -197,6 +198,18 @@ class QuotationreportController extends Controller
                         'D' => 20,
                         'E' => 30,
                     ));
+
+//                    $styleArray = array(
+//                        'borders' => array(
+//                            'allborders' => array(
+//                                'style' => PHPExcel_Style_Border::BORDER_THIN
+//                            )
+//                        )
+//                    );
+//
+//                    $sheet->getStyle()->applyFromArray($styleArray);
+
+
                     //$sheet->setBorder('A1', 'thin');
                     // $sheet->setBorder('A1:F10', 'thin');
                     //$sheet->setBorder('A1:E17', 'thin');
