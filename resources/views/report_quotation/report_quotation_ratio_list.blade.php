@@ -62,11 +62,6 @@
         </div>
     </div>
     {{--end search--}}
-
-<?php
-    $channel1=unserialize(constant('LEADS_SOURCE'));
-    $type1=unserialize(constant('LEADS_TYPE'));
-?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" id="panel-lead-list">
@@ -74,30 +69,6 @@
                     <h3 class="panel-title">Quotation Ratio</h3>
                     <br>
                     <br>
-                    @if(!empty($from))
-                        <h4 class="panel-title">ผลการค้นหาระหว่างวันที่ {!! localDate($from) !!}  ถึง  {!! localDate($to) !!}</h4>
-                    @endif
-
-                    @if(!empty($channel))
-                        <h4 class="panel-title">ผลการค้นหาจากแหล่งที่มา :
-                            @foreach ($channel1 as $key => $value)
-                                @if($channel == $key)
-                                    {!! $value !!}
-                                @endif
-                            @endforeach
-                        </h4>
-                    @endif
-
-                    @if(!empty($type))
-                        <h4 class="panel-title">ผลการค้นหาจากประเภท :
-                            @foreach ($type1 as $key => $value)
-                                @if($type == $key)
-                                    {!! $value !!}
-                                @endif
-                            @endforeach
-                        </h4>
-                    @endif
-
                 </div>
                 <div class="panel-body" id="landing-property-list">
                     @include('report_quotation.report_quotation_ratio_list_element')

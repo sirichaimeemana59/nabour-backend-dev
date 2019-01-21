@@ -7,6 +7,36 @@
     <button type="submit" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button>
 </form>
 <?php
+$channel1=unserialize(constant('LEADS_SOURCE'));
+$type1=unserialize(constant('LEADS_TYPE'));
+?>
+
+@if(!empty($from))
+    <h4 class="panel-title">ผลการค้นหาระหว่างวันที่ {!! localDate($from) !!}  ถึง  {!! localDate($to) !!}</h4>
+@endif
+
+@if($channel != null)
+    <h4 class="panel-title">ผลการค้นหาจากแหล่งที่มา :
+        @foreach ($channel1 as $key => $value)
+            @if($channel == $key)
+                {!! $value !!}
+            @endif
+        @endforeach
+    </h4>
+@endif
+
+@if(!empty($type))
+    <h4 class="panel-title">ผลการค้นหาจากประเภท :
+        @foreach ($type1 as $key => $value)
+            @if($type == $key)
+                {!! $value !!}
+            @endif
+        @endforeach
+    </h4>
+@endif
+
+
+<?php
 $from=0;
 $to=0;
 $allpage=0;

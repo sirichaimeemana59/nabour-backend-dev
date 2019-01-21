@@ -133,13 +133,14 @@ class QuotationreportController extends Controller
 
         $p_rows = new Customer;
 
+            //dd($channel);
+
+        if(Request::ajax()) {
+
             $from       = str_replace('/', '-', Request::get('from-date'));
             $to         = str_replace('/', '-', Request::get('to-date'));
             $channel    = Request::get('channel_id');
             $type       = Request::get('type_id');
-            //dd($channel);
-
-        if(Request::ajax()) {
 
             if (Request::get('from-date')) {
                 $date = array($from . " 00:00:00", $to . " 00:00:00");
