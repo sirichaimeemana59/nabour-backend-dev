@@ -212,15 +212,6 @@ class PropertyController extends Controller {
                 if(empty($prop->max_price)) $prop->max_price = 0;
                 $prop->save();
                 //$this->updateBackendProperty ($prop);
-                $_prop = Property::find($property['id']);
-                $_prop->property_no_label = Request::get('number');
-                //dd($_prop);
-                $_prop->save();
-
-
-                $_prop_ = BackendProperty::find($property['id']);
-                $_prop_->property_no_label = Request::get('number');
-                $_prop_->save();
              
                 $user = User::find($property['user']['id']);
                 //$user->fill($property['user']);
@@ -233,7 +224,7 @@ class PropertyController extends Controller {
                     $user->name = $property['user']['name'];
                     $user->email = $property['user']['email'];
                 }
-                //$user->save();
+                $user->save();
                 return redirect('customer/property/list');
             }
         }
