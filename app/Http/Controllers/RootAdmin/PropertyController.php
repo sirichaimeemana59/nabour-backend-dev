@@ -305,7 +305,7 @@ class PropertyController extends Controller {
             }
 //dd($value->id);
             $update = BackendProperty::find($value->id);
-            $update->property_no_label = null;
+            $update->property_no_label = $cus;
             //dd($update);
             $update->save();
 
