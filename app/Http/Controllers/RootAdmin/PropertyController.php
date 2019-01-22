@@ -255,6 +255,8 @@ class PropertyController extends Controller {
                 ->paginate(30);
 
             $package = array();
+
+
             return view('property.edit')->with(compact('data_array','sing','max_cus','property','provinces','pmg','property1','sale1','max_quo','package'));
         }
 
@@ -277,8 +279,8 @@ class PropertyController extends Controller {
     public function index ()  {
         $props = new BackendProperty;
         //$props = $props->where('is_demo',false);
-
         
+
         if(Request::get('customer')) {
             $props = $props->where('property_no_label','=',Request::get('customer'));
         }
@@ -902,7 +904,7 @@ class PropertyController extends Controller {
         $_property->property_name_en        = $property->property_name_en;
         $_property->developer_group_id      = $property->developer_group_id;
         $_property->id                      = $property->id;
-        $_property->property_no_label                  = $property->number;
+        $_property->property_no_label       = $property->property_no_label;
         $_property->save();
         //dd($_property);
     }
