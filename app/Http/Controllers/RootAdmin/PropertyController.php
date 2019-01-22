@@ -163,7 +163,7 @@ class PropertyController extends Controller {
 
 
             $_props = new BackendProperty;
-            $max_cus = $_props->max('number');
+            $max_cus = $_props->max('property_no_label');
 
 
         return view('property.add')->with(compact('property','provinces','pmg','max_cus'));
@@ -278,6 +278,44 @@ class PropertyController extends Controller {
         $props = new BackendProperty;
         //$props = $props->where('is_demo',false);
 
+        $add = new BackendProperty;
+        $add = $add->get();
+
+        $_props = new BackendProperty;
+        //dump($add->toArray());
+        foreach ($add as $value){
+
+        //return ($value->id);
+            $max_cus = $_props->max('property_no_label');
+
+            if(!empty($max_cus)){
+                $cut_c=substr($max_cus,2);
+                $sum_c=$cut_c+1;
+                $new_id="0000".$sum_c;
+                $count=strlen($new_id);
+                if($count>=5){
+                    $count_c=$count-5;
+                    $cut_new_id=substr($new_id,$count_c);
+                    $cus="NB".$cut_new_id;
+                }else{
+                    $cus="NB".$new_id;
+                }
+            }else{
+                $cus="NB00001";
+            }
+//dd($value->id);
+            $update = BackendProperty::find($value->id);
+            $update->property_no_label = $cus;
+            //dd($update);
+            $update->save();
+
+            $_update = Property::find($value->id);
+            $_update->property_no_label = $value->property_no_label;
+            //dump($update->toArray());
+            //$_update->save();
+        }
+
+
         if(Request::get('customer')) {
             $props = $props->where('property_no_label','=',Request::get('customer'));
         }
@@ -304,11 +342,6 @@ class PropertyController extends Controller {
             });
         }//Join table
 
-//        if(Request::get('customer')){
-//            $props = $props->whereHas('lastest_contract', function ($q) {
-//                $q ->where('customer_id','=',Request::get('customer'));
-//            });
-//        }//Join table
 
         if(Request::get('name')) {
             $props = $props->where('property_name_th','like',"%".Request::get('name')."%")
@@ -318,7 +351,7 @@ class PropertyController extends Controller {
         
 
 
-        $p_rows = $props->orderBy('property_no_label','desc')->paginate(50);
+        //$p_rows = $props->orderBy('property_no_label','desc')->paginate(50);
         $p = new Province;
         $provinces = $p->getProvince();
 
