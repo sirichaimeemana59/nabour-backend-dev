@@ -211,6 +211,7 @@ class PropertyController extends Controller {
                 $prop->max_price = str_replace(',', '', $prop->max_price);
                 if(empty($prop->max_price)) $prop->max_price = 0;
                 $prop->save();
+                $this->updateBackendProperty ($prop);
              
                 $user = User::find($property['user']['id']);
                 //$user->fill($property['user']);
@@ -279,7 +280,6 @@ class PropertyController extends Controller {
     public function index ()  {
         $props = new BackendProperty;
         //$props = $props->where('is_demo',false);
-        
 
         if(Request::get('customer')) {
             $props = $props->where('property_no_label','=',Request::get('customer'));
