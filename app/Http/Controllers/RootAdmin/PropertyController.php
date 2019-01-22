@@ -163,7 +163,7 @@ class PropertyController extends Controller {
 
 
             $_props = new BackendProperty;
-            $max_cus = $_props->max('number');
+            $max_cus = $_props->max('property_no_label');
 
 
         return view('property.add')->with(compact('property','provinces','pmg','max_cus'));
@@ -278,6 +278,7 @@ class PropertyController extends Controller {
         $props = new BackendProperty;
         //$props = $props->where('is_demo',false);
 
+        
         if(Request::get('customer')) {
             $props = $props->where('property_no_label','=',Request::get('customer'));
         }
@@ -304,11 +305,6 @@ class PropertyController extends Controller {
             });
         }//Join table
 
-//        if(Request::get('customer')){
-//            $props = $props->whereHas('lastest_contract', function ($q) {
-//                $q ->where('customer_id','=',Request::get('customer'));
-//            });
-//        }//Join table
 
         if(Request::get('name')) {
             $props = $props->where('property_name_th','like',"%".Request::get('name')."%")
