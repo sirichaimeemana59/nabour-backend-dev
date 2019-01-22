@@ -27,7 +27,7 @@
                                     }
 
                         ?>
-                        <input type="hidden" name="number" value="{!! $cus !!}">
+                        <input type="text" name="number" value="{!! $cus !!}">
                         <div class="form-group @if($errors->has('property_name_th') || $errors->has('property_name_en')) validate-has-error @endif">
                             <label class="col-sm-2 control-label" for="field-1">{!! trans('messages.AboutProp.property_name') !!} (th)</label>
                             <div class="col-sm-4">
