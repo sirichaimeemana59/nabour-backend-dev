@@ -217,7 +217,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">วันหมดอายุ </label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy-mm-dd" value="{!! $quotation->invalid_date !!}">
+                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy-mm-dd" value="{!! $quotation->invalid_date !!}" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>

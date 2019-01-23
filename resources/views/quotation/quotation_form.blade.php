@@ -98,7 +98,7 @@
                         <td></td>
                         <td>
                             <select name="transaction[0][service]"  class="toValidate form-control input-sm  unit-select-project" required OnChange="resultPrice(this.value);">
-                                <option value="">กรุณาเลือกค่าบริการ</option>
+                                <option value="">กรุณาเลือก Package</option>
                                 @foreach($package as $row)
                                     <option value="{!!$row->id!!}|{!! $row->price !!}">{!!$row->name!!}</option>
                                 @endforeach
@@ -202,7 +202,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">วันหมดอายุ </label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy-mm-dd">
+                                                    <input type="text" required class="form-control datepicker" name="invalid_date" data-format="yyyy-mm-dd" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>

@@ -226,10 +226,11 @@ class QuotationController extends Controller
 
     public function destroy()
     {
+        //dd(Request::get('page'));
         $quotation = Quotation::find(Request::get('id2'))->delete();
 
         if(Request::get('page') == 1){
-            return redirect('service/quotation/add/'.Request::get('lead_id'));
+            return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
         }else{
             return redirect('quotation/list');
         }
