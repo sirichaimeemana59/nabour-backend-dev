@@ -93,7 +93,7 @@
                             <td>
                                     @if($quo->lastest_package->status==1)
                                     <select name="_data[{!! $key !!}][service]" class="toValidate form-control input-sm unit-select-project {!! $_service !!}" required OnChange="resultPrice(this.value);">
-                                        <option value="">กรุณาเลือกค่าบริการ</option>
+                                        <option value="">กรุณาเลือก Package</option>
                                             @foreach($package as $row_)
                                                 <?php
                                                 $select_=$row_->id==$quo->package_id?"selected":"";
