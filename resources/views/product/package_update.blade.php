@@ -68,7 +68,7 @@
 {!! Form::model(null,array('url' => array('service/package/update_package'),'class'=>'form-horizontal','id'=>'p_form')) !!}
 <br>
 <div class="form-group">
-    <label class="col-sm-4">ชื่อ Package</label>
+    <label class="col-sm-4">ชื่อผลิตภัณฑ์</label>
     <div class="col-sm-12">
         <input class="form-control" name="name" type="text" required value="{!!$package->name!!}">
     </div>

@@ -109,8 +109,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-4">ประเภท</label>
                                     <div class="col-sm-12">
-                                        <input type="radio" name="status" value="2">  :   บริการ <br>
-                                        <input type="radio" name="status" value="1">  :   Package
+                                        <input type="radio" name="status" value="2" required>  :   บริการ <br>
+                                        <input type="radio" name="status" value="1" required>  :   Package
                                     </div>
                                 </div>
                                 <input type="hidden" name="is_delete" value="0">
@@ -163,7 +163,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">ลบข้อมูล Package</h4>
+                    <h4 class="modal-title">ลบข้อมูลผลิตภัณฑ์</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -194,7 +194,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">แก้ไข Package</h4>
+                    <h4 class="modal-title">แก้ไขผลิตภัณฑ์</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -258,12 +258,14 @@
         function validateForm () {
             $("#p_form").validate({
                 rules: {
-                    name    : 'required',
-                    detail    : 'required',
+                    name_lead    : 'required',
+                    detail_lead  : 'required',
                 },
                 errorPlacement: function(error, element) { element.addClass('error'); }
             });
         }
+
+
 
         function mate_del(id) {
             document.getElementById("id2").value = id;
@@ -301,5 +303,15 @@
                 $('.add-v-exp-dt').hide();
             }
         });
+
+        if($('#p_form').valid() && allGood ) {
+            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+            $('#p_form').submit();
+        } else {
+            var top_;
+            if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
+            else top_ = $('#prop_list').offset().top;
+            $('html,body').animate({scrollTop: top_-100}, 1000);
+        }
     </script>
 @endsection

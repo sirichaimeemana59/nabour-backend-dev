@@ -146,7 +146,7 @@ class PackageController extends Controller
             $product->description           = Request::get('description');
             if(Request::get('vat') == null AND Request::get('price_vat') != Request::get('price')){
                 $product->price             = Request::get('price_vat');
-                $product->price_with_vat             = "0";
+                $product->price_with_vat    = "0";
                 $product->vat               = "0";
             }else{
                 $product->price             = Request::get('price');
