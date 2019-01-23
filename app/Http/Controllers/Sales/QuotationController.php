@@ -35,11 +35,11 @@ class QuotationController extends Controller
 
         if($search == null or $ip == 1) {
             $service = new Products;
-            $service = $service->where('status', '2');
+            $service = $service->where('status', '2')->where('is_delete','=','f');
             $service = $service->get();
 
             $package = new Products;
-            $package = $package->where('status', '1');
+            $package = $package->where('status', '1')->where('is_delete','=','f');
             $package = $package->get();
 
             $lead = new Customer;
@@ -163,11 +163,11 @@ class QuotationController extends Controller
         $quotation_service = $quotation_service->get();
 
         $service = new Products;
-        $service = $service->where('status', '2');
+        $service = $service->where('status', '2')->where('is_delete','=','f');
         $service = $service->get();
 
         $package = new Products;
-        $package = $package->where('status', '1');
+        $package = $package->where('status', '1')->where('is_delete','=','f');
         $package = $package->get();
 
        /* $lead = new LeadTable;
