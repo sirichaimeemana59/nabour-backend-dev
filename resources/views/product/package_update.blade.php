@@ -156,7 +156,7 @@
 $vat1 = ($package->price*7)/100;
 $price_vat1 = $vat1+$package->price;
 ?>
-<input type="hidden" name="price_vat" value="{!!$price_vat1!!}">
+<input type="hidden" name="price_vat" value="{!!$package->price!!}">
 <div class="form-group">
     <label class="col-sm-4"></label>
     <div class="col-sm-12 add-v-exp-dt2" style="display:none;">
