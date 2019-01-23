@@ -161,12 +161,11 @@ class QuotationController extends Controller
 //        $quotation_service = $quotation_service->where('quotation_id', $id);
 //        $quotation_service = $quotation_service->get();
 
-        $quotation_service = Quotation_transaction::where('quotation_id', $id)
-            ->with(['lastest_package' => function($query) {
-                $query->orderBy('status', 'ASC');
-            }])->get();
 
-        //dd($quotation_service);
+        $quotation_service = Quotation_transaction::join('product', 'product.id', '=', 'quotation_transaction.package_id')
+            ->orderBy('product.status', 'asc')
+            ->where('quotation_id', $id)->get();
+
 
         $service = new Products;
         $service = $service->where('status', '2')->where('is_delete','=','f');
