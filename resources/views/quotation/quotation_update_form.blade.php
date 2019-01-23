@@ -123,11 +123,20 @@
                                 @else
                                     <td></td>
                             @endif
-                            <td><div class="input-group">
-                                    <span class="input-group-addon">฿</span>
-                                    <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]" id="{!! $id_ !!}" value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tPrice" readonly/>
-                                </div>
-                            <td>
+                            @if($quo->lastest_package->status==1)
+                                <td><div class="input-group">
+                                        <span class="input-group-addon">฿</span>
+                                        <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]" id="unit_price" value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tPrice"  readonly/>
+                                    </div>
+                                <td>
+                                @else
+                                <td><div class="input-group">
+                                        <span class="input-group-addon">฿</span>
+                                        <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]"  value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tPrice"  readonly/>
+                                    </div>
+                                <td>
+                            @endif
+
                                 <div class="text-right">
                                     <span class="colTotal" id="_colTotal">{!!number_format($quo->total_package,2)!!}</span> บาท
                                 </div>
