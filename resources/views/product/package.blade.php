@@ -89,48 +89,48 @@
                                 ?>
                                 <input type="hidden" name="product_code" value="{!! $cus !!}">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">ชื่อผลิตภัณฑ์</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-4">ชื่อผลิตภัณฑ์</label>
+                                    <div class="col-sm-12">
                                         <input class="form-control" name="name" type="text" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">รายละเอียด</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-4">รายละเอียด</label>
+                                    <div class="col-sm-12">
                                         <textarea name="description" class="form-control" id="" cols="65" rows="9" required></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">ราคา</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-4">ราคา</label>
+                                    <div class="col-sm-12">
                                         <input class="form-control" name="price" id="price" type="text" required >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">ประเภท</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-4">ประเภท</label>
+                                    <div class="col-sm-12">
                                         <input type="radio" name="status" value="2">  :   บริการ <br>
                                         <input type="radio" name="status" value="1">  :   Package
                                     </div>
                                 </div>
                                 <input type="hidden" name="is_delete" value="0">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">Vat 7 %</label>
-                                        <div class="col-sm-9">
+                                        <label class="col-sm-2">Vat 7 %</label>
+                                        <div class="col-sm-4">
                                                     <input id="flag-exp-dt" value="1" type="checkbox" name="vat1" class="cbr cbr-turquoise">
                                         </div>
                                     </div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label"></label>
-                                                <div class="col-sm-9 add-v-exp-dt" style="display:none;">
-                                                    Vat 7 % <input type="text" class="form-control"  name="vat_value" id="vat_value" readonly>
+                                                <div class="col-sm-12 add-v-exp-dt" style="display:none;">
+                                                    <label class="col-sm-4">Vat 7 %</label>
+                                                     <input type="text" class="form-control"  name="vat_value" id="vat_value" readonly>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label"></label>
-                                                <div class="col-sm-9 add-v-exp-dt" style="display:none;">
+                                                <label class="col-sm-4"></label>
+                                                <div class="col-sm-12 add-v-exp-dt" style="display:none;">
                                                     ราคาสุทธิ <input type="text" class="form-control" name="vat_total" id="vat" readonly>
                                                 </div>
                                             </div>

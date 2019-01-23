@@ -68,21 +68,21 @@
 {!! Form::model(null,array('url' => array('service/package/update_package'),'class'=>'form-horizontal','id'=>'p_form')) !!}
 <br>
 <div class="form-group">
-    <label class="col-sm-2 control-label">ชื่อ Package</label>
-    <div class="col-sm-9">
+    <label class="col-sm-4">ชื่อ Package</label>
+    <div class="col-sm-12">
         <input class="form-control" name="name" type="text" required value="{!!$package->name!!}">
     </div>
 </div>
 <input type="hidden" name="id" value="{!!$package->id!!}">
 <div class="form-group">
-    <label class="col-sm-2 control-label">รายละเอียด</label>
-    <div class="col-sm-9">
+    <label class="col-sm-4">รายละเอียด</label>
+    <div class="col-sm-12">
         <textarea name="description" class="form-control" id="" cols="65" rows="9" required>{!!$package->description!!}</textarea>
     </div>
 </div>
 <div class="form-group">
-    <label class="col-sm-2 control-label">ราคา</label>
-    <div class="col-sm-9">
+    <label class="col-sm-4">ราคา</label>
+    <div class="col-sm-12">
         <?php
             if(empty($package->price_with_vat)){
                 $price=$package->price;
@@ -96,8 +96,8 @@
 </div>
 <input type="hidden" name="is_delete" value="f">
 <div class="form-group">
-    <label class="col-sm-2 control-label">ประเภท</label>
-    <div class="col-sm-9">
+    <label class="col-sm-4">ประเภท</label>
+    <div class="col-sm-12">
         <?php
         if($package->status ==1){
             $check1="checked"; //package
@@ -113,8 +113,8 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-2 control-label"></label>
-    <div class="col-sm-9">
+    <label class="col-sm-4"></label>
+    <div class="col-sm-12">
         <?php
         $check=$package->vat!=0?"checked":"";
         ?>
@@ -137,16 +137,16 @@
         $total_vat = $vat+$price_vat;
     ?>
     <div class="form-group">
-        <label class="col-sm-2 control-label"></label>
-        <div class="col-sm-9 add-v-exp-dt1">
+        <label class="col-sm-4"></label>
+        <div class="col-sm-12 add-v-exp-dt1">
             <input type="hidden" name="price_vat" value="{!!$price_vat!!}">
             Vat 7 % <input type="text" class="form-control"  name="vat_value" id="_vat_value" readonly value="{!!$vat!!}">
         </div>
     </div>
 
         <div class="form-group">
-        <label class="col-sm-2 control-label"></label>
-        <div class="col-sm-9 add-v-exp-dt1">
+        <label class="col-sm-4"></label>
+        <div class="col-sm-12 add-v-exp-dt1">
             ราคาสุทธิ <input type="text" class="form-control" name="vat_total" id="_vat" readonly value="{!!$total_vat!!}">
         </div>
     </div>
@@ -158,15 +158,15 @@ $price_vat1 = $vat1+$package->price;
 ?>
 <input type="hidden" name="price_vat" value="{!!$price_vat1!!}">
 <div class="form-group">
-    <label class="col-sm-2 control-label"></label>
-    <div class="col-sm-9 add-v-exp-dt2" style="display:none;">
+    <label class="col-sm-4"></label>
+    <div class="col-sm-12 add-v-exp-dt2" style="display:none;">
         Vat 7 % <input type="text" class="form-control"  name="vat_value" id="vat_value2" readonly >
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-2 control-label"></label>
-    <div class="col-sm-9 add-v-exp-dt2" style="display:none;">
+    <label class="col-sm-4"></label>
+    <div class="col-sm-12 add-v-exp-dt2" style="display:none;">
         ราคาสุทธิ <input type="text" class="form-control" name="vat_total" id="vat2">
     </div>
 </div>
