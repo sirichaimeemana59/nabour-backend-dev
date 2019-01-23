@@ -164,7 +164,10 @@ class QuotationController extends Controller
 
         $quotation_service = Quotation_transaction::join('product', 'product.id', '=', 'quotation_transaction.package_id')
             ->orderBy('product.status', 'asc')
+            ->select('quotation_transaction.*')
             ->where('quotation_id', $id)->get();
+
+        //dd($quotation_service);
 
 
         $service = new Products;
@@ -187,6 +190,7 @@ class QuotationController extends Controller
     {
         if( !empty(Request::get('_data'))) {
             foreach ( Request::get('_data') as $q) {
+                //dd($q['id_']);
                 $service_id = explode("|",$q['service']);
                 $quotation_service = Quotation_transaction::find($q['id_']);
                 //dd($quotation_service);

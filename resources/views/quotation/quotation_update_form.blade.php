@@ -76,10 +76,9 @@
                     </thead>
                     <tbody>
                     @foreach($quotation_service as $key => $quo)
-                        <input type="hidden" name="_data[{!! $key !!}][id_]" value="{!!$quo->id!!}">
+                        <input type="hidden" name="_data[{!! $key !!}][id_]" value="{!!$quo->id!!}"><br>
                         <input type="hidden" name="_data[{!! $key !!}][id]" value="{!!$quo->quotation_id!!}">
                         <input type="hidden" name="_data[{!! $key !!}][lead_id]" value="{!!$quo->lead_id!!}">
-
                         <?php
                             $read=$quo->lastest_package->status==1?"readonly":"";
                             $_read=$quo->lastest_package->status!=1?"readonly":"";
