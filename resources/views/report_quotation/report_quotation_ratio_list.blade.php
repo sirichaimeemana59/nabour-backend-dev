@@ -100,6 +100,12 @@
             //alert('aaa');
         });
 
+        $('.reset-s-btn').on('click',function () {
+            $(this).closest('form').find("input").val("");
+            $(this).closest('form').find("select option:selected").removeAttr('selected');
+            propertyPage (1);
+        });
+
         function propertyPage (page) {
             var data = $('#search-form').serialize()+'&page='+page;
            //alert(data);
