@@ -129,7 +129,7 @@ Route::get('report_quotation/view/{id?}', 'RootAdmin\QuotationreportController@v
 Route::post('report_quotation/detail', 'RootAdmin\QuotationreportController@detail');
 
 
-Route::get('report_quotation/report_count', 'RootAdmin\QuotationreportController@report');
+Route::any('report_quotation/report_count', 'RootAdmin\QuotationreportController@report');
 Route::get('report_quotation_excel', 'RootAdmin\QuotationreportController@excel');
 //Route::get('report_quotation/ratio', 'RootAdmin\QuotationreportController@ratio');
 Route::any('report_quotation/ratio/report', 'RootAdmin\QuotationreportController@ratio');

@@ -1,133 +1,108 @@
 @extends('base-admin')
 @section('content')
-    <?php
-    $from=0;
-    $to=0;
-    $allpage=0;
-    ?>
-    @if($p_rows->count() > 0)
-        <?php
-        $to   	= $p_rows->total() - (($p_rows->currentPage())*$p_rows->perPage());
-        $to     = ($to > 0) ? $to : 1;
-        $from   = $p_rows->total() - (($p_rows->currentPage())*$p_rows->perPage())+$p_rows->perPage();
-        $allpage = $p_rows->lastPage();
-        ?>
-        <div class="panel-body member-list-content">
-            <div class="tab-pane active" id="member-list">
-                <div id="member-list-content">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="dataTables_info" id="example-1_info" role="status" aria-live="polite">
-                                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$p_rows->total()]) !!}<br/><br/>
-                            </div>
-                        </div>
+    <div class="page-title">
+        <div class="title-env">
+            <h1 class="title">รวมยอดสุทธิใบเสนอราคา</h1>
+        </div>
+        <div class="breadcrumb-env">
 
-                        @if($allpage > 1)
-                            <div class="col-md-6 text-right">
-                                <div class="dataTables_paginate paging_simple_numbers" >
-                                    @if($p_rows->currentPage() > 1)
-                                        <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()-1 !!}">{!! trans('messages.prev') !!}</a>
-                                    @endif
-                                    @if($p_rows->lastPage() > 1)
-                                        <?php echo Form::selectRange('page', 1, $customer->lastPage(),$p_rows->currentPage(),['class'=>'form-control p-paginate-select paginate-select']); ?>
-                                    @endif
-                                    @if($p_rows->hasMorePages())
-                                        <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()+1 !!}">{!! trans('messages.next') !!}</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
+            <ol class="breadcrumb bc-1" >
+                <li>
+                    <a href=""><i class="fa-home"></i>Home</a>
+                </li>
+                <li><a href="">Quotation</a></li>
+                <li class="active">
+                    <strong>List Quotation</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {{-- //search --}}
+    {{--{!! Auth::user()->role !!}--}}
+    {{--<div class="row">--}}
+        {{--<div class="col-sm-12">--}}
+            {{--<div class="panel panel-default">--}}
+                {{--<div class="panel-heading">--}}
+                    {{--<h3 class="panel-title">{!! trans('messages.search') !!}</h3>--}}
+                {{--</div>--}}
+                {{--<div class="panel-body search-form">--}}
+                    {{--<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-sm-3 block-input">--}}
+                                {{--<input class="form-control" size="25" placeholder="{!! trans('messages.name') !!}" name="name">--}}
+                            {{--</div>--}}
+
+                        {{--</div>--}}
+
+                        {{--<div class="row">--}}
+                            {{--<div class="col-sm-12 text-right">--}}
+                                    {{--<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>--}}
+                                    {{--<button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
+
+
+                    {{--</form>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+    {{--end search--}}
     <a href="{!! url('report_quotation_excel') !!}"><button type="button" class="btn btn-info btn-primary action-float-right"><i class="fa fa-download"> </i> ดาวน์โหลด</button></a>
 
+    {{--content--}}
     <div class="row">
-    <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">รวมยอดสุทธิใบเสนอราคา</h3>
-            </div>
-            <div class="panel-body">
-                <div class="tab-pane active" id="member-list">
-                    <div id="member-list-content">
-                        {{--content--}}
-                        <div class="form-group">
-                            <table class="table table-bordered table-striped">
-                                <tr>
-                                    <th width="6%">ลำดับ</th>
-                                    <th style="text-align: center;">ชื่อ - สกุล</th>
-                                    <th style="text-align: center;">ใบเสนอราคา</th>
-                                    <th style="text-align: center;">รวม</th>
-                                    <th style="text-align: center;">VAT</th>
-                                    <th style="text-align: center;">รวมสุทธิ</th>
-                                    <th style="text-align: center;" width="*">Action</th>
-                                </tr>
-                                <?php
-                                    $total =0;
-                                    $i=1;
-                                ?>
-                                @foreach($p_rows as $row)
-                                    <tr>
-                                        <td>{!! $i !!}</td>
-                                        <td>{!! $row->latest_lead->firstname !!}  {!! $row->latest_lead->lastname !!}</td>
-                                        <td style="text-align: right;">{!! $row->count !!} ใบ</td>
-                                        <td style="text-align: right;">{!! number_format($row->sum_total,2) !!} บาท</td>
-                                        <td style="text-align: right;">{!! number_format($row->sum_vat,2) !!} บาท</td>
-                                        <td style="text-align: right;">{!! number_format($row->sum,2) !!} บาท</td>
-                                        <td class="action-links">
-                                            <a href="{!! url('report_quotation/view/'.$row->lead_id) !!}" class="view-quotation btn btn-success"   title="ดูรายละเอียด">
-                                                <i class="fa-eye"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                        $total += $row->sum;
-                                        $i++;
-                                    ?>
-                                @endforeach
-                                <tr>
-                                    <td colspan="4" style="font-weight: bold;">รวมสุทธิ</td>
-                                    <td style="text-align: right; font-weight: bold;">{!! number_format($total,2) !!} บาท</td>
-                                    <td></td>
-                                </tr>
-
-                            </table>
-                        </div>
-                        {{--endcontent--}}
-                    </div>
+        <div class="col-md-12">
+            <div class="panel panel-default" id="panel-lead-list">
+                <div class="panel-heading">
+                    <h3 class="panel-title">รวมยอดสุทธิใบเสนอราคา</h3>
+                </div>
+                <div class="panel-body" id="landing-property-list">
+                    @include('report_quotation.report_quotation_detail_element')
                 </div>
             </div>
         </div>
     </div>
-</div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="dataTables_info" id="example-1_info" role="status" aria-live="polite">
-                                    {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$p_rows->total()]) !!}<br/><br/>
-                                </div>
-                            </div>
+    {{--end content--}}
 
-                            @if($allpage > 1)
-                                <div class="col-md-6 text-right">
-                                    <div class="dataTables_paginate paging_simple_numbers" >
-                                        @if($p_rows->currentPage() > 1)
-                                            <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()-1 !!}">{!! trans('messages.prev') !!}</a>
-                                        @endif
-                                        @if($p_rows->lastPage() > 1)
-                                            <?php echo Form::selectRange('page', 1, $customer->lastPage(),$p_rows->currentPage(),['class'=>'form-control p-paginate-select paginate-select']); ?>
-                                        @endif
-                                        @if($p_rows->hasMorePages())
-                                            <a class="btn btn-white p-paginate-link paginate-link" href="#" data-page="{!! $p_rows->currentPage()+1 !!}">{!! trans('messages.next') !!}</a>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-    @else
-     <div class="col-sm-12 text-center">ไม่พบข้อมูล</div><div class="clearfix"></div>
-    @endif
 @endsection
 
+@section('script')
+    <script type="text/javascript" src="{!! url('/') !!}/js/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datatables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/selectboxit/jquery.selectBoxIt.min.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/nabour-search-form.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
+    <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
+    <script type="text/javascript">
+
+        $('.p-search-property').on('click',function () {
+            propertyPage (1);
+        });
 
 
+        function propertyPage (page) {
+            var data = $('#search-form').serialize()+'&page='+page;
+            $('#landing-property-list').css('opacity','0.6');
+            $.ajax({
+                url     : $('#root-url').val()+"/report_quotation/report_count",
+                data    : data,
+                dataType: "html",
+                method: 'post',
+                success: function (h) {
+                    $('#landing-property-list').css('opacity','1').html(h);
+                }
+            })
+        }
+
+    </script>
+    <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
+@endsection
