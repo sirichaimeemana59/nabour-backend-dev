@@ -64,7 +64,7 @@
 								</select>
 							</div>
 							<div class="col-sm-6 text-right ">
-								<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+								<button type="reset" class="btn btn-white @if(isset($demo)) reset-s-btn1 @else reset-s-btn @endif">{!! trans('messages.reset') !!}</button>
 								<button type="button" class="btn btn-secondary @if(isset($demo)) d-search-property @else p-search-property @endif">{!! trans('messages.search') !!}</button>
 							</div>
 						</div>
@@ -359,6 +359,18 @@
             })
 
             $('.d-search-property').on('click',function () {
+                propertyDemoPage (1);
+            });
+
+            $('.reset-s-btn').on('click',function () {
+                $(this).closest('form').find("input").val("");
+                $(this).closest('form').find("select option:selected").removeAttr('selected');
+                propertyPage (1);
+            });
+
+            $('.reset-s-btn1').on('click',function () {
+                $(this).closest('form').find("input").val("");
+                $(this).closest('form').find("select option:selected").removeAttr('selected');
                 propertyDemoPage (1);
             });
 

@@ -29,16 +29,9 @@
                 <div class="panel-body search-form">
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
                         <div class="row">
-                            {{--<div class="col-sm-3 block-input">--}}
-                                {{--<input class="form-control" size="25" placeholder="รหัสลูกค้า" name="customer">--}}
-                            {{--</div>--}}
                             <div class="col-sm-3 block-input">
                                 <input class="form-control" size="25" placeholder="{!! trans('messages.name') !!}" name="name">
                             </div>
-
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}--}}
-                            {{--</div>--}}
 
                             <div class="col-sm-3">
                                 <select name="sale_id" id="" class="form-control" required>
@@ -49,22 +42,16 @@
                                 </select>
                             </div>
 
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}--}}
-                            {{--</div>--}}
                         </div>
 
                         <div class="row">
                             <div class="col-sm-12 text-right">
-                                <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
                                 @if(Auth::user()->role !=2)
-                                     <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
+                                    <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+                                    <button type="button" class="btn btn-secondary p-search-property">{!! trans('messages.search') !!}</button>
                                 @else
-                                     <button type="button" class="btn btn-secondary p-search-property-sale">{!! trans('messages.search') !!}</button>
+                                    <button type="reset" class="btn btn-white reset-s-btn1">{!! trans('messages.reset') !!}</button>
+                                    <button type="button" class="btn btn-secondary p-search-property-sale">{!! trans('messages.search') !!}</button>
                                 @endif
                             </div>
                         </div>
@@ -531,6 +518,18 @@
 
         $('.p-search-property-sale').on('click',function () {
             propertyPageSale (1);
+        });
+
+        $('.reset-s-btn').on('click',function () {
+           $(this).closest('form').find("input").val("");
+           $(this).closest('form').find("select option:selected").removeAttr('selected');
+            propertyPage (1);
+        });
+
+        $('.reset-s-btn1').on('click',function () {
+           $(this).closest('form').find("input").val("");
+           $(this).closest('form').find("select option:selected").removeAttr('selected');
+           propertyPageSale (1);
         });
 
         //update
