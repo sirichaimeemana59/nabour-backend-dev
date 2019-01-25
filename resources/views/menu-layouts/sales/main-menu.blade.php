@@ -1,10 +1,10 @@
 <ul id="main-menu" class="main-menu">
-    <li>
-        <a href="{!!  url('sales/demo-property/list-property') !!}">
-            <i class="fa fa-list"></i>
-            <span class="title">แบบฟอร์มนิติบุคคล</span>
-        </a>
-    </li>
+    {{--<li>--}}
+        {{--<a href="{!!  url('sales/demo-property/list-property') !!}">--}}
+            {{--<i class="fa fa-list"></i>--}}
+            {{--<span class="title">แบบฟอร์มนิติบุคคล</span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
     <li class="has-sub {!! (Request::is('customer/*') || Request::is('sales/property/*') ? 'active expanded' : '') !!}">
         <a href="">
             <i class="fa fa-group"></i>
@@ -62,12 +62,12 @@
         </a>
     </li>
 
-    <li class="{!! (Request::is('service/package/add') ? 'active' : '') !!}">
-        <a href="{!! url('service/package/add')!!}">
-            <i class="fa fa-file-o"></i>
-            <span class="title">รายการผลิตภัณฑ์</span>
-        </a>
-    </li>
+    {{--<li class="{!! (Request::is('service/package/add') ? 'active' : '') !!}">--}}
+        {{--<a href="{!! url('service/package/add')!!}">--}}
+            {{--<i class="fa fa-file-o"></i>--}}
+            {{--<span class="title">รายการผลิตภัณฑ์</span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
 
     <li>
         <a href="{!! url('auth/logout') !!}">

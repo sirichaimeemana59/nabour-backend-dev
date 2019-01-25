@@ -49,24 +49,24 @@
         </a>
     </li>
 
-    <li class="has-sub {!! (Request::is('billing/*') ? 'active expanded' : '') !!}">
-        <a href="">
-            <i class="fa fa-money"></i>
-            <span class="title">ใบแจ้งหนี้/ใบเสร็จ</span>
-        </a>
-        <ul style="{!! (Request::is('root/admin/users/*') ? 'display:block;' : '') !!}">
-            <li class="{!! (Request::is('billing/invoice/*') ? 'active' : '') !!}">
-                <a href="{!! url('billing/invoice/list') !!}">
-                    <span class="title">ใบแจ้งหนี้</span>
-                </a>
-            </li>
-            <li class="{!! (Request::is('billing/receipt/*') ? 'active' : '') !!}">
-                <a href="{!! url('billing/receipt/list') !!}">
-                    <span class="title">ใบเสร็จรับเงิน</span>
-                </a>
-            </li>
-        </ul>
-    </li>
+    {{--<li class="has-sub {!! (Request::is('billing/*') ? 'active expanded' : '') !!}">--}}
+        {{--<a href="">--}}
+            {{--<i class="fa fa-money"></i>--}}
+            {{--<span class="title">ใบแจ้งหนี้/ใบเสร็จ</span>--}}
+        {{--</a>--}}
+        {{--<ul style="{!! (Request::is('root/admin/users/*') ? 'display:block;' : '') !!}">--}}
+            {{--<li class="{!! (Request::is('billing/invoice/*') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('billing/invoice/list') !!}">--}}
+                    {{--<span class="title">ใบแจ้งหนี้</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+            {{--<li class="{!! (Request::is('billing/receipt/*') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('billing/receipt/list') !!}">--}}
+                    {{--<span class="title">ใบเสร็จรับเงิน</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+        {{--</ul>--}}
+    {{--</li>--}}
 
     <li class="{!! (Request::is('service/package/add') ? 'active' : '') !!}">
         <a href="{!! url('service/package/add')!!}">
@@ -76,35 +76,35 @@
     </li>
 
 
-    <li class="has-sub {!! (Request::is('report/*') ? 'active' : '') !!}">
-        <a href="{!! url('root/admin/post') !!}">
-            <i class="fa fa-area-chart"></i>
-            <span class="title">รายงาน</span>
-        </a>
-        <ul {!! (Request::is('report/*') ? 'style="display:block;"' : '') !!}>
-            <li class="{!! (Request::is('report/invoice') ? 'active' : '') !!}">
-                <a href="{!! url('root/admin/invoice') !!}">
-                    <span class="title">ใบแจ้งหนี้</span>
-                </a>
-            </li>
+    {{--<li class="has-sub {!! (Request::is('report/*') ? 'active' : '') !!}">--}}
+        {{--<a href="{!! url('root/admin/post') !!}">--}}
+            {{--<i class="fa fa-area-chart"></i>--}}
+            {{--<span class="title">รายงาน</span>--}}
+        {{--</a>--}}
+        {{--<ul {!! (Request::is('report/*') ? 'style="display:block;"' : '') !!}>--}}
+            {{--<li class="{!! (Request::is('report/invoice') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('root/admin/invoice') !!}">--}}
+                    {{--<span class="title">ใบแจ้งหนี้</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
-            <li class="{!! (Request::is('report/receipt') ? 'active' : '') !!}">
-                <a href="{!! url('report/receipt') !!}">
-                    <span class="title">ใบเสร็จรับเงิน</span>
-                </a>
-            </li>
-            <li class="{!! (Request::is('report/property') ? 'active' : '') !!}">
-                <a href="{!! url('report/property') !!}">
-                    <span class="title">นิติบุคคล</span>
-                </a>
-            </li>
-            <li class="{!! (Request::is('report/user') ? 'active' : '') !!}">
-                <a href="{!! url('report/user') !!}">
-                    <span class="title">ผู้ใช้งาน</span>
-                </a>
-            </li>
-        </ul>
-    </li>
+            {{--<li class="{!! (Request::is('report/receipt') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('report/receipt') !!}">--}}
+                    {{--<span class="title">ใบเสร็จรับเงิน</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+            {{--<li class="{!! (Request::is('report/property') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('report/property') !!}">--}}
+                    {{--<span class="title">นิติบุคคล</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+            {{--<li class="{!! (Request::is('report/user') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('report/user') !!}">--}}
+                    {{--<span class="title">ผู้ใช้งาน</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+        {{--</ul>--}}
+    {{--</li>--}}
     {{--report Quotation--}}
     <li class="has-sub {!! (Request::is('report_quotation/*') ? 'active' : '') !!}">
         <a href="">
@@ -162,26 +162,26 @@
 
     @endif
 
-    <li class="has-sub {!! (Request::is('support/*') ? 'active' : '') !!}">
-        <a href="{!! url('support') !!}">
-            <i class="fa fa-wrench"></i>
-            <span class="title">เครื่องมือ support</span>
-        </a>
+    {{--<li class="has-sub {!! (Request::is('support/*') ? 'active' : '') !!}">--}}
+        {{--<a href="{!! url('support') !!}">--}}
+            {{--<i class="fa fa-wrench"></i>--}}
+            {{--<span class="title">เครื่องมือ support</span>--}}
+        {{--</a>--}}
 
-        <ul {!! (Request::is('support/*') ? 'style="display:block;"' : '') !!}>
-            <li class="{!! (Request::is('support/tool1') ? 'active' : '') !!}">
-                <a href="{!! url('support/tool1') !!}">
-                    <span class="title">เครื่องมือ 1</span>
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">
-        <a href="{!! url('property/setting') !!}">
-            <i class="fa fa-gear"></i>
-            <span class="title">การตั้งค่า</span>
-        </a>
-    </li>
+        {{--<ul {!! (Request::is('support/*') ? 'style="display:block;"' : '') !!}>--}}
+            {{--<li class="{!! (Request::is('support/tool1') ? 'active' : '') !!}">--}}
+                {{--<a href="{!! url('support/tool1') !!}">--}}
+                    {{--<span class="title">เครื่องมือ 1</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
+        {{--</ul>--}}
+    {{--</li>--}}
+    {{--<li class="{!! (Request::is('property/setting/*') ? 'active' : '') !!}">--}}
+        {{--<a href="{!! url('property/setting') !!}">--}}
+            {{--<i class="fa fa-gear"></i>--}}
+            {{--<span class="title">การตั้งค่า</span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
     <li>
         <a href="{!! url('auth/logout') !!}">
             <i class="fa-power-off"></i>
