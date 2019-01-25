@@ -36,7 +36,6 @@ $allpage=0;
                             </div>
                         </div>
                     @endif
-                    @endif
                 </div>
                 <table class="table table-bordered table-striped">
                     <tr>
@@ -104,3 +103,10 @@ $allpage=0;
             </div>
         </div>
     </div>
+@else
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            ไม่พบข้อมูล
+        </div>
+    </div>
+@endif

@@ -36,7 +36,6 @@
                         </div>
                     </div>
                 @endif
-        @endif
             </div>
             <table cellspacing="0" class="table table-bordered table-striped">
                 <thead>
@@ -141,3 +140,10 @@
         </div>
     </div>
 </div>
+@else
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            ไม่พบข้อมูล
+        </div>
+    </div>
+@endif

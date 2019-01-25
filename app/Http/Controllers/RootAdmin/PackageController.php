@@ -21,15 +21,15 @@ class PackageController extends Controller
 
     public function index()
     {
-        $package = new Products;
+        $p_rows = new Products;
         //$package = $package->where('status','1');
-        $package = $package->orderBy('product_code','DESC')->get();
+        $p_rows = $p_rows->orderBy('product_code','DESC')->paginate(50);
 
         $max_cus = new Products;
         $max_cus = $max_cus->max('product_code');
 
         //dd($package);
-        return view('product.package')->with(compact('package','max_cus'));
+        return view('product.package')->with(compact('p_rows','max_cus'));
     }
 
     public function index_list()
