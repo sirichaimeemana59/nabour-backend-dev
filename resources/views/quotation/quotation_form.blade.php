@@ -241,7 +241,7 @@
             <option value="">กรุณาเลือกค่าบริการ</option>
             @foreach($service as $_row)
                 <?php
-                if($row->price_with_vat > 0){
+                if($_row->price_with_vat > 0){
                     $price_vat1=$_row->price_with_vat;
                 }else{
                     $price_vat1=$_row->price;
