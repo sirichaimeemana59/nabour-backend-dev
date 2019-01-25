@@ -5,8 +5,9 @@
             <span class="title">รายชื่อลูกค้า</span>
         </a>
         <ul {!! (Request::is('customer/*') ? 'style="display:block;"' : '') !!}>
-            <li class="{!!  (Request::is('/customer/leads/list') ? 'active' : '') !!}">
-                <a href="{!!  url('/customer/leads/list') !!}">
+
+            <li class="{!! (Request::is('customer/leads/list') ? 'active' : '') !!}">
+                <a href="{!! url('customer/leads/list') !!}">
                     <i class="fa fa-user"></i>
                     <span class="title">Leads</span>
                 </a>
