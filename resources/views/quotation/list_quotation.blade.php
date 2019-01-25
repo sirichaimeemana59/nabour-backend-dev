@@ -76,7 +76,7 @@
                         <th width="200px">นิติบุคคล</th>
                         <th width="120px">ราคาสุทธิ</th>
                         <th width="60px">สถานะ</th>
-                        <th width="*">Action</th>
+                        <th width="110px">Action</th>
                     </tr>
                     </thead>
                     <tbody>
