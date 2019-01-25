@@ -100,7 +100,14 @@
                             <select name="transaction[0][service]"  class="toValidate form-control input-sm  unit-select-project" required OnChange="resultPrice(this.value);">
                                 <option value="">กรุณาเลือก Package</option>
                                 @foreach($package as $row)
-                                    <option value="{!!$row->id!!}|{!! $row->price !!}">{!!$row->name!!}</option>
+                                    <?php
+                                    if($row->price_with_vat > 0){
+                                        $price_vat=$row->price_with_vat;
+                                    }else{
+                                        $price_vat=$row->price;
+                                    }
+                                    ?>
+                                    <option value="{!!$row->id!!}|{!! $price_vat !!}">{!!$row->name!!}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -233,7 +240,14 @@
         <select name="transaction[0][service]"  class="toValidate form-control input-sm price_service"  required OnChange="result_Price(this);">
             <option value="">กรุณาเลือกค่าบริการ</option>
             @foreach($service as $_row)
-                <option value="{!!$_row->id!!}|{!! $_row->price !!}">{!!$_row->name!!}</option>
+                <?php
+                if($row->price_with_vat > 0){
+                    $price_vat1=$_row->price_with_vat;
+                }else{
+                    $price_vat1=$_row->price;
+                }
+                ?>
+                <option value="{!!$_row->id!!}|{!! $price_vat1 !!}">{!!$_row->name!!}</option>
             @endforeach
         </select>
     </div>

@@ -96,8 +96,14 @@
                                             @foreach($package as $row_)
                                                 <?php
                                                 $select_=$row_->id==$quo->package_id?"selected":"";
+
+                                            if($row_->price_with_vat > 0){
+                                                $price_vat=$row_->price_with_vat;
+                                            }else{
+                                                $price_vat=$row_->price;
+                                            }
                                                 ?>
-                                                <option value="{!!$row_->id!!}|{!! $row_->price !!}" {!!$select_!!}>{!!$row_->name!!}</option>
+                                                <option value="{!!$row_->id!!}|{!! $price_vat !!}" {!!$select_!!}>{!!$row_->name!!}</option>
                                             @endforeach
                                     </select>
                                         @else
@@ -106,8 +112,13 @@
                                             @foreach($service as $row)
                                                 <?php
                                                 $select=$row->id==$quo->package_id?"selected":"";
+                                                if($row->price_with_vat > 0){
+                                                    $price_vat1=$row->price_with_vat;
+                                                }else{
+                                                    $price_vat1=$row->price;
+                                                }
                                                 ?>
-                                                <option value="{!!$row->id!!}|{!! $row->price !!}" {!!$select!!}>{!!$row->name!!}</option>
+                                                <option value="{!!$row->id!!}|{!! $price_vat1 !!}" {!!$select!!}>{!!$row->name!!}</option>
                                             @endforeach
                                         </select>
                                     @endif
