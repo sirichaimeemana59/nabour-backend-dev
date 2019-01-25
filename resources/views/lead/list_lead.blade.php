@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <select name="sale_id" id="" class="form-control" required>
+                                <select name="sale_id" id="sale_id" class="form-control" required>
                                     <option value="">กรุณาเลือกพนักงานขาย</option>
                                     @foreach($sale as $srow)
                                         <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
@@ -136,14 +136,14 @@
                             <div class="col-sm-4">
 
                                 @if(Auth::user()->role !=2)
-                                    <select name="sale_id" id="" class="form-control" required>
+                                    <select name="sale_id" id="sale_id1" class="form-control" required>
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
                                         @foreach($sale as $srow)
                                             <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
                                         @endforeach
                                     </select>
                                 @else
-                                    <select name="sale_id" id="" class="form-control"  disabled="true">
+                                    <select name="sale_id" id="sale_id2" class="form-control"  disabled="true">
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
                                         @foreach($sale as $_srow)
                                             <?php
@@ -171,7 +171,7 @@
 
                         <label class="col-sm-2 control-label">จังหวัด</label>
                         <div class="col-sm-4">
-                            <select name="province" id="" class="form-control" required>
+                            <select name="province" id="province" class="form-control" required>
                                 <option value="">กรุณาเลือกจังหวัด</option>
                                 @foreach($provinces as $row)
                                     <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
@@ -395,6 +395,54 @@
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript">
+
+        $(function () {
+            $("#property_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#property_id1").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id1").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id2").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#province").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
 
             $('a[data-toggle=modal], button[data-toggle=modal]').click(function () {
                 var data_id = '';
