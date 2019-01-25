@@ -62,12 +62,12 @@
         </a>
     </li>
 
-    {{--<li class="{!! (Request::is('service/package/add') ? 'active' : '') !!}">--}}
-        {{--<a href="{!! url('service/package/add')!!}">--}}
-            {{--<i class="fa fa-file-o"></i>--}}
-            {{--<span class="title">รายการผลิตภัณฑ์</span>--}}
-        {{--</a>--}}
-    {{--</li>--}}
+    <li class="{!! (Request::is('service/package/add') ? 'active' : '') !!}">
+        <a href="{!! url('service/package/add')!!}">
+            <i class="fa fa-file-o"></i>
+            <span class="title">รายการผลิตภัณฑ์</span>
+        </a>
+    </li>
 
     <li>
         <a href="{!! url('auth/logout') !!}">

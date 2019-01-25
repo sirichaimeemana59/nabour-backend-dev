@@ -13,7 +13,10 @@ class PackageController extends Controller
 {
 
     public function __construct () {
-        $this->middleware('admin');
+        $this->middleware('auth',['except' => ['login']]);
+        if( Auth::check() && Auth::user()->role !== 0 ) {
+            Redirect::to('/')->send();
+        }
     }
 
     public function index()
