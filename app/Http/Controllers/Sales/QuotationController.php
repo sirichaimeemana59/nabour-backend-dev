@@ -133,7 +133,7 @@ class QuotationController extends Controller
         $quotation->quotation_code         = Request::get('quotation_code');
         $quotation->product_price_with_vat = str_replace(',', '',Request::get('grand_total'));
         $quotation->product_vat            = str_replace(',', '',Request::get('vat'));
-        $quotation->grand_total_price      = str_replace(',', '',$total);
+        $quotation->grand_total_price      = str_replace(',', '',Request::get('total'));
         $quotation->discount               = str_replace(',', '',Request::get('discount'));
         $quotation->invalid_date           = Request::get('invalid_date');
         $quotation->remark                 = 0;

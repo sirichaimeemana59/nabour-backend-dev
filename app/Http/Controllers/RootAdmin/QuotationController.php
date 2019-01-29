@@ -133,12 +133,12 @@ class QuotationController extends Controller
 
         $total =  ($grand_total+$discount)-$vat;
 
-        //dd($total);
+       // dd(Request::get('balance'));
 
         $quotation->quotation_code         = Request::get('quotation_code');
         $quotation->product_price_with_vat = str_replace(',', '',Request::get('grand_total'));
         $quotation->product_vat            = str_replace(',', '',Request::get('vat'));
-        $quotation->grand_total_price      = str_replace(',', '',$total);
+        $quotation->grand_total_price      = str_replace(',', '',Request::get('total'));
         $quotation->discount               = str_replace(',', '',Request::get('discount'));
         $quotation->invalid_date           = Request::get('invalid_date');
         $quotation->remark                 = 0;
@@ -146,12 +146,13 @@ class QuotationController extends Controller
         $quotation->lead_id                = Request::get('lead_id');
         $quotation->send_email_status      = 0;
         $quotation->save();
+        //dd($quotation);
         //dump($quotation->toArray());
 
         $search = new Quotation;
         $search = $search->where('quotation_code',Request::get('quotation_code'));
         $search = $search->first();
-        //dd($search);
+        //dd($search->id);
 
         foreach (Request::get('transaction') as $t) {
             $trans = new Quotation_transaction;
