@@ -16,6 +16,8 @@ use App\BackendModel\Products;
 use App\success;
 use App\BackendModel\Customer;
 use App\BackendModel\contract;
+use App\BackendModel\monthly_counter;
+use Carbon\Carbon;
 
 class QuotationController extends Controller
 {
@@ -49,7 +51,39 @@ class QuotationController extends Controller
             $quotation = new Quotation_transaction;
             $max_cus = $quotation->max('quotation_code');
 
-            return view('quotation.quotation_form')->with(compact('service', 'lead', 'id', 'max_cus','package'));
+            $max_coun = new monthly_counter;
+            $max_quotation_counter	 = $max_coun->max('quotation_counter');
+
+            //dd($max_quotation_counter);
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+            $date_period = $year.$month;
+
+            $date_period_arr = str_split($date_period,4);
+            $date_period_format = $date_period_arr[0].str_pad($date_period_arr[1], 2, '0', STR_PAD_LEFT);
+
+            if($max_quotation_counter != null){
+                $max_counter = $max_quotation_counter+1;
+            }else{
+                $max_counter = 1;
+            }
+            //$max_counter = 105;
+            if(!empty($max_cus)){
+                $new_id="000".$max_counter;
+                $count=strlen($new_id);
+                if($count>4){
+                    $count_c=$count-4;
+                    $cut_new_id=substr($new_id,$count_c);
+                    $cus="QU".$date_period_format.$cut_new_id;
+                }else{
+                    $cus="QU".$date_period_format.$new_id;
+                }
+            }else{
+                $new_id="0000".$max_counter;
+                $cus="QU".$date_period_format.$new_id;
+            }
+
+            return view('quotation.quotation_form')->with(compact('service', 'lead', 'id', 'max_cus','package','cus','date_period_format','max_counter'));
         }else{
 
             $quotation1 = new Quotation;
@@ -130,6 +164,12 @@ class QuotationController extends Controller
             //dd($trans);
             //dump($trans->toArray());
         }
+
+        $new_monthly_counter = new monthly_counter;
+        $new_monthly_counter->quotation_id = $search->id;
+        $new_monthly_counter->date_period = Request::get('date_period_format');
+        $new_monthly_counter->quotation_counter = Request::get('max_counter');
+        $new_monthly_counter->save();
 
         if(Auth::user()->role !=2){
             return redirect('customer/service/quotation/add/'.Request::get('lead_id'));

@@ -18,6 +18,8 @@ use App\BackendModel\Customer;
 use App\BackendModel\User as BackendUser;
 use DB;
 use App\BackendModel\contract;
+use App\BackendModel\monthly_counter;
+use Carbon\Carbon;
 
 class QuotationController extends Controller
 {
@@ -51,7 +53,41 @@ class QuotationController extends Controller
             $quotation = new Quotation_transaction;
             $max_cus = $quotation->max('quotation_code');
 
-            return view('quotation.quotation_form')->with(compact('service', 'lead', 'id', 'max_cus','package'));
+            $max_coun = new monthly_counter;
+            $max_quotation_counter	 = $max_coun->max('quotation_counter');
+
+            //dd($max_quotation_counter);
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+            $date_period = $year.$month;
+
+            $date_period_arr = str_split($date_period,4);
+            $date_period_format = $date_period_arr[0].str_pad($date_period_arr[1], 2, '0', STR_PAD_LEFT);
+
+            if($max_quotation_counter != null){
+                $max_counter = $max_quotation_counter+1;
+            }else{
+                $max_counter = 1;
+            }
+            //$max_counter = 105;
+            if(!empty($max_cus)){
+                $new_id="000".$max_counter;
+                $count=strlen($new_id);
+                if($count>4){
+                    $count_c=$count-4;
+                    $cut_new_id=substr($new_id,$count_c);
+                    $cus="QU".$date_period_format.$cut_new_id;
+                }else{
+                    $cus="QU".$date_period_format.$new_id;
+                }
+            }else{
+                $new_id="0000".$max_counter;
+                $cus="QU".$date_period_format.$new_id;
+            }
+
+            //$receipt_no_label = $this->generateRunningLabel('QUOTATION');
+
+            return view('quotation.quotation_form')->with(compact('service', 'lead', 'id', 'max_cus','package','cus','date_period_format','max_counter'));
         }else{
 
             $quotation1 = new Quotation;
@@ -134,6 +170,11 @@ class QuotationController extends Controller
             //dump($trans->toArray());
         }
 
+        $new_monthly_counter = new monthly_counter;
+        $new_monthly_counter->quotation_id = $search->id;
+        $new_monthly_counter->date_period = Request::get('date_period_format');
+        $new_monthly_counter->quotation_counter = Request::get('max_counter');
+        $new_monthly_counter->save();
 
         return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
 
@@ -345,11 +386,9 @@ class QuotationController extends Controller
         return redirect('customer/service/quotation/add/'.$id);
 
     }
-
     public function quotationList ()
     {
         $quotations = new Quotation;
-        //return view('quotation.list')->with(compact('quotation'));
 
         if( Request::get('q_no') ) {
             $quotations = $quotations->where('quotation_code','like','%'.Request::get('q_no').'%');
@@ -359,17 +398,16 @@ class QuotationController extends Controller
             $quotations = $quotations->where('lead_id',Request::get('leads_id'));
         }
 
-        if( Request::get('sale_id') ) {
-            $quotations = $quotations->where('sales_id',Request::get('sale_id'));
-        }
-
         $quotations = $quotations->orderBy('quotation_code','desc')->paginate(500);
+
+        $sales = new BackendUser;
+        $sales = $sales->where('role','=',2);
+        $sales = $sales->get();
 
         if( Request::ajax() ) {
             return view('quotation.list-element')->with(compact('quotations'));
 
         } else {
-            $sales      = BackendUser::whereIn('role',[1,2])->pluck('name','id');
             $customers = Customer::where('role',1)->select('firstname','lastname','id')->get();
             if( $customers ) $customers = $customers->toArray();
             return view('quotation.list')->with(compact('quotations','customers','sales'));

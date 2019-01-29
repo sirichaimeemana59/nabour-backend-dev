@@ -5,21 +5,7 @@
     $property_type = unserialize(constant('PROPERTY_TYPE_'.strtoupper($lang)));*/
     ?>
     <?php
-    if(!empty($max_cus)){
-        $cut_c=substr($max_cus,2);
-        $sum_c=$cut_c+1;
-        $new_id="0000".$sum_c;
-        $count=strlen($new_id);
-        if($count>5){
-            $count_c=$count-5;
-            $cut_new_id=substr($new_id,$count_c);
-            $cus="QU".$cut_new_id;
-        }else{
-            $cus="QU".$new_id;
-        }
-    }else{
-        $cus="QU00001";
-    }
+
     ?>
 
     <div class="page-title">
@@ -115,7 +101,6 @@
                         </td>
                         <td>
                             <input type="text" class="toValidate form-control input-sm" name="transaction[0][price]" maxlength="15" required id="tmonth" style="text-align:right"/>
-
                         </td>
                         <td><div class="input-group">
                                 <span class="input-group-addon">฿</span>
@@ -222,6 +207,8 @@
 
                 <input type="hidden" id="baht-label" value="{!! trans('messages.Report.baht') !!}" />
                 <input type="hidden" name="role" value="{!! $lead->role !!}">
+                <input type="hidden" name="date_period_format" value="{!! $date_period_format !!}">
+                <input type="hidden" name="max_counter" value="{!! $max_counter !!}">
             </div>
         </div>
     </section>
