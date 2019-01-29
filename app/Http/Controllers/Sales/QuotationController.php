@@ -79,7 +79,7 @@ class QuotationController extends Controller
                     $cus="QU".$date_period_format.$new_id;
                 }
             }else{
-                $new_id="0000".$max_counter;
+                $new_id="000".$max_counter;
                 $cus="QU".$date_period_format.$new_id;
             }
 
