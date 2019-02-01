@@ -108,11 +108,12 @@ $allpage=0;
                         </tr>
                         <?php
                         $i++;
+                        $amount = $i-1;
                         ?>
                     @endforeach
                     <tr>
                         <td colspan="3" style="font-weight: bold; text-align: right;">รวม</td>
-                        <td style="font-weight: bold; text-align: right;">{!! $i-1 !!}</td>
+                        <td style="font-weight: bold; text-align: right;">{!! $amount !!}</td>
                         <td style="font-weight: bold;">คน</td>
                     </tr>
                     <tr>
@@ -122,7 +123,7 @@ $allpage=0;
                     </tr>
                     <tr>
                         <td colspan="3" style="font-weight: bold; text-align: right;">คิดเป็น</td>
-                        <td style="font-weight: bold; text-align: right;">{!! number_format(($count/$i)*100,2) !!}</td>
+                        <td style="font-weight: bold; text-align: right;">{!! number_format(($count/$amount)*100,2) !!}</td>
                         <td style="font-weight: bold;">%</td>
                     </tr>
                     </tbody>

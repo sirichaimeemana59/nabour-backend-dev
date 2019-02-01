@@ -123,6 +123,11 @@
                     <span class="title">Quotaiton Ratio</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('report_quotation/report/chart') ? 'active' : '') !!}">
+                <a href="{!! url('report_quotation/report/chart') !!}">
+                    <span class="title">Report Chart</span>
+                </a>
+            </li>
         </ul>
     </li>
     {{--End report quotation--}}
