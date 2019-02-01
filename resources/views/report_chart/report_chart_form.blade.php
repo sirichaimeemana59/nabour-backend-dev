@@ -110,7 +110,7 @@
                             <div class="row">
                                 <div class="col-sm-12 text-right">
                                     <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
-                                    <button type="button" class="btn btn-secondary p-search-property" id="p-search-property">{!! trans('messages.search') !!}</button>
+                                    <button type="button" class="btn btn-secondary p-search-quotation" id="p-search-quotation">{!! trans('messages.search') !!}</button>
                                 </div>
                             </div>
                         </form>
@@ -154,7 +154,7 @@
 
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
-    <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
+    {{--<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>--}}
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript" src="{{url('/')}}/js/report_chart.js"></script>
 

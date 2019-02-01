@@ -253,5 +253,75 @@ $(function(){
 // stop chart lead and customer
 
 // start chart quotation and contract
+$('#p-search-quotation').on('click', function () {
+    if (!$(this).is(':disabled')) {
+        var _this = $(this);
+        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+        _this.attr('disabled');
+        $('#chart-year').css('opacity', '0.6');
+        var parent_ = $(this).parents('form');
+        var data = parent_.serialize();
+        //alert(data);
+        $.ajax({
+            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
+            data: data,
+            dataType: "json",
+            method: 'post',
+            success: function (h) {
+                renderGraph(h);
+                _this.removeAttr('disabled').find('i').remove();
+            }
+        })
+    }
+});
+
+function renderGraph (h) {
+    $('.chart').show();
+    var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
+
+    var rDataSource = [];
+    var approved=0,_approved = 0;
+
+    for (var i = 0; i < h.approved.length; i++) {
+        approved += h.approved[i] << 0;
+    }
+    for (var i = 0; i < h._approved.length; i++) {
+        _approved += h._approved[i] << 0;
+    }
+
+    var per = ((approved/_approved)*100).toFixed(2);
+
+    $.each(h.approved, function (i,v) {
+        if(v <= 0){
+            var x=0;
+            if(h._approved[i] <=0){
+                var y=0;
+                rDataSource.push({type:month[i],value:x,number:y});
+            }
+        }else{
+            rDataSource.push({type:month[i],value:v,number:h._approved[i]});
+        }
+    });
+    console.log(rDataSource);
+
+    $('#chart').dxChart('instance').option('dataSource', rDataSource);
+    $('#chart').dxChart('instance').render();
+
+    $('#reqs-per-second').dxCircularGauge('instance').option('value', per);
+    $('#reqs-per-second').dxCircularGauge('instance').render();
+
+    $('#chart').dxChart('instance').option('text', per);
+    $('#chart').dxChart('instance').render();
+
+    $('#per').html(per);
+    $('#per_').html(per);
+    $('#total_lead').html(approved);
+    $('#total_customer').html(_approved);
+}
+$('.reset-s-btn').on('click',function () {
+    $(this).closest('form').find("input").val("");
+    $(this).closest('form').find("select option:selected").removeAttr('selected');
+});
 
 // stop chart quotation and contract
