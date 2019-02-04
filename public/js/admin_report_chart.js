@@ -109,6 +109,7 @@ function renderGraph (h) {
     $('.chart_line').show();
     $('.chart_bar').hide();
     $('.chart_target').hide();
+    $('.chart_target_detail').hide();
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
@@ -305,6 +306,7 @@ function renderGraph_quotation (h) {
     $('.chart_line').show();
     $('.chart_bar').hide();
     $('.chart_target').hide();
+    $('.chart_target_detail').hide();
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
@@ -425,6 +427,7 @@ function renderGraph_quotation_sum (h) {
     $('.chart_line').hide();
     $('.chart_bar').show();
     $('.chart_target').hide();
+    $('.chart_target_detail').hide();
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
@@ -518,7 +521,7 @@ $(function(){
         },
         series: [
             { valueField: "value", name: "Quotation_Approved" },
-            { valueField: "number", name: "Quotation_Non-Approved" },
+            { valueField: "number", name: "Quotation_Non_Approved" },
         ],
         title: text_,
         legend: {
@@ -535,6 +538,7 @@ $(function(){
 });
 
 //stop chart bar quotation/contract
+
 
 //Start Tar Get Quotation_Contract
 $('#p-search-budget').on('click', function () {
@@ -567,38 +571,33 @@ function renderGraph_target (h) {
     $('.chart_line').hide();
     $('.chart_bar').hide();
     $('.chart_target').show();
+    $('.chart_target_detail').show();
+
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
     var dataSource_target = [];
-    var text_ ="";
+
+    var approved=0,_approved = 0;
+
+    for (var i = 0; i < h.approved.length; i++) {
+        approved += h.approved[i] << 0;
+    }
+    for (var i = 0; i < h._approved.length; i++) {
+        _approved += h._approved[i] << 0;
+    }
 
     $.each(h.approved, function (i,v) {
-        if(v <= 0 ){
-            var x=0;
-            if(h._approved[i] <=0){
-                var y=0;
-                dataSource_target.push({type:month[i],value:x,number:y});
-            }
-        }else{
-            if(h._approved[i] <=0){
-                var y=0;
-                dataSource_target.push({type:month[i],value:numberWithCommas(v),number:y});
-            }else{
-                var comma=0;
-                if(h._approved[i] >0){
-                    comma =numberWithCommas(h._approved[i]);
-                    dataSource_target.push({type:month[i],value:numberWithCommas(v),number:comma});
-                }else{
-                    dataSource_target.push({type:month[i],value:numberWithCommas(v),number:comma});
-                }
-            }
-            //console.log(numberWithCommas(0));
-        }
+                dataSource_target.push({type:month[i],value:v,number:h._approved[i]});
     });
+
+    console.log(dataSource_target);
 
     $('#chart_target').dxChart('instance').option('dataSource', dataSource_target);
     $('#chart_target').dxChart('instance').render();
+
+    $('#total_lead').html("Quotation Approved " + approved);
+    $('#total_customer').html("Quotation Non-Approved " + _approved);
 
     //console.log(dataSource_target);
 }
@@ -608,7 +607,7 @@ $('.reset-s-btn').on('click',function () {
 });
 
 $(function(){
-     $("#chart_target").dxChart({
+    $("#chart_target").dxChart({
         palette: "Violet",
         dataSource: dataSource_target,
         commonSeriesSettings: {

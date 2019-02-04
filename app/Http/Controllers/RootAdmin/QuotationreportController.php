@@ -630,8 +630,8 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $_data[0]['count'];
-                    $information["_approved"][] = $data[0]['count'];
+                    $information["approved"][] =  $data[0]['count'];
+                    $information["_approved"][] = $_data[0]['count'];
                 }
                 //dd($information);
             }
