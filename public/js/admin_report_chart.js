@@ -1,4 +1,10 @@
 // start chart lead and customer
+$('.reset-s-btn').on('click',function () {
+    $(this).closest('form').find("input").val("");
+    $(this).closest('form').find("select option:selected").removeAttr('selected');
+});
+
+
 $(function () {
     $("#name").select2({
         placeholder: "{{ trans('messages.unit_number') }}",
@@ -16,12 +22,42 @@ $(function () {
 });
 
 $(function () {
+    $("#name1").select2({
+        placeholder: "{{ trans('messages.unit_number') }}",
+        allowClear: true,
+        dropdownAutoWidth: true
+    });
+});
+
+$(function () {
+    $("#sale_id1").select2({
+        placeholder: "{{ trans('messages.unit_number') }}",
+        allowClear: true,
+        dropdownAutoWidth: true
+    });
+});
+
+$(function () {
     $("#year").select2({
         placeholder: "{{ trans('messages.unit_number') }}",
         allowClear: true,
         dropdownAutoWidth: true
     });
 });
+
+function numberWithCommas(number) {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+$(document).ready(function() {
+    $("#agent_commission_model td").each(function() {
+        var num = $(this).text();
+        var commaNum = numberWithCommas(num);
+        $(this).text(commaNum);
+    });
+});
+
 
 $('#p-search-property').on('click', function () {
     $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
@@ -45,13 +81,40 @@ $('#p-search-property').on('click', function () {
     }
 });
 
+$('#p-search-property-chart').on('click', function () {
+    var _this = $(this);
+    _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+    _this.attr('disabled');
+    $('#chart-year').css('opacity', '0.6');
+    var parent_ = $(this).parents('form');
+    var data = parent_.serialize();
+    //alert(data);
+    $.ajax({
+        url: $('#root-url').val() + "/report_quotation/ratio/report/date",
+        data: data,
+        dataType: "json",
+        method: 'post',
+        success: function (h) {
+            renderGraph(h);
+            _this.removeAttr('disabled').find('i').remove();
+        }
+    })
+});
+
 function renderGraph (h) {
     $('.chart').show();
+    $('.search_year_lead').show();
+    $('.search_year_quotaion').hide();
+    $('.search_year_sum').hide();
+    $('.chart_line').show();
+    $('.chart_bar').hide();
+    $('.chart_target').hide();
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
     var rDataSource = [];
     var leads=0,customer = 0;
+    var text_ ="";
 
     for (var i = 0; i < h.leads.length; i++) {
         leads += h.leads[i] << 0;
@@ -67,6 +130,7 @@ function renderGraph (h) {
             rDataSource.push({type:month[i],value:v,number:h.customer[i]});
         }
     });
+    text_ ="Leads/Customer Ratio in " + per + "%";
 
     $('#chart').dxChart('instance').option('dataSource', rDataSource);
     $('#chart').dxChart('instance').render();
@@ -74,13 +138,14 @@ function renderGraph (h) {
     $('#reqs-per-second').dxCircularGauge('instance').option('value', per);
     $('#reqs-per-second').dxCircularGauge('instance').render();
 
-    $('#chart').dxChart('instance').option('text', per);
+    $('#chart').dxChart('instance').option('title', text_);
     $('#chart').dxChart('instance').render();
 
-    $('#per').html(per);
+    $('#per').html("Leads/Customer Ratio in " + per + "%");
+    // text ="Leads/Customer Ratio in " + per + "%";
     $('#per_').html(per);
-    $('#total_lead').html(leads);
-    $('#total_customer').html(customer);
+    $('#total_lead').html("Total Leads is. " + leads);
+    $('#total_customer').html("Total Customer is. " + customer);
 }
 $('.reset-s-btn').on('click',function () {
     $(this).closest('form').find("input").val("");
@@ -137,9 +202,11 @@ jQuery(document).ready(function($)
 });
 
 var dataSource = [];
+var text_ = '';
+var series_name =[];
 
 $(function(){
-    var chart = $("#chart").dxChart({
+   $("#chart").dxChart({
         palette: "Violet",
         dataSource: dataSource,
         commonSeriesSettings: {
@@ -166,10 +233,7 @@ $(function(){
             itemTextPosition: "bottom"
         },
         title: {
-            text: "Leads/Customer Ratio in 100%",
-            subtitle: {
-                text: "(Millions of Tons, customer Equivalent)"
-            }
+            text: text_,
         },
         "export": {
             enabled: true
@@ -210,13 +274,52 @@ $('#p-search-quotation').on('click', function () {
     }
 });
 
+$('#p-search-quotation-chart').on('click', function () {
+    if (!$(this).is(':disabled')) {
+        var _this = $(this);
+        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+        _this.attr('disabled');
+        $('#chart-year').css('opacity', '0.6');
+        var parent_ = $(this).parents('form');
+        var data = parent_.serialize();
+        //alert(data);
+        $.ajax({
+            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
+            data: data,
+            dataType: "json",
+            method: 'post',
+            success: function (h) {
+                renderGraph_quotation(h);
+                _this.removeAttr('disabled').find('i').remove();
+            }
+        })
+    }
+});
+
 function renderGraph_quotation (h) {
+   // console.log(h.qapproved);
     $('.chart').show();
+    $('.search_year_quotation').show();
+    $('.search_year_lead').hide();
+    $('.search_year_sum').hide();
+    $('.chart_line').show();
+    $('.chart_bar').hide();
+    $('.chart_target').hide();
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
     var rDataSource = [];
+    var text_ = '';
     var approved=0,_approved = 0;
+    // var count_qapproved=0,count_q_approved=0;
+    //
+    // for (var i = 0; i < h.qapproved.length; i++) {
+    //     count_qapproved += h.qapproved[i] << 0;
+    //     count_q_approved += h.q_approved[i] << 0;
+    // }
+
+    // var total_quotation = count_q_approved+count_qapproved;
+    //console.log(count_qapproved);
 
     for (var i = 0; i < h.approved.length; i++) {
         approved += h.approved[i] << 0;
@@ -225,7 +328,8 @@ function renderGraph_quotation (h) {
         _approved += h._approved[i] << 0;
     }
 
-    var per = ((approved/_approved)*100).toFixed(2);
+    var total_quotation = approved+_approved;
+    var per = ((approved/total_quotation)*100).toFixed(2);
 
     $.each(h.approved, function (i,v) {
         if(v <= 0){
@@ -235,9 +339,16 @@ function renderGraph_quotation (h) {
                 rDataSource.push({type:month[i],value:x,number:y});
             }
         }else{
-            rDataSource.push({type:month[i],value:v,number:h._approved[i]});
+            if(h._approved[i] <=0){
+                var y=0;
+                rDataSource.push({type:month[i],value:v,number:y});
+            }else{
+                rDataSource.push({type:month[i],value:v,number:h._approved[i]});
+            }
         }
     });
+
+    text_ ="Quotation/Contract Ratio in " + per + "%";
 
     $('#chart').dxChart('instance').option('dataSource', rDataSource);
     $('#chart').dxChart('instance').render();
@@ -245,13 +356,13 @@ function renderGraph_quotation (h) {
     $('#reqs-per-second').dxCircularGauge('instance').option('value', per);
     $('#reqs-per-second').dxCircularGauge('instance').render();
 
-    $('#chart').dxChart('instance').option('text', per);
+    $('#chart').dxChart('instance').option('title', text_);
     $('#chart').dxChart('instance').render();
 
-    $('#per').html(per);
+    $('#per').html("Quotation/Contract Ratio in " + per + "%");
     $('#per_').html(per);
-    $('#total_lead').html(approved);
-    $('#total_customer').html(_approved);
+    $('#total_lead').html("Quotation Approved " + approved);
+    $('#total_customer').html("Quotation Non-Approved " + _approved);
 }
 $('.reset-s-btn').on('click',function () {
     $(this).closest('form').find("input").val("");
@@ -259,3 +370,290 @@ $('.reset-s-btn').on('click',function () {
 });
 
 // stop chart quotation and contract
+
+//start chart bar quotation/contract
+$('#p-search-quotation-sum').on('click', function () {
+    if (!$(this).is(':disabled')) {
+        var _this = $(this);
+        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+        _this.attr('disabled');
+        $('#chart-year').css('opacity', '0.6');
+        var parent_ = $(this).parents('form');
+        var data = parent_.serialize();
+        //alert(data);
+        $.ajax({
+            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/sum",
+            data: data,
+            dataType: "json",
+            method: 'post',
+            success: function (h) {
+                renderGraph_quotation_sum(h);
+                _this.removeAttr('disabled').find('i').remove();
+            }
+        })
+    }
+});
+
+$('#p-search-quotation-sum-year').on('click', function () {
+    if (!$(this).is(':disabled')) {
+        var _this = $(this);
+        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+        _this.attr('disabled');
+        $('#chart-year').css('opacity', '0.6');
+        var parent_ = $(this).parents('form');
+        var data = parent_.serialize();
+        //alert(data);
+        $.ajax({
+            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/sum",
+            data: data,
+            dataType: "json",
+            method: 'post',
+            success: function (h) {
+                renderGraph_quotation_sum(h);
+                _this.removeAttr('disabled').find('i').remove();
+            }
+        })
+    }
+});
+
+function renderGraph_quotation_sum (h) {
+    // console.log(h.qapproved);
+    $('.chart').show();
+    $('.search_year_quotation').hide();
+    $('.search_year_lead').hide();
+    $('.search_year_sum').show();
+    $('.chart_line').hide();
+    $('.chart_bar').show();
+    $('.chart_target').hide();
+    var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
+
+    var dataSource_bar = [];
+    var text_ = '';
+    var approved=0,_approved = 0;
+    // var count_qapproved=0,count_q_approved=0;
+    //
+    // for (var i = 0; i < h.qapproved.length; i++) {
+    //     count_qapproved += h.qapproved[i] << 0;
+    //     count_q_approved += h.q_approved[i] << 0;
+    // }
+
+    // var total_quotation = count_q_approved+count_qapproved;
+    //console.log(count_qapproved);
+
+    for (var i = 0; i < h.approved.length; i++) {
+        approved += h.approved[i] << 0;
+    }
+    for (var i = 0; i < h._approved.length; i++) {
+        _approved += h._approved[i] << 0;
+    }
+
+    var total_quotation = approved+_approved;
+    var per = ((approved/total_quotation)*100).toFixed(2);
+
+    $.each(h.approved, function (i,v) {
+        if(v <= 0 ){
+            var x=0;
+            if(h._approved[i] <=0){
+                var y=0;
+                dataSource_bar.push({type:month[i],value:x,number:y});
+            }
+        }else{
+            if(h._approved[i] <=0){
+                var y=0;
+                dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:y});
+            }else{
+                var comma=0;
+                if(h._approved[i] >0){
+                    comma =numberWithCommas(h._approved[i]);
+                        dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:comma});
+                }else{
+                    dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:comma});
+                }
+            }
+            //console.log(numberWithCommas(0));
+        }
+    });
+
+   //console.log(dataSource_bar);
+
+    text_ ="Quotation/Contract";
+
+    $('#chart_bar').dxChart('instance').option('dataSource', dataSource_bar);
+    $('#chart_bar').dxChart('instance').render();
+
+    // $('#reqs-per-second').dxCircularGauge('instance').option('value', per);
+    // $('#reqs-per-second').dxCircularGauge('instance').render();
+
+    $('#chart_bar').dxChart('instance').option('title', text_);
+    $('#chart_bar').dxChart('instance').render();
+
+    //$('#per').html("Quotation/Contract Ratio in " + per + "%");
+    // $('#per_').html(per);
+    // $('#total_lead').html("Quotation Approved " + approved);
+    // $('#total_customer').html("Quotation Non-Approved " + _approved);
+}
+$('.reset-s-btn').on('click',function () {
+    $(this).closest('form').find("input").val("");
+    $(this).closest('form').find("select option:selected").removeAttr('selected');
+});
+
+var dataSource_bar = [];
+
+$(function(){
+    $("#chart_bar").dxChart({
+        dataSource: dataSource_bar,
+        commonSeriesSettings: {
+            argumentField: "type",
+            type: "bar",
+            hoverMode: "allArgumentPoints",
+            selectionMode: "allArgumentPoints",
+            label: {
+                visible: true,
+                format: {
+                    type: "fixedPoint",
+                    precision: 0
+                }
+            }
+        },
+        series: [
+            { valueField: "value", name: "Quotation_Approved" },
+            { valueField: "number", name: "Quotation_Non-Approved" },
+        ],
+        title: text_,
+        legend: {
+            verticalAlignment: "bottom",
+            horizontalAlignment: "center"
+        },
+        "export": {
+            enabled: true
+        },
+        onPointClick: function (e) {
+            e.target.select();
+        }
+    });
+});
+
+//stop chart bar quotation/contract
+
+//Start Tar Get Quotation_Contract
+$('#p-search-budget').on('click', function () {
+    if (!$(this).is(':disabled')) {
+        var _this = $(this);
+        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+        _this.attr('disabled');
+        $('#chart-year').css('opacity', '0.6');
+        var parent_ = $(this).parents('form');
+        var data = parent_.serialize();
+        //alert(data);
+        $.ajax({
+            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/budget",
+            data: data,
+            dataType: "json",
+            method: 'post',
+            success: function (h) {
+                renderGraph_target(h);
+                _this.removeAttr('disabled').find('i').remove();
+            }
+        })
+    }
+});
+
+function renderGraph_target (h) {
+    $('.chart').hide();
+    $('.search_year_lead').hide();
+    $('.search_year_quotaion').hide();
+    $('.search_year_sum').hide();
+    $('.chart_line').hide();
+    $('.chart_bar').hide();
+    $('.chart_target').show();
+    var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
+
+    var dataSource_target = [];
+    var text_ ="";
+
+    $.each(h.approved, function (i,v) {
+        if(v <= 0 ){
+            var x=0;
+            if(h._approved[i] <=0){
+                var y=0;
+                dataSource_target.push({type:month[i],value:x,number:y});
+            }
+        }else{
+            if(h._approved[i] <=0){
+                var y=0;
+                dataSource_target.push({type:month[i],value:numberWithCommas(v),number:y});
+            }else{
+                var comma=0;
+                if(h._approved[i] >0){
+                    comma =numberWithCommas(h._approved[i]);
+                    dataSource_target.push({type:month[i],value:numberWithCommas(v),number:comma});
+                }else{
+                    dataSource_target.push({type:month[i],value:numberWithCommas(v),number:comma});
+                }
+            }
+            //console.log(numberWithCommas(0));
+        }
+    });
+
+    $('#chart_target').dxChart('instance').option('dataSource', dataSource_target);
+    $('#chart_target').dxChart('instance').render();
+
+    //console.log(dataSource_target);
+}
+$('.reset-s-btn').on('click',function () {
+    $(this).closest('form').find("input").val("");
+    $(this).closest('form').find("select option:selected").removeAttr('selected');
+});
+
+$(function(){
+     $("#chart_target").dxChart({
+        palette: "Violet",
+        dataSource: dataSource_target,
+        commonSeriesSettings: {
+            argumentField: "type",
+            type: "line"
+        },
+        margin: {
+            bottom: 20
+        },
+        argumentAxis: {
+            valueMarginsEnabled: false,
+            discreteAxisDivisionMode: "crossLabels",
+            grid: {
+                visible: true
+            }
+        },
+        series: [
+            { valueField: "value", name: "Quotation_Approved" },
+            { valueField: "number", name: "Quotation_Non-Approved" },
+        ],
+        legend: {
+            verticalAlignment: "bottom",
+            horizontalAlignment: "center",
+            itemTextPosition: "bottom"
+        },
+        title: {
+            text: "Target Quotation/Contract",
+            subtitle: {
+                text: "(Millions of Tons, Oil Equivalent)"
+            }
+        },
+        "export": {
+            enabled: true
+        },
+        tooltip: {
+            enabled: true,
+            customizeTooltip: function (arg) {
+                return {
+                    text: arg.valueText
+                };
+            }
+        }
+    }).dxChart("instance");
+});
+
+var dataSource_target = [];
+
+//Stop Tar Get Quotation_Contract

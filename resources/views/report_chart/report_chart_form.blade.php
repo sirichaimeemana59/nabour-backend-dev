@@ -33,8 +33,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#quotation" data-toggle="tab" aria-expanded="false">
-                        <span>Set Target</span>
+                    <a href="#quotation_sum" data-toggle="tab" aria-expanded="false">
+                        <span>Value Quotation</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#target" data-toggle="tab" aria-expanded="false">
+                        <span>Tar Get</span>
                     </a>
                 </li>
             </ul>
@@ -73,6 +78,7 @@
                         </div>
                     </form>
                 </div>
+
                     <div class="tab-pane" id="quotation">
                         <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
                             <div class="row">
@@ -97,16 +103,16 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row">
-                                <label class="col-sm-1 control-label">ปี</label>
-                                <div class="col-sm-3">
-                                    <select name="year" id="year" class="form-control">
-                                        @foreach($year as $key => $value)
-                                            <option value="{!! $value !!}">{!! $value !!}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                            {{--<div class="row">--}}
+                                {{--<label class="col-sm-1 control-label">ปี</label>--}}
+                                {{--<div class="col-sm-3">--}}
+                                    {{--<select name="year" id="year" class="form-control">--}}
+                                        {{--@foreach($year as $key => $value)--}}
+                                            {{--<option value="{!! $value !!}">{!! $value !!}</option>--}}
+                                        {{--@endforeach--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="row">
                                 <div class="col-sm-12 text-right">
                                     <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
@@ -115,9 +121,71 @@
                             </div>
                         </form>
                     </div>
+
+                <div class="tab-pane" id="quotation_sum">
+                    <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
+                        <div class="row">
+                            <label class="col-sm-1 control-label">ชื่อ</label>
+                            <div class="col-sm-3">
+                                <select name="name" id="name1" class="form-control">
+                                    <option value="">กรุณาเลือกชื่อลูกค้า</option>
+                                    @foreach($p_rows as $row)
+                                        <option value="{!! $row->id !!}">{!! $row->firstname !!}  {!! $row->lastname !!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <label class="col-sm-2 control-label">พนักงานขาย</label>
+                            <div class="col-sm-3">
+                                <select name="sale_id" id="sale_id1" class="form-control">
+                                    <option value="">กรุณาเลือกพนักงานขาย</option>
+                                    @foreach($sale as $srow)
+                                        <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+                                <button type="button" class="btn btn-secondary p-search-quotation-sum" id="p-search-quotation-sum">{!! trans('messages.search') !!}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane" id="target">
+                   <div class="panel panel-default">
+                      <div class="panel-body">
+                          <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
+                             <div class="row" style="align: left;">
+                                  <label class="col-sm-9 control-label">ราคา :</label>
+                                  <div class="col-sm-2">
+                                      <select name="target" id="" class="form-control">
+                                          <option value="">Budget</option>
+                                          @for($i=10000;$i<=9000000;$i+=100000)
+                                              <option value="{!! $i !!}">{!! number_format($i) !!}</option>
+                                          @endfor
+                                      </select>
+                                  </div>
+                                         <button type="button" class="btn btn-secondary p-search-budget" id="p-search-budget">{!! trans('messages.search') !!}</button>
+                              </div>
+                          </form>
+                                        <div class="row">
+                                            <div class="dx-viewport demo-container">
+                                                <div id="chart-demo">
+                                                    <div id="chart_target"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                </div>
     </div>
-        </div>
-    </div>
+
 
     {{--End Menu tab--}}
     <div class="row chart" style="display: none;">

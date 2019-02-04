@@ -397,6 +397,110 @@ class QuotationreportController extends Controller
     }
 
     public function quotation(){
+    $p_rows = new Quotation;
+
+    if (Request::ajax()) {
+        if (Request::get('name')) {
+
+            $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+            foreach ($month as $key => $value){
+
+                $data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+//                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                    ->where('lead_id','=', Request::get('name'))
+                    ->whereMonth('created_at','=',$key)
+                    ->where('status','=','1')
+                    ->get();
+                $data = $data->toArray();// quotation approved
+
+                $_data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->where('lead_id','=', Request::get('name'))
+                    ->whereMonth('created_at','=',$key)
+                    ->where('status','=','0')
+                    ->get();
+
+                $_data = $_data->toArray();// quotation none approved
+
+                $information["approved"][] = $_data[0]['count'];
+                $information["_approved"][] = $data[0]['count'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+
+
+            }
+        }
+
+        if (Request::get('sale_id')) {
+
+            $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+            foreach ($month as $key => $value){
+
+                $data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->where('sales_id','=', Request::get('sale_id'))
+                    ->whereMonth('created_at','=',$key)
+                    ->where('status','=','1')
+                    ->get();
+                $data = $data->toArray();// quotation approved
+
+                $_data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->where('sales_id','=', Request::get('sale_id'))
+                    ->whereMonth('created_at','=',$key)
+                    ->where('status','=','0')
+                    ->get();
+
+                $_data = $_data->toArray();// quotation none approved
+
+                $information["approved"][] = $_data[0]['count'];
+                $information["_approved"][] = $data[0]['count'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+
+
+            }
+        }
+
+        if (Request::get('year') != null) {
+            $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+            foreach ($month as $key => $value){
+
+                $data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->whereMonth('created_at','=',$key)
+                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->where('status','=','1')
+                    ->get();
+                $data = $data->toArray();// quotation approved
+
+                $_data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->whereMonth('created_at','=',$key)
+                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->where('status','=','0')
+                    ->get();
+
+                $_data = $_data->toArray();// quotation none approved
+
+                $information["approved"][] = $_data[0]['count'];
+                $information["_approved"][] = $data[0]['count'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+            }
+            // dd($information);
+        }
+    }
+
+    return response()->json( $information );
+
+}
+
+    public function sum(){
         $p_rows = new Quotation;
 
         if (Request::ajax()) {
@@ -425,15 +529,115 @@ class QuotationreportController extends Controller
                     $information["approved"][] = $_data[0]['sum'];
                     $information["_approved"][] = $data[0]['sum'];
 
-                    $information["qapproved"][] = $_data[0]['count'];
-                    $information["q_approved"][] = $data[0]['count'];
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
 
 
                 }
             }
+
+            if (Request::get('sale_id')) {
+
+                $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+                foreach ($month as $key => $value){
+
+                    $data = $p_rows
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->where('sales_id','=', Request::get('sale_id'))
+                        ->whereMonth('created_at','=',$key)
+                        ->where('status','=','1')
+                        ->get();
+                    $data = $data->toArray();// quotation approved
+
+                    $_data = $p_rows
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->where('sales_id','=', Request::get('sale_id'))
+                        ->whereMonth('created_at','=',$key)
+                        ->where('status','=','0')
+                        ->get();
+
+                    $_data = $_data->toArray();// quotation none approved
+
+                    $information["approved"][] = $_data[0]['sum'];
+                    $information["_approved"][] = $data[0]['sum'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+
+
+                }
             }
+
+            if (Request::get('year') != null) {
+                $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+                foreach ($month as $key => $value){
+
+                    $data = $p_rows
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year')-543)
+                        ->where('status','=','1')
+                        ->get();
+                    $data = $data->toArray();// quotation approved
+
+                    $_data = $p_rows
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year')-543)
+                        ->where('status','=','0')
+                        ->get();
+
+                    $_data = $_data->toArray();// quotation none approved
+
+                    $information["approved"][] = $_data[0]['sum'];
+                    $information["_approved"][] = $data[0]['sum'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+                }
+                // dd($information);
+            }
+        }
+
+        return response()->json( $information );
+
+    }
+
+    public function budget(){
+        $p_rows = new Quotation;
+
+        if (Request::ajax()) {
+            if (Request::get('target')) {
+
+                $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+                foreach ($month as $key => $value){
+                    $budget = array(0,Request::get('target'));
+
+                    $data = $p_rows
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                        ->whereBetween('product_price_with_vat', $budget)
+                        ->whereMonth('created_at','=',$key)
+                        ->where('status','=','1')
+                        ->get();
+                    $data = $data->toArray();// quotation approved
+
+                    $_data = $p_rows
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                        ->whereBetween('product_price_with_vat', $budget)
+                        ->whereMonth('created_at','=',$key)
+                        ->where('status','=','0')
+                        ->get();
+
+                    $_data = $_data->toArray();// quotation none approved
+
+                    $information["approved"][] = $_data[0]['sum'];
+                    $information["_approved"][] = $data[0]['sum'];
+                }
                 //dd($information);
-            return response()->json( $information );
+            }
+        }
+
+        return response()->json( $information );
 
     }
 }
