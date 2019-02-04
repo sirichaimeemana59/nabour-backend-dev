@@ -614,7 +614,7 @@ class QuotationreportController extends Controller
                     $budget = array(0,Request::get('target'));
 
                     $data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                        ->select(DB::raw('COUNT(id) as count'))
                         ->whereBetween('product_price_with_vat', $budget)
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','1')
@@ -622,7 +622,7 @@ class QuotationreportController extends Controller
                     $data = $data->toArray();// quotation approved
 
                     $_data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                        ->select(DB::raw('COUNT(id) as count'))
                         ->whereBetween('product_price_with_vat', $budget)
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','0')
@@ -630,8 +630,8 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $_data[0]['sum'];
-                    $information["_approved"][] = $data[0]['sum'];
+                    $information["approved"][] = $_data[0]['count'];
+                    $information["_approved"][] = $data[0]['count'];
                 }
                 //dd($information);
             }
