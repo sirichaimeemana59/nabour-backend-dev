@@ -176,10 +176,10 @@
                                             <div class="col-sm-2 chart_target_detail" style="display: none;">
                                                 <p class="text-medium">Detail.</p>
                                                 <div class="col-sm-12">
-                                                    <p class="text-lg"><span id="total_lead">0</span></p>
+                                                    <p class="text-lg"><span id="total_lead1">0</span></p>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <p class="text-lg"><span id="total_customer">0</span></p>
+                                                    <p class="text-lg"><span id="total_customer1">0</span></p>
                                                 </div>
                                             </div>
                                             <div class="dx-viewport demo-container">

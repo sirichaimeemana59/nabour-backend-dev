@@ -596,8 +596,8 @@ function renderGraph_target (h) {
     $('#chart_target').dxChart('instance').option('dataSource', dataSource_target);
     $('#chart_target').dxChart('instance').render();
 
-    $('#total_lead').html("Quotation Approved " + approved);
-    $('#total_customer').html("Quotation Non-Approved " + _approved);
+    $('#total_lead1').html("Quotation Approved " + approved);
+    $('#total_customer1').html("Quotation Non-Approved " + _approved);
 
     //console.log(dataSource_target);
 }
