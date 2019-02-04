@@ -139,6 +139,7 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/globalize.min.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
@@ -156,7 +157,6 @@
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
     {{--<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>--}}
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
-    <script type="text/javascript" src="{{url('/')}}/js/report_chart.js"></script>
 
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

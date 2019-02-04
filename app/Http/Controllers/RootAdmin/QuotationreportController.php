@@ -406,7 +406,7 @@ class QuotationreportController extends Controller
                 foreach ($month as $key => $value){
 
                     $data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
                         ->where('lead_id','=', Request::get('name'))
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','1')
@@ -414,7 +414,7 @@ class QuotationreportController extends Controller
                     $data = $data->toArray();// quotation approved
 
                     $_data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
                         ->where('lead_id','=', Request::get('name'))
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','0')
@@ -422,8 +422,13 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $_data[0]['count'];
-                    $information["_approved"][] = $data[0]['count'];
+                    $information["approved"][] = $_data[0]['sum'];
+                    $information["_approved"][] = $data[0]['sum'];
+
+                    $information["qapproved"][] = $_data[0]['count'];
+                    $information["q_approved"][] = $data[0]['count'];
+
+
                 }
             }
             }

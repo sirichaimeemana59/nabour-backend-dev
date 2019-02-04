@@ -87,71 +87,6 @@ $('.reset-s-btn').on('click',function () {
     $(this).closest('form').find("select option:selected").removeAttr('selected');
 });
 
-$('#p-search-property-chart').on('click', function () {
-    $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
-    if (!$(this).is(':disabled')) {
-        var _this = $(this);
-        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-        _this.attr('disabled');
-        $('#chart-year').css('opacity', '0.6');
-        var parent_ = $(this).parents('form');
-        var data = parent_.serialize();
-        //alert(data);
-        $.ajax({
-            url: $('#root-url').val() + "/report_quotation/ratio/report/date",
-            data: data,
-            dataType: "json",
-            method: 'post',
-            success: function (h) {
-                renderGraph(h);
-                _this.removeAttr('disabled').find('i').remove();
-            }
-        })
-    }
-});
-
-function renderGraph (h) {
-    $('.chart').show();
-    var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
-
-    var rDataSource = [];
-    var leads=0,customer = 0;
-
-    for (var i = 0; i < h.leads.length; i++) {
-        leads += h.leads[i] << 0;
-    }
-    for (var i = 0; i < h.customer.length; i++) {
-        customer += h.customer[i] << 0;
-    }
-
-    var per = ((leads/customer)*100).toFixed(2);
-
-    $.each(h.leads, function (i,v) {
-        if(h.leads) {
-            rDataSource.push({type:month[i],value:v,number:h.customer[i]});
-        }
-    });
-
-    $('#chart').dxChart('instance').option('dataSource', rDataSource);
-    $('#chart').dxChart('instance').render();
-
-    $('#reqs-per-second').dxCircularGauge('instance').option('value', per);
-    $('#reqs-per-second').dxCircularGauge('instance').render();
-
-    $('#chart').dxChart('instance').option('text', per);
-    $('#chart').dxChart('instance').render();
-
-    $('#per').html(per);
-    $('#per_').html(per);
-    $('#total_lead').html(leads);
-    $('#total_customer').html(customer);
-}
-$('.reset-s-btn').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
-
 jQuery(document).ready(function($)
 {
 
@@ -268,14 +203,14 @@ $('#p-search-quotation').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
-                renderGraph(h);
+                renderGraph_quotation(h);
                 _this.removeAttr('disabled').find('i').remove();
             }
         })
     }
 });
 
-function renderGraph (h) {
+function renderGraph_quotation (h) {
     $('.chart').show();
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
@@ -303,7 +238,6 @@ function renderGraph (h) {
             rDataSource.push({type:month[i],value:v,number:h._approved[i]});
         }
     });
-    console.log(rDataSource);
 
     $('#chart').dxChart('instance').option('dataSource', rDataSource);
     $('#chart').dxChart('instance').render();
