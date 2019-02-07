@@ -82,7 +82,7 @@
 @endsection
 
 @section('script')
-    {{--<script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>--}}
+    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/globalize.min.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
@@ -131,7 +131,6 @@
                 $('#chart-year').css('opacity', '0.6');
                 var parent_ = $(this).parents('form');
                 var data = parent_.serialize();
-                //alert(data);
                 $.ajax({
                     url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
                     data: data,
