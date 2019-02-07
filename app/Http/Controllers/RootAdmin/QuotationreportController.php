@@ -423,8 +423,8 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $_data[0]['count'];
-                $information["_approved"][] = $data[0]['count'];
+                $information["approved"][] = $data[0]['count'];
+                $information["_approved"][] = $_data[0]['count'];
 
 //                    $information["qapproved"][] = $_data[0]['count'];
 //                    $information["q_approved"][] = $data[0]['count'];
@@ -455,8 +455,8 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $_data[0]['count'];
-                $information["_approved"][] = $data[0]['count'];
+                $information["approved"][] = $data[0]['count'];
+                $information["_approved"][] = $_data[0]['count'];
 
 //                    $information["qapproved"][] = $_data[0]['count'];
 //                    $information["q_approved"][] = $data[0]['count'];
@@ -486,8 +486,8 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $_data[0]['count'];
-                $information["_approved"][] = $data[0]['count'];
+                $information["approved"][] = $data[0]['count'];
+                $information["_approved"][] = $_data[0]['count'];
 
 //                    $information["qapproved"][] = $_data[0]['count'];
 //                    $information["q_approved"][] = $data[0]['count'];
@@ -510,7 +510,7 @@ class QuotationreportController extends Controller
                 foreach ($month as $key => $value){
 
                     $data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->where('lead_id','=', Request::get('name'))
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','1')
@@ -518,7 +518,7 @@ class QuotationreportController extends Controller
                     $data = $data->toArray();// quotation approved
 
                     $_data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->where('lead_id','=', Request::get('name'))
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','0')
@@ -526,8 +526,8 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $_data[0]['sum'];
-                    $information["_approved"][] = $data[0]['sum'];
+                    $information["approved"][] = $data[0]['sum'];
+                    $information["_approved"][] = $_data[0]['sum'];
 
 //                    $information["qapproved"][] = $_data[0]['count'];
 //                    $information["q_approved"][] = $data[0]['count'];
@@ -542,7 +542,7 @@ class QuotationreportController extends Controller
                 foreach ($month as $key => $value){
 
                     $data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->where('sales_id','=', Request::get('sale_id'))
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','1')
@@ -550,7 +550,7 @@ class QuotationreportController extends Controller
                     $data = $data->toArray();// quotation approved
 
                     $_data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->where('sales_id','=', Request::get('sale_id'))
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','0')
@@ -558,8 +558,8 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $_data[0]['sum'];
-                    $information["_approved"][] = $data[0]['sum'];
+                    $information["approved"][] = $data[0]['sum'];
+                    $information["_approved"][] = $_data[0]['sum'];
 
 //                    $information["qapproved"][] = $_data[0]['count'];
 //                    $information["q_approved"][] = $data[0]['count'];
@@ -568,34 +568,34 @@ class QuotationreportController extends Controller
                 }
             }
 
-            if (Request::get('year') != null) {
+            if (Request::get('target') != null) {
                 $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
                 foreach ($month as $key => $value){
 
                     $data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->whereMonth('created_at','=',$key)
-                        ->whereYear('created_at','=',Request::get('year')-543)
+                        ->whereYear('created_at','=',Request::get('target')-543)
                         ->where('status','=','1')
                         ->get();
                     $data = $data->toArray();// quotation approved
 
                     $_data = $p_rows
-                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->whereMonth('created_at','=',$key)
-                        ->whereYear('created_at','=',Request::get('year')-543)
+                        ->whereYear('created_at','=',Request::get('target')-543)
                         ->where('status','=','0')
                         ->get();
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $_data[0]['sum'];
-                    $information["_approved"][] = $data[0]['sum'];
+                    $information["approved"][] = $data[0]['sum'];
+                    $information["_approved"][] = $_data[0]['sum'];
 
 //                    $information["qapproved"][] = $_data[0]['count'];
 //                    $information["q_approved"][] = $data[0]['count'];
                 }
-                // dd($information);
+                 //dd($information);
             }
         }
 
@@ -639,5 +639,345 @@ class QuotationreportController extends Controller
 
         return response()->json( $information );
 
+    }
+
+    public function ratio_report(){
+        $c_year = date('Y');
+        $year = array('' => trans_choice('messages.year',1) );
+        $plus = (App::getLocale() == 'th')?543:0;
+        for ($i = $c_year+1; $i >= 1900; $i--) {
+            $year += array($i=>$i+$plus);
+        }
+
+        return view('report_chart.report_chart_ratio')->with(compact('year'));
+    }
+
+    public function ratio_lead(){
+        $p_rows = new Customer;
+
+        if (Request::ajax()) {
+
+            if (Request::get('from-date')) {
+                $from = str_replace('/', '-', Request::get('from-date'));
+                $to = str_replace('/', '-', Request::get('to-date'));
+                $date = array($from . " 00:00:00", $to . " 00:00:00");
+                $information = $this->query_leads_customer_date($date);
+            }
+
+            if (Request::get('channel_id') != null) {
+                $information = $this->query_leads_customer_chanel(Request::get('channel_id'));
+            }
+
+            if (Request::get('type_id') != null) {
+                $information = $this->query_leads_customer_type(Request::get('type_id'));
+            }
+
+            if (Request::get('year') != null) {
+                $information = $this->query_leads_customer_year(Request::get('year'));
+            }
+
+            $p_rows = $p_rows->where('active_status', '=', 't')->get();
+            //dd($information);
+            return response()->json( $information );
+            // dd($p_rows);
+        }
+    }
+
+    public function query_leads_customer_date($date){
+        $p_rows = new Customer;
+        $quotation = new Quotation;
+        $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+        foreach ($month as $key => $value){
+            $data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->whereBetween('created_at', $date)
+                ->whereMonth('created_at','=',$key)
+                ->where('role','=','0')
+                ->get();
+            $data = $data->toArray();
+
+            $_data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->whereBetween('created_at', $date)
+                ->whereMonth('created_at','=',$key)
+                ->where('role','=','1')
+                ->get();
+
+            $_data = $_data->toArray();
+
+            $information["leads"][] = $_data[0]['count'];
+            $information["customer"][] = $data[0]['count'];
+
+            $data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereBetween('created_at', $date)
+                //->where('lead_id','=', Request::get('name'))
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereBetween('created_at', $date)
+                //->where('lead_id','=', Request::get('name'))
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved"][] = $data_quotation[0]['count'];
+            $information["_approved"][] = $_data_quotation[0]['count'];
+
+
+            $data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereBetween('created_at', $date)
+                //->where('lead_id','=', Request::get('name'))
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereBetween('created_at', $date)
+                //->where('lead_id','=', Request::get('name'))
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved_sum"][] = $data_quotation[0]['sum'];
+            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+
+        }
+        return $information;
+    }
+
+    public function query_leads_customer_chanel($channel_id){
+        $p_rows = new Customer;
+        $quotation = new Quotation;
+        $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+        foreach ($month as $key => $value){
+
+            $data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->where('channel','=',$channel_id)
+                ->whereMonth('created_at','=',$key)
+                ->where('role','=','0')
+                ->get();
+            $data = $data->toArray();
+
+            $_data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->where('channel','=',$channel_id)
+                ->whereMonth('created_at','=',$key)
+                ->where('role','=','1')
+                ->get();
+
+            $_data = $_data->toArray();
+
+            $information["leads"][] = $_data[0]['count'];
+            $information["customer"][] = $data[0]['count'];
+
+            $data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereHas('latest_lead', function ($q) use ($channel_id) {
+                $q->where('channel','=',$channel_id);
+                })
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereHas('latest_lead', function ($q) use ($channel_id) {
+                    $q->where('channel','=',$channel_id);
+                })
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+            $information["approved"][] = $data_quotation[0]['count'];
+            $information["_approved"][] = $_data_quotation[0]['count'];
+
+
+            $data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereHas('latest_lead', function ($q) use ($channel_id) {
+                    $q->where('channel','=',$channel_id);
+                })
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereHas('latest_lead', function ($q) use ($channel_id) {
+                    $q->where('channel','=',$channel_id);
+                })
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved_sum"][] = $data_quotation[0]['sum'];
+            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+
+        }
+        return $information;
+    }
+
+    public function query_leads_customer_type($type_id){
+        $p_rows = new Customer;
+        $quotation = new Quotation;
+        $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+        foreach ($month as $key => $value){
+
+            $data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->where('type','=',$type_id)
+                ->whereMonth('created_at','=',$key)
+                ->where('role','=','0')
+                ->get();
+            $data = $data->toArray();
+
+            $_data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->where('type','=',$type_id)
+                ->whereMonth('created_at','=',$key)
+                ->where('role','=','1')
+                ->get();
+
+            $_data = $_data->toArray();
+
+            $data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereHas('latest_lead', function ($q) use ($type_id) {
+                    $q->where('type','=',$type_id);
+                })
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereHas('latest_lead', function ($q) use ($type_id) {
+                    $q->where('type','=',$type_id);
+                })
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved"][] = $data_quotation[0]['count'];
+            $information["_approved"][] = $_data_quotation[0]['count'];
+
+            $information["leads"][] = $_data[0]['count'];
+            $information["customer"][] = $data[0]['count'];
+
+            $data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereHas('latest_lead', function ($q) use ($type_id) {
+                    $q->where('type','=',$type_id);
+                })
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereHas('latest_lead', function ($q) use ($type_id) {
+                    $q->where('type','=',$type_id);
+                })
+                ->whereMonth('created_at','=',$key)
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved_sum"][] = $data_quotation[0]['sum'];
+            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+        }
+        return $information;
+    }
+
+    public function query_leads_customer_year($year){
+        $p_rows = new Customer;
+        $quotation = new Quotation;
+        $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+        foreach ($month as $key => $value){
+
+            $data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year-543)
+                ->where('role','=','0')
+                ->get();
+            $data = $data->toArray();
+
+            $_data = $p_rows
+                ->select(DB::raw('COUNT(*) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year-543)
+                ->where('role','=','1')
+                ->get();
+
+            $_data = $_data->toArray();
+
+            $data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year-543)
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year-543)
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved"][] = $data_quotation[0]['count'];
+            $information["_approved"][] = $_data_quotation[0]['count'];
+
+            $information["leads"][] = $_data[0]['count'];
+            $information["customer"][] = $data[0]['count'];
+
+            $data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year-543)
+                ->where('status','=','1')
+                ->get();
+            $data_quotation = $data_quotation->toArray();// quotation approved
+
+            $_data_quotation = $quotation
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
+                ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year-543)
+                ->where('status','=','0')
+                ->get();
+
+            $_data_quotation = $_data_quotation->toArray();// quotation none approved
+
+            $information["approved_sum"][] = $data_quotation[0]['sum'];
+            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+        }
+        return $information;
     }
 }

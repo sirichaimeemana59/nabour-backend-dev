@@ -139,6 +139,10 @@ Route::post('report_quotation/ratio/report/quotation/sum', 'RootAdmin\Quotationr
 Route::post('report_quotation/ratio/report/quotation/budget', 'RootAdmin\QuotationreportController@budget');
 Route::post('report_quotation_ratio_excel', 'RootAdmin\QuotationreportController@excel_ratio');
 Route::any('report_quotation/report/chart', 'RootAdmin\QuotationreportController@chart_form');
+
+//Ratio
+Route::any('report_quotation/report/chart/ratio', 'RootAdmin\QuotationreportController@ratio_report');
+Route::post('report_quotation/report/chart/ratio_lead', 'RootAdmin\QuotationreportController@ratio_lead');
 //End Report Quotation
 
 

@@ -128,6 +128,11 @@
                     <span class="title">Report Chart</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('report_quotation/report/chart/ratio') ? 'active' : '') !!}">
+                <a href="{!! url('report_quotation/report/chart/ratio') !!}">
+                    <span class="title">Ratio</span>
+                </a>
+            </li>
         </ul>
     </li>
     {{--End report quotation--}}

@@ -173,7 +173,7 @@
                               </div>
                           </form>
                                         <div class="row">
-                                            <div class="col-sm-2 chart_target_detail" style="display: none;">
+                                            <div class="col-sm-4 chart_target_detail" style="display: none;">
                                                 <p class="text-medium">Detail.</p>
                                                 <div class="col-sm-12">
                                                     <p class="text-lg"><span id="total_lead1">0</span></p>
@@ -182,6 +182,9 @@
                                                     <p class="text-lg"><span id="total_customer1">0</span></p>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <br>
                                             <div class="dx-viewport demo-container">
                                                 <div id="chart-demo">
                                                     <div id="chart_target"></div>

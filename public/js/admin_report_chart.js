@@ -375,6 +375,7 @@ $('.reset-s-btn').on('click',function () {
 
 //start chart bar quotation/contract
 $('#p-search-quotation-sum').on('click', function () {
+    //alert('bbb');
     if (!$(this).is(':disabled')) {
         var _this = $(this);
         _this.prepend('<i class="fa-spin fa-spinner"></i> ');
@@ -397,6 +398,7 @@ $('#p-search-quotation-sum').on('click', function () {
 });
 
 $('#p-search-quotation-sum-year').on('click', function () {
+    //alert('aa');
     if (!$(this).is(':disabled')) {
         var _this = $(this);
         _this.prepend('<i class="fa-spin fa-spinner"></i> ');
@@ -451,30 +453,12 @@ function renderGraph_quotation_sum (h) {
         _approved += h._approved[i] << 0;
     }
 
-    var total_quotation = approved+_approved;
-    var per = ((approved/total_quotation)*100).toFixed(2);
 
     $.each(h.approved, function (i,v) {
-        if(v <= 0 ){
-            var x=0;
-            if(h._approved[i] <=0){
-                var y=0;
-                dataSource_bar.push({type:month[i],value:x,number:y});
-            }
+        if(h.approved[i] <=0 || h._approved[i] <=0){
+            dataSource_bar.push({type:month[i],value:numberWithCommas(0),number:0});
         }else{
-            if(h._approved[i] <=0){
-                var y=0;
-                dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:y});
-            }else{
-                var comma=0;
-                if(h._approved[i] >0){
-                    comma =numberWithCommas(h._approved[i]);
-                        dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:comma});
-                }else{
-                    dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:comma});
-                }
-            }
-            //console.log(numberWithCommas(0));
+            dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:h._approved[i]});
         }
     });
 
@@ -591,7 +575,7 @@ function renderGraph_target (h) {
                 dataSource_target.push({type:month[i],value:v,number:h._approved[i]});
     });
 
-    console.log(dataSource_target);
+    //console.log(dataSource_target);
 
     $('#chart_target').dxChart('instance').option('dataSource', dataSource_target);
     $('#chart_target').dxChart('instance').render();
