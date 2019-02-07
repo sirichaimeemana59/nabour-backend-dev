@@ -127,6 +127,50 @@
 </div>
 {{--stop quotation/contract ratio bar--}}
 
+{{--start target quotation ratio--}}
+<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
+    <div class="row" style="align: left;">
+        <label class="col-sm-9 control-label">ราคา :</label>
+        <div class="col-sm-2">
+            <select name="target_ratio" id="" class="form-control">
+                <option value="">Budget</option>
+                @for($i=10000;$i<=9000000;$i+=100000)
+                    <option value="{!! $i !!}">{!! number_format($i) !!}</option>
+                @endfor
+            </select>
+        </div>
+        <button type="button" class="btn btn-secondary p-search-budget-ratio" id="p-search-budget-ratio">{!! trans('messages.search') !!}</button>
+    </div>
+</form>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span id="per-ratio-lead"></span>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-2">
+                <p class="text-medium">Detail.</p>
+                <div class="col-sm-12">
+                    <p class="text-lg"><span id="total_target_leads">0</span></p>
+                </div>
+                <div class="col-sm-12">
+                    <p class="text-lg"><span id="total_target_customer">0</span></p>
+                </div>
+                <br><br><br><br><br><br>
+                <div class="text-secondary" id="per_ratio_quotation" style="color: #1bc634;font-size: 45px;">0</div>
+            </div>
+            <div class="col-sm-2">
+                <div id="reqs-per-quotation-ratio" style="height: 150px;"></div>
+            </div>
+            <div class="col-sm-8">
+                <div id="chart_ratio_target"></div>
+                {{--<div id="types"></div>--}}
+            </div>
+        </div>
+    </div>
+</div>
+{{--stop target quotation ratio--}}
+
 
 
 

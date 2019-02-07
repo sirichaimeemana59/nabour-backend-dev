@@ -101,6 +101,26 @@
     {{--<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>--}}
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script>
+        $('#p-search-budget-ratio').on('click', function () {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart-year').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    renderGraph_target_ratio(h);
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            })
+        });
+
         $('#search-year').on('click', function () {
             var _this = $(this);
             _this.prepend('<i class="fa-spin fa-spinner"></i> ');
@@ -118,6 +138,7 @@
                     renderGraph_ratio(h);
                     renderGraph_quotation(h);
                     renderGraph_quotation_sum_ratio(h);
+                    renderGraph_target_ratio(h);
                     _this.removeAttr('disabled').find('i').remove();
                 }
             })
@@ -140,6 +161,7 @@
                         renderGraph_ratio(h);
                         renderGraph_quotation(h);
                         renderGraph_quotation_sum_ratio(h);
+                        renderGraph_target_ratio(h);
                         _this.removeAttr('disabled').find('i').remove();
                     }
                 })
@@ -465,7 +487,8 @@
                 if(h.approved_sum[i] <=0 || h._approved_sum[i] <=0){
                     dataSource_bar.push({type:month[i],value:numberWithCommas(0),number:0});
                 }else{
-                    dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:h._approved_sum[i]});
+                    var con_ = numberWithCommas(h._approved_sum[i])
+                    dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:con_});
                 }
             });
             //console.log(dataSource_bar);
@@ -521,6 +544,151 @@
         });
 
         //stop quotation_bar
+
+        //strat chart Target quotation
+        function renderGraph_target_ratio (h) {
+
+            var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
+
+            var dataSource_target_ratio = [];
+
+            var approved=0,_approved = 0;
+
+            for (var i = 0; i < h.approved.length; i++) {
+                approved += h.approved[i] << 0;
+            }
+            for (var i = 0; i < h._approved.length; i++) {
+                _approved += h._approved[i] << 0;
+            }
+
+            var total_quotation = approved+_approved;
+            var per = ((approved/total_quotation)*100).toFixed(2);
+
+
+            $.each(h.approved, function (i,v) {
+                dataSource_target_ratio.push({type:month[i],value:v,number:h._approved[i]});
+            });
+
+            //console.log(dataSource_target);
+
+            $('#chart_ratio_target').dxChart('instance').option('dataSource', dataSource_target_ratio);
+            $('#chart_ratio_target').dxChart('instance').render();
+
+            $('#reqs-per-quotation-ratio').dxCircularGauge('instance').option('value', per);
+            $('#reqs-per-quotation-ratio').dxCircularGauge('instance').render();
+
+            $('#total_target_leads').html("Quotation Approved " + approved);
+            $('#total_target_customer').html("Quotation Non-Approved " + _approved);
+
+            $('#per_ratio_quotation').html(per);
+
+            //console.log(dataSource_target);
+        }
+        $('.reset-s-btn').on('click',function () {
+            $(this).closest('form').find("input").val("");
+            $(this).closest('form').find("select option:selected").removeAttr('selected');
+        });
+
+        $(function(){
+            $("#chart_ratio_target").dxChart({
+                palette: "Violet",
+                dataSource: dataSource_target_ratio,
+                commonSeriesSettings: {
+                    argumentField: "type",
+                    type: "line"
+                },
+                margin: {
+                    bottom: 20
+                },
+                argumentAxis: {
+                    valueMarginsEnabled: false,
+                    discreteAxisDivisionMode: "crossLabels",
+                    grid: {
+                        visible: true
+                    }
+                },
+                series: [
+                    { valueField: "value", name: "Quotation_Approved" },
+                    { valueField: "number", name: "Quotation_Non-Approved" },
+                ],
+                legend: {
+                    verticalAlignment: "bottom",
+                    horizontalAlignment: "center",
+                    itemTextPosition: "bottom"
+                },
+                title: {
+                    text: "Target Quotation/Contract",
+                    subtitle: {
+                        text: "(Millions of Tons, Oil Equivalent)"
+                    }
+                },
+                "export": {
+                    enabled: true
+                },
+                tooltip: {
+                    enabled: true,
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.valueText
+                        };
+                    }
+                }
+            }).dxChart("instance");
+        });
+
+        var dataSource_target_ratio = [];
+
+        jQuery(document).ready(function($)
+        {
+
+            if( ! $.isFunction($.fn.dxChart))
+                return;
+
+            var gaugesPalette = ['#8dc63f', '#40bbea', '#ffba00', '#cc3f44'];
+
+            // Requests per second gauge
+            $('#reqs-per-quotation-ratio').dxCircularGauge({
+                scale: {
+                    startValue: 0,
+                    endValue: 200,
+                    majorTick: {
+                        tickInterval: 50
+                    }
+                },
+                rangeContainer: {
+                    palette: 'pastel',
+                    width: 3,
+                    ranges: [
+                        {
+                            startValue: 0,
+                            endValue: 50,
+                            color: gaugesPalette[0]
+                        }, {
+                            startValue: 50,
+                            endValue: 100,
+                            color: gaugesPalette[1]
+                        }, {
+                            startValue: 100,
+                            endValue: 150,
+                            color: gaugesPalette[2]
+                        }, {
+                            startValue: 150,
+                            endValue: 200,
+                            color: gaugesPalette[3]
+                        }
+                    ],
+                },
+                value: per,
+                valueIndicator: {
+                    offset: 10,
+                    color: '#2c2e2f',
+                    spindleSize: 12
+                }
+            });
+        });
+
+        //stop chart Target quotation
     </script>
 
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">

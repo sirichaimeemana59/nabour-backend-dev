@@ -676,6 +676,10 @@ class QuotationreportController extends Controller
                 $information = $this->query_leads_customer_year(Request::get('year'));
             }
 
+            if (Request::get('target_ratio') != null) {
+                $information = $this->chart_target_quotation(Request::get('target_ratio'));
+            }
+
             $p_rows = $p_rows->where('active_status', '=', 't')->get();
             //dd($information);
             return response()->json( $information );
@@ -977,6 +981,34 @@ class QuotationreportController extends Controller
 
             $information["approved_sum"][] = $data_quotation[0]['sum'];
             $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+        }
+        return $information;
+    }
+
+    public function chart_target_quotation($target){
+        $budget = array(0,$target);
+        $p_rows = new Quotation;
+        $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+        foreach ($month as $key => $value) {
+            $data = $p_rows
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereBetween('product_price_with_vat', $budget)
+                ->whereMonth('created_at', '=', $key)
+                ->where('status', '=', '1')
+                ->get();
+            $data = $data->toArray();// quotation approved
+
+            $_data = $p_rows
+                ->select(DB::raw('COUNT(id) as count'))
+                ->whereBetween('product_price_with_vat', $budget)
+                ->whereMonth('created_at', '=', $key)
+                ->where('status', '=', '0')
+                ->get();
+
+            $_data = $_data->toArray();// quotation none approved
+
+            $information["approved"][] = $data[0]['count'];
+            $information["_approved"][] = $_data[0]['count'];
         }
         return $information;
     }

@@ -458,7 +458,8 @@ function renderGraph_quotation_sum (h) {
         if(h.approved[i] <=0 || h._approved[i] <=0){
             dataSource_bar.push({type:month[i],value:numberWithCommas(0),number:0});
         }else{
-            dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:h._approved[i]});
+            var con_ = numberWithCommas(h._approved[i])
+            dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:con_});
         }
     });
 
