@@ -123,36 +123,8 @@
 
         </div>
     </div>
-{{--chart quotation--}}
-    <div class="panel panel-default chart_line_quotation" style="display: none;">
-        <div class="panel-heading">
-            <span id="per_chart_line_quotation"></span>
-        </div>
-        <div class="panel-body">
 
-            <div class="row">
-                <div class="col-sm-2">
-                    <p class="text-medium">Detail.</p>
-                    <div class="col-sm-12">
-                        <p class="text-lg"><span id="total_lead_line_quotation">0</span></p>
-                    </div>
-                    <div class="col-sm-12">
-                        <p class="text-lg"><span id="total_customer_line_quotation">0</span></p>
-                    </div>
-                    <br><br><br><br><br><br>
-                    <div class="text-secondary" id="per_line_quotation" style="color: #1bc634;font-size: 45px;">0</div>
-                </div>
-                <div class="col-sm-2">
-                    <div id="reqs-per-second-quotation" style="height: 150px;"></div>
-                </div>
-                <div class="col-sm-8">
-                    <div id="chart-quotation"></div>
-                    {{--<div id="types"></div>--}}
-                </div>
-            </div>
 
-        </div>
-    </div>
 
 
 

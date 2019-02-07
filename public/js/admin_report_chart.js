@@ -258,7 +258,7 @@ $('#p-search-quotation').on('click', function () {
         var _this = $(this);
         _this.prepend('<i class="fa-spin fa-spinner"></i> ');
         _this.attr('disabled');
-        $('#chart-quotation').css('opacity', '0.6');
+        $('#chart-year').css('opacity', '0.6');
         var parent_ = $(this).parents('form');
         var data = parent_.serialize();
         //alert(data);
@@ -299,8 +299,7 @@ $('#p-search-quotation-chart').on('click', function () {
 
 function renderGraph_quotation (h) {
    // console.log(h.qapproved);
-    $('.chart').hide();
-    $('.chart_line_quotation').hide();
+    $('.chart').show();
     $('.search_year_quotation').show();
     $('.search_year_lead').hide();
     $('.search_year_sum').hide();
@@ -353,120 +352,23 @@ function renderGraph_quotation (h) {
 
     text_ ="Quotation/Contract Ratio in " + per + "%";
 
-    $('#chart-quotation').dxChart('instance').option('dataSource', rDataSource);
-    $('#chart-quotation').dxChart('instance').render();
+    $('#chart').dxChart('instance').option('dataSource', rDataSource);
+    $('#chart').dxChart('instance').render();
 
-    $('#reqs-per-second-quotation').dxCircularGauge('instance').option('value', per);
-    $('#reqs-per-second-quotation').dxCircularGauge('instance').render();
+    $('#reqs-per-second').dxCircularGauge('instance').option('value', per);
+    $('#reqs-per-second').dxCircularGauge('instance').render();
 
-    $('#chart-quotation').dxChart('instance').option('title', text_);
-    $('#chart-quotation').dxChart('instance').render();
+    $('#chart').dxChart('instance').option('title', text_);
+    $('#chart').dxChart('instance').render();
 
-    $('#per_chart_line_quotation').html("Quotation/Contract Ratio in " + per + "%");
-    $('#per_line_quotation').html(per);
-    $('#total_lead_line_quotation').html("Quotation Approved " + approved);
-    $('#total_customer_line_quotation').html("Quotation Non-Approved " + _approved);
+    $('#per').html("Quotation/Contract Ratio in " + per + "%");
+    $('#per_').html(per);
+    $('#total_lead').html("Quotation Approved " + approved);
+    $('#total_customer').html("Quotation Non-Approved " + _approved);
 }
 $('.reset-s-btn').on('click',function () {
     $(this).closest('form').find("input").val("");
     $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
-
-jQuery(document).ready(function($)
-{
-
-    if( ! $.isFunction($.fn.dxChart))
-        return;
-
-    var gaugesPalette = ['#8dc63f', '#40bbea', '#ffba00', '#cc3f44'];
-
-    // Requests per second gauge
-    $('#reqs-per-second-quotation').dxCircularGauge({
-        scale: {
-            startValue: 0,
-            endValue: 200,
-            majorTick: {
-                tickInterval: 50
-            }
-        },
-        rangeContainer: {
-            palette: 'pastel',
-            width: 3,
-            ranges: [
-                {
-                    startValue: 0,
-                    endValue: 50,
-                    color: gaugesPalette[0]
-                }, {
-                    startValue: 50,
-                    endValue: 100,
-                    color: gaugesPalette[1]
-                }, {
-                    startValue: 100,
-                    endValue: 150,
-                    color: gaugesPalette[2]
-                }, {
-                    startValue: 150,
-                    endValue: 200,
-                    color: gaugesPalette[3]
-                }
-            ],
-        },
-        value: per,
-        valueIndicator: {
-            offset: 10,
-            color: '#2c2e2f',
-            spindleSize: 12
-        }
-    });
-});
-
-var dataSource = [];
-var text_ = '';
-var series_name =[];
-
-$(function(){
-    $("#chart-quotation").dxChart({
-        palette: "Violet",
-        dataSource: dataSource,
-        commonSeriesSettings: {
-            argumentField: "type",
-            type: "line"
-        },
-        margin: {
-            bottom: 20
-        },
-        argumentAxis: {
-            valueMarginsEnabled: false,
-            discreteAxisDivisionMode: "crossLabels",
-            grid: {
-                visible: true
-            }
-        },
-        series: [
-            { valueField: "value", name: "Quotation_Approved" },
-            { valueField: "number", name: "Quotation_Non_Approved" },
-        ],
-        legend: {
-            verticalAlignment: "bottom",
-            horizontalAlignment: "center",
-            itemTextPosition: "bottom"
-        },
-        title: {
-            text: text_,
-        },
-        "export": {
-            enabled: true
-        },
-        tooltip: {
-            enabled: true,
-            customizeTooltip: function (arg) {
-                return {
-                    text: arg.valueText
-                };
-            }
-        }
-    }).dxChart("instance");
 });
 
 // stop chart quotation and contract
