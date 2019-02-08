@@ -717,8 +717,8 @@ $(function(){
         },
         series: [
             { valueField: "value", name: "Quotation_Approved" },
+            { valueField: "target", name: "Goal",color: "#ff0000" },
             { valueField: "number", name: "Quotation_Non-Approved" },
-            { valueField: "target", name: "Goal" },
         ],
         legend: {
             verticalAlignment: "bottom",
