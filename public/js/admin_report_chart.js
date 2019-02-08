@@ -96,7 +96,22 @@ $('#p-search-property').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
-                renderGraph(h);
+                var leads=0,customer = 0;
+                for (var i = 0; i < h.leads.length; i++) {
+                    leads += h.leads[i] << 0;
+                }
+                for (var i = 0; i < h.customer.length; i++) {
+                    customer += h.customer[i] << 0;
+                }
+                if(leads != 0 && customer != 0){
+                    renderGraph(h);
+                    $('.chart-none').hide();
+                }else{
+                    console.log('meToo');
+                    $('.chart').show();
+                    $('.chart-none').show();
+                    $('.chart_line').hide();
+                }
                 _this.removeAttr('disabled').find('i').remove();
             }
         })
@@ -287,7 +302,22 @@ $('#p-search-quotation').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
-                renderGraph_quotation(h);
+                var approved=0,_approved = 0;
+
+                for (var i = 0; i < h.approved.length; i++) {
+                    approved += h.approved[i] << 0;
+                }
+                for (var i = 0; i < h._approved.length; i++) {
+                    _approved += h._approved[i] << 0;
+                }
+                if(approved !=0 && _approved !=0){
+                    renderGraph_quotation(h);
+                    $('.chart-none').hide();
+                }else{
+                    $('.chart-none').show();
+                    $('.chart_line_quotation').hide();
+                    $('.chart').show();
+                }
                 _this.removeAttr('disabled').find('i').remove();
             }
         })
@@ -496,7 +526,22 @@ $('#p-search-quotation-sum').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
-                renderGraph_quotation_sum(h);
+                var approved=0,_approved = 0;
+
+                for (var i = 0; i < h.approved.length; i++) {
+                    approved += h.approved[i] << 0;
+                }
+                for (var i = 0; i < h._approved.length; i++) {
+                    _approved += h._approved[i] << 0;
+                }
+                if(approved !=0 && _approved !=0){
+                    renderGraph_quotation_sum(h);
+                    $('.chart-none').hide();
+                }else{
+                    $('.chart-none').show();
+                    $('.chart_bar').hide();
+                    $('.chart').show();
+                }
                 _this.removeAttr('disabled').find('i').remove();
             }
         })
@@ -645,7 +690,23 @@ $('#p-search-budget').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
-                renderGraph_target(h);
+                var approved=0,_approved = 0;
+
+                for (var i = 0; i < h.approved.length; i++) {
+                    approved += h.approved[i] << 0;
+                }
+                for (var i = 0; i < h._approved.length; i++) {
+                    _approved += h._approved[i] << 0;
+                }
+                if(approved !=0 && _approved !=0){
+                    renderGraph_target(h);
+                    $('.chart-none').hide();
+                }else{
+                    $('.chart-none').show();
+                    $('.chart_target_detail').hide();
+                    $('.chart').show();
+                }
+
                 _this.removeAttr('disabled').find('i').remove();
             }
         })
@@ -691,8 +752,8 @@ function renderGraph_target (h) {
     $('#chart_target').dxChart('instance').option('dataSource', dataSource_target);
     $('#chart_target').dxChart('instance').render();
 
-    $('#total_lead1').html("Quotation Approved " + approved);
-    $('#total_customer1').html("Quotation Non-Approved " + _approved);
+    $('#total_lead1').html("Quotation Approved " + numberWithCommas(approved) + "  บาท");
+    $('#total_customer1').html("Quotation Non-Approved " + numberWithCommas(_approved) + "  บาท");
 
     //console.log(dataSource_target);
 }
@@ -748,3 +809,4 @@ $(function(){
 var dataSource_target = [];
 
 //Stop Tar Get Quotation_Contract
+

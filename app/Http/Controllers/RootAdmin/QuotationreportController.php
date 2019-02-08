@@ -340,6 +340,7 @@ class QuotationreportController extends Controller
 
                     $information["leads"][] = $_data[0]['count'];
                     $information["customer"][] = $data[0]['count'];
+
                 }
                 //dd('ffff');
             }
@@ -476,7 +477,42 @@ class QuotationreportController extends Controller
     $p_rows = new Quotation;
 
     if (Request::ajax()) {
-        if (Request::get('name')) {
+        if (Request::get('name') != null AND Request::get('year') != null) {
+
+            $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+            foreach ($month as $key => $value){
+
+                $data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+//                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
+                    ->where('lead_id','=', Request::get('name'))
+                    ->whereMonth('created_at','=',$key)
+                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->where('status','=','1')
+                    ->get();
+                $data = $data->toArray();// quotation approved
+
+                $_data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->where('lead_id','=', Request::get('name'))
+                    ->whereMonth('created_at','=',$key)
+                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->where('status','=','0')
+                    ->get();
+
+                $_data = $_data->toArray();// quotation none approved
+
+                $information["approved"][] = $data[0]['count'];
+                $information["_approved"][] = $_data[0]['count'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+
+
+            }
+        }
+
+        if (Request::get('name') != null AND Request::get('year') == null) {
 
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
@@ -509,7 +545,41 @@ class QuotationreportController extends Controller
             }
         }
 
-        if (Request::get('sale_id')) {
+        if (Request::get('sale_id') != null AND Request::get('year') !=null) {
+
+            $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+            foreach ($month as $key => $value){
+
+                $data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->where('sales_id','=', Request::get('sale_id'))
+                    ->whereMonth('created_at','=',$key)
+                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->where('status','=','1')
+                    ->get();
+                $data = $data->toArray();// quotation approved
+
+                $_data = $p_rows
+                    ->select(DB::raw('COUNT(id) as count'))
+                    ->where('sales_id','=', Request::get('sale_id'))
+                    ->whereMonth('created_at','=',$key)
+                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->where('status','=','0')
+                    ->get();
+
+                $_data = $_data->toArray();// quotation none approved
+
+                $information["approved"][] = $data[0]['count'];
+                $information["_approved"][] = $_data[0]['count'];
+
+//                    $information["qapproved"][] = $_data[0]['count'];
+//                    $information["q_approved"][] = $data[0]['count'];
+
+
+            }
+        }
+
+        if (Request::get('sale_id') != null AND Request::get('year') == null) {
 
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
@@ -541,7 +611,7 @@ class QuotationreportController extends Controller
             }
         }
 
-        if (Request::get('year') != null) {
+        if (Request::get('year') != null AND Request::get('name') == null AND Request::get('sale_id') == null) {
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
 
@@ -683,7 +753,7 @@ class QuotationreportController extends Controller
         $p_rows = new Quotation;
 
         if (Request::ajax()) {
-            if (Request::get('target')) {
+            if (Request::get('target') != null AND Request::get('year_target') != null) {
 
                 $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
                 foreach ($month as $key => $value){
@@ -693,6 +763,7 @@ class QuotationreportController extends Controller
                         ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->whereBetween('product_price_with_vat', $budget)
                         ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year_target')-543)
                         ->where('status','=','1')
                         ->get();
                     $data = $data->toArray();// quotation approved
@@ -701,6 +772,7 @@ class QuotationreportController extends Controller
                         ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->whereBetween('product_price_with_vat', $budget)
                         ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year_target')-543)
                         ->where('status','=','0')
                         ->get();
 

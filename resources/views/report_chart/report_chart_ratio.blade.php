@@ -28,17 +28,17 @@
                     </div>
                     <div class="panel-body search-form">
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-                        <div class="row">
-                            <label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>
-                            <div class="col-sm-3">
-                                {!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}
-                            </div>
-                            <label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>
-                            <div class="col-sm-3">
-                                {!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}
-                            </div>
-                        </div>
-                        <br>
+                        {{--<div class="row">--}}
+                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
+                            {{--</div>--}}
+                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<br>--}}
                         <div class="row">
                             <label class="col-sm-1 control-label">แหล่งที่มา</label>
                             <div class="col-sm-3">
@@ -47,6 +47,23 @@
                             <label class="col-sm-1 control-label">ประเภท</label>
                             <div class="col-sm-3">
                                 {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <label class="col-sm-1 control-label">ปี</label>
+                            <div class="col-sm-3">
+                                <select name="year" id="" class="form-control">
+                                    @foreach($year as $key => $value)
+                                        <?php
+                                        $date=date("Y-m-d");
+                                        $cut_year=explode("-",$date);
+                                        $new_year=$cut_year[0]+543;
+                                        $select=$value==$new_year?"selected":"";
+                                        ?>
+                                        <option value="{!! $value !!}"{!! $select !!}>{!! $value !!}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

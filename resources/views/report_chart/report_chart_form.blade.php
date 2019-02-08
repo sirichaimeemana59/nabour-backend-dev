@@ -118,6 +118,22 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                            <label class="col-sm-1 control-label">ปี</label>
+                            <div class="col-sm-2">
+                                <select name="year" id="" class="form-control">
+                                    <option value="">กรุณาเลือกปี</option>
+                                    @foreach($year as $key => $value)
+                                        <?php
+                                        $date=date("Y-m-d");
+                                        $cut_year=explode("-",$date);
+                                        $new_year=$cut_year[0]+543;
+                                        $select=$value==$new_year?"selected":"";
+                                        ?>
+                                        <option value="{!! $value !!}"{!! $select !!}>{!! $value !!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             </div>
                             <br>
                             {{--<div class="row">--}}
@@ -175,18 +191,38 @@
                 <div class="tab-pane" id="target">
                    <div class="panel panel-default">
                       <div class="panel-body">
-                          <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-                             <div class="row" style="align: left;">
-                                  <label class="col-sm-9 control-label">ราคา :</label>
-                                  <div class="col-sm-2">
-                                      <select name="target" id="" class="form-control">
+                          <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal target_form">
+                             <div class="row">
+                                  <label class="col-sm-2 control-label">ราคา :</label>
+                                  <div class="col-sm-3">
+                                      <select name="target" id="" class="form-control" required>
                                           <option value="">Budget</option>
                                           @for($i=10000;$i<=9000000;$i+=10000)
                                               <option value="{!! $i !!}">{!! number_format($i) !!}</option>
                                           @endfor
                                       </select>
                                   </div>
-                                         <button type="button" class="btn btn-secondary p-search-budget" id="p-search-budget">{!! trans('messages.search') !!}</button>
+
+                                 <label class="col-sm-2 control-label">ปี</label>
+                                 <div class="col-sm-3">
+                                     <select name="year_target" id="" class="form-control">
+                                         @foreach($year as $key => $value)
+                                             <?php
+                                             $date=date("Y-m-d");
+                                             $cut_year=explode("-",$date);
+                                             $new_year=$cut_year[0]+543;
+                                             $select=$value==$new_year?"selected":"";
+                                             ?>
+                                             <option value="{!! $value !!}"{!! $select !!}>{!! $value !!}</option>
+                                         @endforeach
+                                     </select>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-12 text-right">
+                                      <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+                                      <button type="submit" class="btn btn-secondary p-search-budget" id="p-search-budget">{!! trans('messages.search') !!}</button>
+                                  </div>
                               </div>
                           </form>
                                         <div class="row">
@@ -250,11 +286,22 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
-
+    <script>
+        if($('.target_form').valid() && allGood ) {
+            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+            $('.target_form').submit();
+        } else {
+            var top_;
+            if(!$('.target_form').valid()) top_ = $('.error').first().offset().top;
+            else top_ = $('#prop_list').offset().top;
+            $('html,body').animate({scrollTop: top_-100}, 1000);
+        }
+    </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
 @endsection
