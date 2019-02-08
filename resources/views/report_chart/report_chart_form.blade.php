@@ -221,7 +221,7 @@
                               <div class="row">
                                   <div class="col-sm-12 text-right">
                                       <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
-                                      <button type="submit" class="btn btn-secondary p-search-budget" id="p-search-budget">{!! trans('messages.search') !!}</button>
+                                      <button type="button" class="btn btn-secondary p-search-budget" id="p-search-budget">{!! trans('messages.search') !!}</button>
                                   </div>
                               </div>
                           </form>
