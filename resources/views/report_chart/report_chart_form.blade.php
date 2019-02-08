@@ -238,7 +238,7 @@
                                         </div>
                                         <div class="row">
                                             <br>
-                                            <div class="dx-viewport demo-container">
+                                            <div class="dx-viewport demo-container chart_target_detail">
                                                 <div id="chart-demo">
                                                     <div id="chart_target"></div>
                                                 </div>
@@ -292,15 +292,15 @@
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script>
-        if($('.target_form').valid() && allGood ) {
-            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-            $('.target_form').submit();
-        } else {
-            var top_;
-            if(!$('.target_form').valid()) top_ = $('.error').first().offset().top;
-            else top_ = $('#prop_list').offset().top;
-            $('html,body').animate({scrollTop: top_-100}, 1000);
-        }
+        // if($('.target_form').valid() && allGood ) {
+        //     $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+        //     $('.target_form').submit();
+        // } else {
+        //     var top_;
+        //     if(!$('.target_form').valid()) top_ = $('.error').first().offset().top;
+        //     else top_ = $('#prop_list').offset().top;
+        //     $('html,body').animate({scrollTop: top_-100}, 1000);
+        // }
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

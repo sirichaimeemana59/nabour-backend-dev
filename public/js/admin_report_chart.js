@@ -701,8 +701,10 @@ $('#p-search-budget').on('click', function () {
                 if(approved !=0 && _approved !=0){
                     renderGraph_target(h);
                     $('.chart-none').hide();
+                    //$('#chart_target').show();
                 }else{
                     $('.chart-none').show();
+                    //$('#chart_target').hide();
                     $('.chart_target_detail').hide();
                     $('.chart').show();
                 }
