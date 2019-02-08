@@ -1,5 +1,26 @@
 // start chart lead and customer
+$('.lead_set').on('click',function () {
+    $('.chart').hide();
+});
+
+$('.quotation_set').on('click',function () {
+    $('.chart').hide();
+});
+
+$('.quotation_sum_set').on('click',function () {
+    $('.chart').hide();
+});
+
+$('.target_set').on('click',function () {
+    $('.chart').hide();
+});
+
 $('.reset-s-btn').on('click',function () {
+    $(this).closest('form').find("input").val("");
+    $(this).closest('form').find("select option:selected").removeAttr('selected');
+});
+
+$('.reset-s-btn-quotation').on('click',function () {
     $(this).closest('form').find("input").val("");
     $(this).closest('form').find("select option:selected").removeAttr('selected');
 });
@@ -68,6 +89,7 @@ $('#p-search-property').on('click', function () {
         $('#chart-year').css('opacity', '0.6');
         var parent_ = $(this).parents('form');
         var data = parent_.serialize();
+        //alert(data);
         $.ajax({
             url: $('#root-url').val() + "/report_quotation/ratio/report/date",
             data: data,
@@ -149,10 +171,6 @@ function renderGraph (h) {
     $('#total_lead').html("Total Leads is. " + leads);
     $('#total_customer').html("Total Customer is. " + customer);
 }
-$('.reset-s-btn').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
 
 jQuery(document).ready(function($)
 {
@@ -360,10 +378,6 @@ function renderGraph_quotation (h) {
     $('#total_lead_quotation').html("Quotation Approved " + approved);
     $('#total_customer_quotation').html("Quotation Non-Approved " + _approved);
 }
-$('.reset-s-btn').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
 
 jQuery(document).ready(function($)
 {
@@ -574,10 +588,7 @@ function renderGraph_quotation_sum (h) {
     // $('#total_lead').html("Quotation Approved " + approved);
     // $('#total_customer').html("Quotation Non-Approved " + _approved);
 }
-$('.reset-s-btn').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
+
 
 var dataSource_bar = [];
 
@@ -667,7 +678,12 @@ function renderGraph_target (h) {
     }
 
     $.each(h.approved, function (i,v) {
-                dataSource_target.push({type:month[i],value:v,number:h._approved[i]});
+        if(h.approved[i] <=0 || h._approved[i] <=0){
+            dataSource_target.push({type:month[i],value:numberWithCommas(0),number:0,target:numberWithCommas(h._target[i])});
+        }else{
+            var con_ = numberWithCommas(h._approved[i])
+            dataSource_target.push({type:month[i],value:numberWithCommas(v),number:con_,target:numberWithCommas(h._target[i])});
+        }
     });
 
     //console.log(dataSource_target);
@@ -680,10 +696,6 @@ function renderGraph_target (h) {
 
     //console.log(dataSource_target);
 }
-$('.reset-s-btn').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
 
 $(function(){
     $("#chart_target").dxChart({
@@ -706,6 +718,7 @@ $(function(){
         series: [
             { valueField: "value", name: "Quotation_Approved" },
             { valueField: "number", name: "Quotation_Non-Approved" },
+            { valueField: "target", name: "Goal" },
         ],
         legend: {
             verticalAlignment: "bottom",

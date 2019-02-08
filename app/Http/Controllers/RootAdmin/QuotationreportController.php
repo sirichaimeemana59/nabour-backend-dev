@@ -312,14 +312,18 @@ class QuotationreportController extends Controller
                 }
            }
 
-            if (Request::get('channel_id') != null) {
+            if (Request::get('channel_id') != null AND Request::get('year') != null) {
                 $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+                $date=date("Y-m-d");
+                $cut_year=explode("-",$date);
+                //dd($cut_year[0]);
                 foreach ($month as $key => $value){
 
                     $data = $p_rows
                         ->select(DB::raw('COUNT(*) as count'))
                         ->where('channel','=',Request::get('channel_id'))
                         ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year')-543)
                         ->where('role','=','0')
                         ->get();
                     $data = $data->toArray();
@@ -328,6 +332,39 @@ class QuotationreportController extends Controller
                         ->select(DB::raw('COUNT(*) as count'))
                         ->where('channel','=',Request::get('channel_id'))
                         ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year')-543)
+                        ->where('role','=','1')
+                        ->get();
+
+                    $_data = $_data->toArray();
+
+                    $information["leads"][] = $_data[0]['count'];
+                    $information["customer"][] = $data[0]['count'];
+                }
+                //dd('ffff');
+            }
+
+            if (Request::get('channel_id') != null AND Request::get('year') == null) {
+                $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+                $date=date("Y-m-d");
+                $cut_year=explode("-",$date);
+                //dd($cut_year[0]);
+                foreach ($month as $key => $value){
+
+                    $data = $p_rows
+                        ->select(DB::raw('COUNT(*) as count'))
+                        ->where('channel','=',Request::get('channel_id'))
+                        ->whereMonth('created_at','=',$key)
+                        //->whereYear('created_at','=',$cut_year[0])
+                        ->where('role','=','0')
+                        ->get();
+                    $data = $data->toArray();
+
+                    $_data = $p_rows
+                        ->select(DB::raw('COUNT(*) as count'))
+                        ->where('channel','=',Request::get('channel_id'))
+                        ->whereMonth('created_at','=',$key)
+                        //->whereYear('created_at','=',$cut_year[0])
                         ->where('role','=','1')
                         ->get();
 
@@ -338,14 +375,19 @@ class QuotationreportController extends Controller
                 }
             }
 
-            if (Request::get('type_id') != null) {
+            if (Request::get('type_id') != null AND Request::get('year') != null) {
                 $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+
+                $date=date("Y-m-d");
+                $cut_year=explode("-",$date);
+
                 foreach ($month as $key => $value){
 
                     $data = $p_rows
                         ->select(DB::raw('COUNT(*) as count'))
                         ->where('type','=',Request::get('type_id'))
                         ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year')-543)
                         ->where('role','=','0')
                         ->get();
                     $data = $data->toArray();
@@ -354,6 +396,7 @@ class QuotationreportController extends Controller
                         ->select(DB::raw('COUNT(*) as count'))
                         ->where('type','=',Request::get('type_id'))
                         ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',Request::get('year')-543)
                         ->where('role','=','1')
                         ->get();
 
@@ -364,7 +407,40 @@ class QuotationreportController extends Controller
                 }
             }
 
-            if (Request::get('year') != null) {
+            if (Request::get('type_id') != null AND Request::get('year') == null) {
+                $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+
+                $date=date("Y-m-d");
+                $cut_year=explode("-",$date);
+
+                foreach ($month as $key => $value){
+
+                    $data = $p_rows
+                        ->select(DB::raw('COUNT(*) as count'))
+                        ->where('type','=',Request::get('type_id'))
+                        ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',$cut_year[0])
+                        ->where('role','=','0')
+                        ->get();
+                    $data = $data->toArray();
+
+                    $_data = $p_rows
+                        ->select(DB::raw('COUNT(*) as count'))
+                        ->where('type','=',Request::get('type_id'))
+                        ->whereMonth('created_at','=',$key)
+                        ->whereYear('created_at','=',$cut_year[0])
+                        ->where('role','=','1')
+                        ->get();
+
+                    $_data = $_data->toArray();
+
+                    $information["leads"][] = $_data[0]['count'];
+                    $information["customer"][] = $data[0]['count'];
+                }
+            }
+
+            if (Request::get('year') != null AND Request::get('channel_id') == null AND Request::get('type_id') == null) {
+               // dd(Request::get('year'));
                 $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
                 foreach ($month as $key => $value){
 
@@ -614,7 +690,7 @@ class QuotationreportController extends Controller
                     $budget = array(0,Request::get('target'));
 
                     $data = $p_rows
-                        ->select(DB::raw('COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->whereBetween('product_price_with_vat', $budget)
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','1')
@@ -622,7 +698,7 @@ class QuotationreportController extends Controller
                     $data = $data->toArray();// quotation approved
 
                     $_data = $p_rows
-                        ->select(DB::raw('COUNT(id) as count'))
+                        ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                         ->whereBetween('product_price_with_vat', $budget)
                         ->whereMonth('created_at','=',$key)
                         ->where('status','=','0')
@@ -630,8 +706,9 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] =  $data[0]['count'];
-                    $information["_approved"][] = $_data[0]['count'];
+                    $information["approved"][][] =  $data[0]['sum'];
+                    $information["_approved"][][] = $_data[0]['sum'];
+                    $information["_target"][][] = Request::get('target');
                 }
                 //dd($information);
             }

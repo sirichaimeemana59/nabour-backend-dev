@@ -23,22 +23,22 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#lead" data-toggle="tab" aria-expanded="false">
+                    <a href="#lead" class="lead_set" data-toggle="tab" aria-expanded="false">
                         <span>Leads And Customer</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#quotation" data-toggle="tab" aria-expanded="false">
+                    <a href="#quotation" class="quotation_set" data-toggle="tab" aria-expanded="false">
                         <span>Quotation And Contract</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#quotation_sum" data-toggle="tab" aria-expanded="false">
+                    <a href="#quotation_sum" class="quotation_sum_set" data-toggle="tab" aria-expanded="false">
                         <span>Value Quotation</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#target" data-toggle="tab" aria-expanded="false">
+                    <a href="#target" class="target_set" data-toggle="tab" aria-expanded="false">
                         <span>Tar Get</span>
                     </a>
                 </li>
@@ -48,16 +48,16 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="lead">
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-                        <div class="row">
-                            <label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>
-                            <div class="col-sm-3">
-                                {!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}
-                            </div>
-                            <label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>
-                            <div class="col-sm-3">
-                                {!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}
-                            </div>
-                        </div>
+                        {{--<div class="row">--}}
+                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
+                            {{--</div>--}}
+                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>--}}
+                            {{--<div class="col-sm-3">--}}
+                                {{--{!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <br>
                         <div class="row">
                             <label class="col-sm-1 control-label">แหล่งที่มา</label>
@@ -68,8 +68,25 @@
                             <div class="col-sm-3">
                                 {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}
                             </div>
+                            <label class="col-sm-1 control-label">ปี</label>
+                            <div class="col-sm-3">
+                                <select name="year" id="" class="form-control" required>
+                                    <option value="">กรุณาเลือกปี</option>
+                                    @foreach($year as $key => $value)
+                                        <?php
+                                        $date=date("Y-m-d");
+                                        $cut_year=explode("-",$date);
+                                        $new_year=$cut_year[0]+543;
+                                        $select=$value==$new_year?"selected":"";
+                                        ?>
+                                        <option value="{!! $value !!}"{!! $select !!}>{!! $value !!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
+
+                        <br>
                         <div class="row">
                             <div class="col-sm-12 text-right">
                                 <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
@@ -115,7 +132,7 @@
                             {{--</div>--}}
                             <div class="row">
                                 <div class="col-sm-12 text-right">
-                                    <button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
+                                    <button type="reset" class="btn btn-white reset-s-btn-quotation">{!! trans('messages.reset') !!}</button>
                                     <button type="button" class="btn btn-secondary p-search-quotation" id="p-search-quotation">{!! trans('messages.search') !!}</button>
                                 </div>
                             </div>
@@ -164,7 +181,7 @@
                                   <div class="col-sm-2">
                                       <select name="target" id="" class="form-control">
                                           <option value="">Budget</option>
-                                          @for($i=10000;$i<=9000000;$i+=100000)
+                                          @for($i=10000;$i<=9000000;$i+=10000)
                                               <option value="{!! $i !!}">{!! number_format($i) !!}</option>
                                           @endfor
                                       </select>
@@ -235,7 +252,7 @@
 
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
-    {{--<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>--}}
+    <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
 
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">

@@ -27,24 +27,30 @@
         }
     </style>
 
-    <div class="row search_year_lead" style="display: none">
-                <div class="panel-body search-form">
-                    <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-                        <div class="row" style="align: left;">
-                            <label class="col-sm-9 control-label">ปี</label>
-                                <div class="col-sm-2">
-                                    <select name="year" id="" class="form-control">
-                                       @foreach($year as $key => $value)
-                                            <option value="{!! $value !!}">{!! $value !!}</option>
-                                       @endforeach
-                                    </select>
-                                </div>
+   {{--<div class="row search_year_lead" style="display: none">--}}
+                {{--<div class="panel-body search-form">--}}
+                    {{--<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">--}}
+                        {{--<div class="row" style="align: left;">--}}
+                            {{--<label class="col-sm-9 control-label">ปี</label>--}}
+                                {{--<div class="col-sm-2">--}}
+                                    {{--<select name="year" id="" class="form-control">--}}
+                                       {{--@foreach($year as $key => $value)--}}
+                                           <?php
+//                                            $date=date("Y-m-d");
+//                                            $cut_year=explode("-",$date);
+//                                            $new_year=$cut_year[0]+543;
+//                                            $select=$value==$new_year?"selected":"";
+                                            ?>
+                                            {{--<option value="{!! $value !!}" {!! $select !!}>{!! $value !!}</option>--}}
+                                       {{--@endforeach--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
                             {{--<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>--}}
-                            <button type="button" class="btn btn-secondary p-search-property-chart" id="p-search-property-chart">{!! trans('messages.search') !!}</button>
-                        </div>
-                    </form>
-                </div>
-    </div>
+                            {{--<button type="button" class="btn btn-secondary p-search-property-chart" id="p-search-property-chart">{!! trans('messages.search') !!}</button>--}}
+                        {{--</div>--}}
+                    {{--</form>--}}
+                {{--</div>--}}
+    {{--</div>--}}
 
     <div class="row search_year_quotation" style="display: none">
         <div class="panel-body search-form">
@@ -54,7 +60,13 @@
                     <div class="col-sm-2">
                         <select name="year" id="" class="form-control">
                             @foreach($year as $key => $value)
-                                <option value="{!! $value !!}">{!! $value !!}</option>
+                                <?php
+                                $date=date("Y-m-d");
+                                $cut_year=explode("-",$date);
+                                $new_year=$cut_year[0]+543;
+                                $select=$value==$new_year?"selected":"";
+                                ?>
+                                <option value="{!! $value !!}"{!! $select !!}>{!! $value !!}</option>
                             @endforeach
                         </select>
                     </div>
@@ -155,6 +167,13 @@
         </div>
     </div>
 
+    <section id="chart-none">
+        <div class="panel panel-default">
+            <div class="no-report">
+                {{ trans('messages.feesBills.not_found_report') }}
+            </div>
+        </div>
+    </section>
 
 
 
