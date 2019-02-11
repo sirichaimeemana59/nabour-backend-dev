@@ -829,6 +829,8 @@ class QuotationreportController extends Controller
                 $information = $this->chart_target_quotation(Request::get('target_ratio'));
             }
 
+
+
             $p_rows = $p_rows->where('active_status', '=', 't')->get();
             //dd($information);
             return response()->json( $information );
@@ -1140,24 +1142,27 @@ class QuotationreportController extends Controller
         $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
         foreach ($month as $key => $value) {
             $data = $p_rows
-                ->select(DB::raw('COUNT(id) as count'))
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                 ->whereBetween('product_price_with_vat', $budget)
-                ->whereMonth('created_at', '=', $key)
-                ->where('status', '=', '1')
+                ->whereMonth('created_at','=',$key)
+                //->whereYear('created_at','=',Request::get('year_target')-543)
+                ->where('status','=','1')
                 ->get();
             $data = $data->toArray();// quotation approved
 
             $_data = $p_rows
-                ->select(DB::raw('COUNT(id) as count'))
+                ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                 ->whereBetween('product_price_with_vat', $budget)
-                ->whereMonth('created_at', '=', $key)
-                ->where('status', '=', '0')
+                ->whereMonth('created_at','=',$key)
+                //->whereYear('created_at','=',Request::get('year_target')-543)
+                ->where('status','=','0')
                 ->get();
 
             $_data = $_data->toArray();// quotation none approved
 
-            $information["approved"][] = $data[0]['count'];
-            $information["_approved"][] = $_data[0]['count'];
+            $information["approved"][][] =  $data[0]['sum'];
+            $information["_approved"][][] = $_data[0]['sum'];
+            $information["_target"][][] = $target;
         }
         return $information;
     }

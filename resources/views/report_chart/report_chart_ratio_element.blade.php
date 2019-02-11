@@ -27,24 +27,24 @@
     }
 </style>
 
-<div class="row">
-    <div class="panel-body search-form">
-        <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-            <div class="row" style="align: left;">
-                <label class="col-sm-9 control-label">ปี</label>
-                <div class="col-sm-2">
-                    <select name="year" id="" class="form-control">
-                        @foreach($year as $key => $value)
-                            <option value="{!! $value !!}">{!! $value !!}</option>
-                        @endforeach
-                    </select>
-                </div>
+{{--<div class="row">--}}
+    {{--<div class="panel-body search-form">--}}
+        {{--<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">--}}
+            {{--<div class="row" style="align: left;">--}}
+                {{--<label class="col-sm-9 control-label">ปี</label>--}}
+                {{--<div class="col-sm-2">--}}
+                    {{--<select name="year" id="" class="form-control">--}}
+                        {{--@foreach($year as $key => $value)--}}
+                            {{--<option value="{!! $value !!}">{!! $value !!}</option>--}}
+                        {{--@endforeach--}}
+                    {{--</select>--}}
+                {{--</div>--}}
                 {{--<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>--}}
-                <button type="button" class="btn btn-secondary" id="search-year">{!! trans('messages.search') !!}</button>
-            </div>
-        </form>
-    </div>
-</div>
+                {{--<button type="button" class="btn btn-secondary" id="search-year">{!! trans('messages.search') !!}</button>--}}
+            {{--</div>--}}
+        {{--</form>--}}
+    {{--</div>--}}
+{{--</div>--}}
 
 {{--start lead/customer ratio--}}
 <div class="panel panel-default">
@@ -134,7 +134,7 @@
         <div class="col-sm-2">
             <select name="target_ratio" id="" class="form-control">
                 <option value="">Budget</option>
-                @for($i=10000;$i<=9000000;$i+=100000)
+                @for($i=10000;$i<=9000000;$i+=10000)
                     <option value="{!! $i !!}">{!! number_format($i) !!}</option>
                 @endfor
             </select>
@@ -142,25 +142,22 @@
         <button type="button" class="btn btn-secondary p-search-budget-ratio" id="p-search-budget-ratio">{!! trans('messages.search') !!}</button>
     </div>
 </form>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <span id="per-ratio-lead"></span>
     </div>
+    <br>
     <div class="panel-body">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <p class="text-medium">Detail.</p>
                 <div class="col-sm-12">
-                    <p class="text-lg"><span id="total_target_leads">0</span></p>
+                    <p class="text-lg"><span id="total_target_leads"></span></p>
                 </div>
                 <div class="col-sm-12">
-                    <p class="text-lg"><span id="total_target_customer">0</span></p>
+                    <p class="text-lg"><span id="total_target_customer"></span></p>
                 </div>
-                <br><br><br><br><br><br>
-                <div class="text-secondary" id="per_ratio_quotation" style="color: #1bc634;font-size: 45px;">0</div>
-            </div>
-            <div class="col-sm-2">
-                <div id="reqs-per-quotation-ratio" style="height: 150px;"></div>
             </div>
             <div class="col-sm-8">
                 <div id="chart_ratio_target"></div>
@@ -171,6 +168,13 @@
 </div>
 {{--stop target quotation ratio--}}
 
+<div class="panel panel-default chart-none" style="display: none; text-align: center;">
+    <div class="panel-body">
+        <div class="row">
+            {!! trans('messages.feesBills.not_found_report') !!}
+        </div>
+    </div>
+</div>
 
 
 

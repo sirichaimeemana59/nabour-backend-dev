@@ -118,6 +118,8 @@
     {{--<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>--}}
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script>
+        $('.chart-none').show();
+
         $('#p-search-budget-ratio').on('click', function () {
             var _this = $(this);
             _this.prepend('<i class="fa-spin fa-spinner"></i> ');
@@ -132,7 +134,22 @@
                 dataType: "json",
                 method: 'post',
                 success: function (h) {
-                    renderGraph_target_ratio(h);
+                    console.log(h);
+                    var _target=0;
+
+                    for (var i = 0; i < h._target.length; i++) {
+                        _target += h._target[i] << 0;
+                    }
+
+                    if(_target !=0){
+                        renderGraph_target_ratio(h);
+                        $('.chart-none').hide();
+                        $('.target_chart_ratio').show();
+                    }else{
+                        $('.chart-none').show();
+                        $('.target_chart_ratio').hide();
+                    }
+
                     _this.removeAttr('disabled').find('i').remove();
                 }
             })
@@ -155,7 +172,7 @@
                     renderGraph_ratio(h);
                     renderGraph_quotation(h);
                     renderGraph_quotation_sum_ratio(h);
-                    renderGraph_target_ratio(h);
+                    //renderGraph_target_ratio(h);
                     _this.removeAttr('disabled').find('i').remove();
                 }
             })
@@ -175,10 +192,11 @@
                     dataType: "json",
                     method: 'post',
                     success: function (h) {
-                        renderGraph_ratio(h);
-                        renderGraph_quotation(h);
-                        renderGraph_quotation_sum_ratio(h);
-                        renderGraph_target_ratio(h);
+                            renderGraph_ratio(h);
+                            renderGraph_quotation(h);
+                            renderGraph_quotation_sum_ratio(h);
+                            //renderGraph_target_ratio(h);
+
                         _this.removeAttr('disabled').find('i').remove();
                     }
                 })
@@ -565,6 +583,8 @@
         //strat chart Target quotation
         function renderGraph_target_ratio (h) {
 
+           //console.log(h._target);
+
             var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
@@ -579,28 +599,32 @@
                 _approved += h._approved[i] << 0;
             }
 
-            var total_quotation = approved+_approved;
-            var per = ((approved/total_quotation)*100).toFixed(2);
-
-
             $.each(h.approved, function (i,v) {
-                dataSource_target_ratio.push({type:month[i],value:v,number:h._approved[i]});
+                if(h.approved[i] <=0 || h._approved[i] <=0){
+                    dataSource_target_ratio.push({type:month[i],value:numberWithCommas(0),number:0,target:numberWithCommas(h._target[i])});
+                }else{
+                    var con_ = numberWithCommas(h._approved[i])
+                    dataSource_target_ratio.push({type:month[i],value:numberWithCommas(v),number:con_,target:numberWithCommas(h._target[i])});
+                }
             });
 
-            //console.log(dataSource_target);
+            //console.log(dataSource_target_ratio);
 
             $('#chart_ratio_target').dxChart('instance').option('dataSource', dataSource_target_ratio);
             $('#chart_ratio_target').dxChart('instance').render();
 
-            $('#reqs-per-quotation-ratio').dxCircularGauge('instance').option('value', per);
-            $('#reqs-per-quotation-ratio').dxCircularGauge('instance').render();
+            // $('#reqs-per-quotation-ratio').dxCircularGauge('instance').option('value', per);
+            // $('#reqs-per-quotation-ratio').dxCircularGauge('instance').render();
 
-            $('#total_target_leads').html("Quotation Approved " + approved);
-            $('#total_target_customer').html("Quotation Non-Approved " + _approved);
+            // $('#total_target_leads').html("Quotation Approved " + approved);
+            // $('#total_target_customer').html("Quotation Non-Approved " + _approved);
 
-            $('#per_ratio_quotation').html(per);
+            $('#total_target_leads').html("Quotation Approved " + numberWithCommas(approved) + "  บาท");
+            $('#total_target_customer').html("Quotation Non-Approved " + numberWithCommas(_approved) + "  บาท");
 
-            //console.log(dataSource_target);
+            //$('#per_ratio_quotation').html(per);
+
+            //console.log(dataSource_target_ratio);
         }
         $('.reset-s-btn').on('click',function () {
             $(this).closest('form').find("input").val("");
@@ -627,6 +651,7 @@
                 },
                 series: [
                     { valueField: "value", name: "Quotation_Approved" },
+                    { valueField: "target", name: "Goal",color: "#ff0000" },
                     { valueField: "number", name: "Quotation_Non-Approved" },
                 ],
                 legend: {
