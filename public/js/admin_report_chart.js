@@ -67,6 +67,11 @@ $(function () {
 });
 
 function numberWithCommas(number) {
+    if(number == null){
+        number = 0;
+    }else{
+        number = number;
+    }
     var parts = number.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
@@ -635,7 +640,7 @@ $(function(){
 
 //start chart bar quotation/contract
 function renderGraph_quotation_sum (h) {
-    // console.log(h.qapproved);
+    //console.log(h._approved);
     $('.chart').show();
     $('.search_year_quotation').hide();
     $('.search_year_lead').hide();
@@ -674,9 +679,9 @@ function renderGraph_quotation_sum (h) {
             dataSource_bar.push({type:month[i],value:numberWithCommas(0),number:0});
             //console.log('aaa');
         }else{
-            //console.log(h.approved[i]);
+            //console.log('bbb');
             var con_ = numberWithCommas(h._approved[i]);
-            dataSource_bar.push({type:month[i],value:numberWithCommas(i),number:con_});
+            dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:con_});
         }
     });
 
