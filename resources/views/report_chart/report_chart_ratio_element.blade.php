@@ -129,16 +129,33 @@
 
 {{--start target quotation ratio--}}
 <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-    <div class="row" style="align: left;">
-        <label class="col-sm-9 control-label">ราคา :</label>
+    <div class="row">
+        <label class="col-sm-3 control-label">ราคา :</label>
         <div class="col-sm-2">
-            <select name="target_ratio" id="" class="form-control">
+            <select name="target_ratio" id="" class="form-control" required>
                 <option value="">Budget</option>
                 @for($i=10000;$i<=9000000;$i+=10000)
                     <option value="{!! $i !!}">{!! number_format($i) !!}</option>
                 @endfor
             </select>
         </div>
+
+        <label class="col-sm-1 control-label">ปี</label>
+        <div class="col-sm-2">
+            <select name="year_target" id="" class="form-control" required>
+                <option value="">กรุณาเลือกปี</option>
+                @foreach($year as $key => $value)
+                    <?php
+                    $date=date("Y-m-d");
+                    $cut_year=explode("-",$date);
+                    $new_year=$cut_year[0]+543;
+                    $select=$value==$new_year?"selected":"";
+                    ?>
+                    <option value="{!! $value !!}"{!! $select !!}>{!! $value !!}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="button" class="btn btn-secondary p-search-budget-ratio" id="p-search-budget-ratio">{!! trans('messages.search') !!}</button>
     </div>
 </form>

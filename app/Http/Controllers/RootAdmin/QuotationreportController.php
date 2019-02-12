@@ -251,7 +251,7 @@ class QuotationreportController extends Controller
     public function chart_form()
     {
         $c_year = date('Y');
-        $year = array('' => trans_choice('messages.year',1) );
+        $year = array('' => trans_choice('',1) );
         $plus = (App::getLocale() == 'th')?543:0;
         for ($i = $c_year+1; $i >= 1900; $i--) {
             $year += array($i=>$i+$plus);
@@ -477,7 +477,7 @@ class QuotationreportController extends Controller
     $p_rows = new Quotation;
 
     if (Request::ajax()) {
-        if (Request::get('name') != null AND Request::get('year') != null) {
+        if (Request::get('name') != null AND Request::get('year1') != null) {
 
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
@@ -487,7 +487,7 @@ class QuotationreportController extends Controller
 //                        ->select(DB::raw('SUM(product_price_with_vat) as sum,COUNT(id) as count'))
                     ->where('lead_id','=', Request::get('name'))
                     ->whereMonth('created_at','=',$key)
-                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->whereYear('created_at','=',Request::get('year1')-543)
                     ->where('status','=','1')
                     ->get();
                 $data = $data->toArray();// quotation approved
@@ -496,7 +496,7 @@ class QuotationreportController extends Controller
                     ->select(DB::raw('COUNT(id) as count'))
                     ->where('lead_id','=', Request::get('name'))
                     ->whereMonth('created_at','=',$key)
-                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->whereYear('created_at','=',Request::get('year1')-543)
                     ->where('status','=','0')
                     ->get();
 
@@ -512,7 +512,7 @@ class QuotationreportController extends Controller
             }
         }
 
-        if (Request::get('name') != null AND Request::get('year') == null) {
+        if (Request::get('name') != null AND Request::get('year1') == null) {
 
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
@@ -545,7 +545,7 @@ class QuotationreportController extends Controller
             }
         }
 
-        if (Request::get('sale_id') != null AND Request::get('year') !=null) {
+        if (Request::get('sale_id') != null AND Request::get('year1') !=null) {
 
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
@@ -554,7 +554,7 @@ class QuotationreportController extends Controller
                     ->select(DB::raw('COUNT(id) as count'))
                     ->where('sales_id','=', Request::get('sale_id'))
                     ->whereMonth('created_at','=',$key)
-                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->whereYear('created_at','=',Request::get('year1')-543)
                     ->where('status','=','1')
                     ->get();
                 $data = $data->toArray();// quotation approved
@@ -563,7 +563,7 @@ class QuotationreportController extends Controller
                     ->select(DB::raw('COUNT(id) as count'))
                     ->where('sales_id','=', Request::get('sale_id'))
                     ->whereMonth('created_at','=',$key)
-                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->whereYear('created_at','=',Request::get('year1')-543)
                     ->where('status','=','0')
                     ->get();
 
@@ -579,7 +579,7 @@ class QuotationreportController extends Controller
             }
         }
 
-        if (Request::get('sale_id') != null AND Request::get('year') == null) {
+        if (Request::get('sale_id') != null AND Request::get('year1') == null) {
 
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
@@ -611,14 +611,14 @@ class QuotationreportController extends Controller
             }
         }
 
-        if (Request::get('year') != null AND Request::get('name') == null AND Request::get('sale_id') == null) {
+        if (Request::get('year1') != null AND Request::get('name') == null AND Request::get('sale_id') == null) {
             $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
             foreach ($month as $key => $value){
 
                 $data = $p_rows
                     ->select(DB::raw('COUNT(id) as count'))
                     ->whereMonth('created_at','=',$key)
-                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->whereYear('created_at','=',Request::get('year1')-543)
                     ->where('status','=','1')
                     ->get();
                 $data = $data->toArray();// quotation approved
@@ -626,7 +626,7 @@ class QuotationreportController extends Controller
                 $_data = $p_rows
                     ->select(DB::raw('COUNT(id) as count'))
                     ->whereMonth('created_at','=',$key)
-                    ->whereYear('created_at','=',Request::get('year')-543)
+                    ->whereYear('created_at','=',Request::get('year1')-543)
                     ->where('status','=','0')
                     ->get();
 
@@ -792,7 +792,7 @@ class QuotationreportController extends Controller
 
     public function ratio_report(){
         $c_year = date('Y');
-        $year = array('' => trans_choice('messages.year',1) );
+        $year = array('' => trans_choice('',1) );
         $plus = (App::getLocale() == 'th')?543:0;
         for ($i = $c_year+1; $i >= 1900; $i--) {
             $year += array($i=>$i+$plus);
@@ -813,20 +813,22 @@ class QuotationreportController extends Controller
                 $information = $this->query_leads_customer_date($date);
             }
 
-            if (Request::get('channel_id') != null) {
-                $information = $this->query_leads_customer_chanel(Request::get('channel_id'));
+            $year=Request::get('year')-543;
+
+            if (Request::get('channel_id') != null AND Request::get('year') != null) {
+                $information = $this->query_leads_customer_chanel(Request::get('channel_id'),Request::get('year')-543);
             }
 
-            if (Request::get('type_id') != null) {
-                $information = $this->query_leads_customer_type(Request::get('type_id'));
+            if (Request::get('type_id') != null AND Request::get('year') != null) {
+                $information = $this->query_leads_customer_type(Request::get('type_id'),Request::get('year')-543);
             }
 
             if (Request::get('year') != null) {
                 $information = $this->query_leads_customer_year(Request::get('year'));
             }
 
-            if (Request::get('target_ratio') != null) {
-                $information = $this->chart_target_quotation(Request::get('target_ratio'));
+            if (Request::get('target_ratio') != null AND Request::get('year_target') != null) {
+                $information = $this->chart_target_quotation(Request::get('target_ratio'),Request::get('year_target') -543);
             }
 
 
@@ -912,7 +914,7 @@ class QuotationreportController extends Controller
         return $information;
     }
 
-    public function query_leads_customer_chanel($channel_id){
+    public function query_leads_customer_chanel($channel_id,$year){
         $p_rows = new Customer;
         $quotation = new Quotation;
         $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
@@ -922,6 +924,7 @@ class QuotationreportController extends Controller
                 ->select(DB::raw('COUNT(*) as count'))
                 ->where('channel','=',$channel_id)
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('role','=','0')
                 ->get();
             $data = $data->toArray();
@@ -930,6 +933,7 @@ class QuotationreportController extends Controller
                 ->select(DB::raw('COUNT(*) as count'))
                 ->where('channel','=',$channel_id)
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('role','=','1')
                 ->get();
 
@@ -941,6 +945,7 @@ class QuotationreportController extends Controller
             $data_quotation = $quotation
                 ->select(DB::raw('COUNT(id) as count'))
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->whereHas('latest_lead', function ($q) use ($channel_id) {
                 $q->where('channel','=',$channel_id);
                 })
@@ -951,6 +956,7 @@ class QuotationreportController extends Controller
             $_data_quotation = $quotation
                 ->select(DB::raw('COUNT(id) as count'))
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->whereHas('latest_lead', function ($q) use ($channel_id) {
                     $q->where('channel','=',$channel_id);
                 })
@@ -968,6 +974,7 @@ class QuotationreportController extends Controller
                     $q->where('channel','=',$channel_id);
                 })
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('status','=','1')
                 ->get();
             $data_quotation = $data_quotation->toArray();// quotation approved
@@ -978,6 +985,7 @@ class QuotationreportController extends Controller
                     $q->where('channel','=',$channel_id);
                 })
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('status','=','0')
                 ->get();
 
@@ -990,7 +998,7 @@ class QuotationreportController extends Controller
         return $information;
     }
 
-    public function query_leads_customer_type($type_id){
+    public function query_leads_customer_type($type_id,$year){
         $p_rows = new Customer;
         $quotation = new Quotation;
         $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
@@ -1000,6 +1008,7 @@ class QuotationreportController extends Controller
                 ->select(DB::raw('COUNT(*) as count'))
                 ->where('type','=',$type_id)
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('role','=','0')
                 ->get();
             $data = $data->toArray();
@@ -1008,6 +1017,7 @@ class QuotationreportController extends Controller
                 ->select(DB::raw('COUNT(*) as count'))
                 ->where('type','=',$type_id)
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('role','=','1')
                 ->get();
 
@@ -1016,6 +1026,7 @@ class QuotationreportController extends Controller
             $data_quotation = $quotation
                 ->select(DB::raw('COUNT(id) as count'))
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->whereHas('latest_lead', function ($q) use ($type_id) {
                     $q->where('type','=',$type_id);
                 })
@@ -1026,6 +1037,7 @@ class QuotationreportController extends Controller
             $_data_quotation = $quotation
                 ->select(DB::raw('COUNT(id) as count'))
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->whereHas('latest_lead', function ($q) use ($type_id) {
                     $q->where('type','=',$type_id);
                 })
@@ -1046,6 +1058,7 @@ class QuotationreportController extends Controller
                     $q->where('type','=',$type_id);
                 })
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('status','=','1')
                 ->get();
             $data_quotation = $data_quotation->toArray();// quotation approved
@@ -1056,6 +1069,7 @@ class QuotationreportController extends Controller
                     $q->where('type','=',$type_id);
                 })
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 ->where('status','=','0')
                 ->get();
 
@@ -1136,7 +1150,7 @@ class QuotationreportController extends Controller
         return $information;
     }
 
-    public function chart_target_quotation($target){
+    public function chart_target_quotation($target,$year){
         $budget = array(0,$target);
         $p_rows = new Quotation;
         $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
@@ -1145,6 +1159,7 @@ class QuotationreportController extends Controller
                 ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                 ->whereBetween('product_price_with_vat', $budget)
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 //->whereYear('created_at','=',Request::get('year_target')-543)
                 ->where('status','=','1')
                 ->get();
@@ -1154,6 +1169,7 @@ class QuotationreportController extends Controller
                 ->select(DB::raw('SUM(product_price_with_vat) as sum'))
                 ->whereBetween('product_price_with_vat', $budget)
                 ->whereMonth('created_at','=',$key)
+                ->whereYear('created_at','=',$year)
                 //->whereYear('created_at','=',Request::get('year_target')-543)
                 ->where('status','=','0')
                 ->get();

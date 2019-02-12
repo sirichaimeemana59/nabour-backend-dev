@@ -53,7 +53,7 @@
                         <div class="row">
                             <label class="col-sm-1 control-label">ปี</label>
                             <div class="col-sm-3">
-                                <select name="year" id="" class="form-control">
+                                <select name="year" id="year1" class="form-control" required>
                                     <option value="">กรุณาเลือกปี</option>
                                     @foreach($year as $key => $value)
                                         <?php
@@ -105,6 +105,7 @@
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/knockout-3.1.0.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
 
 
     <link rel="stylesheet" href="{!! url('https://cdn3.devexpress.com/jslib/18.2.5/css/dx.light.css') !!}">
@@ -121,40 +122,52 @@
     <script>
         $('.chart-none').show();
 
+        // if($('#p_form').valid() && allGood ) {
+        //     $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+        //     $('#p_form').submit();
+        // } else {
+        //     var top_;
+        //     if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
+        //     else top_ = $('#prop_list').offset().top;
+        //     $('html,body').animate({scrollTop: top_-100}, 1000);
+        // }
+
         //$( document ).ready(function(){
             $('#p-search-budget-ratio').on('click', function () {
-                var _this = $(this);
-                _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-                _this.attr('disabled');
-                $('#chart-year').css('opacity', '0.6');
-                var parent_ = $(this).parents('form');
-                var data = parent_.serialize();
-                //alert(data);
-                $.ajax({
-                    url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
-                    data: data,
-                    dataType: "json",
-                    method: 'post',
-                    success: function (h) {
-                        console.log(h);
-                        var _target=0;
+                if ($("select[name=year_target]").valid() && $("select[name=target_ratio]").valid()) {
+                    var _this = $(this);
+                    _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+                    _this.attr('disabled');
+                    $('#chart-year').css('opacity', '0.6');
+                    var parent_ = $(this).parents('form');
+                    var data = parent_.serialize();
+                    //alert('year');
+                    $.ajax({
+                        url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
+                        data: data,
+                        dataType: "json",
+                        method: 'post',
+                        success: function (h) {
+                            //console.log(h);
+                            var _target = 0;
 
-                        for (var i = 0; i < h._target.length; i++) {
-                            _target += h._target[i] << 0;
+                            for (var i = 0; i < h._target.length; i++) {
+                                _target += h._target[i] << 0;
+                            }
+
+                            if (_target != 0) {
+                                renderGraph_target_ratio(h);
+                                $('.chart-none').hide();
+                                $('.target_chart_ratio').show();
+                            } else {
+                                $('.chart-none').show();
+                                $('.target_chart_ratio').hide();
+                            }
+
+                            _this.removeAttr('disabled').find('i').remove();
                         }
-
-                        if(_target !=0){
-                            renderGraph_target_ratio(h);
-                            $('.chart-none').hide();
-                            $('.target_chart_ratio').show();
-                        }else{
-                            $('.chart-none').show();
-                            $('.target_chart_ratio').hide();
-                        }
-
-                        _this.removeAttr('disabled').find('i').remove();
-                    }
-                });
+                    });
+                }
             });
 
             $('#search-year').on('click', function () {
@@ -181,29 +194,34 @@
             });
 
             $('#search_ratio_chart_all').on('click', function () {
-                if (!$(this).is(':disabled')) {
-                    var _this = $(this);
-                    _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-                    _this.attr('disabled');
-                    $('#chart-year').css('opacity', '0.6');
-                    var parent_ = $(this).parents('form');
-                    var data = parent_.serialize();
-                    //alert(data);
-                    $.ajax({
-                        url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
-                        data: data,
-                        dataType: "json",
-                        method: 'post',
-                        success: function (h) {
-                            //console.log(h);
-                            renderGraph_ratio(h);
-                            renderGraph_quotation(h);
-                            renderGraph_quotation_sum_ratio(h);
-                            //renderGraph_target_ratio(h);
+                if ($("select[name=year]").valid())
+                {
+                    if (!$(this).is(':disabled')) {
+                        var _this = $(this);
+                        //$('#year1').valid();
+                        var year = $('#year1').val();
+                        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+                        _this.attr('disabled');
+                        $('#chart-year').css('opacity', '0.6');
+                        var parent_ = $(this).parents('form');
+                        var data = parent_.serialize();
+                        //alert(year);
+                        $.ajax({
+                            url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
+                            data: data,
+                            dataType: "json",
+                            method: 'post',
+                            success: function (h) {
+                                //console.log(h);
+                                renderGraph_ratio(h);
+                                renderGraph_quotation(h);
+                                renderGraph_quotation_sum_ratio(h);
+                                //renderGraph_target_ratio(h);
 
-                            _this.removeAttr('disabled').find('i').remove();
-                        }
-                    });
+                                _this.removeAttr('disabled').find('i').remove();
+                            }
+                        });
+                    }
                 }
             });
         //})

@@ -121,7 +121,7 @@
 
                             <label class="col-sm-1 control-label">ปี</label>
                             <div class="col-sm-2">
-                                <select name="year" id="" class="form-control">
+                                <select name="year1" id="" class="form-control" required>
                                     <option value="">กรุณาเลือกปี</option>
                                     @foreach($year as $key => $value)
                                         <?php
@@ -205,7 +205,8 @@
 
                                  <label class="col-sm-2 control-label">ปี</label>
                                  <div class="col-sm-3">
-                                     <select name="year_target" id="" class="form-control">
+                                     <select name="year_target" id="" class="form-control" required>
+                                         <option value="">กรุณาเลือกปี</option>
                                          @foreach($year as $key => $value)
                                              <?php
                                              $date=date("Y-m-d");
@@ -276,8 +277,10 @@
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/knockout-3.1.0.js"></script>
+    <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
 
     <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
+
 
     <link rel="stylesheet" href="{!! url('https://cdn3.devexpress.com/jslib/18.2.5/css/dx.light.css') !!}">
     <link rel="stylesheet" href="{!! url('https://cdn3.devexpress.com/jslib/18.2.5/css/dx.common.css') !!}">

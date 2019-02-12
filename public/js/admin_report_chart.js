@@ -79,45 +79,47 @@ $(document).ready(function() {
     });
 });
 
-$( document ).ready(function () {
+$(function () {
     $('#p-search-property').on('click', function () {
-        //alert('aaa');
-        $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
-        if (!$(this).is(':disabled')) {
-            var _this = $(this);
-            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-            _this.attr('disabled');
-            $('#chart-year').css('opacity', '0.6');
-            var parent_ = $(this).parents('form');
-            var data = parent_.serialize();
-            //alert(data);
-            $.ajax({
-                url: $('#root-url').val() + "/report_quotation/ratio/report/date",
-                data: data,
-                dataType: "json",
-                method: 'post',
-                success: function (h) {
-                    //alert('yes');
-                    var leads=0,customer = 0;
-                    for (var i = 0; i < h.leads.length; i++) {
-                        leads += h.leads[i] << 0;
+        if ($("select[name=year]").valid()) {
+            //alert('aaa');
+            $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
+            if (!$(this).is(':disabled')) {
+                var _this = $(this);
+                _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+                _this.attr('disabled');
+                $('#chart-year').css('opacity', '0.6');
+                var parent_ = $(this).parents('form');
+                var data = parent_.serialize();
+                //alert(data);
+                $.ajax({
+                    url: $('#root-url').val() + "/report_quotation/ratio/report/date",
+                    data: data,
+                    dataType: "json",
+                    method: 'post',
+                    success: function (h) {
+                        //alert('yes');
+                        var leads = 0, customer = 0;
+                        for (var i = 0; i < h.leads.length; i++) {
+                            leads += h.leads[i] << 0;
+                        }
+                        for (var x = 0; x < h.customer.length; x++) {
+                            customer += h.customer[x] << 0;
+                        }
+                        if (leads != 0 || customer != 0) {
+                            renderGraph(h);
+                            $('.chart-none').hide();
+                            //console.log('yes');
+                        } else {
+                            //console.log('noo');
+                            $('.chart').show();
+                            $('.chart-none').show();
+                            $('.chart_line').hide();
+                        }
+                        _this.removeAttr('disabled').find('i').remove();
                     }
-                    for (var x = 0; x < h.customer.length; x++) {
-                        customer += h.customer[x] << 0;
-                    }
-                    if(leads != 0 || customer != 0){
-                        renderGraph(h);
-                        $('.chart-none').hide();
-                        //console.log('yes');
-                    }else{
-                        //console.log('noo');
-                        $('.chart').show();
-                        $('.chart-none').show();
-                        $('.chart_line').hide();
-                    }
-                    _this.removeAttr('disabled').find('i').remove();
-                }
-            });
+                });
+            }
         }
     });
 
@@ -142,39 +144,41 @@ $( document ).ready(function () {
     });
 
     $('#p-search-quotation').on('click', function () {
-        if (!$(this).is(':disabled')) {
-            var _this = $(this);
-            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-            _this.attr('disabled');
-            $('#chart_quotation').css('opacity', '0.6');
-            var parent_ = $(this).parents('form');
-            var data = parent_.serialize();
-            //alert(data);
-            $.ajax({
-                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
-                data: data,
-                dataType: "json",
-                method: 'post',
-                success: function (h) {
-                    var approved=0,_approved = 0;
+        if ($("select[name=year1]").valid()) {
+            if (!$(this).is(':disabled')) {
+                var _this = $(this);
+                _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+                _this.attr('disabled');
+                $('#chart_quotation').css('opacity', '0.6');
+                var parent_ = $(this).parents('form');
+                var data = parent_.serialize();
+                //alert(data);
+                $.ajax({
+                    url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
+                    data: data,
+                    dataType: "json",
+                    method: 'post',
+                    success: function (h) {
+                        var approved = 0, _approved = 0;
 
-                    for (var i = 0; i < h.approved.length; i++) {
-                        approved += h.approved[i] << 0;
+                        for (var i = 0; i < h.approved.length; i++) {
+                            approved += h.approved[i] << 0;
+                        }
+                        for (var x = 0; i < h._approved.length; x++) {
+                            _approved += h._approved[x] << 0;
+                        }
+                        if (approved != 0 || _approved != 0) {
+                            renderGraph_quotation(h);
+                            $('.chart-none').hide();
+                        } else {
+                            $('.chart-none').show();
+                            $('.chart_line_quotation').hide();
+                            $('.chart').show();
+                        }
+                        _this.removeAttr('disabled').find('i').remove();
                     }
-                    for (var x = 0; i < h._approved.length; x++) {
-                        _approved += h._approved[x] << 0;
-                    }
-                    if(approved !=0 || _approved !=0){
-                        renderGraph_quotation(h);
-                        $('.chart-none').hide();
-                    }else{
-                        $('.chart-none').show();
-                        $('.chart_line_quotation').hide();
-                        $('.chart').show();
-                    }
-                    _this.removeAttr('disabled').find('i').remove();
-                }
-            });
+                });
+            }
         }
     });
 
@@ -262,42 +266,44 @@ $( document ).ready(function () {
     });
 
     $('#p-search-budget').on('click', function () {
-        if (!$(this).is(':disabled')) {
-            var _this = $(this);
-            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-            _this.attr('disabled');
-            $('#chart-year').css('opacity', '0.6');
-            var parent_ = $(this).parents('form');
-            var data = parent_.serialize();
-            //alert(data);
-            $.ajax({
-                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/budget",
-                data: data,
-                dataType: "json",
-                method: 'post',
-                success: function (h) {
-                    var approved=0,_approved = 0;
+        if ($("select[name=year_target]").valid() && $("select[name=target]").valid()) {
+            if (!$(this).is(':disabled')) {
+                var _this = $(this);
+                _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+                _this.attr('disabled');
+                $('#chart-year').css('opacity', '0.6');
+                var parent_ = $(this).parents('form');
+                var data = parent_.serialize();
+                //alert(data);
+                $.ajax({
+                    url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/budget",
+                    data: data,
+                    dataType: "json",
+                    method: 'post',
+                    success: function (h) {
+                        var approved = 0, _approved = 0;
 
-                    for (var i = 0; i < h.approved.length; i++) {
-                        approved += h.approved[i] << 0;
-                    }
-                    for (var x = 0; i < h._approved.length; x++) {
-                        _approved += h._approved[x] << 0;
-                    }
-                    if(approved !=0 || _approved !=0){
-                        renderGraph_target(h);
-                        $('.chart-none').hide();
-                        //$('#chart_target').show();
-                    }else{
-                        $('.chart-none').show();
-                        //$('#chart_target').hide();
-                        $('.chart_target_detail').hide();
-                        $('.chart').show();
-                    }
+                        for (var i = 0; i < h.approved.length; i++) {
+                            approved += h.approved[i] << 0;
+                        }
+                        for (var x = 0; i < h._approved.length; x++) {
+                            _approved += h._approved[x] << 0;
+                        }
+                        if (approved != 0 || _approved != 0) {
+                            renderGraph_target(h);
+                            $('.chart-none').hide();
+                            //$('#chart_target').show();
+                        } else {
+                            $('.chart-none').show();
+                            //$('#chart_target').hide();
+                            $('.chart_target_detail').hide();
+                            $('.chart').show();
+                        }
 
-                    _this.removeAttr('disabled').find('i').remove();
-                }
-            });
+                        _this.removeAttr('disabled').find('i').remove();
+                    }
+                });
+            }
         }
     });
 
@@ -674,7 +680,7 @@ function renderGraph_quotation_sum (h) {
         }
     });
 
-   console.log(dataSource_bar);
+   //console.log(dataSource_bar);
 
     text_ ="Quotation/Contract";
 
