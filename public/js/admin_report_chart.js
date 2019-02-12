@@ -341,7 +341,7 @@ function renderGraph (h) {
         customer += h.customer[x] << 0;
     }
 
-    var per = ((leads/customer)*100).toFixed(2);
+    var per = ((customer/(leads+customer))*100).toFixed(2);
 
     if(per == 'Infinity'){
         per = 0;
@@ -354,7 +354,7 @@ function renderGraph (h) {
             rDataSource.push({type:month[i],value:v,number:h.customer[i]});
         }
     });
-    //console.log(per);
+    console.log(per);
 
     text_ = "Leads/Customer Ratio in " + per + "%";
 

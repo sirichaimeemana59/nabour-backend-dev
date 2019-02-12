@@ -243,7 +243,7 @@
                 customer += h.customer[i] << 0;
             }
 
-            var per = ((leads/customer)*100).toFixed(2);
+            var per = ((customer/(leads+customer))*100).toFixed(2);
 
             $.each(h.leads, function (i,v) {
                 if(h.leads) {
