@@ -244,6 +244,7 @@
             }
 
             var per = ((customer/(leads+customer))*100).toFixed(2);
+            //Math.ceil(per);
 
             $.each(h.leads, function (i,v) {
                 if(h.leads) {
@@ -251,21 +252,21 @@
                 }
             });
 
-            text_ ="Leads/Customer Ratio in " + per + "%";
+            text_ ="Leads/Customer Ratio in " + Math.ceil(per) + "%";
             //console.log(dataSource_ratio);
 
             $('#chart_ratio').dxChart('instance').option('dataSource', dataSource_ratio);
             $('#chart_ratio').dxChart('instance').render();
 
-            $('#reqs-per-second-ratio').dxCircularGauge('instance').option('value', per);
+            $('#reqs-per-second-ratio').dxCircularGauge('instance').option('value', Math.ceil(per));
             $('#reqs-per-second-ratio').dxCircularGauge('instance').render();
 
             $('#chart_ratio').dxChart('instance').option('title', text_);
             $('#chart_ratio').dxChart('instance').render();
 
-            $('#per-ratio-lead').html("Leads/Customer Ratio in " + per + "%");
+            $('#per-ratio-lead').html("Leads/Customer Ratio in " + Math.ceil(per) + "%");
             // text ="Leads/Customer Ratio in " + per + "%";
-            $('#per_ratio').html(per);
+            $('#per_ratio').html(Math.ceil(per));
             $('#total_lead_ratio').html("Total Leads is. " + leads);
             $('#total_customer_ratio').html("Total Customer is. " + customer);
 
@@ -389,6 +390,7 @@
             var total_quotation = approved+_approved;
             var per = ((approved/total_quotation)*100).toFixed(2);
 
+
             $.each(h.approved, function (i,v) {
                 if(v <= 0){
                     var x=0;
@@ -406,19 +408,19 @@
                 }
             });
 
-            text_ ="Quotation/Contract Ratio in " + per + "%";
+            text_ ="Quotation/Contract Ratio in " + Math.ceil(per) + "%";
 
             $('#chart_quotation_ratio').dxChart('instance').option('dataSource', rDataSource);
             $('#chart_quotation_ratio').dxChart('instance').render();
 
-            $('#reqs-per-second-quotation').dxCircularGauge('instance').option('value', per);
+            $('#reqs-per-second-quotation').dxCircularGauge('instance').option('value', Math.ceil(per));
             $('#reqs-per-second-quotation').dxCircularGauge('instance').render();
 
             $('#chart_quotation_ratio').dxChart('instance').option('title', text_);
             $('#chart_quotation_ratio').dxChart('instance').render();
 
             //$('#per').html("Quotation/Contract Ratio in " + per + "%");
-            $('#per_quotation').html(per);
+            $('#per_quotation').html(Math.ceil(per));
             $('#total_quotation_app').html("Quotation Approved " + approved);
             $('#total_quotation_nonapp').html("Quotation Non-Approved " + _approved);
         }
