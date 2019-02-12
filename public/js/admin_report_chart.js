@@ -79,11 +79,49 @@ $(document).ready(function() {
     });
 });
 
+$( document ).ready(function () {
+    $('#p-search-property').on('click', function () {
+        //alert('aaa');
+        $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
+        if (!$(this).is(':disabled')) {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart-year').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/ratio/report/date",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    //alert('yes');
+                    var leads=0,customer = 0;
+                    for (var i = 0; i < h.leads.length; i++) {
+                        leads += h.leads[i] << 0;
+                    }
+                    for (var x = 0; x < h.customer.length; x++) {
+                        customer += h.customer[x] << 0;
+                    }
+                    if(leads != 0 || customer != 0){
+                        renderGraph(h);
+                        $('.chart-none').hide();
+                        //console.log('yes');
+                    }else{
+                        //console.log('noo');
+                        $('.chart').show();
+                        $('.chart-none').show();
+                        $('.chart_line').hide();
+                    }
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            });
+        }
+    });
 
-$('#p-search-property').on('click', function () {
-    //alert('aaa');
-    $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
-    if (!$(this).is(':disabled')) {
+    $('#p-search-property-chart').on('click', function () {
         var _this = $(this);
         _this.prepend('<i class="fa-spin fa-spinner"></i> ');
         _this.attr('disabled');
@@ -97,49 +135,176 @@ $('#p-search-property').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
-                //alert('yes');
-                var leads=0,customer = 0;
-                for (var i = 0; i < h.leads.length; i++) {
-                    leads += h.leads[i] << 0;
-                }
-                for (var x = 0; x < h.customer.length; x++) {
-                    customer += h.customer[x] << 0;
-                }
-                if(leads != 0 || customer != 0){
-                    renderGraph(h);
-                    $('.chart-none').hide();
-                    //console.log('yes');
-                }else{
-                    //console.log('noo');
-                    $('.chart').show();
-                    $('.chart-none').show();
-                    $('.chart_line').hide();
-                }
+                renderGraph(h);
                 _this.removeAttr('disabled').find('i').remove();
             }
         });
-    }
-});
+    });
 
-$('#p-search-property-chart').on('click', function () {
-    var _this = $(this);
-    _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-    _this.attr('disabled');
-    $('#chart-year').css('opacity', '0.6');
-    var parent_ = $(this).parents('form');
-    var data = parent_.serialize();
-    //alert(data);
-    $.ajax({
-        url: $('#root-url').val() + "/report_quotation/ratio/report/date",
-        data: data,
-        dataType: "json",
-        method: 'post',
-        success: function (h) {
-            renderGraph(h);
-            _this.removeAttr('disabled').find('i').remove();
+    $('#p-search-quotation').on('click', function () {
+        if (!$(this).is(':disabled')) {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart_quotation').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    var approved=0,_approved = 0;
+
+                    for (var i = 0; i < h.approved.length; i++) {
+                        approved += h.approved[i] << 0;
+                    }
+                    for (var x = 0; i < h._approved.length; x++) {
+                        _approved += h._approved[x] << 0;
+                    }
+                    if(approved !=0 || _approved !=0){
+                        renderGraph_quotation(h);
+                        $('.chart-none').hide();
+                    }else{
+                        $('.chart-none').show();
+                        $('.chart_line_quotation').hide();
+                        $('.chart').show();
+                    }
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            });
         }
     });
-});
+
+    $('#p-search-quotation-chart').on('click', function () {
+        if (!$(this).is(':disabled')) {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart_quotation').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    renderGraph_quotation(h);
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            });
+        }
+    });
+
+    $('#p-search-quotation-sum').on('click', function () {
+        //alert('bbb');
+        if (!$(this).is(':disabled')) {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart-year').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/sum",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    var approved=0,_approved = 0;
+
+                    for (var i = 0; i < h.approved.length; i++) {
+                        approved += h.approved[i] << 0;
+                    }
+                    for (var x = 0; x < h._approved.length; x++) {
+                        _approved += h._approved[x] << 0;
+                    }
+                    if(approved !=0 || _approved !=0){
+                        renderGraph_quotation_sum(h);
+                        $('.chart-none').hide();
+                    }else{
+                        $('.chart-none').show();
+                        $('.chart_bar').hide();
+                        $('.chart').show();
+                    }
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            });
+        }
+    });
+
+    $('#p-search-quotation-sum-year').on('click', function () {
+        //alert('aa');
+        if (!$(this).is(':disabled')) {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart-year').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/sum",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    renderGraph_quotation_sum(h);
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            });
+        }
+    });
+
+    $('#p-search-budget').on('click', function () {
+        if (!$(this).is(':disabled')) {
+            var _this = $(this);
+            _this.prepend('<i class="fa-spin fa-spinner"></i> ');
+            _this.attr('disabled');
+            $('#chart-year').css('opacity', '0.6');
+            var parent_ = $(this).parents('form');
+            var data = parent_.serialize();
+            //alert(data);
+            $.ajax({
+                url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/budget",
+                data: data,
+                dataType: "json",
+                method: 'post',
+                success: function (h) {
+                    var approved=0,_approved = 0;
+
+                    for (var i = 0; i < h.approved.length; i++) {
+                        approved += h.approved[i] << 0;
+                    }
+                    for (var x = 0; i < h._approved.length; x++) {
+                        _approved += h._approved[x] << 0;
+                    }
+                    if(approved !=0 || _approved !=0){
+                        renderGraph_target(h);
+                        $('.chart-none').hide();
+                        //$('#chart_target').show();
+                    }else{
+                        $('.chart-none').show();
+                        //$('#chart_target').hide();
+                        $('.chart_target_detail').hide();
+                        $('.chart').show();
+                    }
+
+                    _this.removeAttr('disabled').find('i').remove();
+                }
+            });
+        }
+    });
+
+})
+
+
+
 
 function renderGraph (h) {
     $('.chart').show();
@@ -167,12 +332,18 @@ function renderGraph (h) {
 
     var per = ((leads/customer)*100).toFixed(2);
 
+    if(per == 'Infinity'){
+        per = 0;
+    }else{
+        per = per;
+    }
+
     $.each(h.leads, function (i,v) {
         if(h.leads) {
             rDataSource.push({type:month[i],value:v,number:h.customer[i]});
         }
     });
-    //console.log(rDataSource);
+    //console.log(per);
 
     text_ = "Leads/Customer Ratio in " + per + "%";
 
@@ -292,64 +463,6 @@ $(function(){
 // stop chart lead and customer
 
 // start chart quotation and contract
-$('#p-search-quotation').on('click', function () {
-    if (!$(this).is(':disabled')) {
-        var _this = $(this);
-        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-        _this.attr('disabled');
-        $('#chart_quotation').css('opacity', '0.6');
-        var parent_ = $(this).parents('form');
-        var data = parent_.serialize();
-        //alert(data);
-        $.ajax({
-            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
-            data: data,
-            dataType: "json",
-            method: 'post',
-            success: function (h) {
-                var approved=0,_approved = 0;
-
-                for (var i = 0; i < h.approved.length; i++) {
-                    approved += h.approved[i] << 0;
-                }
-                for (var x = 0; i < h._approved.length; x++) {
-                    _approved += h._approved[x] << 0;
-                }
-                if(approved !=0 || _approved !=0){
-                    renderGraph_quotation(h);
-                    $('.chart-none').hide();
-                }else{
-                    $('.chart-none').show();
-                    $('.chart_line_quotation').hide();
-                    $('.chart').show();
-                }
-                _this.removeAttr('disabled').find('i').remove();
-            }
-        });
-    }
-});
-
-$('#p-search-quotation-chart').on('click', function () {
-    if (!$(this).is(':disabled')) {
-        var _this = $(this);
-        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-        _this.attr('disabled');
-        $('#chart_quotation').css('opacity', '0.6');
-        var parent_ = $(this).parents('form');
-        var data = parent_.serialize();
-        //alert(data);
-        $.ajax({
-            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation",
-            data: data,
-            dataType: "json",
-            method: 'post',
-            success: function (h) {
-                renderGraph_quotation(h);
-                _this.removeAttr('disabled').find('i').remove();
-            }
-        });
-    }
-});
 
 function renderGraph_quotation (h) {
    // console.log(h.qapproved);
@@ -515,67 +628,6 @@ $(function(){
 // stop chart quotation and contract
 
 //start chart bar quotation/contract
-$('#p-search-quotation-sum').on('click', function () {
-    //alert('bbb');
-    if (!$(this).is(':disabled')) {
-        var _this = $(this);
-        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-        _this.attr('disabled');
-        $('#chart-year').css('opacity', '0.6');
-        var parent_ = $(this).parents('form');
-        var data = parent_.serialize();
-        //alert(data);
-        $.ajax({
-            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/sum",
-            data: data,
-            dataType: "json",
-            method: 'post',
-            success: function (h) {
-                var approved=0,_approved = 0;
-
-                for (var i = 0; i < h.approved.length; i++) {
-                    approved += h.approved[i] << 0;
-                }
-                for (var x = 0; x < h._approved.length; x++) {
-                    _approved += h._approved[x] << 0;
-                }
-                if(approved !=0 || _approved !=0){
-                    renderGraph_quotation_sum(h);
-                    $('.chart-none').hide();
-                }else{
-                    $('.chart-none').show();
-                    $('.chart_bar').hide();
-                    $('.chart').show();
-                }
-                _this.removeAttr('disabled').find('i').remove();
-            }
-        });
-    }
-});
-
-$('#p-search-quotation-sum-year').on('click', function () {
-    //alert('aa');
-    if (!$(this).is(':disabled')) {
-        var _this = $(this);
-        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-        _this.attr('disabled');
-        $('#chart-year').css('opacity', '0.6');
-        var parent_ = $(this).parents('form');
-        var data = parent_.serialize();
-        //alert(data);
-        $.ajax({
-            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/sum",
-            data: data,
-            dataType: "json",
-            method: 'post',
-            success: function (h) {
-                renderGraph_quotation_sum(h);
-                _this.removeAttr('disabled').find('i').remove();
-            }
-        });
-    }
-});
-
 function renderGraph_quotation_sum (h) {
     // console.log(h.qapproved);
     $('.chart').show();
@@ -606,21 +658,23 @@ function renderGraph_quotation_sum (h) {
     for (var i = 0; i < h.approved.length; i++) {
         approved += h.approved[i] << 0;
     }
-    for (var x = 0; i < h._approved.length; x++) {
+    for (var x = 0; x < h._approved.length; x++) {
         _approved += h._approved[x] << 0;
     }
 
 
     $.each(h.approved, function (i,v) {
-        if(h.approved[i] <=0 || h._approved[i] <=0){
+        if(h.approved[i] <=0 && h._approved[i] <=0){
             dataSource_bar.push({type:month[i],value:numberWithCommas(0),number:0});
+            //console.log('aaa');
         }else{
-            var con_ = numberWithCommas(h._approved[i])
-            dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:con_});
+            //console.log(h.approved[i]);
+            var con_ = numberWithCommas(h._approved[i]);
+            dataSource_bar.push({type:month[i],value:numberWithCommas(i),number:con_});
         }
     });
 
-   //console.log(dataSource_bar);
+   console.log(dataSource_bar);
 
     text_ ="Quotation/Contract";
 
@@ -680,46 +734,6 @@ $(function(){
 
 
 //Start Tar Get Quotation_Contract
-$('#p-search-budget').on('click', function () {
-    if (!$(this).is(':disabled')) {
-        var _this = $(this);
-        _this.prepend('<i class="fa-spin fa-spinner"></i> ');
-        _this.attr('disabled');
-        $('#chart-year').css('opacity', '0.6');
-        var parent_ = $(this).parents('form');
-        var data = parent_.serialize();
-        //alert(data);
-        $.ajax({
-            url: $('#root-url').val() + "/report_quotation/ratio/report/quotation/budget",
-            data: data,
-            dataType: "json",
-            method: 'post',
-            success: function (h) {
-                var approved=0,_approved = 0;
-
-                for (var i = 0; i < h.approved.length; i++) {
-                    approved += h.approved[i] << 0;
-                }
-                for (var x = 0; i < h._approved.length; x++) {
-                    _approved += h._approved[x] << 0;
-                }
-                if(approved !=0 || _approved !=0){
-                    renderGraph_target(h);
-                    $('.chart-none').hide();
-                    //$('#chart_target').show();
-                }else{
-                    $('.chart-none').show();
-                    //$('#chart_target').hide();
-                    $('.chart_target_detail').hide();
-                    $('.chart').show();
-                }
-
-                _this.removeAttr('disabled').find('i').remove();
-            }
-        });
-    }
-});
-
 function renderGraph_target (h) {
     $('.chart').hide();
     $('.search_year_lead').hide();
@@ -749,7 +763,7 @@ function renderGraph_target (h) {
         if(h.approved[i] <=0 || h._approved[i] <=0){
             dataSource_target.push({type:month[i],value:numberWithCommas(0),number:0,target:numberWithCommas(h._target[i])});
         }else{
-            var con_ = numberWithCommas(h._approved[i])
+            var con_ = numberWithCommas(h._approved[i]);
             dataSource_target.push({type:month[i],value:numberWithCommas(v),number:con_,target:numberWithCommas(h._target[i])});
         }
     });
