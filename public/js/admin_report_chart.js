@@ -15,16 +15,6 @@ $('.target_set').on('click',function () {
     $('.chart').hide();
 });
 
-$('.reset-s-btn').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
-
-$('.reset-s-btn-quotation').on('click',function () {
-    $(this).closest('form').find("input").val("");
-    $(this).closest('form').find("select option:selected").removeAttr('selected');
-});
-
 
 $(function () {
     $("#name").select2({
@@ -85,6 +75,21 @@ $(document).ready(function() {
 });
 
 $(function () {
+    $('.reset-s-btn').on('click',function () {
+        $(this).closest('form').find("input").val("");
+        $(this).closest('form').find("select option:selected").removeAttr('selected');
+        $('#name1').select2("val", "");
+        $('#sale_id1').select2("val", "");
+    });
+
+    $('.reset-s-btn-quotation').on('click',function () {
+        $(this).closest('form').find("input").val("");
+        $(this).closest('form').find("select option:selected").removeAttr('selected');
+        $('#name').select2("val", "");
+        $('#sale_id').select2("val", "");
+    });
+
+
     $('#p-search-property').on('click', function () {
         if ($("select[name=year]").valid()) {
             //alert('aaa');
