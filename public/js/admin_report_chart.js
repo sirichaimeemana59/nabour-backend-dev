@@ -81,6 +81,7 @@ $(document).ready(function() {
 
 
 $('#p-search-property').on('click', function () {
+    //alert('aaa');
     $('#ie-search-from-date,#ie-search-to-date').removeClass('error');
     if (!$(this).is(':disabled')) {
         var _this = $(this);
@@ -96,25 +97,27 @@ $('#p-search-property').on('click', function () {
             dataType: "json",
             method: 'post',
             success: function (h) {
+                //alert('yes');
                 var leads=0,customer = 0;
                 for (var i = 0; i < h.leads.length; i++) {
                     leads += h.leads[i] << 0;
                 }
-                for (var i = 0; i < h.customer.length; i++) {
-                    customer += h.customer[i] << 0;
+                for (var x = 0; x < h.customer.length; x++) {
+                    customer += h.customer[x] << 0;
                 }
-                if(leads != 0 && customer != 0){
+                if(leads != 0 || customer != 0){
                     renderGraph(h);
                     $('.chart-none').hide();
+                    //console.log('yes');
                 }else{
-                    console.log('meToo');
+                    //console.log('noo');
                     $('.chart').show();
                     $('.chart-none').show();
                     $('.chart_line').hide();
                 }
                 _this.removeAttr('disabled').find('i').remove();
             }
-        })
+        });
     }
 });
 
@@ -135,7 +138,7 @@ $('#p-search-property-chart').on('click', function () {
             renderGraph(h);
             _this.removeAttr('disabled').find('i').remove();
         }
-    })
+    });
 });
 
 function renderGraph (h) {
@@ -153,13 +156,13 @@ function renderGraph (h) {
 
     var rDataSource = [];
     var leads=0,customer = 0;
-    var text_ ="";
+    var text_ = " ";
 
     for (var i = 0; i < h.leads.length; i++) {
         leads += h.leads[i] << 0;
     }
-    for (var i = 0; i < h.customer.length; i++) {
-        customer += h.customer[i] << 0;
+    for (var x = 0; x < h.customer.length; x++) {
+        customer += h.customer[x] << 0;
     }
 
     var per = ((leads/customer)*100).toFixed(2);
@@ -169,7 +172,9 @@ function renderGraph (h) {
             rDataSource.push({type:month[i],value:v,number:h.customer[i]});
         }
     });
-    text_ ="Leads/Customer Ratio in " + per + "%";
+    //console.log(rDataSource);
+
+    text_ = "Leads/Customer Ratio in " + per + "%";
 
     $('#chart').dxChart('instance').option('dataSource', rDataSource);
     $('#chart').dxChart('instance').render();
@@ -307,10 +312,10 @@ $('#p-search-quotation').on('click', function () {
                 for (var i = 0; i < h.approved.length; i++) {
                     approved += h.approved[i] << 0;
                 }
-                for (var i = 0; i < h._approved.length; i++) {
-                    _approved += h._approved[i] << 0;
+                for (var x = 0; i < h._approved.length; x++) {
+                    _approved += h._approved[x] << 0;
                 }
-                if(approved !=0 && _approved !=0){
+                if(approved !=0 || _approved !=0){
                     renderGraph_quotation(h);
                     $('.chart-none').hide();
                 }else{
@@ -320,7 +325,7 @@ $('#p-search-quotation').on('click', function () {
                 }
                 _this.removeAttr('disabled').find('i').remove();
             }
-        })
+        });
     }
 });
 
@@ -342,7 +347,7 @@ $('#p-search-quotation-chart').on('click', function () {
                 renderGraph_quotation(h);
                 _this.removeAttr('disabled').find('i').remove();
             }
-        })
+        });
     }
 });
 
@@ -367,8 +372,8 @@ function renderGraph_quotation (h) {
     for (var i = 0; i < h.approved.length; i++) {
         approved += h.approved[i] << 0;
     }
-    for (var i = 0; i < h._approved.length; i++) {
-        _approved += h._approved[i] << 0;
+    for (var x = 0; x < h._approved.length; x++) {
+        _approved += h._approved[x] << 0;
     }
 
     var total_quotation = approved+_approved;
@@ -531,10 +536,10 @@ $('#p-search-quotation-sum').on('click', function () {
                 for (var i = 0; i < h.approved.length; i++) {
                     approved += h.approved[i] << 0;
                 }
-                for (var i = 0; i < h._approved.length; i++) {
-                    _approved += h._approved[i] << 0;
+                for (var x = 0; x < h._approved.length; x++) {
+                    _approved += h._approved[x] << 0;
                 }
-                if(approved !=0 && _approved !=0){
+                if(approved !=0 || _approved !=0){
                     renderGraph_quotation_sum(h);
                     $('.chart-none').hide();
                 }else{
@@ -544,7 +549,7 @@ $('#p-search-quotation-sum').on('click', function () {
                 }
                 _this.removeAttr('disabled').find('i').remove();
             }
-        })
+        });
     }
 });
 
@@ -567,7 +572,7 @@ $('#p-search-quotation-sum-year').on('click', function () {
                 renderGraph_quotation_sum(h);
                 _this.removeAttr('disabled').find('i').remove();
             }
-        })
+        });
     }
 });
 
@@ -601,8 +606,8 @@ function renderGraph_quotation_sum (h) {
     for (var i = 0; i < h.approved.length; i++) {
         approved += h.approved[i] << 0;
     }
-    for (var i = 0; i < h._approved.length; i++) {
-        _approved += h._approved[i] << 0;
+    for (var x = 0; i < h._approved.length; x++) {
+        _approved += h._approved[x] << 0;
     }
 
 
@@ -695,10 +700,10 @@ $('#p-search-budget').on('click', function () {
                 for (var i = 0; i < h.approved.length; i++) {
                     approved += h.approved[i] << 0;
                 }
-                for (var i = 0; i < h._approved.length; i++) {
-                    _approved += h._approved[i] << 0;
+                for (var x = 0; i < h._approved.length; x++) {
+                    _approved += h._approved[x] << 0;
                 }
-                if(approved !=0 && _approved !=0){
+                if(approved !=0 || _approved !=0){
                     renderGraph_target(h);
                     $('.chart-none').hide();
                     //$('#chart_target').show();
@@ -711,7 +716,7 @@ $('#p-search-budget').on('click', function () {
 
                 _this.removeAttr('disabled').find('i').remove();
             }
-        })
+        });
     }
 });
 
@@ -736,8 +741,8 @@ function renderGraph_target (h) {
     for (var i = 0; i < h.approved.length; i++) {
         approved += h.approved[i] << 0;
     }
-    for (var i = 0; i < h._approved.length; i++) {
-        _approved += h._approved[i] << 0;
+    for (var x = 0; x < h._approved.length; x++) {
+        _approved += h._approved[x] << 0;
     }
 
     $.each(h.approved, function (i,v) {

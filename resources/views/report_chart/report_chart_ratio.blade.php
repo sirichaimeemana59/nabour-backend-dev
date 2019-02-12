@@ -99,7 +99,7 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
+    {{--<script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>--}}
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/globalize.min.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
@@ -152,7 +152,7 @@
 
                     _this.removeAttr('disabled').find('i').remove();
                 }
-            })
+            });
         });
 
         $('#search-year').on('click', function () {
@@ -175,7 +175,7 @@
                     //renderGraph_target_ratio(h);
                     _this.removeAttr('disabled').find('i').remove();
                 }
-            })
+            });
         });
 
         $('#search_ratio_chart_all').on('click', function () {
@@ -199,7 +199,7 @@
 
                         _this.removeAttr('disabled').find('i').remove();
                     }
-                })
+                });
             }
         });
 
@@ -210,7 +210,7 @@
 
             var dataSource_ratio = [];
             var leads=0,customer = 0;
-            var text_ ="";
+            var text_ = " ";
 
             for (var i = 0; i < h.leads.length; i++) {
                 leads += h.leads[i] << 0;

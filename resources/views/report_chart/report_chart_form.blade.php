@@ -272,12 +272,12 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/globalize.min.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/knockout-3.1.0.js"></script>
 
+    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
 
     <link rel="stylesheet" href="{!! url('https://cdn3.devexpress.com/jslib/18.2.5/css/dx.light.css') !!}">
     <link rel="stylesheet" href="{!! url('https://cdn3.devexpress.com/jslib/18.2.5/css/dx.common.css') !!}">
@@ -289,19 +289,10 @@
     <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/datepicker/bootstrap-datepicker.th.js"></script>
-    <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
+    {{--<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>--}}
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
-    <script>
-        // if($('.target_form').valid() && allGood ) {
-        //     $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-        //     $('.target_form').submit();
-        // } else {
-        //     var top_;
-        //     if(!$('.target_form').valid()) top_ = $('.error').first().offset().top;
-        //     else top_ = $('#prop_list').offset().top;
-        //     $('html,body').animate({scrollTop: top_-100}, 1000);
-        // }
-    </script>
+
+
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
 @endsection
