@@ -823,7 +823,7 @@ class QuotationreportController extends Controller
                 $information = $this->query_leads_customer_type(Request::get('type_id'),Request::get('year')-543);
             }
 
-            if (Request::get('year') != null) {
+            if (Request::get('year') != null AND Request::get('channel_id') == null AND Request::get('type_id') == null) {
                 $information = $this->query_leads_customer_year(Request::get('year'));
             }
 
