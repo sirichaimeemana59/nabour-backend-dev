@@ -24,6 +24,8 @@ $(function () {
 
         success: function(file,xhr)
         {
+
+
             file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-success');
             file.p_progressBar.hide();
             var removeButton = $('<span>').attr({'class':'remove-img-preview'}).html('&times');
@@ -36,12 +38,15 @@ $(function () {
             }
 
             console.log(xhr);
+            // $('.save-show').hide();
+            // console.log('aa');
 
             if(isImage) {
                 imgAppend = $('<img>').attr({'src':root+"/upload_tmp/"+xhr.name,'width':'80px'});
             } else {
                 imgAppend = $('<img>').attr({'src':root+"/images/file.png",'width':'80px'});
                 fileNameLabel = $('<span>').attr('class','file-label').html(xhr.oldname);
+
             }
             file.entry.prepend(imgAppend).append( removeButton ).append(
                     $('<input>').attr({'type':'hidden','name':'attachment['+i+'][name]','value':xhr.name})
@@ -64,7 +69,8 @@ $(function () {
             i++;
             imgAppend.load(function () {
                 $( window ).resize();
-            })
+            });
+
         },
         error: function(file)
         {

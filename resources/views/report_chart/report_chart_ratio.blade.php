@@ -634,7 +634,7 @@
                 }
             });
 
-            //console.log(dataSource_target_ratio);
+            console.log(dataSource_target_ratio);
 
             $('#chart_ratio_target').dxChart('instance').option('dataSource', dataSource_target_ratio);
             $('#chart_ratio_target').dxChart('instance').render();

@@ -161,6 +161,22 @@
             </ul>
         </li>
 
+        <li class="has-sub {!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
+            <a href="#">
+                <i class="fa fa fa-file"></i>
+                <span class="title">จัดการข้อมูลการเงิน</span>
+            </a>
+
+            <ul {!! (Request::is('root/admin/upload_file/*') ? 'style="display:block;"' : '') !!}>
+                <li class="{!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/upload_file/receipt') !!}">
+                        <i class="fa fa-file"></i>
+                        <span class="title">อัพโหลดหลักฐานการชำระเงิน</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
     @elseif ( Auth::user()->role == 1 )
 
         <li class="{!! (Request::is('admin/sales/*') ? 'active' : '') !!}">

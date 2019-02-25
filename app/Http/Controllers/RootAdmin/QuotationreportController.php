@@ -467,6 +467,7 @@ class QuotationreportController extends Controller
                 }
             }
 
+            //dd($information);
             $p_rows = $p_rows->where('active_status', '=', 't')->get();
             return response()->json( $information );
            // dd($p_rows);

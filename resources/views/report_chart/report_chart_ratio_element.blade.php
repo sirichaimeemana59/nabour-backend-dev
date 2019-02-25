@@ -48,9 +48,9 @@
 
 {{--start lead/customer ratio--}}
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <span id="per-ratio-lead"></span>
-    </div>
+    {{--<div class="panel-heading">--}}
+        {{--<span id="per-ratio-lead"></span>--}}
+    {{--</div>--}}
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-2">
@@ -162,7 +162,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <span id="per-ratio-lead"></span>
+        {{--<span id="per-ratio-lead"></span>--}}
     </div>
     <br>
     <div class="panel-body">

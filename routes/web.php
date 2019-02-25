@@ -224,3 +224,10 @@ Route::post('admin/demo-property/add','RootAdmin\PropertyController@create_demo'
 //Route::get('admin/property-form/view/{id}', 'RootAdmin\PropertyFormController@view_form');
 Route::post('admin/property/reset', 'RootAdmin\PropertyController@reset');
 Route::post('admin/property/assign', 'RootAdmin\PropertyController@assignDemoProperty');
+
+//Edit receipt
+Route::get('root/admin/upload_file/receipt', 'RootAdmin\EditreceiptController@index');
+Route::resource('root/admin/upload_file/receipt/file', 'RootAdmin\EditreceiptController@upload');
+Route::post('root/admin/search/receipt', 'RootAdmin\EditreceiptController@searchreceipt');
+Route::post('root/admin/upload_file/receipt/file/submit', 'RootAdmin\EditreceiptController@create');
+//End Edit receipt
