@@ -96,12 +96,14 @@
                                 $('.upload_bill').show();
                                // $('.search-receipt').hide();
                             }else{
+                                alert('ไม่พบใบแจ้งหนี้เลขที่ : '+id);
                                 $('.upload_bill').hide();
                                 //$('.search-receipt').show();
                             }
                             b.button('reset');
                         },
                         error : function () {
+                            alert('ไม่พบใบแจ้งหนี้เลขที่ : '+id);
                             b.button('reset');
                             $('.upload_bill').hide();
                         }

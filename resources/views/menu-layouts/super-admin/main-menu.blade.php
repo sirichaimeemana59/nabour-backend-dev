@@ -170,7 +170,7 @@
             <ul {!! (Request::is('root/admin/upload_file/*') ? 'style="display:block;"' : '') !!}>
                 <li class="{!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
                     <a href="{!! url('root/admin/upload_file/receipt') !!}">
-                        <i class="fa fa-file"></i>
+                        <i></i>
                         <span class="title">อัพโหลดหลักฐานการชำระเงิน</span>
                     </a>
                 </li>
