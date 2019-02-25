@@ -6,6 +6,8 @@ use Request;
 use App\Http\Controllers\Controller;
 use File;
 use App\InvoiceFile;
+use App\Invoice;
+
 use Storage;
 
 class EditreceiptController extends Controller
@@ -19,17 +21,35 @@ class EditreceiptController extends Controller
 
     public function create()
     {
+        $invoicefile = InvoiceFile::find(Request::get('id-invoice'));
 
-        foreach (Request::get('attachment') as $key => $file) {
-            $path = $this->createLoadBalanceDir($file['name']);
-            $invoicefile = InvoiceFile::find(Request::get('id-invoice'));
-            $invoicefile->name = $file['name'];
-            $invoicefile->url = $path;
-            $invoicefile->is_image = $file['isImage'];
-            $invoicefile->original_name = $file['originalName'];
-            $invoicefile->save();
+        if($invoicefile){
+            foreach (Request::get('attachment') as $key => $file) {
+                $path = $this->createLoadBalanceDir($file['name']);
+                $invoicefile = InvoiceFile::find(Request::get('id-invoice'));
+                $invoicefile->name = $file['name'];
+                $invoicefile->url = $path;
+                $invoicefile->is_image = $file['isImage'];
+                $invoicefile->original_name = $file['originalName'];
+                $invoicefile->save();
 
+            }
+
+        }else{
+            foreach (Request::get('attachment') as $key => $file) {
+                $path = $this->createLoadBalanceDir($file['name']);
+                $invoicefile = new InvoiceFile;
+                $invoicefile->invoice_id  = Request::get('id-invoice');
+                $invoicefile->name = $file['name'];
+                $invoicefile->url = $path;
+                $invoicefile->is_image = $file['isImage'];
+                $invoicefile->original_name = $file['originalName'];
+                $invoicefile->save();
+                //dd($invoicefile);
+
+            }
         }
+
 
         return redirect('root/admin/upload_file/receipt');
     }
@@ -72,7 +92,7 @@ class EditreceiptController extends Controller
     {
 
         if (Request::get('id')) {
-            $invoice = InvoiceFile::find(Request::get('id'));
+            $invoice = Invoice::find(Request::get('id'));
             //dd($invoice);
             if ($invoice) {
                 $data = '1';
