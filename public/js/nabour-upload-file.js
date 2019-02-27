@@ -1,5 +1,6 @@
 $(function () {
     var root = $('#root-url').val();
+
     var i = 0;
     $('#attachment').dropzone({
         maxFiles: 3,
@@ -37,7 +38,8 @@ $(function () {
                 isImage = 1;
             }
 
-            console.log(xhr);
+            //console.log(root);
+            //console.log(xhr);
             // $('.save-show').hide();
             // console.log('aa');
 

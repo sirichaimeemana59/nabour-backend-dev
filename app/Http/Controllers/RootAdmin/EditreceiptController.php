@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use File;
 use App\InvoiceFile;
 use App\Invoice;
+use League\Flysystem\AwsS3v2\AwsS3Adapter;
 
 use Storage;
 
@@ -21,71 +22,46 @@ class EditreceiptController extends Controller
 
     public function create()
     {
-        $invoicefile = InvoiceFile::find(Request::get('id-invoice'));
-
-        if($invoicefile){
+        $invoice = new Invoice;
+        //$invoice1 = Invoice::find(Request::get('id-invoice'));
+        $invoicefile = InvoiceFile::where('invoice_id','=',(Request::get('id-invoice')));
+        $invoicefile = $invoicefile->get();
+        //dump($invoicefile);
+        $id = Request::get('id-invoice');
+        //dd($id);
+//        if($invoicefile){
+//            $invoicefile = [];
+//            foreach (Request::get('attachment') as $key => $file) {
+//                $path = $this->createLoadBalanceDir($file['name']);
+//
+//                $invoicefile[] = InvoiceFile::find($invoicefile->id)([
+//                    'name' => $file['name'],
+//                    'url' => $path,
+//                    'file_type' => $file['mime'],
+//                    'is_image'	=> $file['isImage'],
+//                    'original_name'	=> $file['originalName']
+//                ]);
+//            }$invoice->invoiceFile()->saveMany($invoicefile);
+//            //$invoice->invoiceFile()->saveMany($invoicefile);
+//            //dd($invoicefile);
+//            } else{
+            //$invoicefile = [];
             foreach (Request::get('attachment') as $key => $file) {
                 $path = $this->createLoadBalanceDir($file['name']);
-                $invoicefile = InvoiceFile::find(Request::get('id-invoice'));
-                $invoicefile->name = $file['name'];
-                $invoicefile->url = $path;
-                $invoicefile->is_image = $file['isImage'];
-                $invoicefile->original_name = $file['originalName'];
-                $invoicefile->save();
 
-            }
-
-        }else{
-            foreach (Request::get('attachment') as $key => $file) {
-                $path = $this->createLoadBalanceDir($file['name']);
                 $invoicefile = new InvoiceFile;
-                $invoicefile->invoice_id  = Request::get('id-invoice');
+                $invoicefile->invoice_id  = $id;
                 $invoicefile->name = $file['name'];
                 $invoicefile->url = $path;
-                $invoicefile->is_image = $file['isImage'];
-                $invoicefile->original_name = $file['originalName'];
+                $invoicefile->file_type = $file['mime'];
+                $invoicefile->is_image	= $file['isImage'];
+                $invoicefile->original_name	= $file['originalName'];
                 $invoicefile->save();
-                //dd($invoicefile);
 
             }
-        }
-
+            //}
 
         return redirect('root/admin/upload_file/receipt');
-    }
-
-
-    public function upload () {
-
-        $targetFolder = public_path().DIRECTORY_SEPARATOR.'upload_tmp'.DIRECTORY_SEPARATOR;
-        if(!file_exists($targetFolder))
-        {
-            $dir = File::makeDirectory($targetFolder, 0777, true, true);
-        }
-        //dd($targetFolder);
-        if (!empty(Request::hasFile('file'))) //originalName
-        {
-            $name =  md5(Request::file('file')->getFilename());//getClientOriginalName();
-            $extension = Request::file('file')->getClientOriginalExtension();
-            $targetName = $name.".".$extension;
-
-
-            if(Request::file('file')->move($targetFolder,$targetName)) {
-                //if image
-                $isImage = 0;
-                if(in_array($extension, ['jpeg','jpg','gif','png'])) {
-                    $isImage = 1;
-                    $this->reduceImgQuality($name,$extension,$targetFolder);
-                }
-                return response()->json([
-                        'name'      => $targetName,
-                        'mime'      => Request::file('file')->getClientMimeType(),
-                        'oldname'   => Request::file('file')->getClientOriginalName(),
-                        'isImage'   => $isImage
-                    ]
-                );
-            }else return '';
-        }
     }
 
     public function searchreceipt()
@@ -95,13 +71,43 @@ class EditreceiptController extends Controller
             $invoice = Invoice::find(Request::get('id'));
             //dd($invoice);
             if ($invoice) {
-                $data = '1';
-            } else {
-                $data = '2';
+                $receipt = Invoice::with('property','invoiceFile')
+                    ->where('type', 1)
+                    ->where('payment_status', 2)
+                    ->where('id', Request::get('id'))->first();
+
+                //dd($receipt);
+                if ($receipt) {
+                    if ($receipt->property_unit)
+                        $receipt->load('property_unit');
+                    if ($receipt->payment_type == 1) $receipt->payment_label = trans('messages.feesBills.cash');
+                    elseif ($receipt->payment_type == 2) $receipt->payment_label = trans('messages.feesBills.transfer');
+                    else $receipt->payment_label = trans('messages.feesBills.substract');
+
+                    if ($receipt->is_retroactive_record)
+                        $receipt->receipt_type = "บันทึกรายรับ";
+                    else if ($receipt->is_revenue_record)
+                        $receipt->receipt_type = "บันทึกรายรับยกมา";
+                    else $receipt->receipt_type = "ใบเสร็จทั่วไป";
+
+                    if ($receipt->property_unit) {
+                        $receipt->to = $receipt->property_unit->unit_number;
+                    } else {
+                        $receipt->to = $receipt->payer_name;
+                    }
+
+                    if ($receipt->receipt_no_label)
+                        $receipt->receipt_no = $receipt->receipt_no_label;
+                $data = $receipt;
+            }
+            }else {
+                $data= '2';
             }
         } else {
             $data = '2';
         }
+//        $data = $data->toArray();
+//        $data_["status"] = $data;
 
 
         return response()->json($data);
@@ -120,6 +126,29 @@ class EditreceiptController extends Controller
         $upload = Storage::disk('s3')->put($full_path_upload, file_get_contents($targetFolder.$name), 'public');
         File::delete($targetFolder.$name);
         return $folder."/";
+    }
+
+    public function delete(){
+        //dd(Request::all());
+        if(!empty(Request::get('delete_img'))) {
+            $remove = Request::get('delete_img');
+            // Remove old files
+            if(!empty($remove['event-file']))
+                foreach ($remove['event-file'] as $file) {
+                    $file = InvoiceFile::find(Request::get('file-id'));
+                    $this->removeFile($file->name);
+                    $file->delete();
+                }
+        }
+        return redirect('root/admin/upload_file/receipt');
+    }
+
+    public function removeFile ($name) {
+        $folder = substr($name, 0,2);
+        $file_path = 'event-file/'.$folder."/".$name;
+        if(Storage::disk('s3')->has($file_path)) {
+            Storage::disk('s3')->delete($file_path);
+        }
     }
 
 

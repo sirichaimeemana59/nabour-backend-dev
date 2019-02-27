@@ -227,7 +227,8 @@ Route::post('admin/property/assign', 'RootAdmin\PropertyController@assignDemoPro
 
 //Edit receipt
 Route::get('root/admin/upload_file/receipt', 'RootAdmin\EditreceiptController@index');
-Route::resource('root/admin/upload_file/receipt/file', 'RootAdmin\EditreceiptController@upload');
+//Route::resource('root/admin/upload_file/receipt/file', 'RootAdmin\EditreceiptController@upload');
 Route::post('root/admin/search/receipt', 'RootAdmin\EditreceiptController@searchreceipt');
 Route::post('root/admin/upload_file/receipt/file/submit', 'RootAdmin\EditreceiptController@create');
+Route::post('root/admin/receipt/delete/image','RootAdmin\EditreceiptController@delete');
 //End Edit receipt
