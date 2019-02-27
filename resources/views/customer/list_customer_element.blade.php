@@ -76,7 +76,12 @@
                         <td>{!!$row->company_name !!}</td>
                         <td>{!!$row->phone !!}</td>
                         <td>{!!$provinces[$row->province]!!}</td>
-                        <td>{!!$row->latest_sale->name!!}</td>
+                            @if(!empty($row->latest_sale->name))
+                                <td>{!!$row->latest_sale->name!!}</td>
+                            @else
+                                <td>ไม่พบข้อมูล</td>
+                            @endif
+
                         <td class="text-right">{!! $row->contract->count() !!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
