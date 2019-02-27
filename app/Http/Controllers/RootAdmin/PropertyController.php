@@ -177,6 +177,16 @@ class PropertyController extends Controller {
         if (Request::isMethod('post'))
         {
 
+            $backendproperty = BackendProperty::find($id);
+            $backendproperty->juristic_person_name_th   = Request::get('juristic_person_name_th');
+            $backendproperty->province                  = Request::get('province');
+            $backendproperty->juristic_person_name_en   = Request::get('juristic_person_name_en');
+            $backendproperty->property_name_th          = Request::get('property_name_th');
+            $backendproperty->property_name_en          = Request::get('property_name_en');
+            $backendproperty->developer_group_id        = Request::get('developer_group_id');
+            $backendproperty->save();
+
+            //dd($backendproperty);
             $property = Request::all();
 
             $rules = ['name' => 'required|max:255'];

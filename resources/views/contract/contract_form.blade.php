@@ -192,7 +192,7 @@
                         ?>
 
                         <div style="text-align: right">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                            <button type="reset" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
                             <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
                         </div>
                 </div>
