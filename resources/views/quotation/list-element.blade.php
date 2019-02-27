@@ -57,7 +57,11 @@
                 <td>ไม่พบข้อมูล</td>
             @endif
 
-            <td>{!! $row->latest_sale->name !!}</td>
+            @if(!empty($row->latest_sale->name))
+                <td>{!!$row->latest_sale->name!!}</td>
+            @else
+                <td>ไม่พบข้อมูล</td>
+            @endif
             <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
             @if(!empty($row->latest_contract->id))
                     <td>{!! $row->latest_contract->contract_code !!}</td>
