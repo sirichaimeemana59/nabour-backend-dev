@@ -51,7 +51,11 @@
 			@endif
 			<td>
 				@if($row->sale_property && $row->sale_property->lead_id)
+					@if(!empty($row->sale_property->latest_lead->firstname) AND !empty($row->sale_property->latest_lead->lastname))
 					{!!$row->sale_property->latest_lead->firstname!!}  {!!$row->sale_property->latest_lead->lastname!!}
+						@else
+						<span style="color:#b3b3b3;">ไม่พบข้อมูล</span>
+						@endif
 				@else
 					<span style="color:#b3b3b3;">ยังไม่มีการใช้งาน</span>
 				@endif
