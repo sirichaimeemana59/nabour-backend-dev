@@ -380,16 +380,19 @@ class PropertyController extends Controller {
     public function status () {
         if(Request::ajax()) {
             $property   = Property::find(Request::get('pid'));
+            $backendproperty   = BackendProperty::find(Request::get('pid'));
             //$_property  = BackendProperty::find(Request::get('pid'));
 
             if($property) {
                 //$property->active_status = $_property->active_status = Request::get('status');
                 $property->active_status = Request::get('status');
+                $backendproperty->active_status = Request::get('status');
 
                 if($property->active_status == 0) {
                     $property->last_inactive_date = date('Y-m-d H:i:s');
                 }
                 $property->save();
+                $backendproperty->save();
                // $_property->save();
                 return response()->json(['result'=>true]);
             }
