@@ -206,6 +206,7 @@
                         success: function (r) {
 
                             if(r != 2){
+                                $('.alert-danger').hide();
                                 $('.upload_bill').show();
                                 $('.detail-invoice').show();
                                 $('.receipt-name').html(r.name);
