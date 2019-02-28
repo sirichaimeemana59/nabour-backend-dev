@@ -22,12 +22,40 @@ class EditreceiptController extends Controller
 
     public function create()
     {
+
+           $count =count(Request::get('attachment'));
+
         $invoice = new Invoice;
-        //$invoice1 = Invoice::find(Request::get('id-invoice'));
         $invoicefile = InvoiceFile::where('invoice_id','=',(Request::get('id-invoice')));
         $invoicefile = $invoicefile->get();
-        //dump($invoicefile);
         $id = Request::get('id-invoice');
+
+        $count_invoice_file = count($invoicefile);
+
+        $screen = $count + $count_invoice_file;
+
+        if($screen <= 3){
+           foreach (Request::get('attachment') as $key => $file) {
+                $path = $this->createLoadBalanceDir($file['name']);
+
+                $invoicefile = new InvoiceFile;
+                $invoicefile->invoice_id  = $id;
+                $invoicefile->name = $file['name'];
+                $invoicefile->url = $path;
+                $invoicefile->file_type = $file['mime'];
+                $invoicefile->is_image	= $file['isImage'];
+                $invoicefile->original_name	= $file['originalName'];
+                $invoicefile->save();
+
+            }
+        }else{
+            $count_test = 1;
+            return view('Editreceipt.Editreceipt')->with(compact('count_test'));
+        }
+        //$invoice1 = Invoice::find(Request::get('id-invoice'));
+
+        //dump($invoicefile);
+
         //dd($id);
 //        if($invoicefile){
 //            $invoicefile = [];
@@ -46,19 +74,7 @@ class EditreceiptController extends Controller
 //            //dd($invoicefile);
 //            } else{
             //$invoicefile = [];
-            foreach (Request::get('attachment') as $key => $file) {
-                $path = $this->createLoadBalanceDir($file['name']);
 
-                $invoicefile = new InvoiceFile;
-                $invoicefile->invoice_id  = $id;
-                $invoicefile->name = $file['name'];
-                $invoicefile->url = $path;
-                $invoicefile->file_type = $file['mime'];
-                $invoicefile->is_image	= $file['isImage'];
-                $invoicefile->original_name	= $file['originalName'];
-                $invoicefile->save();
-
-            }
             //}
 
         return redirect('root/admin/upload_file/receipt');

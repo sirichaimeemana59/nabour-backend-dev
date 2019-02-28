@@ -1,5 +1,12 @@
 @extends('base-admin')
 @section('content')
+    @if(!empty($count_test))
+    <div class="row">
+        <div class="alert alert-danger">
+            <strong>เกิดข้อผิดพลาด!</strong> หลักฐานการชำระเงินของคุณเกินจำนวนที่ระบบกำหนดให้คือ 3 จำนวน กรุณาตรวจสอบ
+        </div>
+    </div>
+    @endif
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -70,12 +77,15 @@
                                         <div class="col-sm-4" style="text-align: left;"><b>หมายเลขที่พักอาศัย</b></div>
                                         <div class="col-sm-8 property-unit" style="text-align: left;"></div>
                                     </div>
-                                    <div class="row com-sm-4">
-                                        <button class="btn-info btn-primary btn-lg" type="submit">บันทึก</button>
-                                        <button class="btn-info btn-warning btn-lg" type="reset">ยกเลิก</button>
-                                    </div>
+                                    {{--<div class="row com-sm-4">--}}
+                                        {{--<button class="btn-info btn-primary btn-lg" type="submit">บันทึก</button>--}}
+                                        {{--<button class="btn-info btn-warning btn-lg" type="reset">ยกเลิก</button>--}}
+                                    {{--</div>--}}
                                     <br>
-                                    <div class="img img-thumbnail"></div>
+                                    {{--<div class="preview-img">--}}
+                                        <div class="img img-thumbnail"></div>
+                                    {{--<div class="preview-img">show</div>--}}
+                                    {{--</div>--}}
                                 </div>
                                 {!! Form::close() !!}
                             </div>
@@ -104,6 +114,7 @@
                                         <span id="attachment"><i class="fa fa-camera"></i> {{ trans('messages.feesBills.attach_evidence') }}</span>
                                         {{--<div class=" field-hint">{{ trans('messages.upload_file_description') }}</div>--}}
                                         <div id="previews">
+                                            <input type="hidden" name="count" id="count">
 
                                     </div>
                                     </div>
@@ -120,41 +131,6 @@
             </div>
         </div>
     </div>
-
-    {{--Model Delete--}}
-    {{--<div class="modal fade" id="delete-img" data-backdrop="static">--}}
-        {{--<div class="modal-dialog">--}}
-            {{--<div class="modal-content">--}}
-                {{--<div class="modal-header">--}}
-                    {{--<div class="panel-heading">--}}
-                        {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--}}
-                        {{--<h3 class="panel-title">คุณแน่ใจหรือไม่ ? ในการลบหลักฐานการชำระเงิน</h3>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row">--}}
-                    {{--<div class="col-sm-12">--}}
-                        {{--<div class="form">--}}
-                            {{--<form method="post" action="{!! url('root/admin/receipt/delete/image') !!}">--}}
-                            {{--<div class="form-group">--}}
-                                {{--<div class="row col-sm-12" style="margin-top: 25px;">--}}
-                                    {{--<div class="delete-zone"></div>--}}
-                                    {{--<div class="file-id"></div>--}}
-                                    {{--<div class="url-img" style="text-align: center;"></div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                                {{--<br><br>--}}
-                            {{--<div class="row com-sm-4" style="text-align: center;">--}}
-                                {{--<button class="btn-info btn-primary btn-lg" type="submit">ลบ</button>--}}
-                                {{--<button type="button" class="close btn-info btn-warning btn-lg" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>--}}
-                            {{--</div>--}}
-                            {{--</form>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 
 
     <div class="modal fade" id="delete-img">
@@ -192,10 +168,18 @@
 @section('script')
     <script type="text/javascript" src="{!!url('/')!!}/js/dropzone/dropzone.min.js"></script>
     <script type="text/javascript" src="{{url('/')}}/js/nabour-upload-file.js"></script>
+            <script type="text/javascript" src="{{url('/')}}/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+            <script type="text/javascript" src="{{url('/')}}/js/nabour-onload-receipt-view.js?v=<?php echo time(); ?>"></script>
+            <link rel="stylesheet" href="{{url('/')}}/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
     <script type="text/javascript">
         $(function(){
             $('.upload_bill').hide();
             $('.detail-invoice').hide();
+
+            $('.test').on('click',function(){
+                var data = $('#prevews').val();
+                console.log(data);
+            })
 
             //$('.save-show').hide();
 
@@ -238,15 +222,20 @@
                                     imgAppend = $('<img>').attr({'src':"{{ env('URL_S3') }}"+/bills/+val.url+val.name,'width':'80px'});
 
                                     $entry = $('<div>').attr({'class':'preview-img-item'}).append(
-                                        $('<img>').attr({'src':"{{ env('URL_S3') }}"+/bills/+val.url+val.name,'width':'80px','class':'img-thumbnail'}),
-                                        $('<span>').attr({'class':'remove-img-preview remove-file'}).html('x'),
+                                        $('<a>').attr({'href':"{{ env('URL_S3') }}"+/bills/+val.url+val.name,'class':'thumb gallery','rel':'gal-1'}).html(
+                                            $('<img>').attr({'src':"{{ env('URL_S3') }}"+/bills/+val.url+val.name,'width':'80px','class':'img-thumbnail'}),
+                                        ),
                                         $('<span>').attr({'class':'remove-img-preview remove-file','data-e-id':val.name,'data-e-url':val.url,'data-file-id':val.id,'data-e-type':'event-file'}).html('x'));
-
                                     $('.img').append($entry);
+                                    // $('.preview-img').html(link)
 
-                                //console.log(root);.prepend(removeButton)
+
+                                //console.log(i.length());
 
                                 });
+                                $('#count').val(r.invoice_file.length);
+
+                                //console.log();
 
                                 $('.img-thumbnail').on("click",".remove-file", function(e) {
                                     e.preventDefault();
@@ -256,7 +245,7 @@
                                     var file_id = $(this).data('file-id');
                                     //alert(id);
                                     $('#delete-img').modal('show');
-                                    imgAppend = $('<img>').attr({'src':"{{ env('URL_S3') }}"+/bills/+url+id,'width':'100%'});
+                                    imgAppend = $('<img>').attr({'src':"{{ env('URL_S3') }}"+/bills/+url+id,'width':'180px'});
                                      $('.delete-zone').html('<input type="hidden" name="delete_img['+model+'][]" value="'+id+'" />');
                                      $('.file-id').html('<input type="hidden" name="file-id" value="'+file_id+'" />');
                                      $('.url-img').html(imgAppend);
