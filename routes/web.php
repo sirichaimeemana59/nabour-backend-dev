@@ -175,6 +175,8 @@ Route::get('root/admin/property/receipt/import/{id}','RootAdmin\feesBillsControl
 Route::post('root/admin/property/receipt/import','RootAdmin\feesBillsController@startImportReceipt');
 Route::get('root/admin/property/expense/import/{id}','RootAdmin\feesBillsController@importExpense');
 Route::post('root/admin/property/expense/import','RootAdmin\feesBillsController@startImportExpense');
+Route::any('root/admin/edit/receipt', 'RootAdmin\EditreceiptController@getReceiptForAdjust');
+Route::any('root/admin/edit/receipt/save', 'RootAdmin\EditreceiptController@adjustReceipt');
 
 // Property
 Route::any('customer/property/list', 'RootAdmin\PropertyController@index');
