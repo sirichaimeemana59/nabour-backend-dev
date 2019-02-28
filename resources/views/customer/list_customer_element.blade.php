@@ -76,7 +76,12 @@
                         <td>{!!$row->company_name !!}</td>
                         <td>{!!$row->phone !!}</td>
                         <td>{!!$provinces[$row->province]!!}</td>
-                        <td>{!!$row->latest_sale->name!!}</td>
+                            @if(!empty($row->latest_sale->name))
+                                <td>{!!$row->latest_sale->name!!}</td>
+                            @else
+                                <td>ไม่พบข้อมูล</td>
+                            @endif
+
                         <td class="text-right">{!! $row->contract->count() !!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
@@ -90,14 +95,15 @@
                                         $class='edit-customer-detail';
                                     }
                                     ?>
-                                    <li><a href="#" class="edit {!! $class !!}" data-toggle="modal" data-target="#edit-customer" data-vehicle-id="{!!$row->id!!}">
-                                            <i class="fa-pencil-square-o"></i>แก้ไข
-                                        </a>
-                                    </li>
+
                                     @if($row->status != 't')
+                                            <li><a href="#" class="edit {!! $class !!}" data-toggle="modal" data-target="#edit-customer" data-vehicle-id="{!!$row->id!!}">
+                                                    <i class="fa-pencil-square-o"></i>แก้ไข
+                                                </a>
+                                            </li>
                                         <li><a href="#"  data-toggle="modal" data-target="#delete" data-original-title="ลบ Customer" onclick="mate_del('{!!$row->id!!}')">
                                                 {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
-                                                <i class="fa-trash"></i>ลบ
+                                                <i class="fa-trash"></i>ระงับการใช้งาน
                                             </a>
                                         </li>
                                     @else
@@ -114,7 +120,9 @@
                                             <a href="{!!url('/customer/service/sales/quotation/add/'.$row->id)!!}" >
                                         @endif
                                             {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
-                                            <i class="fa fa-newspaper-o"></i>ออกใบเสนอราคา
+                                                @if($row->status != 't')
+                                                <i class="fa fa-newspaper-o"></i>ออกใบเสนอราคา
+                                                @endif
                                         </a>
                                     </li>
                                 </ul>

@@ -117,12 +117,12 @@
                                                 </a>
                                                 @else
                                                     @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                            <i class="fa-eye"></i>
+                                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="รายละเอียดสัญญา">
+                                                            <i class="fa-edit"></i>
                                                         </a>
                                                     @else
-                                                        <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
-                                                            <i class="fa-eye"></i>
+                                                        <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="รายละเอียดสัญญา">
+                                                            <i class="fa-edit"></i>
                                                         </a>
                                                     @endif
                                                 @endif
@@ -146,7 +146,7 @@
                                                             @endif
 
                                                             @if(empty($row->latest_contract->quotation_id))
-                                                                <a href="#" class="view-quotation btn btn-danger" data-toggle="modal" data-target="#delete" data-placement="top" title="ลบใบเสนอราคา" onclick="mate_del('{!!$row->id!!}','{!! $row->lead_id !!}')" >
+                                                                <a href="#" class="view-quotation btn btn-danger delete" data-toggle="tooltip"  data-placement="top" title="ลบใบเสนอราคา"  data-id="{!!$row->id!!}" data-lead_id="{!!$row->lead_id!!}" >
                                                                     <i class="fa-trash"></i>
                                                                 </a>
                                                             @endif
@@ -159,7 +159,7 @@
                                                             }
                                                             ?>
 
-                                                            <a href="#" class="edit {!! $class !!} btn btn-info view-member"   data-toggle="modal" data-target="#edit-package" data-placement="top" title="{{ trans('messages.detail') }}" data-vehicle-id="{!!$row->quotation_code!!}" >
+                                                            <a href="#" class="edit {!! $class !!} btn btn-info view-member edit-package"   data-toggle="tooltip"  data-placement="top" data-original-title="{{ trans('messages.detail') }}ใบเสนอราคา" data-vehicle-id="{!!$row->quotation_code!!}" >
                                                                 <i class="fa-eye"></i>
                                                             </a>
                             </td>
@@ -324,6 +324,27 @@
             document.getElementById("page").value = 1;
             document.getElementById("lead_id").value = lead_id;
         }
+
+        $('.edit-package').on('click',function(e){
+            e.preventDefault();
+            var id = $(this).data('vehicle-id');
+            //alert(id);
+            $('#edit-package').modal('show');
+        })
+
+        $('.delete').on('click',function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            var lead_id = $(this).data('lead_id');
+
+            $('#page').val(1);
+            $('#id2').val(id);
+            $('#lead_id').val(lead_id);
+
+            $('#delete').modal('show');
+
+            //console.log(id+'///'+lead_id);
+        })
 
     </script>
 @endsection

@@ -104,7 +104,11 @@ $allpage=0;
                                 }
                             ?>
                             <td>{!! $status_ !!}</td>
-                            <td>{!! $row->latest_sale->name !!}</td>
+                            @if(!empty($row->latest_sale->name))
+                                <td>{!!$row->latest_sale->name!!}</td>
+                            @else
+                                <td>ไม่พบข้อมูล</td>
+                            @endif
                         </tr>
                         <?php
                         $i++;

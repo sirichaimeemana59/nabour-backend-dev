@@ -86,7 +86,7 @@ function makeUploadNabourPostImageZone (target) {
             file.entry = $entry;
             file.progressBar = $entry.find('.progress-bar');
             file.p_progressBar = $entry.find('.progress');
-            $('#previews-img').append($entry);
+            $('#-img').append($entry);
         },
         uploadprogress: function(file, progress, bytesSent)
         {

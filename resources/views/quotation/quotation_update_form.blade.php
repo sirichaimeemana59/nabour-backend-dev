@@ -46,13 +46,13 @@
                     <div class="tab-pane active" id="member-list">
                         <div id="member-list-content">
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : {!!$quotation->latest_lead->firstname ."   ". $quotation->latest_lead->lastname!!} </label>
+                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : @if(!empty($quotation->latest_lead->firstname) AND !empty($quotation->latest_lead->lastname)){!!$quotation->latest_lead->firstname ."   ". $quotation->latest_lead->lastname!!} @else ไม่พบข้อมูล @endif </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">โทร :  {!!$quotation->latest_lead->phone!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">โทร :  @if(!empty($quotation->latest_lead->phone)){!!$quotation->latest_lead->phone!!}@else ไม่พบข้อมูล @endif</label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  {!!$quotation->latest_lead->email!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  @if(!empty($quotation->latest_lead->email)){!!$quotation->latest_lead->email!!}@else ไม่พบข้อมูล @endif</label>
                             </div>
                         </div>
                     </div>
