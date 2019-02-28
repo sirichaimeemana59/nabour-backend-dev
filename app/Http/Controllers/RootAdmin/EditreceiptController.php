@@ -26,7 +26,8 @@ class EditreceiptController extends Controller
            $count =count(Request::get('attachment'));
 
         $invoice = new Invoice;
-        $invoicefile = InvoiceFile::where('invoice_id','=',(Request::get('id-invoice')));
+        $invoicefile = InvoiceFile::where('invoice_id','=',(Request::get('id-invoice')))
+            ->where('status_delete','=','0');
         $invoicefile = $invoicefile->get();
         $id = Request::get('id-invoice');
 
@@ -90,6 +91,10 @@ class EditreceiptController extends Controller
                 $receipt = Invoice::with('property','invoiceFile')
                     ->where('type', 1)
                     ->where('payment_status', 2)
+                    //->whereHas('invoiceFile', function ($q) {
+                            //$q ->where('status_delete',0);
+                        //})
+//                    ->where('status_delete',0)
                     ->where('id', Request::get('id'))->first();
 
                 //dd($receipt);
@@ -152,8 +157,10 @@ class EditreceiptController extends Controller
             if(!empty($remove['event-file']))
                 foreach ($remove['event-file'] as $file) {
                     $file = InvoiceFile::find(Request::get('file-id'));
-                    $this->removeFile($file->name);
-                    $file->delete();
+                    $file->status_delete = 1;
+                    $file->save();
+                    //$this->removeFile($file->name);
+                    //$file->delete();
                 }
         }
         return redirect('root/admin/upload_file/receipt');

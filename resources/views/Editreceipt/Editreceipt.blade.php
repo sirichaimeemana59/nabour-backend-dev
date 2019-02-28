@@ -217,7 +217,7 @@
                                 $('.payment-type').html(r.payment_label);
                                 $('.receipt-type').html(r.receipt_type);
 
-
+                                $('.img').html('');
                                 $.each(r.invoice_file, function (i,val) {
 
                                     imgAppend = $('<img>').attr({'src':"{{ env('URL_S3') }}"+/bills/+val.url+val.name,'width':'80px'});
