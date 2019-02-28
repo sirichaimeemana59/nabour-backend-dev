@@ -77,7 +77,7 @@ $allpage=0;
                                     <a href="#" class="edit edit-package btn btn-warning" data-toggle="modal" data-target="#edit-package" data-vehicle-id="{!!$row->id!!}">
                                         <i class="fa-pencil-square-o"></i>
                                     </a>
-                                    <a href="#" class="btn btn-danger"  data-toggle="modal" data-target="#delete" data-original-title="ลบ Package" onclick="mate_del('{!!$row->id!!}')">
+                                    <a href="#" class="btn btn-danger"  data-toggle="modal" data-target="#delete" data-original-title="ลบผลิตภัณฑ์" onclick="mate_del('{!!$row->id!!}')">
                                         <i class="fa-trash"></i>
                                     </a>
                                 </td>
