@@ -150,19 +150,19 @@ class EditreceiptController extends Controller
     }
 
     public function delete(){
-        //dd(Request::all());
-        if(!empty(Request::get('delete_img'))) {
-            $remove = Request::get('delete_img');
-            // Remove old files
-            if(!empty($remove['event-file']))
-                foreach ($remove['event-file'] as $file) {
+        //dd(Request::get('file-id'));
+//        if(!empty(Request::get('delete_img'))) {
+//            $remove = Request::get('delete_img');
+//            // Remove old files
+//            if(!empty($remove['event-file']))
+//                foreach ($remove['event-file'] as $file) {
                     $file = InvoiceFile::find(Request::get('file-id'));
                     $file->status_delete = 1;
                     $file->save();
-                    //$this->removeFile($file->name);
-                    //$file->delete();
-                }
-        }
+       // dd($file);
+                    //$this->removeFile($file->name);$file->delete();
+                //}
+        //}
         return redirect('root/admin/upload_file/receipt');
     }
 
