@@ -329,7 +329,7 @@ define('PRINT_SETTING_EN', serialize(array(
     5 =>'Continuous Paper 9x11"'
 )));
 
-define('', serialize(array(
+define('LEADS_SOURCE', serialize(array(
     0 => 'Facebook',
     1   => 'Google',
     2  => 'สื่อสิ่งพิมพ์',
