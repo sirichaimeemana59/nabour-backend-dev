@@ -161,17 +161,24 @@
             </ul>
         </li>
 
-        <li class="has-sub {!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
+        <li class="has-sub {!! ((Request::is('root/admin/upload_file/*') || Request::is('root/admin/edit/receipt*')) ? 'active' : '') !!}">
             <a href="#">
                 <i class="fa fa fa-file"></i>
                 <span class="title">จัดการข้อมูลการเงิน</span>
             </a>
 
-            <ul {!! (Request::is('root/admin/upload_file/*') ? 'style="display:block;"' : '') !!}>
+            <ul {!! ((Request::is('root/admin/upload_file/*') || Request::is('root/admin/edit/receipt')) ? 'style="display:block;"' : '') !!}>
                 <li class="{!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
                     <a href="{!! url('root/admin/upload_file/receipt') !!}">
                         <i></i>
                         <span class="title">อัพโหลดหลักฐานการชำระเงิน</span>
+                    </a>
+                </li>
+
+                <li class="{!! (Request::is('root/admin/edit/receipt*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/edit/receipt') !!}">
+                        <i></i>
+                        <span class="title">แก้ไขข้อมูลใบเสร็จรับเงิน</span>
                     </a>
                 </li>
             </ul>
