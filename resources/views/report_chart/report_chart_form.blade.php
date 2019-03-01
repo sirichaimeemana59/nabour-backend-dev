@@ -48,16 +48,6 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="lead">
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-                        {{--<div class="row">--}}
-                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>--}}
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
-                            {{--</div>--}}
-                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>--}}
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
                         <br>
                         <div class="row">
                             <label class="col-sm-1 control-label">แหล่งที่มา</label>
@@ -136,16 +126,7 @@
                             </div>
                             </div>
                             <br>
-                            {{--<div class="row">--}}
-                                {{--<label class="col-sm-1 control-label">ปี</label>--}}
-                                {{--<div class="col-sm-3">--}}
-                                    {{--<select name="year" id="year" class="form-control">--}}
-                                        {{--@foreach($year as $key => $value)--}}
-                                            {{--<option value="{!! $value !!}">{!! $value !!}</option>--}}
-                                        {{--@endforeach--}}
-                                    {{--</select>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
+
                             <div class="row">
                                 <div class="col-sm-12 text-right">
                                     <button type="reset" class="btn btn-white reset-s-btn-quotation">{!! trans('messages.reset') !!}</button>
@@ -273,13 +254,14 @@
 @endsection
 
 @section('script')
+    <?php $t = time(); ?>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/globalize.min.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/xenon-widgets.js"></script>
     <script type="text/javascript" src="{!! url('/')!!}/js/devexpress-web-14.1/js/knockout-3.1.0.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/jquery-validate/jquery.validate.min.js"></script>
 
-    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js"></script>
+    <script type="text/javascript" src="{!! url('/')!!}/js/admin_report_chart.js?v={!! $t !!}"></script>
 
 
     <link rel="stylesheet" href="{!! url('https://cdn3.devexpress.com/jslib/18.2.5/css/dx.light.css') !!}">

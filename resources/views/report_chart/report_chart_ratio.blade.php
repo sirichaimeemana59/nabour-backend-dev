@@ -122,17 +122,6 @@
     <script>
         $('.chart-none').show();
 
-        // if($('#p_form').valid() && allGood ) {
-        //     $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-        //     $('#p_form').submit();
-        // } else {
-        //     var top_;
-        //     if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
-        //     else top_ = $('#prop_list').offset().top;
-        //     $('html,body').animate({scrollTop: top_-100}, 1000);
-        // }
-
-        //$( document ).ready(function(){
             $('#p-search-budget-ratio').on('click', function () {
                 if ($("select[name=year_target]").valid() && $("select[name=target_ratio]").valid()) {
                     var _this = $(this);
@@ -392,20 +381,7 @@
 
 
             $.each(h.approved, function (i,v) {
-                if(v <= 0){
-                    var x=0;
-                    if(h._approved[i] <=0){
-                        var y=0;
-                        rDataSource.push({type:month[i],value:x,number:y});
-                    }
-                }else{
-                    if(h._approved[i] <=0){
-                        var y=0;
-                        rDataSource.push({type:month[i],value:v,number:y});
-                    }else{
-                        rDataSource.push({type:month[i],value:v,number:h._approved[i]});
-                    }
-                }
+                rDataSource.push({type:month[i],value:v,number:h._approved[i]});
             });
 
             text_ ="Quotation/Contract Ratio in " + Math.ceil(per) + "%";
@@ -545,14 +521,10 @@
             var per = ((approved_sum/total_quotation)*100).toFixed(2);
 
             $.each(h.approved_sum, function (i,v) {
-                if(h.approved_sum[i] <=0 || h._approved_sum[i] <=0){
-                    dataSource_bar.push({type:month[i],value:numberWithCommas(0),number:0});
-                }else{
-                    var con_ = numberWithCommas(h._approved_sum[i])
-                    dataSource_bar.push({type:month[i],value:numberWithCommas(v),number:con_});
-                }
+                    var con_ = parseInt(h._approved_sum[i])
+                    dataSource_bar.push({type:month[i],value:parseInt(v),number:parseInt(con_)});
             });
-            //console.log(dataSource_bar);
+            console.log(dataSource_bar);
 
             text_ ="Quotation/Contract";
 
@@ -626,12 +598,8 @@
             }
 
             $.each(h.approved, function (i,v) {
-                if(h.approved[i] <=0 || h._approved[i] <=0){
-                    dataSource_target_ratio.push({type:month[i],value:numberWithCommas(0),number:0,target:numberWithCommas(h._target[i])});
-                }else{
-                    var con_ = numberWithCommas(h._approved[i])
-                    dataSource_target_ratio.push({type:month[i],value:numberWithCommas(v),number:con_,target:numberWithCommas(h._target[i])});
-                }
+                    var con_ = parseInt(h._approved[i])
+                    dataSource_target_ratio.push({type:month[i],value:parseInt(v),number:parseInt(con_),target:parseInt(h._target[i])});
             });
 
             console.log(dataSource_target_ratio);
@@ -639,18 +607,9 @@
             $('#chart_ratio_target').dxChart('instance').option('dataSource', dataSource_target_ratio);
             $('#chart_ratio_target').dxChart('instance').render();
 
-            // $('#reqs-per-quotation-ratio').dxCircularGauge('instance').option('value', per);
-            // $('#reqs-per-quotation-ratio').dxCircularGauge('instance').render();
-
-            // $('#total_target_leads').html("Quotation Approved " + approved);
-            // $('#total_target_customer').html("Quotation Non-Approved " + _approved);
-
             $('#total_target_leads').html("Quotation Approved " + numberWithCommas(approved) + "  บาท");
             $('#total_target_customer').html("Quotation Non-Approved " + numberWithCommas(_approved) + "  บาท");
 
-            //$('#per_ratio_quotation').html(per);
-
-            //console.log(dataSource_target_ratio);
         }
         $('.reset-s-btn').on('click',function () {
             $(this).closest('form').find("input").val("");
