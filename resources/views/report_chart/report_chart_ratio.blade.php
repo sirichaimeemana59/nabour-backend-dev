@@ -602,7 +602,7 @@
                     dataSource_target_ratio.push({type:month[i],value:parseInt(v),number:parseInt(con_),target:parseInt(h._target[i])});
             });
 
-            console.log(dataSource_target_ratio);
+            //console.log(dataSource_target_ratio);
 
             $('#chart_ratio_target').dxChart('instance').option('dataSource', dataSource_target_ratio);
             $('#chart_ratio_target').dxChart('instance').render();
