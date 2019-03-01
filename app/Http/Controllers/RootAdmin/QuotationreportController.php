@@ -116,16 +116,10 @@ class QuotationreportController extends Controller
                     'D' => 30,
                     'E' => 30,
                 ));
-                //$sheet->setBorder('A1', 'thin');
-                // $sheet->setBorder('A1:F10', 'thin');
-                //$sheet->setBorder('A1:E17', 'thin');
+
                 $sheet->loadView('report_quotation.report_quotation_excel')->with(compact('quotation', 'filename'));
             });
         })->download('xls');
-
-        //return($quotation);
-        //dd($customer);
-        //return view('report_quotation.report_quotation_excel')->with(compact('quotation','filename'));
 
     }
 
@@ -156,10 +150,6 @@ class QuotationreportController extends Controller
                 //dump($information);
             }
 
-//            if (Request::get('from-date')) {
-//                $date = array($from . " 00:00:00", $to . " 00:00:00");
-//                    $p_rows = $p_rows->whereBetween('created_at', $date);
-//            }
 
             if (Request::get('channel_id') != null) {
                 $p_rows = $p_rows->where('channel', '=', Request::get('channel_id'));
@@ -223,27 +213,9 @@ class QuotationreportController extends Controller
                     'E' => 30,
                 ));
 
-//                    $styleArray = array(
-//                        'borders' => array(
-//                            'allborders' => array(
-//                                'style' => PHPExcel_Style_Border::BORDER_THIN
-//                            )
-//                        )
-//                    );
-//
-//                    $sheet->getStyle()->applyFromArray($styleArray);
-
-
-                //$sheet->setBorder('A1', 'thin');
-                // $sheet->setBorder('A1:F10', 'thin');
-                //$sheet->setBorder('A1:E17', 'thin');
                 $sheet->loadView('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows', 'filename', 'from', 'to', 'channel', 'type'));
             });
         })->download('xls');
-
-        //return($quotation);
-        //dd($customer);
-        //return view('report_quotation.report_quotation_ratio_excel')->with(compact('p_rows','filename','from','to','channel','type'));
 
     }
 
@@ -307,8 +279,18 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();
 
-                    $information["leads"][] = $_data[0]['count'];
-                    $information["customer"][] = $data[0]['count'];
+                    if($_data[0]['count'] <= 0){
+                        $information["leads"][] = 0;
+                    }else{
+                        $information["leads"][] = $_data[0]['count'];
+                    }
+
+                    if($data[0]['count'] <= 0){
+                        $information["customer"][] = 0;
+                    }else{
+                        $information["customer"][] = $data[0]['count'];
+                    }
+
                 }
            }
 
@@ -338,8 +320,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();
 
-                    $information["leads"][] = $_data[0]['count'];
-                    $information["customer"][] = $data[0]['count'];
+                    if($_data[0]['count'] <= 0){
+                        $information["leads"][] = 0;
+                    }else{
+                        $information["leads"][] = $_data[0]['count'];
+                    }
+
+                    if($data[0]['count'] <= 0){
+                        $information["customer"][] = 0;
+                    }else{
+                        $information["customer"][] = $data[0]['count'];
+                    }
 
                 }
                 //dd('ffff');
@@ -371,8 +362,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();
 
-                    $information["leads"][] = $_data[0]['count'];
-                    $information["customer"][] = $data[0]['count'];
+                    if($_data[0]['count'] <= 0){
+                        $information["leads"][] = 0;
+                    }else{
+                        $information["leads"][] = $_data[0]['count'];
+                    }
+
+                    if($data[0]['count'] <= 0){
+                        $information["customer"][] = 0;
+                    }else{
+                        $information["customer"][] = $data[0]['count'];
+                    }
                 }
             }
 
@@ -403,8 +403,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();
 
-                    $information["leads"][] = $_data[0]['count'];
-                    $information["customer"][] = $data[0]['count'];
+                    if($_data[0]['count'] <= 0){
+                        $information["leads"][] = 0;
+                    }else{
+                        $information["leads"][] = $_data[0]['count'];
+                    }
+
+                    if($data[0]['count'] <= 0){
+                        $information["customer"][] = 0;
+                    }else{
+                        $information["customer"][] = $data[0]['count'];
+                    }
                 }
             }
 
@@ -435,8 +444,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();
 
-                    $information["leads"][] = $_data[0]['count'];
-                    $information["customer"][] = $data[0]['count'];
+                    if($_data[0]['count'] <= 0){
+                        $information["leads"][] = 0;
+                    }else{
+                        $information["leads"][] = $_data[0]['count'];
+                    }
+
+                    if($data[0]['count'] <= 0){
+                        $information["customer"][] = 0;
+                    }else{
+                        $information["customer"][] = $data[0]['count'];
+                    }
                 }
             }
 
@@ -462,8 +480,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();
 
-                    $information["leads"][] = $_data[0]['count'];
-                    $information["customer"][] = $data[0]['count'];
+                    if($_data[0]['count'] <= 0){
+                        $information["leads"][] = 0;
+                    }else{
+                        $information["leads"][] = $_data[0]['count'];
+                    }
+
+                    if($data[0]['count'] <= 0){
+                        $information["customer"][] = 0;
+                    }else{
+                        $information["customer"][] = $data[0]['count'];
+                    }
                 }
             }
 
@@ -503,13 +530,17 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $data[0]['count'];
-                $information["_approved"][] = $_data[0]['count'];
+                if($data[0]['count'] <=0){
+                    $information["approved"][] = 0;
+                }else{
+                    $information["approved"][] = $data[0]['count'];
+                }
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
-
-
+                if($_data[0]['count'] <= 0 ){
+                    $information["_approved"][] = 0;
+                }else{
+                    $information["_approved"][] = $_data[0]['count'];
+                }
             }
         }
 
@@ -536,13 +567,18 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $data[0]['count'];
-                $information["_approved"][] = $_data[0]['count'];
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
+                if($data[0]['count'] <=0){
+                    $information["approved"][] = 0;
+                }else{
+                    $information["approved"][] = $data[0]['count'];
+                }
 
-
+                if($_data[0]['count'] <= 0 ){
+                    $information["_approved"][] = 0;
+                }else{
+                    $information["_approved"][] = $_data[0]['count'];
+                }
             }
         }
 
@@ -570,13 +606,17 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $data[0]['count'];
-                $information["_approved"][] = $_data[0]['count'];
+                if($data[0]['count'] <=0){
+                    $information["approved"][] = 0;
+                }else{
+                    $information["approved"][] = $data[0]['count'];
+                }
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
-
-
+                if($_data[0]['count'] <= 0 ){
+                    $information["_approved"][] = 0;
+                }else{
+                    $information["_approved"][] = $_data[0]['count'];
+                }
             }
         }
 
@@ -602,12 +642,18 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $data[0]['count'];
-                $information["_approved"][] = $_data[0]['count'];
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
+                if($data[0]['count'] <=0){
+                    $information["approved"][] = 0;
+                }else{
+                    $information["approved"][] = $data[0]['count'];
+                }
 
+                if($_data[0]['count'] <= 0 ){
+                    $information["_approved"][] = 0;
+                }else{
+                    $information["_approved"][] = $_data[0]['count'];
+                }
 
             }
         }
@@ -633,11 +679,18 @@ class QuotationreportController extends Controller
 
                 $_data = $_data->toArray();// quotation none approved
 
-                $information["approved"][] = $data[0]['count'];
-                $information["_approved"][] = $_data[0]['count'];
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
+                if($data[0]['count'] <=0){
+                    $information["approved"][] = 0;
+                }else{
+                    $information["approved"][] = $data[0]['count'];
+                }
+
+                if($_data[0]['count'] <= 0 ){
+                    $information["_approved"][] = 0;
+                }else{
+                    $information["_approved"][] = $_data[0]['count'];
+                }
             }
             // dd($information);
         }
@@ -673,11 +726,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $data[0]['sum'];
-                    $information["_approved"][] = $_data[0]['sum'];
+                    if($data[0]['sum'] <=0){
+                        $information["approved"][] = 0;
+                    }else{
+                        $information["approved"][] = $data[0]['sum'];
+                    }
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
+                    if($_data[0]['sum'] <=0){
+                        $information["_approved"][] = 0;
+                    }else{
+                        $information["_approved"][] = $_data[0]['sum'];
+                    }
 
 
                 }
@@ -705,11 +764,17 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $data[0]['sum'];
-                    $information["_approved"][] = $_data[0]['sum'];
+                    if($data[0]['sum'] <=0){
+                        $information["approved"][] = 0;
+                    }else{
+                        $information["approved"][] = $data[0]['sum'];
+                    }
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
+                    if($_data[0]['sum'] <=0){
+                        $information["_approved"][] = 0;
+                    }else{
+                        $information["_approved"][] = $_data[0]['sum'];
+                    }
 
 
                 }
@@ -736,11 +801,19 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][] = $data[0]['sum'];
-                    $information["_approved"][] = $_data[0]['sum'];
+                    if($data[0]['sum'] <=0){
+                        $information["approved"][] = 0;
+                    }else{
+                        $information["approved"][] = $data[0]['sum'];
+                    }
 
-//                    $information["qapproved"][] = $_data[0]['count'];
-//                    $information["q_approved"][] = $data[0]['count'];
+                    if($_data[0]['sum'] <=0){
+                        $information["_approved"][] = 0;
+                    }else{
+                        $information["_approved"][] = $_data[0]['sum'];
+                    }
+
+//
                 }
                  //dd($information);
             }
@@ -779,8 +852,19 @@ class QuotationreportController extends Controller
 
                     $_data = $_data->toArray();// quotation none approved
 
-                    $information["approved"][][] =  $data[0]['sum'];
-                    $information["_approved"][][] = $_data[0]['sum'];
+                    if($data[0]['sum'] <=0){
+                        $information["approved"][] = 0;
+                    }else{
+                        $information["approved"][] = $data[0]['sum'];
+                    }
+
+                    if($_data[0]['sum'] <=0){
+                        $information["_approved"][] = 0;
+                    }else {
+                        $information["_approved"][] = $_data[0]['sum'];
+                    }
+
+
                     $information["_target"][][] = Request::get('target');
                 }
                 //dd($information);
@@ -863,8 +947,19 @@ class QuotationreportController extends Controller
 
             $_data = $_data->toArray();
 
-            $information["leads"][] = $_data[0]['count'];
-            $information["customer"][] = $data[0]['count'];
+            if($_data[0]['count'] <= 0){
+                $information["leads"][] = 0;
+            }else{
+                $information["leads"][] = $_data[0]['count'];
+            }
+
+            if($_data[0]['count'] <= 0){
+                $information["customer"][] = 0;
+            }else{
+                $information["customer"][] = $data[0]['count'];
+            }
+
+
 
             $data_quotation = $quotation
                 ->select(DB::raw('COUNT(id) as count'))
@@ -885,8 +980,17 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved"][] = $data_quotation[0]['count'];
-            $information["_approved"][] = $_data_quotation[0]['count'];
+            if($data_quotation[0]['count'] <= 0){
+                $information["approved"][] = 0;
+            }else{
+                $information["approved"][] = $data_quotation[0]['count'];
+            }
+
+            if($data_quotation[0]['count'] <= 0){
+                $information["_approved"][] = 0;
+            }else{
+                $information["_approved"][] = $_data_quotation[0]['count'];
+            }
 
 
             $data_quotation = $quotation
@@ -908,8 +1012,18 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved_sum"][] = $data_quotation[0]['sum'];
-            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            if($data_quotation[0]['sum'] <= 0){
+                $information["approved_sum"][] = 0;
+            }else{
+                $information["approved_sum"][] = $data_quotation[0]['sum'];
+            }
+
+            if($data_quotation[0]['sum'] <= 0){
+                $information["_approved_sum"][] = 0;
+            }else{
+                $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            }
+
 
         }
         return $information;
@@ -940,8 +1054,17 @@ class QuotationreportController extends Controller
 
             $_data = $_data->toArray();
 
-            $information["leads"][] = $_data[0]['count'];
-            $information["customer"][] = $data[0]['count'];
+            if($_data[0]['count'] <= 0){
+                $information["leads"][] = 0;
+            }else{
+                $information["leads"][] = $_data[0]['count'];
+            }
+
+            if($_data[0]['count'] <= 0){
+                $information["customer"][] = 0;
+            }else{
+                $information["customer"][] = $data[0]['count'];
+            }
 
             $data_quotation = $quotation
                 ->select(DB::raw('COUNT(id) as count'))
@@ -965,8 +1088,17 @@ class QuotationreportController extends Controller
                 ->get();
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
-            $information["approved"][] = $data_quotation[0]['count'];
-            $information["_approved"][] = $_data_quotation[0]['count'];
+            if($data_quotation[0]['count'] <= 0){
+                $information["approved"][] = 0;
+            }else{
+                $information["approved"][] = $data_quotation[0]['count'];
+            }
+
+            if($data_quotation[0]['count'] <= 0){
+                $information["_approved"][] = 0;
+            }else{
+                $information["_approved"][] = $_data_quotation[0]['count'];
+            }
 
 
             $data_quotation = $quotation
@@ -992,8 +1124,17 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved_sum"][] = $data_quotation[0]['sum'];
-            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            if($data_quotation[0]['sum'] <= 0){
+                $information["approved_sum"][] = 0;
+            }else{
+                $information["approved_sum"][] = $data_quotation[0]['sum'];
+            }
+
+            if($data_quotation[0]['sum'] <= 0){
+                $information["_approved_sum"][] = 0;
+            }else{
+                $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            }
 
         }
         return $information;
@@ -1047,11 +1188,29 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved"][] = $data_quotation[0]['count'];
-            $information["_approved"][] = $_data_quotation[0]['count'];
+            if($data_quotation[0]['count'] <= 0){
+                $information["approved"][] = 0;
+            }else{
+                $information["approved"][] = $data_quotation[0]['count'];
+            }
 
-            $information["leads"][] = $_data[0]['count'];
-            $information["customer"][] = $data[0]['count'];
+            if($data_quotation[0]['count'] <= 0){
+                $information["_approved"][] = 0;
+            }else{
+                $information["_approved"][] = $_data_quotation[0]['count'];
+            }
+
+            if($_data[0]['count'] <= 0){
+                $information["leads"][] = 0;
+            }else{
+                $information["leads"][] = $_data[0]['count'];
+            }
+
+            if($_data[0]['count'] <= 0){
+                $information["customer"][] = 0;
+            }else{
+                $information["customer"][] = $data[0]['count'];
+            }
 
             $data_quotation = $quotation
                 ->select(DB::raw('SUM(product_price_with_vat) as sum'))
@@ -1076,8 +1235,17 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved_sum"][] = $data_quotation[0]['sum'];
-            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            if($data_quotation[0]['sum'] <= 0){
+                $information["approved_sum"][] = 0;
+            }else{
+                $information["approved_sum"][] = $data_quotation[0]['sum'];
+            }
+
+            if($data_quotation[0]['sum'] <= 0){
+                $information["_approved_sum"][] = 0;
+            }else{
+                $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            }
         }
         return $information;
     }
@@ -1122,11 +1290,29 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved"][] = $data_quotation[0]['count'];
-            $information["_approved"][] = $_data_quotation[0]['count'];
+            if($data_quotation[0]['count'] <= 0){
+                $information["approved"][] = 0;
+            }else{
+                $information["approved"][] = $data_quotation[0]['count'];
+            }
 
-            $information["leads"][] = $_data[0]['count'];
-            $information["customer"][] = $data[0]['count'];
+            if($data_quotation[0]['count'] <= 0){
+                $information["_approved"][] = 0;
+            }else{
+                $information["_approved"][] = $_data_quotation[0]['count'];
+            }
+
+            if($_data[0]['count'] <= 0){
+                $information["leads"][] = 0;
+            }else{
+                $information["leads"][] = $_data[0]['count'];
+            }
+
+            if($_data[0]['count'] <= 0){
+                $information["customer"][] = 0;
+            }else{
+                $information["customer"][] = $data[0]['count'];
+            }
 
             $data_quotation = $quotation
                 ->select(DB::raw('SUM(product_price_with_vat) as sum'))
@@ -1145,8 +1331,17 @@ class QuotationreportController extends Controller
 
             $_data_quotation = $_data_quotation->toArray();// quotation none approved
 
-            $information["approved_sum"][] = $data_quotation[0]['sum'];
-            $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            if($data_quotation[0]['sum'] <= 0){
+                $information["approved_sum"][] = 0;
+            }else{
+                $information["approved_sum"][] = $data_quotation[0]['sum'];
+            }
+
+            if($data_quotation[0]['sum'] <= 0){
+                $information["_approved_sum"][] = 0;
+            }else{
+                $information["_approved_sum"][] = $_data_quotation[0]['sum'];
+            }
         }
         return $information;
     }
@@ -1177,8 +1372,17 @@ class QuotationreportController extends Controller
 
             $_data = $_data->toArray();// quotation none approved
 
-            $information["approved"][][] =  $data[0]['sum'];
-            $information["_approved"][][] = $_data[0]['sum'];
+            if($data[0]['sum'] <= 0){
+                $information["approved"][] = 0;
+            }else{
+                $information["approved"][] = $data[0]['sum'];
+            }
+
+            if($_data[0]['sum'] <= 0){
+                $information["_approved"][] = 0;
+            }else{
+                $information["_approved"][] = $_data[0]['sum'];
+            }
             $information["_target"][][] = $target;
         }
         return $information;

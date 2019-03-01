@@ -422,16 +422,39 @@
             })
         });
         //end update sale
+        $("#p_form").validate({
+            rules: {
+                firstname  	: 'required',
+                lastname 	: 'required',
+                phone 	    : 'required',
+                email 	    : 'required',
+                channel  	: 'required',
+                type 	    : 'required',
+                sale_id 	        : 'required',
+                company_name 	    : 'required',
+                address 	        : 'required',
+                province  	        : 'required',
+                postcode 	        : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
 
-        if($('#p_form').valid() && allGood ) {
-            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-            $('#p_form').submit();
-        } else {
-            var top_;
-            if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
-            else top_ = $('#prop_list').offset().top;
-            $('html,body').animate({scrollTop: top_-100}, 1000);
-        }
+        $('#change-active-status-btn').on('click', function () {
+            if($("#p_form").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#p_form").submit();
+            }
+        });
+
+        // if($('#p_form').valid() && allGood ) {
+        //     $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+        //     $('#p_form').submit();
+        // } else {
+        //     var top_;
+        //     if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
+        //     else top_ = $('#prop_list').offset().top;
+        //     $('html,body').animate({scrollTop: top_-100}, 1000);
+        // }
 
         function mate_del(id) {
             document.getElementById("id2").value = id;

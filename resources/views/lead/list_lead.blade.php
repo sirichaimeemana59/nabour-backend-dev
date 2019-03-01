@@ -396,6 +396,30 @@
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript">
 
+        $("#p_form").validate({
+            rules: {
+                firstname  	: 'required',
+                lastname 	: 'required',
+                phone 	    : 'required',
+                email 	    : 'required',
+                channel  	: 'required',
+                type 	    : 'required',
+                sale_id 	        : 'required',
+                company_name 	    : 'required',
+                address 	        : 'required',
+                province  	        : 'required',
+                postcode 	        : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
+
+        $('#change-active-status-btn').on('click', function () {
+            if($("#p_form").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#p_form").submit();
+            }
+        });
+
         $(function () {
             $("#property_id").select2({
                 placeholder: "{{ trans('messages.unit_number') }}",
@@ -454,66 +478,6 @@
 
                 $('#lead_id').val(data_id);
                 $('#lead_id1').val(data_id);
-            });
-
-            $("#assign-demo-form").validate({
-                ignore:'',
-                rules: {
-                    name : 'required',
-                    property_name: 'required',
-                    email : 'required',
-                    tel : 'required'
-                },
-                messages: {
-                    title: {
-                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
-                    },
-                    detail: {
-                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
-                    },
-                    complain_category_id: {
-                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
-                    }
-                }
-            });
-
-            $('#submit-assign-demo').on('click', function () {
-                if( $("#assign-demo-form").valid() ) {
-                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-                    $('#assign-demo-form').submit();
-                } else {
-                    $(window).resize();
-                }
-            });
-
-            $("#assign-demo-form1").validate({
-                ignore:'',
-                rules: {
-                    name : 'required',
-                    property_name: 'required',
-                    email : 'required',
-                    tel : 'required'
-                },
-                messages: {
-                    title: {
-                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
-                    },
-                    detail: {
-                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
-                    },
-                    complain_category_id: {
-                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
-                    }
-                }
-            });
-
-            $('#submit-assign-demo1').on('click', function () {
-                if( $("#assign-demo-form1").valid() ) {
-                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-                    $('#assign-demo-form1').submit();
-                } else {
-                    $(window).resize();
-                }
             });
 
 
@@ -623,16 +587,6 @@
             })
         });
         //end update sale
-
-        if($('#p_form').valid() && allGood ) {
-            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-            $('#p_form').submit();
-        } else {
-            var top_;
-            if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
-            else top_ = $('#prop_list').offset().top;
-            $('html,body').animate({scrollTop: top_-100}, 1000);
-        }
 
         function mate_del(id) {
             document.getElementById("id2").value = id;
