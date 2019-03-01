@@ -2,7 +2,7 @@
 @section('content')
 @if ($message = Session::pull('message'))
     <div class="alert alert-{{ Session::pull('class') }} alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>	
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{!! $message !!}</strong>
     </div>
 @endif
@@ -10,17 +10,17 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">แก้ไขข้อมูลใบเสร็จรับเงิน</h3>
+                    <h3 class="panel-title">แก้ไขข้อมูลใบสำคัญจ่าย</h3>
                 </div>
                 <div class="panel-body" style="text-align: center;">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="field-1">Id ใบเสร็จรับเงิน</label>
+                            <label class="col-sm-4 control-label" for="field-1">Id ใบสำคัญจ่าย</label>
                             <div class="col-sm-4">
                                 {!! Form::text('id',Request::old('id'),array('class'=>'form-control', 'id'=>'receipt_id')) !!}
                             </div>
                             <div class="col-sm-2 text-left">
-                                <button type="button" class="btn btn-primary search-receipt">ค้นหาใบเสร็จ</button>
+                                <button type="button" class="btn btn-primary search-receipt">ค้นหาใบสำคัญจ่าย</button>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
-                            กรุณาระบุ id ของใบเสร็จรับเงินและกดปุ่มค้นหา
+                            กรุณาระบุ id ของใบสำคัญจ่ายและกดปุ่มค้นหา
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 
             function retriveData (id,b) {
                 $.ajax({
-                    url : $('#root-url').val()+"/root/admin/edit/receipt",
+                    url : $('#root-url').val()+"/root/admin/edit/expense",
                     type : 'post',
                     dataType: 'html',
                     data : ({'id':id}),

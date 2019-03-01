@@ -181,6 +181,13 @@
                         <span class="title">แก้ไขข้อมูลใบเสร็จรับเงิน</span>
                     </a>
                 </li>
+
+                <li class="{!! (Request::is('root/admin/edit/expense*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/edit/expense') !!}">
+                        <i></i>
+                        <span class="title">แก้ไขข้อมูลใบสำคัญจ่าย</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
