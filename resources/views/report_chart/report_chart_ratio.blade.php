@@ -121,6 +121,7 @@
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script>
         $('.chart-none').show();
+        var text_ ='';
 
             $('#p-search-budget-ratio').on('click', function () {
                 if ($("select[name=year_target]").valid() && $("select[name=target_ratio]").valid()) {
@@ -254,7 +255,6 @@
             $('#chart_ratio').dxChart('instance').render();
 
             $('#per-ratio-lead').html("Leads/Customer Ratio in " + Math.ceil(per) + "%");
-            // text ="Leads/Customer Ratio in " + per + "%";
             $('#per_ratio').html(Math.ceil(per));
             $('#total_lead_ratio').html("Total Leads is. " + leads);
             $('#total_customer_ratio').html("Total Customer is. " + customer);

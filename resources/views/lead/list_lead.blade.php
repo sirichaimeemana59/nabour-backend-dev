@@ -257,6 +257,49 @@
     </div>
     {{--end delete--}}
 
+    {{--Note--}}
+    <div class="modal fade" id="note">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">บันทึกการติดตามผล</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role ==2)
+                                    {!! Form::model(null,array('url' => array('customer/sales/Lead_form/note'),'class'=>'form-horizontal','id'=>'note')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/Lead_form/note'),'class'=>'form-horizontal','id'=>'note')) !!}
+
+                                @endif
+                                <br>
+                                <input type="hidden" name="note_id" id="note_id">
+                                <div style="text-align: center;">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">หมายเหตุ</label>
+                                        <div class="col-sm-4">
+                                            <textarea name="note_detail" id="note_detail" cols="50" rows="10" required></textarea>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg save-note" name="submit" >บันทึก</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end note--}}
+
+
     {{--Demo Property_sales--}}
     <div class="modal fade" id="demo_sale">
         {!! Form::open(['url'=>'sales/property/assign','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
@@ -413,10 +456,24 @@
             errorPlacement: function(error, element) { element.addClass('error'); }
         });
 
+        $("#note").validate({
+            rules: {
+                note_detail        : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
+
         $('#change-active-status-btn').on('click', function () {
             if($("#p_form").valid()) {
                 $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
                 $("#p_form").submit();
+            }
+        });
+
+        $('.save-note').on('click', function () {
+            if($("#note").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#note").submit();
             }
         });
 
@@ -629,6 +686,15 @@
                 }
             })
         }
+
+        $('.note').on('click',function(){
+            var id = $(this).data('id');
+            var note_detail =  $(this).data('detail');
+           //alert(id);
+            $('#note_id').val(id);
+            $('#note').modal('show');
+            $('#note_detail').val(note_detail);
+        })
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
