@@ -21,6 +21,7 @@ Route::get('customer/Lead_form/add/list', 'RootAdmin\LeadsController@index');
 Route::post('customer/Lead_form/delete', 'RootAdmin\LeadsController@destroy');
 Route::post('customer/list_update_lead', 'RootAdmin\LeadsController@edit');
 Route::post('customer/Lead_form/update', 'RootAdmin\LeadsController@update');
+Route::post('customer/Lead_form/note', 'RootAdmin\LeadsController@note');
 //End Leads
 
 //Leads Sales
@@ -30,6 +31,7 @@ Route::get('customer/sales/Lead_form/add/list','Sales\LeadsController@index');
 Route::post('customer/sales/Lead_form/delete','Sales\LeadsController@destroy');
 Route::post('customer/sales/list_update_lead','Sales\LeadsController@edit');
 Route::post('customer/sales/Lead_form/update','Sales\LeadsController@update');
+Route::post('customer/sales/Lead_form/note','Sales\LeadsController@note');
 //End Leads Sales
 
 //Product
