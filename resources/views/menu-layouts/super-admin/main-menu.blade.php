@@ -30,6 +30,12 @@
                     <span class="title">นิติบุคคลทดลองใช้</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('customer/lead/data/import/csv') ? 'active' : '') !!}">
+                <a href="{!! url('customer/lead/data/import/csv') !!}">
+                    <i class="fa fa-upload"></i>
+                    <span class="title">นำเข้าข้อมูล Leads</span>
+                </a>
+            </li>
         </ul>
     </li>
 

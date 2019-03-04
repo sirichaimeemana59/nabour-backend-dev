@@ -154,4 +154,37 @@ class LeadsController extends Controller
         return redirect('customer/Lead_form/add/list');
         //dd($note);
     }
+
+    public function importCSV(){
+        return view('lead.import_leads');
+    }
+
+    public function importCSVdata(){
+
+        //dump(Request::input('data_import'));
+
+        $data_array=array();
+        $data = explode(PHP_EOL,Request::get('data_import'));
+        foreach ($data as $datas){
+            $data_array[] = str_getcsv($datas);
+        }
+
+        foreach ($data_array as $row){
+            $rows = new Customer;
+                $rows->firstname = $row[0];
+                $rows->lastname  = $row[1];
+                $rows->phone    = $row[2];
+                $rows->email    = $row[3];
+                $rows->address  = $row[4];
+                $rows->province = $row[5];
+                $rows->postcode = $row[6];
+                $rows->sale_id  = $row[7];
+                $rows->role     = 1;
+
+            $rows->save();
+        }
+        //dump($rows);
+        //dump($data_array);
+        return redirect('customer/Lead_form/add/list');
+    }
 }
