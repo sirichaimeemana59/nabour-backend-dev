@@ -167,13 +167,13 @@
             </ul>
         </li>
 
-        <li class="has-sub {!! ((Request::is('root/admin/upload_file/*') || Request::is('root/admin/edit/receipt*')) ? 'active' : '') !!}">
+        <li class="has-sub {!! (isset($active_menu) && $active_menu == 'finance') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa fa-file"></i>
                 <span class="title">จัดการข้อมูลการเงิน</span>
             </a>
 
-            <ul {!! ((Request::is('root/admin/upload_file/*') || Request::is('root/admin/edit/receipt')) ? 'style="display:block;"' : '') !!}>
+            <ul {!! (isset($active_menu) && $active_menu == 'finance') ? 'style="display:block;"' : '' !!}>
                 <li class="{!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
                     <a href="{!! url('root/admin/upload_file/receipt') !!}">
                         <i></i>

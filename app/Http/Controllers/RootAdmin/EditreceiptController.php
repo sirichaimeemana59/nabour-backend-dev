@@ -20,6 +20,7 @@ class EditreceiptController extends Controller
 {
     public function __construct () {
         $this->middleware('admin');
+        view()->share('active_menu','finance');
     }
     
 

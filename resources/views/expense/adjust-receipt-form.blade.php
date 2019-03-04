@@ -363,34 +363,34 @@ array_forget($cate,'-');
                     <div class="invoice-logo">
                         <table>
                             <tr>
-                                @if($bill->property->logo_pic_name)
-                                    <td style="vertical-align:top;">
-                                        <a href="#" class="logo">
-                                            <img src="{{ env('URL_S3')."/property-file/".$bill->property->logo_pic_path.$bill->property->logo_pic_name }}" alt="property-image"/>
-                                        </a>
-                                    </td>
-                                    <td style="vertical-align:top;padding-left:20px;">
-                                @else
-                                    <td style="vertical-align:top;">
-                                        @endif
-                                        <ul class="list-unstyled">
-                                            <li class="upper"><strong style="font-size:20px;">
-                                                    {{ $bill->property->{'juristic_person_name_'.$lang} }}</strong><br/>
-                                                {{ trans('messages.AboutProp.address_no')." ".$bill->property->address_no}}
-                                                @if($bill->property->{'street_'.$lang } != "-")
-                                                    {{ $bill->property->{'street_'.$lang } }}
-                                                @endif
-                                                {{$bill->property->{'address_'.$lang} }}<br/>
-                                                {{
-                                                    $bill->property->has_province->{'name_'.$lang }." ".
-                                                    $bill->property->postcode
-                                                }}
-                                                @if($bill->property->tel != "-")
-                                                    <br/> Tel: {{ $bill->property->tel }}
-                                                @endif
-                                            </li>
-                                        </ul>
-                                    </td>
+                            @if($bill->property->logo_pic_name)
+                                <td style="vertical-align:top;">
+                                    <a href="#" class="logo">
+                                        <img src="{{ env('URL_S3')."/property-file/".$bill->property->logo_pic_path.$bill->property->logo_pic_name }}" alt="property-image"/>
+                                    </a>
+                                </td>
+                                <td style="vertical-align:top;padding-left:20px;">
+                            @else
+                                <td style="vertical-align:top;">
+                            @endif
+                                    <ul class="list-unstyled">
+                                        <li class="upper"><strong style="font-size:20px;">
+                                                {{ $bill->property->{'juristic_person_name_'.$lang} }}</strong><br/>
+                                            {{ trans('messages.AboutProp.address_no')." ".$bill->property->address_no}}
+                                            @if($bill->property->{'street_'.$lang } != "-")
+                                                {{ $bill->property->{'street_'.$lang } }}
+                                            @endif
+                                            {{$bill->property->{'address_'.$lang} }}<br/>
+                                            {{
+                                                $bill->property->has_province->{'name_'.$lang }." ".
+                                                $bill->property->postcode
+                                            }}
+                                            @if($bill->property->tel != "-")
+                                                <br/> Tel: {{ $bill->property->tel }}
+                                            @endif
+                                        </li>
+                                    </ul>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -415,8 +415,6 @@ array_forget($cate,'-');
                                                 @endif
                                             </strong>
                                         </li>
-                                        <li class="upper">{{ trans('messages.Expenses.ref_no') }} : <strong class="s-label">{{ $bill->ref_no }}</strong></li>
-                                        <li class="upper">{{ trans('messages.date') }} : <strong class="s-label">{{localDate($bill->created_at)}}</strong></li>
                                         </li>
                                         @if($bill->payment_status == 3)
                                             <li class="upper">{{ trans('messages.status') }} : <strong class="s-label"><div class="label label-default">{{ trans('messages.feesBills.canceled') }}</div></strong></li>
@@ -445,6 +443,10 @@ array_forget($cate,'-');
                     <div class="col-sm-4">
                         {!! Form::select('payee_id',$payees_list,null,array('class'=>'form-control')) !!}
                     </div>
+                    <label class="control-label col-sm-2">{{ trans('messages.date') }}</label>
+                    <div class="col-sm-4">
+                        {!! Form::text('created_at',null,array('class'=>'form-control','maxlength'=>50)) !!}
+                    </div>
                 </div>
 
                 <hr/>
@@ -453,19 +455,12 @@ array_forget($cate,'-');
             </section>
         </div>
         <hr/>
-        @if( $bill->payment_status != 3 )
-            @if($bill->remark)
-                <div class="row remark-row" style="margin-bottom:20px;">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                *{!! displayTextAreaVal($bill->remark) !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @else
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-md-12">
+                {!! Form::textarea('remark',null,array('class'=>'form-control','placeholder' => trans('messages.feesBills.remark'),'maxlength'=>1000,'rows'=>4)) !!}
+            </div>
+        </div>
+        @if( $bill->payment_status == 3 )
             <div class="row remark-row">
                 <div class="col-md-12">
                     <div>{{ trans('messages.feesBills.cancelled_at') }} : {{ localDate($bill->cancelled_at) }}</div>
@@ -478,19 +473,7 @@ array_forget($cate,'-');
             </div>
         @endif
 
-        <div class="row" style="margin-bottom: 15px;">
-            <div class="col-md-12">
-                {!! Form::textarea('remark',null,array('class'=>'form-control','placeholder' => trans('messages.feesBills.remark'),'maxlength'=>1000,'rows'=>4)) !!}
-            </div>
-        </div>
-
         <div class="row hidden-print">
-            <?php /*
-            <div class="col-md-4">
-                <span id="attachment"><i class="fa fa-camera"></i> {{ trans('messages.feesBills.attach_evidence') }}:</span>
-                <div class=" field-hint">{{ trans('messages.upload_file_description') }}</div>
-                <div id="previews"></div>
-            </div> */ ?>
             <div class="col-md-8 col-md-offset-4">
                 <div class="row">
                     <div class="col-sm-5 block-input">
