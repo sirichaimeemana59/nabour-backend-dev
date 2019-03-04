@@ -22,6 +22,8 @@ Route::post('customer/Lead_form/delete', 'RootAdmin\LeadsController@destroy');
 Route::post('customer/list_update_lead', 'RootAdmin\LeadsController@edit');
 Route::post('customer/Lead_form/update', 'RootAdmin\LeadsController@update');
 Route::post('customer/Lead_form/note', 'RootAdmin\LeadsController@note');
+Route::get('customer/lead/data/import/csv','RootAdmin\LeadsController@importCSV');
+Route::post('customer/import/add', 'RootAdmin\LeadsController@importCSVdata');
 //End Leads
 
 //Leads Sales
