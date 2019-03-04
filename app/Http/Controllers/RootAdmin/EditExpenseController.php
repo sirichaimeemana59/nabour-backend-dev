@@ -15,6 +15,11 @@ use App\Payee;
 
 class EditExpenseController extends Controller
 {
+    public function __construct () {
+        $this->middleware('admin');
+        view()->share('active_menu','finance');
+    }
+
     public function getExpenseForAdjust(Request $r) {
         if($r->isMethod('post')) {
 
@@ -27,8 +32,6 @@ class EditExpenseController extends Controller
 
                 $payees_list = array( "" => trans('messages.Payee.select_name'));
                 $payees_list += Payee::where('property_id',$bill->property_id)->pluck('name','id')->toArray();
-                //return view('expenses.admin-create-expense')->with(compact('payees_list','bank_list'));
-
             }
             return view('expense.adjust-receipt-form')->with(compact('bill','unit_list','bank_list','payees_list'));
 
@@ -40,8 +43,6 @@ class EditExpenseController extends Controller
     public function adjustExpense(Request $r) {
         if($r->isMethod('post')) {
 
-            $change_payment_date = $change_transfer_date = $change_payment_type = false;
-
             $receipt = Invoice::with('bankTransaction')->find($r->get('id'));
             $receipt->timestamps    = false;
             $validDate              = true;
@@ -50,6 +51,11 @@ class EditExpenseController extends Controller
             if( !$this->validateDate($r->get('payment_date')) ) {
                 $validDate = false;
                 $msg[] = "วันที่ชำระเงินไม่ถูกต้อง";
+            }
+
+            if( !$this->validateDate($r->get('created_at')) ) {
+                $validDate = false;
+                $msg[] = "วันที่ออกใบสำคัญจ่ายไม่ถูกต้อง";
             }
 
             if($r->get('bank_id') && !$this->validateDate($r->get('bank_transfer_date'))) {
@@ -66,6 +72,7 @@ class EditExpenseController extends Controller
 
                 $receipt->payment_type      = $r->get('payment_type');
                 $receipt->payment_date      = $r->get('payment_date');
+                $receipt->created_at        = $r->get('created_at');
                 $receipt->ref_no            = $r->get('ref_no');
                 $receipt->remark            = $r->get('remark');
 
@@ -86,8 +93,7 @@ class EditExpenseController extends Controller
                     $transaction->bank_transfer_date    =  $receipt->bank_transfer_date;
                     $transaction->save();
                 }
-                //dump( $r->all() );
-                //dd($receipt->toArray());
+
                 if( $r->get('bank_id') ) {
                     if( $receipt->bankTransaction ) {
                         // if bank transaction exited
