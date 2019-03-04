@@ -18,6 +18,13 @@
         </div>
     </div>
 
+    @if(!empty($msg))
+        <div class="row">
+            <div class="alert alert-danger">
+                <strong>เกิดข้อผิดพลาด!</strong> {!! $msg !!}
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default" id="panel-lead-list">
