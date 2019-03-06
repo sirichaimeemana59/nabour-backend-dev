@@ -50,7 +50,11 @@
         <tr>
             <td>{!! $i; !!}</td>
             <td>{!! $row->quotation_code !!}</td>
-            <td>{!! $row->latest_lead->firstname." ".$row->latest_lead->lastname !!}</td>
+            @if($row->latest_customer)
+                <td>{!! $row->latest_customer->firstname." ".$row->latest_customer->lastname !!}</td>
+            @else
+                <td>ไม่พบข้อมูล</td>
+            @endif
             <td class="text-right">{!! number_format($row->product_price_with_vat,2) !!}</td>
             @if(!empty($row->latest_contract->id))
                 <td>{!! $row->latest_contract->contract_code !!}</td>

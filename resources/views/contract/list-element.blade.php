@@ -54,8 +54,17 @@
     <tr>
         <td>{!! $i; !!}</td>
         <td>{!! $row->contract_code !!}</td>
-        <td>{!! $row->customer->company_name !!}</td>
-        <td>{!! $row->latest_sale->name !!}</td>
+        @if(!empty($row->customer->company_name))
+            <td>{!!$row->customer->company_name!!}</td>
+        @else
+            <td>ไม่พบข้อมูล</td>
+        @endif
+        {{--<td>{!! $row->customer->company_name !!}</td>--}}
+        @if(!empty($row->latest_sale->name))
+            <td>{!!$row->latest_sale->name!!}</td>
+        @else
+            <td>ไม่พบข้อมูล</td>
+        @endif
         <td>{!! localDate($row->start_date) !!}</td>
         <td>{!! localDate($row->end_date) !!}</td>
         <?php

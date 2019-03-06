@@ -275,6 +275,13 @@
             document.getElementById("id3").value = id;
         }
 
+        // $('.delete').on('click',function(e){
+        //     e.preventDefault();
+        //     var id = $(this).da
+        //
+        //     $('#delete').modal('show');
+        //     //alert('aa');
+        // })
         //update
         $('#panel-package-list').on('click','.edit-package' ,function (){
             var id = $(this).data('vehicle-id');

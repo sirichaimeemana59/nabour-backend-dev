@@ -188,7 +188,7 @@ function calTotal () {
     var grandTotal_ = $.number(grandTotal,2);
     $('#grandTotal').html(grandTotal_);
     $('#h_total').val(grandTotal_);
-    $('#form-grand-total').val(grandTotal.toFixed(2));
+    $('#form-grand-total').val(grandTotal_);
 
     if($('#unit-balance-input').length && Number($('#unit-balance-input').val()) > 0 ) {
         calFinalGrandTotal();

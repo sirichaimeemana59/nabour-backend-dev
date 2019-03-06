@@ -44,7 +44,7 @@
                             {{--</div>--}}
 
                             <div class="col-sm-3">
-                                <select name="sale_id" id="" class="form-control" required>
+                                <select name="sale_id" id="sale_id" class="form-control" required>
                                     <option value="">กรุณาเลือกพนักงานขาย</option>
                                     @foreach($sale as $srow)
                                         <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
@@ -147,14 +147,14 @@
                             <label class="col-sm-2 control-label">พนักงานขาย</label>
                             <div class="col-sm-4">
                                 @if(Auth::user()->role !=2)
-                                    <select name="sale_id" id="" class="form-control" required>
+                                    <select name="sale_id" id="sale_id1" class="form-control" required>
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
                                         @foreach($sale as $srow)
                                             <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
                                         @endforeach
                                     </select>
                                 @else
-                                    <select name="sale_id" id="" class="form-control"  disabled="true">
+                                    <select name="sale_id" id="sale_id2" class="form-control"  disabled="true">
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
                                         @foreach($sale as $_srow)
                                             <?php
@@ -181,7 +181,7 @@
 
                         <label class="col-sm-2 control-label">จังหวัด</label>
                         <div class="col-sm-4">
-                            {!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
+                            {!! Form::select('province', $provinces,null,['id'=>'province','class'=>'form-control']) !!}
                         </div>
                     </div>
 
@@ -304,8 +304,51 @@
     <script type="text/javascript" src="{!! url('/') !!}/js/selectboxit/jquery.selectBoxIt.min.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/nabour-search-form.js"></script>
     <script type="text/javascript" src="{!! url('/') !!}/js/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
+    <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript">
         // Override
+
+        $(function () {
+            $("#sale_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id1").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id2").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#property-province").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#province").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
         function validateForm () {
             $("#p_form").validate({
                 rules: {
@@ -379,16 +422,39 @@
             })
         });
         //end update sale
+        $("#p_form").validate({
+            rules: {
+                firstname  	: 'required',
+                lastname 	: 'required',
+                phone 	    : 'required',
+                email 	    : 'required',
+                channel  	: 'required',
+                type 	    : 'required',
+                sale_id 	        : 'required',
+                company_name 	    : 'required',
+                address 	        : 'required',
+                province  	        : 'required',
+                postcode 	        : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
 
-        if($('#p_form').valid() && allGood ) {
-            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-            $('#p_form').submit();
-        } else {
-            var top_;
-            if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
-            else top_ = $('#prop_list').offset().top;
-            $('html,body').animate({scrollTop: top_-100}, 1000);
-        }
+        $('#change-active-status-btn').on('click', function () {
+            if($("#p_form").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#p_form").submit();
+            }
+        });
+
+        // if($('#p_form').valid() && allGood ) {
+        //     $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+        //     $('#p_form').submit();
+        // } else {
+        //     var top_;
+        //     if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
+        //     else top_ = $('#prop_list').offset().top;
+        //     $('html,body').animate({scrollTop: top_-100}, 1000);
+        // }
 
         function mate_del(id) {
             document.getElementById("id2").value = id;
@@ -426,6 +492,7 @@
                 }
             })
         }
-
     </script>
+    <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
+    <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
 @endsection

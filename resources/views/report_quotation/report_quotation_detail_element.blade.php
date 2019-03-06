@@ -54,7 +54,11 @@ $allpage=0;
                     @foreach($p_rows as $row)
                         <tr>
                             <td>{!! $i !!}</td>
-                            <td>{!! $row->latest_lead->firstname !!}  {!! $row->latest_lead->lastname !!}</td>
+                            @if(!empty($row->latest_lead->firstname) OR !empty($row->latest_lead->lastname))
+                                <td>{!! $row->latest_lead->firstname !!}  {!! $row->latest_lead->lastname !!}</td>
+                            @else
+                                <td>ไม่พบข้อมูล</td>
+                            @endif
                             <td style="text-align: right;">{!! $row->count !!} ใบ</td>
                             <td style="text-align: right;">{!! number_format($row->sum_total,2) !!} บาท</td>
                             <td style="text-align: right;">{!! number_format($row->sum_vat,2) !!} บาท</td>

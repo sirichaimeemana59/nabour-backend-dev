@@ -70,7 +70,7 @@
 									<i class="fa-edit"></i> แก้ไข
 								</a>
 							</li>
-							@if($row->active_status)
+							@if($row->active_status == true)
 								<li><a href="#" class="active-status" data-status="0" data-pid="{!! $row->id !!}">
 										<i class="fa-lock"></i> {!! trans('messages.Member.account_ban') !!}
 									</a></li>

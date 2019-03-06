@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <select name="sale_id" id="" class="form-control" required>
+                                <select name="sale_id" id="sale_id" class="form-control" required>
                                     <option value="">กรุณาเลือกพนักงานขาย</option>
                                     @foreach($sale as $srow)
                                         <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
@@ -136,14 +136,14 @@
                             <div class="col-sm-4">
 
                                 @if(Auth::user()->role !=2)
-                                    <select name="sale_id" id="" class="form-control" required>
+                                    <select name="sale_id" id="sale_id1" class="form-control" required>
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
                                         @foreach($sale as $srow)
                                             <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
                                         @endforeach
                                     </select>
                                 @else
-                                    <select name="sale_id" id="" class="form-control"  disabled="true">
+                                    <select name="sale_id" id="sale_id2" class="form-control"  disabled="true">
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
                                         @foreach($sale as $_srow)
                                             <?php
@@ -171,7 +171,7 @@
 
                         <label class="col-sm-2 control-label">จังหวัด</label>
                         <div class="col-sm-4">
-                            <select name="province" id="" class="form-control" required>
+                            <select name="province" id="province" class="form-control" required>
                                 <option value="">กรุณาเลือกจังหวัด</option>
                                 @foreach($provinces as $row)
                                     <option value="{!!$row->code!!}">{!!$row->name_th!!}</option>
@@ -257,6 +257,49 @@
     </div>
     {{--end delete--}}
 
+    {{--Note--}}
+    <div class="modal fade" id="note">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">บันทึกการติดตามผล</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role ==2)
+                                    {!! Form::model(null,array('url' => array('customer/sales/Lead_form/note'),'class'=>'form-horizontal','id'=>'note')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/Lead_form/note'),'class'=>'form-horizontal','id'=>'note')) !!}
+
+                                @endif
+                                <br>
+                                <input type="hidden" name="note_id" id="note_id">
+                                <div style="text-align: center;">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">หมายเหตุ</label>
+                                        <div class="col-sm-4">
+                                            <textarea name="note_detail" id="note_detail" cols="50" rows="10" required></textarea>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg save-note" name="submit" >บันทึก</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end note--}}
+
+
     {{--Demo Property_sales--}}
     <div class="modal fade" id="demo_sale">
         {!! Form::open(['url'=>'sales/property/assign','class'=>'form-horizontal','id'=>'assign-demo-form']) !!}
@@ -341,6 +384,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อผู้ติดต่อนิติบุคคลทดลองใช้</label>
+                                <div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
                                 <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
                                 <div class="col-md-8">
                                     <select name="property" id="property_id1" class="form-control" required>
@@ -396,6 +447,92 @@
     <script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
     <script type="text/javascript">
 
+        $("#p_form").validate({
+            rules: {
+                firstname  	: 'required',
+                lastname 	: 'required',
+                phone 	    : 'required',
+                email 	    : 'required',
+                channel  	: 'required',
+                type 	    : 'required',
+                sale_id 	        : 'required',
+                company_name 	    : 'required',
+                address 	        : 'required',
+                province  	        : 'required',
+                postcode 	        : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
+
+        $("#note").validate({
+            rules: {
+                note_detail        : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
+
+        $('#change-active-status-btn').on('click', function () {
+            if($("#p_form").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#p_form").submit();
+            }
+        });
+
+        $('.save-note').on('click', function () {
+            if($("#note").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#note").submit();
+            }
+        });
+
+        $(function () {
+            $("#property_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#property_id1").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id1").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#sale_id2").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
+        $(function () {
+            $("#province").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
             $('a[data-toggle=modal], button[data-toggle=modal]').click(function () {
                 var data_id = '';
                 if (typeof $(this).data('id') !== 'undefined') {
@@ -406,66 +543,6 @@
 
                 $('#lead_id').val(data_id);
                 $('#lead_id1').val(data_id);
-            });
-
-            $("#assign-demo-form").validate({
-                ignore:'',
-                rules: {
-                    name : 'required',
-                    property_name: 'required',
-                    email : 'required',
-                    tel : 'required'
-                },
-                messages: {
-                    title: {
-                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
-                    },
-                    detail: {
-                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
-                    },
-                    complain_category_id: {
-                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
-                    }
-                }
-            });
-
-            $('#submit-assign-demo').on('click', function () {
-                if( $("#assign-demo-form").valid() ) {
-                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-                    $('#assign-demo-form').submit();
-                } else {
-                    $(window).resize();
-                }
-            });
-
-            $("#assign-demo-form1").validate({
-                ignore:'',
-                rules: {
-                    name : 'required',
-                    property_name: 'required',
-                    email : 'required',
-                    tel : 'required'
-                },
-                messages: {
-                    title: {
-                        required: '{!! trans('messages.Complain.invalid_title_msg') !!}'
-                    },
-                    detail: {
-                        required: '{!! trans('messages.Complain.invalid_detail_msg') !!}'
-                    },
-                    complain_category_id: {
-                        required: '{!! trans('messages.Complain.invalid_type_msg') !!}'
-                    }
-                }
-            });
-
-            $('#submit-assign-demo1').on('click', function () {
-                if( $("#assign-demo-form1").valid() ) {
-                    $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-                    $('#assign-demo-form1').submit();
-                } else {
-                    $(window).resize();
-                }
             });
 
 
@@ -576,16 +653,6 @@
         });
         //end update sale
 
-        if($('#p_form').valid() && allGood ) {
-            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-            $('#p_form').submit();
-        } else {
-            var top_;
-            if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
-            else top_ = $('#prop_list').offset().top;
-            $('html,body').animate({scrollTop: top_-100}, 1000);
-        }
-
         function mate_del(id) {
             document.getElementById("id2").value = id;
         }
@@ -627,6 +694,15 @@
                 }
             })
         }
+
+        $('.note').on('click',function(){
+            var id = $(this).data('id');
+            var note_detail =  $(this).data('detail');
+           //alert(id);
+            $('#note_id').val(id);
+            $('#note').modal('show');
+            $('#note_detail').val(note_detail);
+        })
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

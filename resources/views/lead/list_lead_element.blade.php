@@ -60,7 +60,7 @@
                         <td>{!!localDate($row->created_at)!!}</td>
                         <td>{!!$row->firstname.' '.$row->lastname !!}</td>
                         <td>{!!$row->phone !!}</td>
-                        <td>{!!$row->latest_sale->name!!}</td>
+                        <td>@if($row->latest_sale){!!$row->latest_sale->name!!}@else ไม่พบข้อมูล @endif</td>
                         <td class="text-right">{!! $doc_count > 0 ? $doc_count : 'ไม่มีข้อมูล'; !!}</td>
                         <td>
                             <div class="btn-group left-dropdown">
@@ -79,10 +79,10 @@
                                         </a>
                                     </li>
                                     <li><a href="#"  data-toggle="modal" data-target="#delete" data-original-title="ลบ Lead" onclick="mate_del('{!!$row->id!!}')">
-                                            {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
-                                            <i class="fa-trash"></i>ลบ
-                                        </a>
-                                    </li>
+                                                {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
+                                                <i class="fa-trash"></i>ลบ
+                                            </a>
+                                        </li>
                                     <li>
                                         @if(Auth::user()->role !=2)
                                                 <a href="{!!url('/customer/service/quotation/add/'.$row->id)!!}" >
@@ -104,6 +104,12 @@
                                         @endif
                                         </a>
                                     </li>
+
+                                            <li><a href="#" class="note"  data-toggle="tooltip" data-original-title="หมายเหตุ" data-id="{!! $row->id !!}" data-detail="{!! $row->note !!}">
+                                                    {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
+                                                    <i class="fa-newspaper-o"></i>หมายเหตุ
+                                                </a>
+                                            </li>
                                 </ul>
                             </div>
                         </td>

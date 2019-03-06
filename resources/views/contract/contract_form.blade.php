@@ -27,7 +27,12 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    @if($quotation1->latest_sale->role==1)
+                    @if(!empty($quotation1->latest_sale))
+                        @if($quotation1->latest_sale->role==1)
+                            <h3 class="panel-title">รายละเอียด Lead</h3>
+                            @else
+                            <h3 class="panel-title">รายละเอียด Customer</h3>
+                            @endif
                         <h3 class="panel-title">รายละเอียด Lead</h3>
                     @else
                         <h3 class="panel-title">รายละเอียด Customer</h3>
@@ -38,16 +43,21 @@
                         <div id="member-list-content">
                             {{--content--}}
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : {!!$quotation1->latest_lead->firstname ."   ". $quotation1->latest_lead->lastname!!} </label>
+                                @if(!empty($quotation1->latest_lead->firstname) and !empty($quotation1->latest_lead->lastname))
+                                     <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : {!!$quotation1->latest_lead->firstname ."   ". $quotation1->latest_lead->lastname!!} </label>
+                                @else
+                                    <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : ไม่พบข้อมูล </label>
+
+                                @endif
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">โทร :  {!!$quotation1->latest_lead->phone!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">โทร : @if(!empty($quotation1->latest_lead->phone)){!!$quotation1->latest_lead->phone!!} @else ไม่พบข้อมูล  @endif</label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  {!!$quotation1->latest_lead->email!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  @if(!empty($quotation1->latest_lead->email)){!!$quotation1->latest_lead->email!!} @else ไม่พบข้อมูล @endif</label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">พนักงานขาย  :  {!!$quotation1->latest_sale->name!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">พนักงานขาย  :  @if(!empty($quotation1->latest_sale->name)){!!$quotation1->latest_sale->name!!} @else ไม่พบข้อมูล @endif</label>
                             </div>
                             <div class="form-group">
                                 <?php
@@ -192,7 +202,7 @@
                         ?>
 
                         <div style="text-align: right">
-                            <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                            <button type="reset" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
                             <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
                         </div>
                 </div>

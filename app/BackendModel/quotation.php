@@ -19,7 +19,12 @@ class Quotation extends GeneralModel
 
     public function latest_lead ()
     {
-        return $this->hasOne('App\BackendModel\Customer','id','lead_id');
+        return $this->hasOne('App\BackendModel\Customer','id','lead_id')->orderBy('created_at','desc');
+    }
+
+    public function latest_customer ()
+    {
+        return $this->hasOne('App\BackendModel\Customer','id','lead_id')->orderBy('created_at','desc');
     }
 
     public function latest_province ()

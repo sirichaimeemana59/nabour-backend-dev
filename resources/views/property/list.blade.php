@@ -331,7 +331,17 @@
 	<script type="text/javascript" src="{!! url('/') !!}/js/selectboxit/jquery.selectBoxIt.min.js"></script>
 	<script type="text/javascript" src="{!! url('/') !!}/js/nabour-search-form.js"></script>
 	<script type="text/javascript" src="{!! url('/') !!}/js/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>
+	<script type="text/javascript" src="{!!url('/js/select2/select2.min.js')!!}"></script>
 	<script>
+        $(function () {
+            $("#property-province").select2({
+                placeholder: "{{ trans('messages.unit_number') }}",
+                allowClear: true,
+                dropdownAutoWidth: true
+            });
+        });
+
         var target_prop;
         $(function () {
             $('.panel-body').on('click','.p-paginate-link', function (e){

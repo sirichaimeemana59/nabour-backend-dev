@@ -4,7 +4,7 @@ namespace App;
 class Property extends GeneralModel
 {
     protected $table = 'property';
-    protected $fillable = ['id','property_name_th','property_name_en','area_size','unit_size','construction_by','address_th','address_en','street_th','street_en','province','postcode','lat','lng','about','tel','common_area_fee_type','common_area_fee_rate','min_price','max_price','property_type','tax_id','fax','address_no','juristic_person_name_th','juristic_person_name_en','common_area_fee_land_type','common_area_fee_land_rate','is_add_initial_water_meter','is_add_initial_electric_meter','document_print_type','developer_group_id','company_name','sale_contract','property_no_label'];
+    protected $fillable = ['id','property_name_th','property_name_en','area_size','unit_size','construction_by','address_th','address_en','street_th','street_en','province','postcode','lat','lng','about','tel','common_area_fee_type','common_area_fee_rate','min_price','max_price','property_type','tax_id','fax','address_no','juristic_person_name_th','juristic_person_name_en','common_area_fee_land_type','common_area_fee_land_rate','is_add_initial_water_meter','is_add_initial_electric_meter','document_print_type','developer_group_id','sale_contract','property_no_label'];
     // Close timestamp
 	public $timestamps = true;
 
@@ -130,6 +130,11 @@ class Property extends GeneralModel
     public function lastest_quotation()
     {
         return $this->hasOne('App\quotation','property_id','id');
+    }
+
+    public function latest_lead()
+    {
+        return $this->hasOne('App\BackendModel\Customer','lead_id','id');
     }
 
 

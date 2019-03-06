@@ -8,6 +8,11 @@
     <?php
     $sum = 0;
     ?>
+    <style>
+        @media screen {
+            br { display: none; }
+        }
+    </style>
     <div class="page-title">
         <div class="title-env">
             <h1 class="title">ใบเสนอราคา</h1>
@@ -26,9 +31,9 @@
         </div>
     </div>
     @if(Auth::user()->role !=2)
-            <a href="{!! url('service/quotation/print_quotation/'.$quotation->id) !!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
-        @else
-            <a href="{!! url('service/sales/quotation/print_quotation/'.$quotation->id) !!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
+        <a href="{!! url('service/quotation/print_quotation/'.$quotation->id) !!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
+    @else
+        <a href="{!! url('service/sales/quotation/print_quotation/'.$quotation->id) !!}" target="_blank" class="action-float-right btn btn-primary"><i class="fa fa-print"> </i> พิมพ์ใบเสนอราคา</a><span></span>
     @endif
 
     <div class="row">
@@ -41,13 +46,13 @@
                     <div class="tab-pane active" id="member-list">
                         <div id="member-list-content">
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : {!!$quotation->latest_lead->firstname ."   ". $quotation->latest_lead->lastname!!} </label>
+                                <label class="col-sm-6 control-label" for="field-1">ชื่อ - นามสกุล : @if(!empty($quotation->latest_lead->firstname) AND !empty($quotation->latest_lead->lastname)){!!$quotation->latest_lead->firstname ."   ". $quotation->latest_lead->lastname!!} @else ไม่พบข้อมูล @endif </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">โทร :  {!!$quotation->latest_lead->phone!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">โทร :  @if(!empty($quotation->latest_lead->phone)){!!$quotation->latest_lead->phone!!}@else ไม่พบข้อมูล @endif</label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  {!!$quotation->latest_lead->email!!}</label>
+                                <label class="col-sm-6 control-label" for="field-1">E - mail  :  @if(!empty($quotation->latest_lead->email)){!!$quotation->latest_lead->email!!}@else ไม่พบข้อมูล @endif</label>
                             </div>
                         </div>
                     </div>
@@ -57,11 +62,15 @@
     </div>
     <section class="bills-env">
         <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="">
+                <div class="panel-heading">
+                    <h3 class="panel-title">รายละเอียดใบเสนอราคา</h3>
+                </div>
+                <p style="margin-top: 25px;"></p>
                 @if(Auth::user()->role !=2)
-                        {!! Form::model(null,array('url' => array('service/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
-                    @else
-                        {!! Form::model(null,array('url' => array('service/sales/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
+                    {!! Form::model(null,array('url' => array('service/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
+                @else
+                    {!! Form::model(null,array('url' => array('service/sales/quotation/update/file'),'class'=>'form-horizontal','id'=>'p_form','name'=>'form1')) !!}
                 @endif
                 <table class="table table-striped table-condensed" id="itemsTable" style="min-width:600px;">
                     <thead>
@@ -80,47 +89,58 @@
                         <input type="hidden" name="_data[{!! $key !!}][id]" value="{!!$quo->quotation_id!!}">
                         <input type="hidden" name="_data[{!! $key !!}][lead_id]" value="{!!$quo->lead_id!!}">
                         <?php
-                            $read=$quo->lastest_package->status==1?"readonly":"";
-                            $_read=$quo->lastest_package->status!=1?"readonly":"";
-                            $id_=$quo->lastest_package->status==1?"unit_price":"";
-                            $t_price=$quo->lastest_package->status==1?"tprice":"";
-                            $t_month=$quo->lastest_package->status==1?"tmonth":"";
-                            $_service=$quo->lastest_package->status==1?"service_":"";
+                        $read=$quo->lastest_package->status==1?"readonly":"";
+                        $_read=$quo->lastest_package->status!=1?"readonly":"";
+                        $id_=$quo->lastest_package->status==1?"unit_price":"";
+                        $t_price=$quo->lastest_package->status==1?"tprice":"";
+                        $t_month=$quo->lastest_package->status==1?"tmonth":"";
+                        $_service=$quo->lastest_package->status==1?"service_":"";
                         ?>
                         <tr class="item-row">
                             <td></td>
                             <td>
-                                    @if($quo->lastest_package->status==1)
+                                @if($quo->lastest_package->status==1)
                                     <select name="_data[{!! $key !!}][service]" class="toValidate form-control input-sm unit-select-project {!! $_service !!}" required OnChange="resultPrice(this.value);">
                                         <option value="">กรุณาเลือก Package</option>
-                                            @foreach($package as $row_)
-                                                <?php
-                                                $select_=$row_->id==$quo->package_id?"selected":"";
-                                                ?>
-                                                <option value="{!!$row_->id!!}|{!! $row_->price !!}" {!!$select_!!}>{!!$row_->name!!}</option>
-                                            @endforeach
+                                        @foreach($package as $row_)
+                                            <?php
+                                            $select_=$row_->id==$quo->package_id?"selected":"";
+
+                                            if($row_->price_with_vat > 0){
+                                                $price_vat=$row_->price_with_vat;
+                                            }else{
+                                                $price_vat=$row_->price;
+                                            }
+                                            ?>
+                                            <option value="{!!$row_->id!!}|{!! $price_vat !!}" {!!$select_!!}>{!!$row_->name!!}</option>
+                                        @endforeach
                                     </select>
-                                        @else
-                                        <select name="_data[{!! $key !!}][service]"  class="toValidate form-control input-sm price_service" required OnChange="result_Price(this);">
-                                            <option value="">กรุณาเลือกค่าบริการ</option>
-                                            @foreach($service as $row)
-                                                <?php
-                                                $select=$row->id==$quo->package_id?"selected":"";
-                                                ?>
-                                                <option value="{!!$row->id!!}|{!! $row->price !!}" {!!$select!!}>{!!$row->name!!}</option>
-                                            @endforeach
-                                        </select>
-                                    @endif
+                                @else
+                                    <select name="_data[{!! $key !!}][service]"  class="toValidate form-control input-sm price_service" required OnChange="result_Price(this);">
+                                        <option value="">กรุณาเลือกค่าบริการ</option>
+                                        @foreach($service as $row)
+                                            <?php
+                                            $select=$row->id==$quo->package_id?"selected":"";
+                                            if($row->price_with_vat > 0){
+                                                $price_vat1=$row->price_with_vat;
+                                            }else{
+                                                $price_vat1=$row->price;
+                                            }
+                                            ?>
+                                            <option value="{!!$row->id!!}|{!! $price_vat1 !!}" {!!$select!!}>{!!$row->name!!}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </td>
                             <input type="hidden" name="_data[{!! $key !!}][quotation_code]" value="{!!$quo->quotation_code!!}"/>
-                                <td><input type="text" required name="_data[{!! $key !!}][project]" id="{!! $t_price !!}"  style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control tQty"/></td>
+                            <td><input type="text" required name="_data[{!! $key !!}][project]" id="{!! $t_price !!}"  style="text-align: right;" value="{!!$quo->project_package!!}" class="toValidate form-control tQty"/></td>
                             @if($quo->lastest_package->status==1)
-                                    <td>
-                                        <input type="text" required style="text-align: right;" {!! $_read !!} id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{!! $key !!}][price]" value="{!!$quo->month_package!!}" maxlength="15"/>
+                                <td>
+                                    <input type="text" required style="text-align: right;" {!! $_read !!} id="{!! $t_month !!}" class="toValidate form-control input-sm" name="_data[{!! $key !!}][price]" value="{!!$quo->month_package!!}" maxlength="15"/>
 
-                                    </td>
-                                @else
-                                    <td></td>
+                                </td>
+                            @else
+                                <td></td>
                             @endif
                             @if($quo->lastest_package->status==1)
                                 <td><div class="input-group">
@@ -128,19 +148,19 @@
                                         <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]" id="unit_price" value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tPrice"  readonly/>
                                     </div>
                                 <td>
-                                @else
+                            @else
                                 <td><div class="input-group">
                                         <span class="input-group-addon">฿</span>
                                         <input type="text" style="text-align: right;" required name="_data[{!! $key !!}][unit_price]"  value="{!!$quo->unit_package!!}" class="toValidate form-control input-sm tPrice"  readonly/>
                                     </div>
                                 <td>
-                            @endif
+                                    @endif
 
-                                <div class="text-right">
-                                    <span class="colTotal" id="_colTotal">{!!number_format($quo->total_package,2)!!}</span> บาท
-                                </div>
-                                <input name="_data[{!! $key !!}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{!!$quo->total_package!!}"/>
-                            </td>
+                                    <div class="text-right">
+                                        <span class="colTotal" id="_colTotal">{!!number_format($quo->total_package,2)!!}</span> บาท
+                                    </div>
+                                    <input name="_data[{!! $key !!}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{!!$quo->total_package!!}"/>
+                                </td>
                         </tr>
                         <?php
                         $sum +=$quo->total_package;
@@ -176,7 +196,7 @@
                             </div>
                         </div>
                         <?php
-                            $grand_total=($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount;
+                        $grand_total=($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount;
                         ?>
                         <div class="row">
                             <div class="col-md-6 text-right"><h5>{!! trans('messages.feesBills.grand_total') !!} :</h5></div>
@@ -252,12 +272,12 @@
     {!! Form::close() !!}
 
     {{--<div id="invoice-category-template" style="display:none;">--}}
-        {{--<select name="transaction[0][service]" id="service" class="toValidate form-control input-sm">--}}
-            {{--<option value="">กรุณาเลือกค่าบริการ</option>--}}
-            {{--@foreach($service as $row)--}}
-                {{--<option value="{!!$row->id!!}">{!!$row->name!!}</option>--}}
-            {{--@endforeach--}}
-        {{--</select>--}}
+    {{--<select name="transaction[0][service]" id="service" class="toValidate form-control input-sm">--}}
+    {{--<option value="">กรุณาเลือกค่าบริการ</option>--}}
+    {{--@foreach($service as $row)--}}
+    {{--<option value="{!!$row->id!!}">{!!$row->name!!}</option>--}}
+    {{--@endforeach--}}
+    {{--</select>--}}
     {{--</div>--}}
 @endsection
 
@@ -344,7 +364,7 @@
                 var project_package = parseInt($('#tmonth').val());
                 var month_package = parseFloat($('#unit_price').val());
                 //var TotalTax = parseInt($('#tax').val());
-               //alert(project_package);
+                //alert(project_package);
                 var total = parseFloat((price*project_package*month_package) || 0).toFixed(2);
 
                 var _total = $.number(total,2);

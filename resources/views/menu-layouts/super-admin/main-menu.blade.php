@@ -30,6 +30,12 @@
                     <span class="title">นิติบุคคลทดลองใช้</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('customer/lead/data/import/csv') ? 'active' : '') !!}">
+                <a href="{!! url('customer/lead/data/import/csv') !!}">
+                    <i class="fa fa-upload"></i>
+                    <span class="title">นำเข้าข้อมูล Leads</span>
+                </a>
+            </li>
         </ul>
     </li>
 
@@ -123,6 +129,16 @@
                     <span class="title">Quotaiton Ratio</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('report_quotation/report/chart') ? 'active' : '') !!}">
+                <a href="{!! url('report_quotation/report/chart') !!}">
+                    <span class="title">Report Chart</span>
+                </a>
+            </li>
+            <li class="{!! (Request::is('report_quotation/report/chart/ratio') ? 'active' : '') !!}">
+                <a href="{!! url('report_quotation/report/chart/ratio') !!}">
+                    <span class="title">Ratio</span>
+                </a>
+            </li>
         </ul>
     </li>
     {{--End report quotation--}}
@@ -146,6 +162,36 @@
                     <a href="{!! url('admin/sales/list') !!}">
                         <i class="fa fa-user"></i>
                         <span class="title">พนักงานขาย</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="has-sub {!! (isset($active_menu) && $active_menu == 'finance') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa fa-file"></i>
+                <span class="title">จัดการข้อมูลการเงิน</span>
+            </a>
+
+            <ul {!! (isset($active_menu) && $active_menu == 'finance') ? 'style="display:block;"' : '' !!}>
+                <li class="{!! (Request::is('root/admin/upload_file/*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/upload_file/receipt') !!}">
+                        <i></i>
+                        <span class="title">อัพโหลดหลักฐานการชำระเงิน</span>
+                    </a>
+                </li>
+
+                <li class="{!! (Request::is('root/admin/edit/receipt*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/edit/receipt') !!}">
+                        <i></i>
+                        <span class="title">แก้ไขข้อมูลใบเสร็จรับเงิน</span>
+                    </a>
+                </li>
+
+                <li class="{!! (Request::is('root/admin/edit/expense*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/edit/expense') !!}">
+                        <i></i>
+                        <span class="title">แก้ไขข้อมูลใบสำคัญจ่าย</span>
                     </a>
                 </li>
             </ul>

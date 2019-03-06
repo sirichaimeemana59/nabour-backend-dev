@@ -62,11 +62,12 @@ class LeadsController extends Controller
         $property = $property->get();
 
 
+        $property_demo = new SalePropertyDemo;
+        $property_demo = $property_demo->whereHas('property', function ($q) {
+            $q ->where('status','=',0);
+        });
+        $property_demo = $property_demo->get();
 
-        $property_demo = SalePropertyDemo::where('status','=',0)->get();
-
-
-        //dump($property_demo->toArray());
 
         if(!Request::ajax()) {
             return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property','property_demo'));
@@ -103,15 +104,6 @@ class LeadsController extends Controller
 
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
 
     public function edit()
     {
@@ -152,5 +144,73 @@ class LeadsController extends Controller
         $lead->delete();
         //dd($id);
         return redirect('customer/Lead_form/add/list');
+    }
+
+    public function note(){
+        //dd(Request::get('note_id'));
+        $note = Customer::find(Request::input('note_id'));
+        $note->note = Request::get('note_detail');
+        $note->save();
+        return redirect('customer/Lead_form/add/list');
+        //dd($note);
+    }
+
+    public function importCSV(){
+        return view('lead.import_leads');
+    }
+
+    public function importCSVdata(){
+
+        //dump(Request::input('data_import'));
+
+        $data_array=array();
+        $data = explode(PHP_EOL,Request::get('data_import'));
+        foreach ($data as $datas){
+            $data_array[] = str_getcsv($datas);
+        }
+
+        $result = $this->checkUnitFormat($data_array);
+
+        if($result['result'] == true){
+            foreach ($data_array as $row){
+                $rows = new Customer;
+                $rows->firstname = $row[0];
+                $rows->lastname  = $row[1];
+                $rows->phone    = $row[2];
+                $rows->email    = $row[3];
+                $rows->address  = $row[4];
+                $rows->province = $row[5];
+                $rows->postcode = $row[6];
+                $rows->sale_id  = $row[7];
+                $rows->role     = 1;
+
+                $rows->save();
+            }
+        }else{
+            $msg=$result['messages'];
+            return view('lead.import_leads')->with(compact('msg'));
+        }
+
+        //dump($rows);
+        //dump($data_array);
+        return redirect('customer/Lead_form/add/list');
+    }
+
+    private function checkUnitFormat ($data) {
+        $valid = true;
+        $msg = "";
+        if(!empty($data)) {
+            foreach($data as $row => $datas) {
+                if(count($datas) != 8) {
+                    $valid = false;
+                    $msg .= 'ข้อมูลบรรทัดที่ '.($row +1).' จำนวนข้อมูลไม่ถูกต้อง<br/>';
+                }
+            }
+            //return true;
+        } else {
+            $valid =  false;
+            $msg = 'ไม่มีข้อมูล';
+        }
+        return array('result'=> $valid, 'messages' => $msg);
     }
 }

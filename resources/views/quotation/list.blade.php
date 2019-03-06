@@ -266,6 +266,20 @@
         function mate_check(id) {
             document.getElementById("id3").value = id;
         }
+
+        $('.view-quotaion').on('click',function(e){
+            e.preventDefault();
+            //alert('aa');
+            $('#view-quotaion').modal('show');
+        })
+
+        $('.delete').on('click',function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            $('#id2').val(id);
+            //alert(id);
+            $('#delete').modal('show');
+        })
     </script>
 
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">

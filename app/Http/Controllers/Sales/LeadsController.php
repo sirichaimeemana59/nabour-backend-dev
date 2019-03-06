@@ -52,13 +52,6 @@ class LeadsController extends Controller
         $sale = $sale->get();
 
 
-
-//        $_lead = $_lead->where('role','=',1)->where('sale_id','=',Auth::user()->id);
-//        $_lead = $_lead->orderBy('created_at','desc')->get();
-
-        //dump($sale->toArray());
-
-//        $p_rows = new Customer;
         $p_rows = $p_rows->where('role','=',1)->where('sale_id','=',Auth::user()->id);
         $p_rows = $p_rows->orderBy('created_at','desc')->paginate(50);
 
@@ -104,15 +97,6 @@ class LeadsController extends Controller
 
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
 
     public function edit()
     {
@@ -163,5 +147,18 @@ class LeadsController extends Controller
             return redirect('customer/sales/Lead_form/add/list');
         }
 
+    }
+
+    public function note(){
+        //dd(Request::get('note_id'));
+        $note = Customer::find(Request::input('note_id'));
+        $note->note = Request::get('note_detail');
+        $note->save();
+
+        if(Auth::user()->role !=2) {
+            return redirect('customer/Lead_form/add/list');
+        }else{
+            return redirect('customer/sales/Lead_form/add/list');
+        }
     }
 }

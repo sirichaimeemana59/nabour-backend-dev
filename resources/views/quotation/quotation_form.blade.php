@@ -5,21 +5,7 @@
     $property_type = unserialize(constant('PROPERTY_TYPE_'.strtoupper($lang)));*/
     ?>
     <?php
-    if(!empty($max_cus)){
-        $cut_c=substr($max_cus,2);
-        $sum_c=$cut_c+1;
-        $new_id="0000".$sum_c;
-        $count=strlen($new_id);
-        if($count>5){
-            $count_c=$count-5;
-            $cut_new_id=substr($new_id,$count_c);
-            $cus="QU".$cut_new_id;
-        }else{
-            $cus="QU".$new_id;
-        }
-    }else{
-        $cus="QU00001";
-    }
+
     ?>
 
     <div class="page-title">
@@ -100,7 +86,14 @@
                             <select name="transaction[0][service]"  class="toValidate form-control input-sm  unit-select-project" required OnChange="resultPrice(this.value);">
                                 <option value="">กรุณาเลือก Package</option>
                                 @foreach($package as $row)
-                                    <option value="{!!$row->id!!}|{!! $row->price !!}">{!!$row->name!!}</option>
+                                    <?php
+                                    if($row->price_with_vat > 0){
+                                        $price_vat=$row->price_with_vat;
+                                    }else{
+                                        $price_vat=$row->price;
+                                    }
+                                    ?>
+                                    <option value="{!!$row->id!!}|{!! $price_vat !!}">{!!$row->name!!}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -108,7 +101,6 @@
                         </td>
                         <td>
                             <input type="text" class="toValidate form-control input-sm" name="transaction[0][price]" maxlength="15" required id="tmonth" style="text-align:right"/>
-
                         </td>
                         <td><div class="input-group">
                                 <span class="input-group-addon">฿</span>
@@ -215,6 +207,8 @@
 
                 <input type="hidden" id="baht-label" value="{!! trans('messages.Report.baht') !!}" />
                 <input type="hidden" name="role" value="{!! $lead->role !!}">
+                <input type="hidden" name="date_period_format" value="{!! $date_period_format !!}">
+                <input type="hidden" name="max_counter" value="{!! $max_counter !!}">
             </div>
         </div>
     </section>
@@ -233,16 +227,24 @@
         <select name="transaction[0][service]"  class="toValidate form-control input-sm price_service"  required OnChange="result_Price(this);">
             <option value="">กรุณาเลือกค่าบริการ</option>
             @foreach($service as $_row)
-                <option value="{!!$_row->id!!}|{!! $_row->price !!}">{!!$_row->name!!}</option>
+                <?php
+                if($_row->price_with_vat > 0){
+                    $price_vat1=$_row->price_with_vat;
+                }else{
+                    $price_vat1=$_row->price;
+                }
+                ?>
+                <option value="{!!$_row->id!!}|{!! $price_vat1 !!}">{!!$_row->name!!}</option>
             @endforeach
         </select>
     </div>
 @endsection
 @section('script')
+    <?php $t = time(); ?>
     <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/nabour-create-quotation.js')!!}"></script>
+    <script type="text/javascript" src="{!!url('/')!!}/js/nabour-create-quotation.js?v={!! $t !!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>

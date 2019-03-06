@@ -3,6 +3,7 @@
 namespace App;
 use Request;
 use Auth;
+use App;
 
 class Bank extends GeneralModel
 {
@@ -15,11 +16,14 @@ class Bank extends GeneralModel
         return $this->hasMany('App\BankTransaction','bank_id','id');
     }
 
-	public function getBankList ($isExpense = false) {
+	public function getBankList ($isExpense = false,$property_id = null) {
 		if( $isExpense ) $bank_list[''] = trans('messages.feesBills.expense_transfered_account');
 		else $bank_list[''] = trans('messages.feesBills.transfered_account');
 		$bank_name 	= unserialize(constant('BANK_LIST_'.strtoupper(App::getLocale())));
-	    $banks 	= Bank::where('property_id',Auth::user()->property_id)->where('active',true)->select('account_name','account_number','account_branch','id','bank')->orderBy('created_at','ASC')->get();
+		if( !$property_id ) {
+			$property_id = Auth::user()->property_id;
+		}
+	    $banks 	= Bank::where('property_id',$property_id)->where('active',true)->select('account_name','account_number','account_branch','id','bank')->orderBy('created_at','ASC')->get();
 	    foreach ($banks as $bank) {
 	    	$bank_list[$bank->id] = $bank_name[$bank->bank]." (".$bank->account_branch.") ".": ".$bank->account_name.' ('.$bank->account_number.')';
 	    }

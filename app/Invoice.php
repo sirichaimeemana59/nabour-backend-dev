@@ -20,7 +20,7 @@ class Invoice extends GeneralModel
     }
 
     public function invoiceFile () {
-    	return $this->hasMany('App\InvoiceFile');
+    	return $this->hasMany('App\InvoiceFile')->where('status_delete',0);
     }
 
     public function payee () {

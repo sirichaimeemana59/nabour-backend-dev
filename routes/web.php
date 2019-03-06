@@ -21,6 +21,9 @@ Route::get('customer/Lead_form/add/list', 'RootAdmin\LeadsController@index');
 Route::post('customer/Lead_form/delete', 'RootAdmin\LeadsController@destroy');
 Route::post('customer/list_update_lead', 'RootAdmin\LeadsController@edit');
 Route::post('customer/Lead_form/update', 'RootAdmin\LeadsController@update');
+Route::post('customer/Lead_form/note', 'RootAdmin\LeadsController@note');
+Route::get('customer/lead/data/import/csv','RootAdmin\LeadsController@importCSV');
+Route::post('customer/import/add', 'RootAdmin\LeadsController@importCSVdata');
 //End Leads
 
 //Leads Sales
@@ -30,6 +33,7 @@ Route::get('customer/sales/Lead_form/add/list','Sales\LeadsController@index');
 Route::post('customer/sales/Lead_form/delete','Sales\LeadsController@destroy');
 Route::post('customer/sales/list_update_lead','Sales\LeadsController@edit');
 Route::post('customer/sales/Lead_form/update','Sales\LeadsController@update');
+Route::post('customer/sales/Lead_form/note','Sales\LeadsController@note');
 //End Leads Sales
 
 //Product
@@ -133,7 +137,16 @@ Route::any('report_quotation/report_count', 'RootAdmin\QuotationreportController
 Route::get('report_quotation_excel', 'RootAdmin\QuotationreportController@excel');
 //Route::get('report_quotation/ratio', 'RootAdmin\QuotationreportController@ratio');
 Route::any('report_quotation/ratio/report', 'RootAdmin\QuotationreportController@ratio');
+Route::post('report_quotation/ratio/report/date', 'RootAdmin\QuotationreportController@date');
+Route::post('report_quotation/ratio/report/quotation', 'RootAdmin\QuotationreportController@quotation');
+Route::post('report_quotation/ratio/report/quotation/sum', 'RootAdmin\QuotationreportController@sum');
+Route::post('report_quotation/ratio/report/quotation/budget', 'RootAdmin\QuotationreportController@budget');
 Route::post('report_quotation_ratio_excel', 'RootAdmin\QuotationreportController@excel_ratio');
+Route::any('report_quotation/report/chart', 'RootAdmin\QuotationreportController@chart_form');
+
+//Ratio
+Route::any('report_quotation/report/chart/ratio', 'RootAdmin\QuotationreportController@ratio_report');
+Route::post('report_quotation/report/chart/ratio_lead', 'RootAdmin\QuotationreportController@ratio_lead');
 //End Report Quotation
 
 
@@ -166,6 +179,10 @@ Route::get('root/admin/property/receipt/import/{id}','RootAdmin\feesBillsControl
 Route::post('root/admin/property/receipt/import','RootAdmin\feesBillsController@startImportReceipt');
 Route::get('root/admin/property/expense/import/{id}','RootAdmin\feesBillsController@importExpense');
 Route::post('root/admin/property/expense/import','RootAdmin\feesBillsController@startImportExpense');
+Route::any('root/admin/edit/receipt', 'RootAdmin\EditreceiptController@getReceiptForAdjust');
+Route::any('root/admin/edit/receipt/save', 'RootAdmin\EditreceiptController@adjustReceipt');
+Route::any('root/admin/edit/expense', 'RootAdmin\EditExpenseController@getExpenseForAdjust');
+Route::any('root/admin/edit/expense/save', 'RootAdmin\EditExpenseController@adjustExpense');
 
 // Property
 Route::any('customer/property/list', 'RootAdmin\PropertyController@index');
@@ -215,3 +232,11 @@ Route::post('admin/demo-property/add','RootAdmin\PropertyController@create_demo'
 //Route::get('admin/property-form/view/{id}', 'RootAdmin\PropertyFormController@view_form');
 Route::post('admin/property/reset', 'RootAdmin\PropertyController@reset');
 Route::post('admin/property/assign', 'RootAdmin\PropertyController@assignDemoProperty');
+
+//Edit receipt
+Route::get('root/admin/upload_file/receipt', 'RootAdmin\EditreceiptController@index');
+//Route::resource('root/admin/upload_file/receipt/file', 'RootAdmin\EditreceiptController@upload');
+Route::post('root/admin/search/receipt', 'RootAdmin\EditreceiptController@searchreceipt');
+Route::post('root/admin/upload_file/receipt/file/submit', 'RootAdmin\EditreceiptController@create');
+Route::post('root/admin/receipt/delete/image','RootAdmin\EditreceiptController@delete');
+//End Edit receipt

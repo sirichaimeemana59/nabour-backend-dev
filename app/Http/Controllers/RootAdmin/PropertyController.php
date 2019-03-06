@@ -177,6 +177,16 @@ class PropertyController extends Controller {
         if (Request::isMethod('post'))
         {
 
+            $backendproperty = BackendProperty::find($id);
+            $backendproperty->juristic_person_name_th   = Request::get('juristic_person_name_th');
+            $backendproperty->province                  = Request::get('province');
+            $backendproperty->juristic_person_name_en   = Request::get('juristic_person_name_en');
+            $backendproperty->property_name_th          = Request::get('property_name_th');
+            $backendproperty->property_name_en          = Request::get('property_name_en');
+            $backendproperty->developer_group_id        = Request::get('developer_group_id');
+            $backendproperty->save();
+
+            //dd($backendproperty);
             $property = Request::all();
 
             $rules = ['name' => 'required|max:255'];
@@ -370,16 +380,19 @@ class PropertyController extends Controller {
     public function status () {
         if(Request::ajax()) {
             $property   = Property::find(Request::get('pid'));
+            $backendproperty   = BackendProperty::find(Request::get('pid'));
             //$_property  = BackendProperty::find(Request::get('pid'));
 
             if($property) {
                 //$property->active_status = $_property->active_status = Request::get('status');
                 $property->active_status = Request::get('status');
+                $backendproperty->active_status = Request::get('status');
 
                 if($property->active_status == 0) {
                     $property->last_inactive_date = date('Y-m-d H:i:s');
                 }
                 $property->save();
+                $backendproperty->save();
                // $_property->save();
                 return response()->json(['result'=>true]);
             }
@@ -1080,7 +1093,8 @@ class PropertyController extends Controller {
             $property_demo->email_contact = $data['email'];
             $property_demo->tel_contact = $data['tel'];
             $property_demo->default_password = $new_password;
-            $property_demo->lead_id = $id;
+            $property_demo->property_test_name = $data['property_test_name'];
+            //$property_demo->lead_id = $id;
             $property_demo->save();
             // dump($property_demo->toArray());
 
@@ -1096,7 +1110,8 @@ class PropertyController extends Controller {
             $property_demo->email_contact = $data['email'];
             $property_demo->tel_contact = $data['tel'];
             $property_demo->default_password = $new_password;
-            $property_demo->lead_id = Request::get('lead_id');
+            $property_demo->property_test_name = $data['property_test_name'];
+            //$property_demo->lead_id = Request::get('lead_id');
             $property_demo->save();
             //dump($property_demo->toArray());
             $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);
