@@ -240,10 +240,11 @@
     </div>
 @endsection
 @section('script')
+    <?php $t = time(); ?>
     <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/nabour-create-quotation.js')!!}"></script>
+    <script type="text/javascript" src="{!!url('/')!!}/js/nabour-create-quotation.js?v={!! $t !!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>

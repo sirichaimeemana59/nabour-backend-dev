@@ -384,6 +384,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row form-group">
+                                <label class="control-label col-md-4">ชื่อผู้ติดต่อนิติบุคคลทดลองใช้</label>
+                                <div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control']) !!} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
                                 <label class="control-label col-md-4">ชื่อหมู่บ้าน/โครงการ</label>
                                 <div class="col-md-8">
                                     <select name="property" id="property_id1" class="form-control" required>

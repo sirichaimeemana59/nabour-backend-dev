@@ -1093,7 +1093,8 @@ class PropertyController extends Controller {
             $property_demo->email_contact = $data['email'];
             $property_demo->tel_contact = $data['tel'];
             $property_demo->default_password = $new_password;
-            $property_demo->lead_id = $id;
+            $property_demo->property_test_name = $data['property_test_name'];
+            //$property_demo->lead_id = $id;
             $property_demo->save();
             // dump($property_demo->toArray());
 
@@ -1109,7 +1110,8 @@ class PropertyController extends Controller {
             $property_demo->email_contact = $data['email'];
             $property_demo->tel_contact = $data['tel'];
             $property_demo->default_password = $new_password;
-            $property_demo->lead_id = Request::get('lead_id');
+            $property_demo->property_test_name = $data['property_test_name'];
+            //$property_demo->lead_id = Request::get('lead_id');
             $property_demo->save();
             //dump($property_demo->toArray());
             $this->setUpUserAccountForDemo($property_demo->property_id,$new_password);

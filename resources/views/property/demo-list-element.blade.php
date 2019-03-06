@@ -50,9 +50,9 @@
 				<td>-</td>
 			@endif
 			<td>
-				@if($row->sale_property && $row->sale_property->lead_id)
-					@if(!empty($row->sale_property->latest_lead->firstname) AND !empty($row->sale_property->latest_lead->lastname))
-					{!!$row->sale_property->latest_lead->firstname!!}  {!!$row->sale_property->latest_lead->lastname!!}
+				@if($row->sale_property && $row->sale_property->property_test_name)
+					@if(!empty($row->sale_property->property_test_name))
+					{!!$row->sale_property->property_test_name!!}
 						@else
 						<span style="color:#b3b3b3;">ไม่พบข้อมูล</span>
 						@endif
