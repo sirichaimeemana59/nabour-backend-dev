@@ -150,6 +150,28 @@ class SalesOfficerController extends Controller {
             $new_feature->menu_message = true;
             $new_feature->save();
 
+            // User Property Menu Feature
+            $user_feature = new UserPropertyFeature;
+            $user_feature->property_id = $new_property->id;
+            $user_feature->menu_committee_room = true;
+            $user_feature->menu_event = true;
+            $user_feature->menu_vote = true;
+            $user_feature->menu_tenant = true;
+            $user_feature->menu_vehicle = true;
+            $user_feature->menu_prepaid = true;
+            $user_feature->menu_revenue_record = true;
+            $user_feature->menu_retroactive_receipt = true;
+            $user_feature->menu_common_fee = true;
+            $user_feature->menu_cash_on_hand = true;
+            $user_feature->menu_pettycash = true;
+            $user_feature->menu_fund = true;
+            $user_feature->menu_complain = true;
+            $user_feature->menu_parcel = true;
+            $user_feature->menu_message = true;
+            $user_feature->menu_utility = true;
+            $user_feature->menu_finance_group = true;
+            $user_feature->save();
+
             $this->createPropertyUnit($new_property->id,$name_new,$default_password);
             return $new_property->id;
         }catch(Exception $ex){
