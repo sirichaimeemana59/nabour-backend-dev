@@ -335,6 +335,8 @@ define('LEADS_SOURCE', serialize(array(
     2  => 'สื่อสิ่งพิมพ์',
     3  => 'ผู้แนะนำ',
     4   => 'อื่นๆ',
+    5 => 'Line@',
+    6 => 'E-mail',
 )));
 define('LEADS_TYPE', serialize(array(
     0 => 'นิติบุคคลจัดตั้งเอง',
