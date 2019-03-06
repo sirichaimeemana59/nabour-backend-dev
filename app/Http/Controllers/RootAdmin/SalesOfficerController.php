@@ -16,6 +16,7 @@ use App\User;
 use App\Province;
 use App\Property;
 use App\SalePropertyDemo;
+use App\UserPropertyFeature;
 use App\PropertyFeature;
 use Validator;
 
