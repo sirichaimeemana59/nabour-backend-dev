@@ -43,7 +43,7 @@
                 <tr>
                     <td style="padding:5px 0 0 5px;">Attention</td>
                     <td style="padding:5px 0 0 5px;">:</td>
-                    <td style="padding:5px 0 0 5px; border-right: 1px solid black;" colspan="6">{!! $quotation->latest_lead->firstname !!}</td>
+                    <td style="padding:5px 0 0 5px; border-right: 1px solid black;" colspan="6">{!! $quotation->latest_lead->company_name !!}</td>
                     <td style="padding:5px 0 0 5px;">No : </td>
                     <td style="padding:5px 0 0 5px;"> {!! $quotation->quotation_code !!}</td>
                 </tr>
@@ -86,10 +86,10 @@
                 <tr>
                     <td style="border-bottom: 1px solid black; width: 10%; padding:0 0 5px 5px;">contact</td>
                     <td style="border-bottom: 1px solid black; padding:0 0 5px 5px;">:</td>
-                    <td style="border-bottom: 1px solid black; width: 10%; padding:0 0 5px 5px;">คุณทรงสิทธิ์</td>
+                    <td style="border-bottom: 1px solid black; width: 30%; padding:0 0 5px 5px;">{!! $quotation->latest_lead->firstname !!} {!! $quotation->latest_lead->lastname !!}</td>
                     {{--<td style="border-bottom: 1px solid black;"><span style="color: black;"></span></td>--}}
                     <td colspan="3" style="border-bottom: 1px solid black; padding:0 0 5px 5px;">Email : </td>
-                    <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black; padding:0 0 5px 5px;"> afmanager@stms.co.th</td>
+                    <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black; padding:0 0 5px 5px;"> {!! $quotation->latest_lead->email !!}</td>
                     <td style="color: black; padding:0 0 5px 5px;">Email : </td>
                     <td style="color: black; padding:0 0 5px 5px;">{!! $quotation->latest_sale->email !!}</td>
                 </tr>
@@ -178,7 +178,7 @@
             <tr>
                 <td align="center" style="vertical-align: top; font-weight: bold; padding:5px;">บริษัท โอกาสพลัส จำกัด<br><br>
                     _____________________________<br>
-                    ( {!! $quotation->latest_sale->name !!}  )<br>
+                    ( วีรยุทธ  งานดี  )<br>
                     Sales & Marketing Director</td>
                 <td align="center" style="font-weight: bold; color: black; padding:5px;">Aprroval to Payment<br><br>
                     Signature  ____________________________<br><br>
