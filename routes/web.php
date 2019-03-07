@@ -93,13 +93,19 @@ Route::any('quotation/sales/list', 'Sales\QuotationController@quotationList');
 Route::any('contract/sales/list', 'Sales\ContractsignController@contractList');
 //End Quotation Sales
 
-//Customerservice/package/add
+//Customerservice
 Route::any('customer/customer/list', 'RootAdmin\CustomerController@index');
 Route::post('customer/Customer_form/add', 'RootAdmin\CustomerController@create');
-Route::post('customer/list_update_customer', 'RootAdmin\CustomerController@edit');
+Route::get('customer/list_update_customer/{id?}', 'RootAdmin\CustomerController@edit');
 Route::post('customer/Customer_form/update', 'RootAdmin\CustomerController@update');
 Route::post('customer/Customer_form/delete', 'RootAdmin\CustomerController@destroy');
 Route::post('customer/Customer_form/check', 'RootAdmin\CustomerController@check');
+Route::get('customer/form/add','RootAdmin\CustomerController@add');
+
+
+//Open Book Bank
+Route::get('customer/create/book/account/{id?}','RootAdmin\CustomerController@print_report_book_bank');
+//End open Book Bank
 //End Customer
 
 //Customer Sales
@@ -240,3 +246,4 @@ Route::post('root/admin/search/receipt', 'RootAdmin\EditreceiptController@search
 Route::post('root/admin/upload_file/receipt/file/submit', 'RootAdmin\EditreceiptController@create');
 Route::post('root/admin/receipt/delete/image','RootAdmin\EditreceiptController@delete');
 //End Edit receipt
+

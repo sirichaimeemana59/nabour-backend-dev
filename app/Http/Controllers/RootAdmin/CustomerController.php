@@ -12,6 +12,8 @@ use App\PropertyContract;
 use App\BackendModel\service_quotation;
 use App\BackendModel\User;
 use App\BackendModel\Customer;
+use App\BackendModel\User_company;
+use App\BackendModel\contract;
 
 use Validator;
 use DB;
@@ -79,6 +81,7 @@ class CustomerController extends Controller
 
     public function create()
     {
+       //dd(Request::get('user'));
         if(Request::isMethod('post')) {
             $customer = new Customer;
             $customer->firstname        = Request::get('firstname');
@@ -101,9 +104,16 @@ class CustomerController extends Controller
         return redirect('customer/customer/list');
     }
 
-    public function store(Request $request)
+    public function add()
     {
-        //
+        $p = new Province;
+        $provinces = $p->getProvince();
+
+        $sale = new User;
+        $sale = $sale->where('role','=',2);
+        $sale = $sale->get();
+
+        return view('customer.add')->with(compact('provinces','sale'));
     }
 
 
@@ -113,12 +123,11 @@ class CustomerController extends Controller
     }
 
 
-    public function edit()
+    public function edit($id)
     {
-        if(Request::isMethod('post')) {
-            $customer = Customer::find(Request::get('id'));
+            $customer = Customer::find($id);
 
-            //dump($customer->toArray());
+            //dump($customer->user_company->count());
 
             $p = new Province;
             $provinces = $p->get();
@@ -127,8 +136,11 @@ class CustomerController extends Controller
             $sale = $sale->where('role','=',2);
             $sale = $sale->get();
 
-            return view('customer.customer_update')->with(compact('customer','provinces','sale'));
-        }
+            $_p = new Province;
+            $_provinces = $_p->getProvince();
+
+            return view('customer.edit_customer')->with(compact('customer','provinces','sale','_provinces'));
+
     }
 
 
@@ -150,6 +162,75 @@ class CustomerController extends Controller
             $customer->status           = Request::get('status');
             $customer->sale_id          = Request::get('sale_id');
             $customer->save();
+
+            $customer_company = User_company::find(Request::get('customer_id'));
+            $count = count($customer_company);
+
+
+            if($count !=0){
+                $user_company = User_company::find(Request::get('customer_id'));
+                $user_company->company_name_en      =  Request::get('company_name_en');
+                $user_company->customer_id          =  Request::get('customer_id');
+                $user_company->tax_id               =  Request::get('tax_id');
+                $user_company->date_register        =  Request::get('date_register');
+                $user_company->registered_capital   =  Request::get('registered_capital');
+                $user_company->type_company         =  Request::get('type_company');
+                $user_company->address_no           =  Request::get('address_no');
+                $user_company->street_th            =  Request::get('street_th');
+                $user_company->address_th           =  Request::get('address_th');
+                $user_company->province_company     =  Request::get('province_company');
+                $user_company->postcode_company     =  Request::get('postcode_company');
+                $user_company->tel_company          =  Request::get('tel_company');
+                $user_company->fax_company          =  Request::get('fax_company');
+                $user_company->phone_company        =  Request::get('phone_company');
+                $user_company->mail_company         =  Request::get('mail_company');
+
+                $directer[] = Request::get('directer_company');
+
+                $count = count($directer);
+
+                for ($i=0;$i<$count;$i++){
+                    $cut_directer = implode(",",$directer[$i]);
+                }
+
+                $user_company->directer_company     =  $cut_directer;
+                $user_company->save();
+               //dd($user_company);
+            }else{
+                if(!empty(Request::get('company_name_en'))){
+                    $user_company = new User_company;
+                    $user_company->company_name_en      =  Request::get('company_name_en');
+                    $user_company->customer_id          =  Request::get('customer_id');
+                    $user_company->tax_id               =  Request::get('tax_id');
+                    $user_company->date_register        =  Request::get('date_register');
+                    $user_company->registered_capital   =  Request::get('registered_capital');
+                    $user_company->type_company         =  Request::get('type_company');
+                    $user_company->address_no           =  Request::get('address_no');
+                    $user_company->street_th            =  Request::get('street_th');
+                    $user_company->address_th           =  Request::get('address_th');
+                    $user_company->province_company     =  Request::get('province_company');
+                    $user_company->postcode_company     =  Request::get('postcode_company');
+                    $user_company->tel_company          =  Request::get('tel_company');
+                    $user_company->fax_company          =  Request::get('fax_company');
+                    $user_company->phone_company        =  Request::get('phone_company');
+                    $user_company->mail_company         =  Request::get('mail_company');
+                    $directer[] = Request::get('directer_company');
+
+                    $count = count($directer);
+
+                    for ($i=0;$i<$count;$i++){
+                        $cut_directer = implode(",",$directer[$i]);
+                    }
+
+                    $user_company->directer_company     =  $cut_directer;
+
+                    //dd($user_company);
+                    $user_company->save();
+                }
+            }
+
+
+            //dd($user_company);
             //dump($customer->toArray());
         }
         return redirect('customer/customer/list');
@@ -174,5 +255,22 @@ class CustomerController extends Controller
             $customer->save();
         }
         return redirect('customer/customer/list');
+    }
+
+    public function print_report_book_bank($id = null){
+
+        $customer = Customer::find($id);
+
+        $p = new Province;
+        $provinces = $p->getProvince();
+
+        $contract = new contract;
+        $contract = $contract->where('customer_id','=',$id);
+        $contract = $contract->get();
+
+       // dump($contract);
+
+
+        return view('customer.report_open_book_bank')->with(compact('customer','provinces','contract'));
     }
 }

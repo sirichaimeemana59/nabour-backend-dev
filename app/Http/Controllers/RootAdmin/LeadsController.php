@@ -43,6 +43,10 @@ class LeadsController extends Controller
             if (Request::get('type_id')) {
                 $p_rows = $p_rows->where('type', '=', Request::get('type_id'));
             }
+
+            if (Request::get('status_leads')) {
+                $p_rows = $p_rows->where('status_leads', '=', Request::get('status_leads'));
+            }
             //dd(Request::get('channel_id'));
         }
 

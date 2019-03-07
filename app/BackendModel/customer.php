@@ -7,7 +7,7 @@ class Customer extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'customer';
-    protected $fillable = ['firstname','lastname','phone','email','address','province','postcode','company_name','channel','type','active_status','role','sale_id','convert_date'];
+    protected $fillable = ['firstname','lastname','phone','email','address','province','postcode','company_name','channel','type','active_status','role','sale_id','convert_date','note','status_leads'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 
@@ -28,6 +28,11 @@ class Customer extends GeneralModel
 
     public function contract ()
     {
-        return $this->hasMany('App\BackendModel\contract','customer_id','id')->orderBy('created_at','desc');
+        return $this->hasOne('App\BackendModel\contract','customer_id','id')->orderBy('created_at','desc');
+    }
+
+    public function user_company ()
+    {
+        return $this->hasOne('App\BackendModel\User_company','customer_id','id')->orderBy('created_at','desc');
     }
 }

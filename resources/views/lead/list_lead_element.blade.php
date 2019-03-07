@@ -2,6 +2,7 @@
     $from=0;
     $to=0;
     $allpage=0;
+    $status_leads=unserialize(constant('status_leads'));
 ?>
 @if($p_rows->count() > 0)
     <?php
@@ -46,6 +47,7 @@
                     <th width="*">เบอร์โทร</th>
                     <th width="*">พนักงานขาย</th>
                     <th width="120px">ใบเสนอราคา</th>
+                    <th width="120px">สถานะ</th>
                     <th width="*">การจัดการ</th>
                 </tr>
                 </thead>
@@ -62,6 +64,7 @@
                         <td>{!!$row->phone !!}</td>
                         <td>@if($row->latest_sale){!!$row->latest_sale->name!!}@else ไม่พบข้อมูล @endif</td>
                         <td class="text-right">{!! $doc_count > 0 ? $doc_count : 'ไม่มีข้อมูล'; !!}</td>
+                        <td>@if($row->status_leads){!!$status_leads[$row->status_leads]!!}@else ไม่พบข้อมูล @endif</td>
                         <td>
                             <div class="btn-group left-dropdown">
                                 <button type="button" class="btn btn-success" data-toggle="dropdown">เลือกการจัดการ</button>

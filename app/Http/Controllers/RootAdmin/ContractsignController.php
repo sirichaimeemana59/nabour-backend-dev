@@ -124,7 +124,7 @@ class ContractsignController extends Controller
         $contract->contract_code        = Request::get('contract_code');
         $contract->start_date           = Request::get('start_date');
         $contract->end_date             = Request::get('end_date');
-        $contract->contract_type        = Request::get('contract_type');
+        //$contract->contract_type        = Request::get('contract_type');
         $contract->grand_total_price    = Request::get('price');
         $contract->sales_id             = Request::get('sales_id');
         $contract->customer_id          = Request::get('customer_id');
@@ -158,7 +158,7 @@ class ContractsignController extends Controller
         $contract->contract_code        = Request::get('contract_code');
         $contract->start_date           = Request::get('start_date');
         $contract->end_date             = Request::get('end_date');
-        $contract->contract_type        = Request::get('contract_type');
+        //$contract->contract_type        = Request::get('contract_type');
         $contract->grand_total_price    = Request::get('price');
         $contract->sales_id             = Request::get('sales_id');
         $contract->customer_id          = Request::get('customer_id');

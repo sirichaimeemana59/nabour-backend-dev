@@ -75,8 +75,8 @@
         </div>
     </div>
     {{--end search--}}
+    {{--<a href="{!! url('customer/form/add') !!}"></a>--}}
     <button type="button" class="btn btn-info btn-primary action-float-right" data-toggle="modal" data-target="#modal-lead"><i class="fa fa-plus"> </i> เพิ่ม Customer</button>
-
     {{--content--}}
     <div class="row">
         <div class="col-md-12">

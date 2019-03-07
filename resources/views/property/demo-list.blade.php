@@ -308,14 +308,14 @@
 							</div>
 						</div>
 					</div>
-					{{--<div class="row">--}}
-						{{--<div class="col-md-12">--}}
-							{{--<div class="row form-group">--}}
-								{{--<label class="control-label col-md-4">หมู่บ้านที่สนใจทดลองใช้</label>--}}
-								{{--<div class="col-md-8">{!! Form::text('property_name',null,['class'=>'form-control']) !!} </div>--}}
-							{{--</div>--}}
-						{{--</div>--}}
-					{{--</div>--}}
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row form-group">
+								<label class="control-label col-md-4">หมู่บ้านที่สนใจทดลองใช้</label>
+								<div class="col-md-8">{!! Form::text('property_test_name',null,['class'=>'form-control']) !!} </div>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="row form-group">

@@ -147,12 +147,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">ประเภทสัญญา</label>
-                        <div class="col-sm-10">
-                            {!! Form::select('contract_type',unserialize(constant('CONTRACT_TYPE')),null,array('class'=>'form-control','required')) !!}
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">ประเภทสัญญา</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--{!! Form::select('contract_type',unserialize(constant('CONTRACT_TYPE')),null,array('class'=>'form-control','required')) !!}--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">รูปแบบการชำระเงิน</label>

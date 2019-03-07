@@ -42,6 +42,10 @@
                                 </select>
                             </div>
 
+                            <div class="col-sm-3">
+                                {!! Form::select('status_leads',unserialize(constant('status_leads')),null,array('class'=>'form-control','required')) !!}
+                            </div>
+
                         </div>
 
                         <div class="row">

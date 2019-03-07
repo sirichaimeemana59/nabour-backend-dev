@@ -132,10 +132,6 @@ class Property extends GeneralModel
         return $this->hasOne('App\quotation','property_id','id');
     }
 
-    public function latest_lead()
-    {
-        return $this->hasOne('App\BackendModel\Customer','lead_id','id');
-    }
 
 
 }
