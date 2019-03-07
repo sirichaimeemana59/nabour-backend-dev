@@ -82,7 +82,7 @@
                                 <td>ไม่พบข้อมูล</td>
                             @endif
                             <?php
-                                $count = count($row->contract);
+                                    $count = $row->contract->count();
                             ?>
 
                         <td class="text-right">{!! $count !!}</td>

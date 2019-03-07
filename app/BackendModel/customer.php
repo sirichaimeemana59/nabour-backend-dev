@@ -28,7 +28,7 @@ class Customer extends GeneralModel
 
     public function contract ()
     {
-        return $this->hasOne('App\BackendModel\contract','customer_id','id')->orderBy('created_at','desc');
+        return $this->hasMany('App\BackendModel\contract','customer_id','id')->orderBy('created_at','desc');
     }
 
     public function user_company ()
