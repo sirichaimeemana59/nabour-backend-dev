@@ -1,4 +1,7 @@
 @extends('print')
+        <?php
+        $type_service= unserialize(constant('type_service'));
+        ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,23 +51,6 @@
             text-align: right;
             font-size:16px;
         }
-        /* @font-face {
-            font-family: 'thaisans_neueregular';
-            src: url('{{ url("font/thaisans") }}/thaisansneue-regular-webfont.eot');
-            src: url('{{ url("font/thaisans") }}/thaisansneue-regular-webfont.eot?#iefix') format('embedded-opentype'),
-            url('{{ url("font/thaisans") }}/thaisansneue-regular-webfont.woff2') format('woff2'),
-            url('{{ url("font/thaisans") }}/thaisansneue-regular-webfont.woff') format('woff'),
-            url('{{ url("font/thaisans") }}/thaisansneue-regular-webfont.ttf') format('truetype'),
-            url('{{ url("font/thaisans") }}/thaisansneue-regular-webfont.svg#thaisans_neueregular') format('svg');
-            font-weight: normal;
-            font-style: normal;
-
-        }
-        body{
-            font-family: thaisans_neueregular;
-            text-align: left;
-            font-size: 18px;
-        } */
 
         span.a {
             display: inline;
@@ -80,7 +66,6 @@
 @section('content')
     <span id="pageFooter"></span><header align="right" id="header"><img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
-        {{--@foreach ($users as $row)--}}
         <div class="title">
             <div style="font-size=18px; font-weight: bold;" align="center">สัญญาใช้บริการและอนุญาตให้ใช้สิทธิ์ใน</div>
             <div style="font-size=18px; font-weight: bold;" align="center">ระบบบริหารจัดการงานนิติบุคคลหมู่บ้านจัดสรรและอาคารชุดออนไลน์ และโมบายแอปพลิเคชัน</div>
@@ -115,7 +100,6 @@
             </div>
         </div>
     </div>
-    {{-- <div style="page-break-after:always;"></div>   --}}
     <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
@@ -133,7 +117,7 @@
             <div class="numberdetail">
                 <div> 3.1 &nbsp;&nbsp;&nbsp; อัตราค่าบริการ แบ่งออกเป็น 2 รูปแบบ<br></div>
                 <div class="subdetail">
-                    <div>3.1.1 &nbsp;&nbsp;&nbsp; ค่าติดตั้งระบบจ่ายครั้งแรก ครั้งเดียว โครงการละ 5,000 บาท<br>
+                    <div>3.1.1 &nbsp;&nbsp;&nbsp; ค่าติดตั้งระบบจ่ายครั้งแรก ครั้งเดียว โครงการละ 5,000 บาท {!! $type_service[$quotation->type_service] !!}<br>
                         3.1.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือน ตามสัญญาเป็นเวลา 1 ปี คิดค่าใช้จ่ายตามการใช้งานจริง 2 รูปแบบการใช้งานของแต่ละโครงการดังนี้<br></div>
                 </div>
                 <div class="subnode">
@@ -147,8 +131,7 @@
 
         </div>
     </div>
-    <footer align="center" style="font-size:12px;text-align:center;" id="footer"><span style="margin:0 0 50px 0;" class="a"> คุณ {!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10px;"> บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพ 10110</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="align:right;" class="a"> คุณจินตนา เลิศล้ำยิ่ง </span></footer>
-    {{-- <div style="page-break-after:always;"></div> --}}
+    {{--<footer align="center" style="font-size:12px;text-align:center;" id="footer"><span style="margin:0 0 50px 0;" class="a"> คุณ {!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10px;"> บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพ 10110</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="align:right;" class="a"> คุณจินตนา เลิศล้ำยิ่ง </span></footer>--}}
     <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="subnode">
@@ -190,8 +173,6 @@
         </div> <br>
 
     </div>
-    {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
-    {{-- <div style="page-break-after:always;"></div>  --}}
     <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"><br></header>
     <div class="con">
         <div class="numberh">
@@ -228,8 +209,6 @@
 
 
     </div>
-    {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
-    {{-- <div style="page-break-after:always;"></div>  --}}
     <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
@@ -276,8 +255,6 @@
         </div><br>
 
     </div>
-    {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
-    {{-- <div style="page-break-after:always;"></div>  --}}
     <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div class="numberh">
@@ -291,32 +268,67 @@
                 <div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สัญญานี้ทำขึ้นเป็นสองฉบับมีข้อความถูกต้องตรงกันคู่สัญญาได้อ่านและเข้าใจข้อความในสัญญาโดยตลอดดีแล้ว จึงลงลายมือชื่อพร้อมทั้งตราประทับ (ถ้ามี) ไว้เป็นสำคัญ ต่อหน้าพยานและเก็บ ไว้ฝ่ายละหนึ่งฉบับ<br><br><br></div>
             </div>
         </div>
-        <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
-        <div></div>
-        <div align="center" style="font-size:16px;">({!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!})</div>
-        <br>
-        <div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>
-        <div align="center" style="font-size:16px;">.....</div><br><br>
-        <div align="center" style="font-size:16px;">ลงชื่อ................................................พยาน</div><br>
-        <div align="center" style="font-size:16px;">(_________________________________)</div><br>
-        <br>
-        <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
-        <div></div>
-        <div align="center" style="font-size:16px;">(คุณ จินตนา เลิศล้ำยิ่ง)</div>
-        <br>
-        <div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>
-        <div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>
-        <br>
-        <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
-        <div></div>
-        <div align="center" style="font-size:16px;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</div>
-        <br>
-        <div align="center" style="font-size:16px;">ผู้อำนวยการฝ่ายขายและการคลาด</div>
-        <div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>
-        <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
+        <table style="width: 100%;">
+            <tr>
+                <?php
+                $name= "(.................................................)";
+                ?>
+                <td style="width: 150px;">
+                    <p style="text-align: center;">ลงชื่อ..........................................ผู้ใช้บริการ</p>
+                    <p></p>
+                    <p style="text-align: center;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</p>
+                    <p style="text-align: center;">กรรมการ</p>
+                    <p style="text-align: center;">บริษัท {!! $quotation->customer->company_name !!}</p>
+                </td>
+                <td style="width: 150px; margin-left: 45px;">
+                    <p style="text-align: center;">ลงชื่อ..........................................</p>
+                    <p style="text-align: center;">(คุณ จินตนา เลิศล้ำยิ่ง)</p>
+                    <p style="text-align: center;">กรรมการผู้จัดการ</p>
+                    <p style="text-align: center;">บริษัท โอกาสพลัส จำกัด</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 150px;">
+                    <p style="text-align: center;">ลงชื่อ..........................................พยาน</p>
+                        <br>
+                    <p style="text-align: center;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</p>
+                </td>
+                <td style="width: 150px;">
+                    <br><br><br><br><br>
+                    <p style="text-align: center;">ลงชื่อ..........................................</p>
+                    <p style="text-align: center;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</p>
+                    <p style="text-align: center;">ผู้อำนวยการฝ่ายขายและการตลาด</p>
+                    <p style="text-align: center;">บริษัท โอกาสพลัส จำกัด</p>
+                    <br><br>
+                    <p style="text-align: center;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</p>
+                </td>
+            </tr>
+        </table>
+        {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>--}}
+        {{--<div></div>--}}
+        {{--<div align="center" style="font-size:16px;">({!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!})</div>--}}
+        {{--<br>--}}
+        {{--<div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>--}}
+        {{--<div align="center" style="font-size:16px;">.....</div><br><br>--}}
+        {{--<div align="center" style="font-size:16px;">ลงชื่อ................................................พยาน</div><br>--}}
+        {{--<div align="center" style="font-size:16px;">(_________________________________)</div><br>--}}
+        {{--<br>--}}
+        {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ให้บริการ</div>--}}
+        {{--<div></div>--}}
+        {{--<div align="center" style="font-size:16px;">(คุณ จินตนา เลิศล้ำยิ่ง)</div>--}}
+        {{--<br>--}}
+        {{--<div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>--}}
+        {{--<div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>--}}
+        {{--<br>--}}
+        {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ให้บริการ</div>--}}
+        {{--<div></div>--}}
+        {{--<div align="center" style="font-size:16px;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</div>--}}
+        {{--<br>--}}
+        {{--<div align="center" style="font-size:16px;">ผู้อำนวยการฝ่ายขายและการคลาด</div>--}}
+        {{--<div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>--}}
+        {{--<div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>--}}
     </div>
-    {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
-    {{-- <div style="page-break-after:always;"></div>  --}}
     <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div align="center" style="font-weight: bold;font-size:16px;">เอกสารแนบท้ายสัญญา</div>
@@ -326,18 +338,7 @@
                 <td width="35%" style="font-size:16px;"><div>ชื่อบริษัท</div></td>
                 <td align="left" style="font-size:16px;"><div>: {!! $quotation->latest_lead->company_name !!}</div></td>
             </tr>
-           {{-- <tr>
-                <td width="35%" style="font-size:16px;"><div>ชื่อโครงการ</div></td>
-                <td align="left" style="font-size:16px;"><div>: .....</div></td>
-            </tr>
-            <tr>
-                <td width="35%" style="font-size:16px;"><div>ประเภทโครงการ</div></td>
-                <td align="left" style="font-size:16px;"><div>: .....</div></td>
-            </tr>
-            <tr>
-                <td width="35%" style="font-size:16px;"><div>จำนวนยูนิต</div></td>
-                <td align="left" style="font-size:16px;"><div>: ....  ยูนิต</div></td>
-            </tr>--}}
+
             <tr>
                 <td width="35%" style="font-size:16px;"><div>วันที่ทำสัญญา</div></td>
                 <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->start_date)!!}</div></td>
@@ -347,81 +348,6 @@
                 <td align="left" style="font-size:16px;"><div>: {!!localDate($quotation->end_date)!!}</div></td>
             </tr>
             <tr>
-                {{--<td width="35%" style="font-size:16px;"><div>วันที่ใช้งานจริง</div></td>--}}
-    <?php
-//                 if(!empty($quotation->latest_contract->start_date)){
-//                        $contract_length =$property_contract_data['contract_length']; //ระยะเวลาใช้งาน contract_length
-//                        $free =0; //แถมฟรี free
-//                        $info_used_date =$property_contract_data['info_used_date'];  //วันที่เริ่มใช้งานจริง info_used_date
-//
-//                        $cut_date=explode("-", $info_used_date);
-//
-//                        if(!empty($free) && !empty($contract_length)){
-//                            $sum_month=$contract_length+$free;
-//                            if($sum_month==24){
-//                                $year=$cut_date[0]+2;
-//                                $end_date= $year."-".$cut_date[1]."-".$cut_date[2];
-//                            }else{
-//                                $sum_date_new=$contract_length+$free;
-//                                if($sum_date_new>=12){
-//                                    $year=$cut_date[0]+1;
-//                                    $del_month=abs($sum_month-12);//จำนวนเดือนเกิน 1 ปี
-//                                    $del_month_used=abs($cut_date[1]-1)+$del_month;//เดือนที่คงเหลือจากการใช้งานจริง + จำนวนเดือนเกิน 1 ปี
-//                                    //$month_new=abs($sum_date_new-12);
-//                                    if($del_month_used>12){
-//                                        $year=$cut_date[0]+2;
-//                                        $del_month_used=$del_month_used-12;
-//                                    }
-//                                    $end_date= $year."-".$del_month_used."-".$cut_date[2];
-//                                }else{
-//                                    $sum_month_new=abs($cut_date[1]-12);//เก็บเดือนคงเหลือในปีนั้น
-//                                    $new_month=$sum_month_new+$sum_month;//รวมเดือนคงเหลือกับเดือนที่จะใช้งาน
-//
-//                                    if($sum_date_new>$sum_month_new){
-//                                        $year=$cut_date[0]+1;
-//                                        $del_new_month=abs($sum_month_new-$sum_month)-1;//เก็บเดือนคงเหลือในปีหน้า
-//                                        $end_date= $year."-".$del_new_month."-".$cut_date[2];
-//                                    }else{
-//                                        $del_new_month=$cut_date[1]+$sum_month;
-//                                        $end_date= $cut_date[0]."-".$del_new_month."-".$cut_date[2];
-//                                    }
-//                                }
-//                            }
-//                        }elseif(empty($free) && !empty($contract_length)){
-//                            if($contract_length==12){
-//                                $year=$cut_date[0]+1;
-//                                $end_date= $year."-".$cut_date[1]."-".$cut_date[2];
-//                            }else{
-//                                $sum_month_new=$contract_length+($cut_date[1]-12);
-//                                if($sum_month_new>($cut_date[1]-12)){
-//                                    $year=$cut_date[0]+1;
-//                                    $new_month=$sum_month_new-1;
-//                                    $end_date= $year."-".$new_month."-".$cut_date[2];
-//                                }
-//                            }
-//                        }
-//                        $cut_str_date=explode("-",$end_date);
-//                        $count=strlen($cut_str_date[1]);
-//                        if($count<2){
-//                            $new_month_str="0".$cut_str_date[1];
-//                            $end_date=$cut_str_date[0]."-".$new_month_str."-".$cut_str_date[2];
-//                        }
-//                        if(empty($end_date)){
-//                            $end="2018-09-12";
-//                        }else{
-//                            $end=$end_date;
-//                        }
-//                    }else{
-//                        $date3=date("0000-01-01");
-//                        $cut_date3=explode(" ",$date3);
-//                        $cut_new_date3=explode("-",$cut_date3[0]);
-//                        $end=$cut_new_date3[0]."-".$cut_new_date3[1]."-".$cut_new_date3[2];
-//                    }
-
-                    ?>
-    {{--<td align="left" style="font-size:16px;"><div>: {{localDate($property_contract_data['info_used_date'])}} ถึง {{localDate($end)}}</div></td>
-</tr>--}}
-    <?php /*$package=$property_contract_data['package']==1?"Lite Package (รวมทุก Feature ยกเว้นด้าน การเงิน)ราคา 1,250 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่รวมภาษีมูลค่าเพิ่ม 7%":"Full Package (มีทุก Feature รวมด้านการเงิน) โครงการที่มีจำนวนไม่เกิน 200 ยูนิต ราคา 1,800 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่ร่วมภาษีมูลค่าเพิ่ม 7%"*/?>
     <tr>
         <td width="35%" style="font-size:16px;vertical-align: top;"><div>ค่าบริการรายเดือน</div></td>
         <td align="left" style="font-size:16px;"><div>:
@@ -437,25 +363,23 @@
     </tr>
 </table><br><br>
 <div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
-<div></div>
-<div align="center" style="font-size:16px;">({!!$quotation->person_name!!})</div>
-<br>
+<div></div><br>
+<div align="center" style="font-size:16px;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</div>
+
 <div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>
 <div align="center" style="font-size:16px;">{!! $quotation->latest_lead->company_name !!}</div><br><br>
-<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
+<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ให้บริการ</div>
 <div></div>
 <div align="center" style="font-size:16px;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</div>
 <br>
 <div align="center" style="font-size:16px;">ผู้อำนวยการฝ่ายขายและการคลาด</div>
 <div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>
-<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
-<div></div>
-<div align="center" style="font-size:16px;">({!!$quotation->person_name!!})</div>
+{{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>--}}
+{{--<div></div>--}}
+{{--<div align="center" style="font-size:16px;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else ___________________________ @endif</div>--}}
 <br>
 <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
 </div>
-    {{--@endforeach--}}
-    {{-- <footer align="center" style="font-size:14px">บริษัท โอกาส พลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท63 แขวงคอลงตันเหนือ เขตวัฒนา กรุงเทพ 10110</footer> --}}
 @stop
 </body>
 </html>

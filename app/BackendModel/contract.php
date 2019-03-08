@@ -7,7 +7,7 @@ class contract extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'contract';
-    protected $fillable = ['contract_code','start_date','end_date','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','property_id'];
+    protected $fillable = ['contract_code','start_date','end_date','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','property_id','type_service'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 

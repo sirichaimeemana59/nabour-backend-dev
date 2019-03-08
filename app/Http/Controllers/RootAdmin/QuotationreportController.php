@@ -160,7 +160,7 @@ class QuotationreportController extends Controller
             }
         }
 
-        $p_rows = $p_rows->where('active_status', '=', 't')->paginate(50);
+        $p_rows = $p_rows->paginate(50);
 
 
         if (!Request::ajax()) {
@@ -200,7 +200,7 @@ class QuotationreportController extends Controller
                 $p_rows = $p_rows->where('type', '=', Request::get('type_id'));
             }
         }
-        $p_rows = $p_rows->where('active_status', '=', 't')->paginate(50);
+        $p_rows = $p_rows->paginate(50);
 
         $filename = "สถิติการเปลี่ยนจาก Leads เป็นลูกค้า";
 

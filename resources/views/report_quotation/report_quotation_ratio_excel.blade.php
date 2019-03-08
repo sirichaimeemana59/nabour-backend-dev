@@ -64,13 +64,17 @@
                 <td>{!! localDate($row->created_at) !!}</td>
                 <td>{!! $row->firstname !!}  {!! $row->lastname !!}</td>
                 <?php
-                $status_=$row->role==1?"Customer":"Leads";
-                if($row->role==1){
+                $status_=$row->role==0?"Customer":"Leads";
+                if($row->role==0){
                     $count++;
                 }
                 ?>
                 <td>{!! $status_ !!}</td>
-                <td>{!! $row->latest_sale->name !!}</td>
+                @if(!empty($row->latest_sale->name))
+                    <td>{!!$row->latest_sale->name!!}</td>
+                @else
+                    <td>ไม่พบข้อมูล</td>
+                @endif
             </tr>
             <?php
             $i++;

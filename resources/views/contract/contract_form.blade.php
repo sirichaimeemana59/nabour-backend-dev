@@ -162,6 +162,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">รูปแบบการคิดค่าบริการ</label>
+                        <div class="col-sm-10">
+                            {!! Form::select('type_service',unserialize(constant('type_service')),null,array('class'=>'form-control','required')) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">วันที่ทำสัญญา</label>
                         <div class="col-sm-10">
                             <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" autocomplete="off"   required>
@@ -176,7 +183,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ผู้ทำสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="person_name" type="text" required>
+                            <input class="form-control" name="person_name" type="text">
                         </div>
                     </div>
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
@@ -203,7 +210,7 @@
 
                         <div style="text-align: right">
                             <button type="reset" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
-                            <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
+                            <button type="submit" class="btn btn-primary change-active-status-btn" id="change-active-status-btn">{{ trans('messages.confirm') }}</button>
                         </div>
                 </div>
             </div>
@@ -233,25 +240,26 @@
             });
         });
 
-        function validateForm () {
-            $("#p_form").validate({
-                rules: {
-                    name_lead    : 'required',
-                    detail_lead  : 'required',
-                },
-                errorPlacement: function(error, element) { element.addClass('error'); }
-            });
-        }
+        $("#p_form").validate({
+            rules: {
+                contract_code  	: 'required',
+                quotation_id 	: 'required',
+                property_id 	    : 'required',
+                payment_term_type   : 'required',
+                type_service    : 'required',
+                start_date  : 'required',
+                end_date    : 'required'
+            },
+            errorPlacement: function(error, element) { element.addClass('error'); }
+        });
 
-        if($('#p_form').valid() && allGood ) {
-            $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
-            $('#p_form').submit();
-        } else {
-            var top_;
-            if(!$('#p_form').valid()) top_ = $('.error').first().offset().top;
-            else top_ = $('#prop_list').offset().top;
-            $('html,body').animate({scrollTop: top_-100}, 1000);
-        }
+
+        $('#change-active-status-btn').on('click', function () {
+            if($("#p_form").valid()) {
+                $(this).attr('disabled','disabled').prepend('<i class="fa-spin fa-spinner"></i> ');
+                $("#p_form").submit();
+            }
+        });
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

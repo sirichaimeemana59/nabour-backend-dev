@@ -12,7 +12,7 @@
         width: 100%;
     }
     .content{
-        margin: 25px 30px 25px 30px;
+        margin: 25px 30px 25px 90px;
     }
     table ,tr,td,th{
         padding: 5px;

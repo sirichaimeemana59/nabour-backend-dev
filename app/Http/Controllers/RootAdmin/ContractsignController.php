@@ -131,8 +131,9 @@ class ContractsignController extends Controller
         $contract->payment_term_type    = Request::get('payment_term_type');
         $contract->contract_status      = 0;
         $contract->quotation_id         = Request::get('quotation_id1');
-        $contract->person_name          = Request::get('person_name');
+        $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
         $contract->property_id          = Request::get('property_id');
+        $contract->type_service          = Request::get('type_service');
         $contract->save();
 
         //dump($contract->toArray());
@@ -165,8 +166,9 @@ class ContractsignController extends Controller
         $contract->payment_term_type    = Request::get('payment_term_type');
         $contract->contract_status      = 0;
         $contract->quotation_id         = Request::get('quotation_id1');
-        $contract->person_name          = Request::get('person_name');
+        $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
         $contract->property_id          = Request::get('property_id');
+        $contract->type_service          = Request::get('type_service');
         $contract->save();
         //dump($contract->toArray());
         return redirect('customer/service/quotation/add/'.Request::get('customer_id'));
