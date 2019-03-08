@@ -183,7 +183,7 @@
                 <td align="center" style="font-weight: bold; color: black; padding:5px;">Aprroval to Payment<br><br>
                     Signature  ____________________________<br><br>
                     Name (_____________________________)<br><br>
-                    position (_____________________________)</td>
+                    position _____________________________</td>
             </tr>
         </table>
     </div>

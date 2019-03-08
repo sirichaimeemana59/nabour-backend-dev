@@ -158,7 +158,7 @@
                 <div> 3.3 &nbsp;&nbsp;&nbsp; ระยะเวลาการใช้บริการ<br></div>
                 <div class="subdetail">
                     <div> 3.3.1 &nbsp;&nbsp;&nbsp; ระยะเวลาใช้บริการโปรแกรมคอมพิวเตอร์ตามสัญญานี้มีกำหนด 1 ปี ตามกำหนดการเริ่มใช้งานของแต่ละโครงการ โดยมีรายละเอียดตามเอกสารแนบ<br>
-                        3.3.2 &nbsp;&nbsp;&nbsp; ในกรณีที่ {!! $quotation->latest_lead->company_name !!} ถูกผู้ว่าจ้างยกเลิกสัญญาในช่วงระยะเวลาสัญญา 1 ปีที่กำหนดไว้ผู้ให้บริการจะระงับการใช้งานระบบในนามของ {!! $quotation->latest_lead->company_name !!} กับโครงการนั้น ๆ และทางผู้ให้บริการจะมีการคิดค่าใชจ่ายในเดือนที่ถูกบอกเลิกสัญญาเท่านั้น แต่จะไม่มีการคิดค่าใช้จ่ายรายเดือนในเดือนถัดไปหลังจากถูกยกเลิกสัญญาของโครงการดังกล่าว<br></div>
+                        3.3.2 &nbsp;&nbsp;&nbsp; ในกรณีที่ {!! $quotation->latest_lead->company_name !!} ผู้ว่าจ้างยกเลิกสัญญาในช่วงระยะเวลาสัญญา 1 ปีที่กำหนดไว้ผู้ให้บริการจะระงับการใช้งานระบบในนามของบริษัท โอกาสพลัส จำกัด กับโครงการนั้น ๆ และทางผู้ให้บริการจะมีการคิดค่าใชจ่ายในเดือนที่ถูกบอกเลิกสัญญาเท่านั้น แต่จะไม่มีการคิดค่าใช้จ่ายรายเดือนในเดือนถัดไปหลังจากถูกยกเลิกสัญญาของโครงการดังกล่าว<br></div>
                 </div>
             </div>
             <div class="numberdetail">
@@ -360,23 +360,35 @@
 
             </div> </td>
     </tr>
-</table><br><br>
-<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>
-<div></div><br>
-<div align="center" style="font-size:16px;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</div>
-
-<div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>
-<div align="center" style="font-size:16px;">{!! $quotation->latest_lead->company_name !!}</div><br><br>
-<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ให้บริการ</div>
-<div></div>
-<div align="center" style="font-size:16px;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</div>
-<br>
-<div align="center" style="font-size:16px;">ผู้อำนวยการฝ่ายขายและการคลาด</div>
-<div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>
+</table>
+        <table style="width: 100%;">
+            <tr>
+                <?php
+                $name= "(.................................................)";
+                ?>
+                <td style="width: 150px;">
+                    <p style="text-align: center;">ลงชื่อ..........................................ผู้ใช้บริการ</p>
+                    <p></p>
+                    <p style="text-align: center;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</p>
+                    <p style="text-align: center;">กรรมการผู้จัดการ</p>
+                    <p style="text-align: center;">บริษัท {!! $quotation->customer->company_name !!}</p>
+                </td>
+                <td style="width: 150px; margin-left: 45px;">
+                    <br><br><br>
+                    <p style="text-align: center;">ลงชื่อ..........................................</p>
+                    <p style="text-align: center;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</p>
+                    <p style="text-align: center;">ผู้อำนวยการฝ่ายขายและการตลาด</p>
+                    <p style="text-align: center;">บริษัท โอกาสพลัส จำกัด</p>
+                    <br><br>
+                    {{--<p style="text-align: center;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</p>--}}
+                </td>
+            </tr>
+        </table>
+        <br>
 {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>--}}
 {{--<div></div>--}}
 {{--<div align="center" style="font-size:16px;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else ___________________________ @endif</div>--}}
-<br>
+<br><br><br>
 <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
 </div>
 @stop
