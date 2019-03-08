@@ -53,7 +53,7 @@
                     ?>
                     <td style="color: black; padding:0 0 0 5px; width: 10%">Address</td>
                     <td style="color: black; padding:0 0 0 5px;">:</td>
-                    <td colspan="6" style="color: black; padding:0 0 0 5px; border-right: 1px solid black;">{!! $quotation->latest_lead->address ." ". $provinces[$quotation['province']] ." ". $quotation->latest_lead->postcode!!}</td>
+                    <td colspan="6" style="color: black; padding:0 0 0 5px; border-right: 1px solid black;">{!! $quotation->latest_lead->address ." ". $provinces[$quotation->latest_customer->province] ." ". $quotation->latest_lead->postcode!!}</td>
                     <td style="color: black; padding:0 0 0 5px;">Date : </td>
                     <td style="color: black; padding:0 0 0 5px;">{{localDate($date)}}</td>
                 </tr>
