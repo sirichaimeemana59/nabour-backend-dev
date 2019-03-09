@@ -13,6 +13,7 @@
     }
     .content{
         margin: 25px 30px 25px 90px;
+        page-break-after:always;
     }
     table ,tr,td,th{
         padding: 5px;
