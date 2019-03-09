@@ -38,4 +38,9 @@ class contract extends GeneralModel
     {
         return $this->hasOne('App\BackendModel\Property','id','property_id');
     }
+
+    public function latest_property_nabour ()
+    {
+        return $this->hasOne('App\Property','id','property_id');
+    }
 }

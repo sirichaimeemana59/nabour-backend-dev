@@ -111,10 +111,14 @@ Route::get('customer/create/book/account/{id?}','RootAdmin\CustomerController@pr
 //Customer Sales
 Route::any('customer/sales/customer/list', 'Sales\CustomerController@index');
 Route::post('customer/sales/Customer_form/add', 'Sales\CustomerController@create');
-Route::post('customer/sales/list_update_customer', 'Sales\CustomerController@edit');
+Route::get('customer/sales/list_update_customer/{id?}', 'Sales\CustomerController@edit');
 Route::post('customer/sales/Customer_form/update', 'Sales\CustomerController@update');
 Route::post('customer/sales/Customer_form/delete', 'Sales\CustomerController@destroy');
 Route::post('customer/sales/Customer_form/check', 'Sales\CustomerController@check');
+
+//Open Book Bank
+Route::get('customer/sales/create/book/account/{id?}','Sales\CustomerController@print_report_book_bank');
+//End open Book Bank
 //End Customer Sales
 
 //Contract sign no

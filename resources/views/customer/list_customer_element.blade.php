@@ -100,7 +100,13 @@
                                     ?>
 
                                     @if($row->status != 't')
-                                            <li><a href="{!! url('customer/list_update_customer/'.$row->id) !!}">
+                                            <li>
+                                                @if(Auth::user()->role !=2)
+                                                    <a href="{!! url('customer/list_update_customer/'.$row->id) !!}">
+                                                        @else
+                                                    <a href="{!! url('customer/sales/list_update_customer/'.$row->id) !!}">
+                                                @endif
+
                                                     <i class="fa-pencil-square-o"></i>แก้ไข
                                                 </a>
                                             </li>
@@ -128,8 +134,13 @@
                                                 @endif
                                         </a>
                                     </li>
-                                            @if( $row->status != 't' and $count > 0)
-                                                <li><a href="{!! url('customer/create/book/account/'.$row->id) !!}" target="_blank">
+                                            @if( $row->status != 't' and $count > 0 and !empty($row->user_company))
+                                                <li>
+                                                    @if(Auth::user()->role !=2)
+                                                        <a href="{!! url('customer/create/book/account/'.$row->id) !!}" target="_blank">
+                                                        @else
+                                                        <a href="{!! url('customer/sales/create/book/account/'.$row->id) !!}" target="_blank">
+                                                    @endif
                                                         {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
                                                         <i class="fa-newspaper-o"></i>แบบฟอร์มขอเปิดหน้าบัญชี
                                                     </a>

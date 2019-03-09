@@ -185,15 +185,17 @@ class CustomerController extends Controller
                 $user_company->phone_company        =  Request::get('phone_company');
                 $user_company->mail_company         =  Request::get('mail_company');
 
-                $directer[] = Request::get('directer_company');
+                if(!empty(Request::get('directer_company'))){
+                    $directer[] = Request::get('directer_company');
 
-                $count = count($directer);
+                    $count = count($directer);
 
-                for ($i=0;$i<$count;$i++){
-                    $cut_directer = implode(",",$directer[$i]);
+                    for ($i = 0; $i < $count; $i++) {
+                        $cut_directer = implode(",", $directer[$i]);
+                    }
                 }
 
-                $user_company->directer_company     =  $cut_directer;
+                $user_company->directer_company     =  empty($cut_directer)?null:$cut_directer;;
                 $user_company->save();
                //dd($user_company);
             }else{
@@ -214,15 +216,16 @@ class CustomerController extends Controller
                     $user_company->fax_company          =  Request::get('fax_company');
                     $user_company->phone_company        =  Request::get('phone_company');
                     $user_company->mail_company         =  Request::get('mail_company');
-                    $directer[] = Request::get('directer_company');
+                    if(!empty(Request::get('directer_company'))){
+                        $directer[] = Request::get('directer_company');
 
-                    $count = count($directer);
+                        $count = count($directer);
 
-                    for ($i=0;$i<$count;$i++){
-                        $cut_directer = implode(",",$directer[$i]);
+                        for ($i = 0; $i < $count; $i++) {
+                            $cut_directer = implode(",", $directer[$i]);
+                        }
                     }
-
-                    $user_company->directer_company     =  $cut_directer;
+                    $user_company->directer_company     =  empty($cut_directer)?null:$cut_directer;;
 
                     //dd($user_company);
                     $user_company->save();

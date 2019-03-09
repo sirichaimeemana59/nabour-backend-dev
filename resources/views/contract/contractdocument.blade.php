@@ -1,6 +1,8 @@
 @extends('print')
         <?php
         $type_service= unserialize(constant('type_service'));
+
+        $property_type = unserialize(constant('PROPERTY_TYPE_TH'));
         ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,9 +78,9 @@
         <br>
 
 
-        <div style="font-size:16px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สัญญาฉบับ นี้ทำขึ้น ณ บริษัท โอกาสพลัส จำกัด เมื่อวันที่ {!!localDate(date("Y-m-d"))!!} ระหว่าง {!! $quotation->latest_lead->company_name !!} ที่อยู่ {!! $quotation->latest_lead->address !!}  จังหวัด {!! $provinces[$quotation->province] !!}   {!! $quotation->latest_lead->postcode !!}  <u>“ผู้ใช้บริการ”</u>
+        <div style="font-size:16px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; สัญญาฉบับ นี้ทำขึ้น ณ บริษัท โอกาสพลัส จำกัด เมื่อวันที่ {!!localDate(date("Y-m-d"))!!} ระหว่าง {!! $quotation->latest_lead->company_name !!} ที่อยู่ {!! $quotation->latest_lead->address !!}  จังหวัด {!! $provinces[$quotation->customer->province] !!}   {!! $quotation->latest_lead->postcode !!}  <u>“ผู้ใช้บริการ”</u>
             ฝ่ายหนึ่งกับ บริษัท โอกาสพลัส จำกัด เลขที่ 428 ชั้น 6 ซอยสุขุมวิท 63 แขวงคลองตันเหนือ เขตวัฒนา
-            กรุงเทพฯ 10110 <u>“ผู้ใช้บริการ”</u> อีกฝ่ายหนึ่งคู่สัญญาได้ตกลงทำสัญญากันและมีข้อความดังต่อไปนี้</div><br>
+            กรุงเทพฯ 10110 <u>“ผู้ให้บริการ”</u> อีกฝ่ายหนึ่งคู่สัญญาได้ตกลงทำสัญญากันและมีข้อความดังต่อไปนี้</div><br>
         <div class="numberh">
             1.  &nbsp;&nbsp;&nbsp;<u>การอนุญาตใช้โปรแกรมคอมพิวเตอร์</u>
 
@@ -335,7 +337,12 @@
         <table style="width:100%">
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ชื่อบริษัท</div></td>
-                <td align="left" style="font-size:16px;"><div>: {!! $quotation->latest_lead->company_name !!}</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!! $quotation->latest_property_nabour->property_name_th !!}</div></td>
+            </tr>
+
+            <tr>
+                <td width="35%" style="font-size:16px;"><div>ประเภทโครงการ</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!! $provinces[$quotation->latest_property_nabour->province] !!}</div></td>
             </tr>
 
             <tr>

@@ -273,7 +273,11 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form">
-                                {!! Form::model(null,array('url' => array('customer/Customer_form/check'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @if(Auth::user()->role ==2)
+                                    {!! Form::model(null,array('url' => array('customer/sales/Customer_form/check'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/Customer_form/check'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @endif
                                 <br>
                                 <input type="hidden" name="id3" id="id3">
                                 <div style="text-align: center;">

@@ -7,6 +7,7 @@
         <label class="col-sm-2 control-label">ชื่อบริษัท</label>
         <div class="col-sm-4">
             <input class="form-control" name="company_name" type="text" required value="{!! $customer->company_name !!}">
+            <input class="form-control" name="sale_id" type="hidden" required value="{!! $customer->sale_id !!}">
         </div>
 
         <label class="col-sm-2 control-label">Company Name</label>

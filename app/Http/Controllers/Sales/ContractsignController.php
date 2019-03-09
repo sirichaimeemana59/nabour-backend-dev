@@ -16,7 +16,8 @@ use App\BackendModel\contract;
 use App\BackendModel\User as BackendUser;
 use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
-use App\BackendModel\Property;
+use App\BackendModel\Property as BackendProperty;
+use App\Property;
 
 class ContractsignController extends Controller
 {
@@ -79,7 +80,7 @@ class ContractsignController extends Controller
             $quotation_service = $quotation_service->where('quotation_id', $id);
             $quotation_service = $quotation_service->get();
 
-            $property = new Property;
+            $property = new BackendProperty;
             $property = $property->get();
 
             return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count_','quotation','quotation_service','count','property'));
@@ -104,7 +105,7 @@ class ContractsignController extends Controller
                 ->get();
             $sing=$singg->max('contract_code');
 
-            $property = new Property;
+            $property = new BackendProperty;
             $property = $property->get();
 
             //dd($quotation1);
@@ -130,6 +131,7 @@ class ContractsignController extends Controller
         $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = Request::get('person_name');
         $contract->property_id          = Request::get('property_id');
+        $contract->type_service          = Request::get('type_service');
         $contract->save();
 
         //dump($contract->toArray());
@@ -169,6 +171,7 @@ class ContractsignController extends Controller
         $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = Request::get('person_name');
         $contract->property_id          = Request::get('property_id');
+        $contract->type_service          = Request::get('type_service');
         $contract->save();
         //dump($contract->toArray());
         if(Auth::user()->role !=2){
