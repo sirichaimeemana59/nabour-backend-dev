@@ -342,8 +342,18 @@
 
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ประเภทโครงการ</div></td>
-                <td align="left" style="font-size:16px;"><div>: {!! $provinces[$quotation->latest_property_nabour->province] !!}</div></td>
+                <td align="left" style="font-size:16px;"><div>:
+                             {!! $property_type[$type->property_type] !!}
+                    </div></td>
             </tr>
+
+            <tr>
+                <td width="35%" style="font-size:16px;"><div>จำนวนยูนิต</div></td>
+                <td align="left" style="font-size:16px;"><div>:
+                        {!! $type->unit_size !!}  ยูนิต
+                    </div></td>
+            </tr>
+
 
             <tr>
                 <td width="35%" style="font-size:16px;"><div>วันที่ทำสัญญา</div></td>
@@ -381,7 +391,7 @@
                     <p style="text-align: center;">บริษัท {!! $quotation->customer->company_name !!}</p>
                 </td>
                 <td style="width: 150px; margin-left: 45px;">
-                    <br><br><br>
+                    <br><br>
                     <p style="text-align: center;">ลงชื่อ..........................................</p>
                     <p style="text-align: center;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</p>
                     <p style="text-align: center;">ผู้อำนวยการฝ่ายขายและการตลาด</p>

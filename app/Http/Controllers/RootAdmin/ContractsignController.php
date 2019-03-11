@@ -16,7 +16,7 @@ use App\BackendModel\contract;
 use App\BackendModel\User as BackendUser;
 use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
-//use App\Property;
+use App\Property as property_db;
 use App\BackendModel\Property;
 
 class ContractsignController extends Controller
@@ -32,6 +32,9 @@ class ContractsignController extends Controller
         $quotation = $quotation->where('id',$quotation_code);
         $quotation = $quotation->first();
 
+        $type = property_db::find($quotation->property_id);
+
+        //dd($type);
         $package = new Products;
         $package = $package->where('status', '1');
         $package = $package->get();
@@ -40,10 +43,12 @@ class ContractsignController extends Controller
         $quotation_service = $quotation_service->where('quotation_id', $code);
         $quotation_service = $quotation_service->get();
 
+
+
         $p = new Province;
         $provinces = $p->getProvince();
 
-        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package'));
+        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package','type'));
     }
 
 
