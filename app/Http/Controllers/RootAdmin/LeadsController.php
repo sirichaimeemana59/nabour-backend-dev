@@ -134,7 +134,7 @@ class LeadsController extends Controller
             $id = Request::input('lead_id');
             $lead = Customer::find($id);
             $lead->fill(Request::all());
-            $lead->status_leads = empty(Request::get('status_leads')?'0':Request::get('status_leads'));
+            $lead->status_leads = Request::get('status_leads');
             $lead->save();
             //dump($lead->toArray());
         }

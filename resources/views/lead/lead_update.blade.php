@@ -100,7 +100,7 @@
     </div>
     <label class="col-sm-2 control-label">สถานะ</label>
     <div class="col-sm-4">
-        {!! Form::select('status_leads',unserialize(constant('status_leads')),$_lead->status_leads,array('class'=>'form-control','required')) !!}
+        {!! Form::select('status_leads',unserialize(constant('status_leads')),null,array('class'=>'form-control','required')) !!}
     </div>
 </div>
 </div>
