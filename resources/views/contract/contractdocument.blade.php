@@ -306,38 +306,14 @@
                 </td>
             </tr>
         </table>
-        {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>--}}
-        {{--<div></div>--}}
-        {{--<div align="center" style="font-size:16px;">({!! $quotation->latest_lead->firstname ." ". $quotation->latest_lead->lastname!!})</div>--}}
-        {{--<br>--}}
-        {{--<div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>--}}
-        {{--<div align="center" style="font-size:16px;">.....</div><br><br>--}}
-        {{--<div align="center" style="font-size:16px;">ลงชื่อ................................................พยาน</div><br>--}}
-        {{--<div align="center" style="font-size:16px;">(_________________________________)</div><br>--}}
-        {{--<br>--}}
-        {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ให้บริการ</div>--}}
-        {{--<div></div>--}}
-        {{--<div align="center" style="font-size:16px;">(คุณ จินตนา เลิศล้ำยิ่ง)</div>--}}
-        {{--<br>--}}
-        {{--<div align="center" style="font-size:16px;">กรรมการผู้จัดการ</div>--}}
-        {{--<div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>--}}
-        {{--<br>--}}
-        {{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ให้บริการ</div>--}}
-        {{--<div></div>--}}
-        {{--<div align="center" style="font-size:16px;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</div>--}}
-        {{--<br>--}}
-        {{--<div align="center" style="font-size:16px;">ผู้อำนวยการฝ่ายขายและการคลาด</div>--}}
-        {{--<div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>--}}
-        {{--<div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>--}}
     </div>
-    <div style="page-break-after:always;"></div>
 
     @foreach($contract_property as $row)
     <header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div align="center" style="font-weight: bold;font-size:16px;">เอกสารแนบท้ายสัญญา</div>
         <br><br>
-        <table style="width:100%">
+        <table>
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ชื่อบริษัท</div></td>
                 <td align="left" style="font-size:16px;"><div>: {!! $row->property_name !!}</div></td>
@@ -399,20 +375,14 @@
                     <p style="text-align: center;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</p>
                     <p style="text-align: center;">ผู้อำนวยการฝ่ายขายและการตลาด</p>
                     <p style="text-align: center;">บริษัท โอกาสพลัส จำกัด</p>
-                    <br><br>
-                    {{--<p style="text-align: center;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</p>--}}
-                </td>
+                    <br><br></td>
             </tr>
         </table>
         <br>
-{{--<div align="center" style="font-size:16px;">ลงชื่อ..........................................ผู้ใช้บริการ</div>--}}
-{{--<div></div>--}}
-{{--<div align="center" style="font-size:16px;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else ___________________________ @endif</div>--}}
 <br><br><br>
 <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
-        <div style="page-break-after:always;"></div>
+    </div>
         @endforeach
-</div>
 @stop
 </body>
 </html>
