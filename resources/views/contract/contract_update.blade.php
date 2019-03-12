@@ -178,6 +178,7 @@
                         <div class="col-sm-10">
                             <input class="form-control" name="quotation_id" type="text" readonly value="{!! $contract->latest_quotation->quotation_code !!}">
                             <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $contract->quotation_id !!}">
+                            <input class="form-control" name="contract_id" type="hidden" readonly value="{!! $contract->id !!}">
                         </div>
                     </div>
 
@@ -263,11 +264,11 @@
                                                 </select>
                                             <td>
                                             <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required/></td>
-                                            {{--<td>--}}
-                                                {{--<a class="btn btn-danger unit-card-delete-button">--}}
-                                                    {{--<i class="fa-trash"></i>--}}
-                                                {{--</a>--}}
-                                            {{--</td>--}}
+                                            <td>
+                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $customer_id !!}">
+                                                    <i class="fa-trash"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                             </table>
@@ -275,14 +276,14 @@
 
                     </div>
 
-                    {{--<div class="form-group">--}}
-                        {{--<div class="col-sm-4" style="margin-left: 15%">--}}
-                            {{--<button type="button" class="btn btn-info btn-primary add_directer"><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>--}}
-                        {{--</div>--}}
-                        {{--<label class="col-sm-2 control-label"></label>--}}
-                        {{--<div class="col-sm-4">--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="form-group">
+                        <div class="col-sm-4" style="margin-left: 15%">
+                            <button type="button" class="btn btn-info btn-primary add_directer"><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
 
 
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
@@ -359,8 +360,46 @@
         </div>
     </div>
     {{--end Approved--}}
+
+    {{--delete--}}
+    <div class="modal fade" id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ลบนิติบุคคล</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role !=2)
+                                    {!! Form::model(null,array('url' => array('customer/Customer_form/delete_property'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/sales/Customer_form/delete_property'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @endif
+                                <br>
+                                    <input type="hidden" name="id_property" class="id_property">
+                                    <input type="hidden" name="id_quotation" class="id_quotation">
+                                    <input type="hidden" name="id_customer" class="id_customer">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
+                                    <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ลบ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end delete--}}
     <div id="property_select" style="display:none;">
-        <select name="property_id[]" id="property_id" class="form-control" required OnChange="result_Name(this);">
+        <select name="property_id_update[]" id="property_id" class="form-control" required OnChange="result_Name(this);">
             <option value="">กรุณาเลือกนิติบุคคล</option>
             @foreach($property as $prow)
                 <option value="{!! $prow['id'] !!}|{!! $prow['property_name_th'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
@@ -420,14 +459,14 @@
         $(function () {
             $('.add_directer').on('click', function (e){
                 e.preventDefault();
-                var property = '<select name="property_id[]" class="price_service" OnChange="result_Name(this);">'+ $('#property_select select').html() + '</select>';
+                var property = '<select name="property_id_update[]" class="price_service" OnChange="result_Name(this);">'+ $('#property_select select').html() + '</select>';
 
                 var tRowTmp = [
                     '<tr class="item-row">',
                     '<input type="hidden" name="" value="" />',
                     '<td>'+property+'</td>',
                     '<td><input type="hidden" class="toValidate form-control input-sm"/></td>',
-                    '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName" required/></td>',
+                    '<td><input type="text" name="property_name_update[]" value="" class="toValidate form-control input-sm tName" required/></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 
@@ -449,6 +488,19 @@
             name = name.split("|")[1];
             $(strName).parents('tr').find('.tName').val(name);
         }
+
+        $('.delete-property-button').on('click',function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var id_quotation = $(this).data("quotation");
+            var id_customer = $(this).data("customer");
+
+            $('.id_property').val(id);
+            $('.id_quotation').val(id_quotation);
+            $('.id_customer').val(id_customer);
+            $('#delete').modal('show');
+            //console.log(id);
+        })
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

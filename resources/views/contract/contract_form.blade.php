@@ -132,6 +132,7 @@
                         <div class="col-sm-10">
                             <input class="form-control" name="quotation_id" type="text" readonly value="{!! $quotation1->quotation_code !!}">
                             <input class="form-control" name="quotation_id1" type="hidden" readonly value="{!! $quotation1->id !!}">
+                            {{--<input class="form-control" name="contract_id" type="text" readonly value="{!! $quotation1->latest_contract->id !!}">--}}
                         </div>
                     </div>
 

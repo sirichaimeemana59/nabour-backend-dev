@@ -103,6 +103,7 @@ Route::post('customer/Customer_form/check', 'RootAdmin\CustomerController@check'
 Route::get('customer/form/add','RootAdmin\CustomerController@add');
 
 
+
 //Open Book Bank
 Route::get('customer/create/book/account/{id?}','RootAdmin\CustomerController@print_report_book_bank');
 //End open Book Bank
@@ -116,6 +117,7 @@ Route::post('customer/sales/Customer_form/update', 'Sales\CustomerController@upd
 Route::post('customer/sales/Customer_form/delete', 'Sales\CustomerController@destroy');
 Route::post('customer/sales/Customer_form/check', 'Sales\CustomerController@check');
 
+
 //Open Book Bank
 Route::get('customer/sales/create/book/account/{id?}','Sales\CustomerController@print_report_book_bank');
 //End open Book Bank
@@ -128,6 +130,7 @@ Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save'
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
 Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@approved');
 Route::get('service/contract/sign/attachment/{id?}','RootAdmin\ContractsignController@attachment');
+Route::post('customer/Customer_form/delete_property','RootAdmin\ContractsignController@delete_property');
 //End Contract
 
 //Contract sign no Sales
@@ -136,6 +139,7 @@ Route::get('customer/service/sales/contract/sign/form/{id?}/{customer_id?}', 'Sa
 Route::post('service/sales/contract/sign/add', 'Sales\ContractsignController@save');
 Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@update');
 Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');
+Route::post('customer/sales/Customer_form/delete_property','Sales\ContractsignController@delete_property');
 //End Contract Sales
 
 //Report Quotation
