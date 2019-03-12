@@ -263,11 +263,11 @@
                                                 </select>
                                             <td>
                                             <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required/></td>
-                                            <td>
-                                                <a class="btn btn-danger unit-card-delete-button">
-                                                    <i class="fa-trash"></i>
-                                                </a>
-                                            </td>
+                                            {{--<td>--}}
+                                                {{--<a class="btn btn-danger unit-card-delete-button">--}}
+                                                    {{--<i class="fa-trash"></i>--}}
+                                                {{--</a>--}}
+                                            {{--</td>--}}
                                         </tr>
                                     @endforeach
                             </table>
@@ -275,14 +275,14 @@
 
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-4" style="margin-left: 15%">
-                            <button type="button" class="btn btn-info btn-primary add_directer"><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>
-                        </div>
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-4">
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<div class="col-sm-4" style="margin-left: 15%">--}}
+                            {{--<button type="button" class="btn btn-info btn-primary add_directer"><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>--}}
+                        {{--</div>--}}
+                        {{--<label class="col-sm-2 control-label"></label>--}}
+                        {{--<div class="col-sm-4">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
 
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
@@ -360,10 +360,10 @@
     </div>
     {{--end Approved--}}
     <div id="property_select" style="display:none;">
-        <select name="property_id[]" id="property_id" class="form-control" required>
+        <select name="property_id[]" id="property_id" class="form-control" required OnChange="result_Name(this);">
             <option value="">กรุณาเลือกนิติบุคคล</option>
             @foreach($property as $prow)
-                <option value="{!! $prow['id'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
+                <option value="{!! $prow['id'] !!}|{!! $prow['property_name_th'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
             @endforeach
         </select>
     </div>
@@ -426,6 +426,7 @@
                     '<tr class="item-row">',
                     '<input type="hidden" name="" value="" />',
                     '<td>'+property+'</td>',
+                    '<td><input type="hidden" class="toValidate form-control input-sm"/></td>',
                     '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName" required/></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
