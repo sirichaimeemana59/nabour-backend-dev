@@ -135,17 +135,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">นิติบุคคล</label>
-                        <div class="col-sm-10">
-                            <select name="property_id" id="property_id" class="form-control" required>
-                                <option value="">กรุณาเลือกนิติบุคคล</option>
-                                @foreach($property as $prow)
-                                    <option value="{!! $prow['id'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">นิติบุคคล</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<select name="property_id" id="property_id" class="form-control" required>--}}
+                                {{--<option value="">กรุณาเลือกนิติบุคคล</option>--}}
+                                {{--@foreach($property as $prow)--}}
+                                    {{--<option value="{!! $prow['id'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>--}}
+                                {{--@endforeach--}}
+                            {{--</select>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     {{--<div class="form-group">--}}
                         {{--<label class="col-sm-2 control-label">ประเภทสัญญา</label>--}}
@@ -186,6 +186,32 @@
                             <input class="form-control" name="person_name" type="text">
                         </div>
                     </div>
+
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">นิติบุคคล</label>
+                        <div class="col-sm-9">
+                            <table class="table table-striped table-condensed" id="itemsTable">
+
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4" style="margin-left: 15%">
+                            <button type="button" class="btn btn-info btn-primary add_directer"><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">ชื่อนิติบุคคล</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control" name="property_name"  type="text" >--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
                     <input type="hidden" name="sales_id" value="{!! $quotation1->sales_id !!}">
                     <input type="hidden" name="customer_id" value="{!! $quotation1->lead_id !!}">
                     <input type="hidden" name="price" value="{!! $price !!}">
@@ -218,7 +244,14 @@
     </div>
     {!! Form::close(); !!}
     {{--endcontent--}}
-
+    <div id="property_select" style="display:none;">
+        <select name="property_id[]" id="property_id" class="form-control" required OnChange="result_Name(this);">
+            <option value="">กรุณาเลือกนิติบุคคล</option>
+            @foreach($property as $prow)
+                <option value="{!! $prow['id'] !!}|{!! $prow['property_name_th'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
+            @endforeach
+        </select>
+    </div>
 @endsection
 @section('script')
     <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
@@ -240,6 +273,30 @@
             });
         });
 
+        $(function () {
+            $('.add_directer').on('click', function (e){
+                e.preventDefault();
+                var property = '<select name="property_id[]" class="price_service" OnChange="result_Name(this);">'+ $('#property_select select').html() + '</select>';
+
+                var tRowTmp = [
+                    '<tr class="item-row">',
+                    '<input type="hidden" name="" value="" />',
+                    '<td>'+property+'</td>',
+                    '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName" required/></td>',
+                    '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
+                    '</tr>'].join('');
+
+                $('#itemsTable').append(tRowTmp);
+            });
+
+            $('body').on("click", '.unit-card-delete-button', function() {
+                //alert('aaa');
+                $(this).closest('tr.item-row').remove();
+                return false;
+            });
+
+        });
+
         $("#p_form").validate({
             rules: {
                 contract_code  	: 'required',
@@ -248,7 +305,9 @@
                 payment_term_type   : 'required',
                 type_service    : 'required',
                 start_date  : 'required',
-                end_date    : 'required'
+                end_date    : 'required',
+                person_name    : 'required',
+                property_name    : 'required'
             },
             errorPlacement: function(error, element) { element.addClass('error'); }
         });
@@ -260,6 +319,14 @@
                 $("#p_form").submit();
             }
         });
+
+        function result_Name(strName)
+        {
+            //alert('ssss');
+            var name = strName.value;
+            name = name.split("|")[1];
+            $(strName).parents('tr').find('.tName').val(name);
+        }
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

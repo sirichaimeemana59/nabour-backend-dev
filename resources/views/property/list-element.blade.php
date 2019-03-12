@@ -126,6 +126,10 @@
 												<i class="fa-print"></i> พิมพ์ใบสัญญา
 											</a>
 										</li>
+										{{--<li><a href="{!! url('service/contract/sign/attachment/'.$row->latest_contract->id) !!}" target="_bank">--}}
+												{{--<i class="fa-print"></i> เอกสารแนบท้าย--}}
+											{{--</a>--}}
+										{{--</li>--}}
 									@else
 										<li><a href="{!! url('customer/service/sales/contract/sign/form/'.$row->latest_contract->quotation_id) !!}">
 												<i class="fa-file-o"></i> ดู/แก้ไขสัญญา Nabour
@@ -134,6 +138,10 @@
 												<i class="fa-print"></i> พิมพ์ใบสัญญา
 											</a>
 										</li>
+										{{--<li><a href="{!! url('service/contract/sign/attachment/'.$row->latest_contract->id) !!}" target="_bank">--}}
+												{{--<i class="fa-print"></i> เอกสารแนบท้าย--}}
+											{{--</a>--}}
+										{{--</li>--}}
 								@endif
 							@endif
 						</ul>

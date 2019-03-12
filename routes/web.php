@@ -127,6 +127,7 @@ Route::get('customer/service/contract/sign/form/{id?}/{customer_id?}', 'RootAdmi
 Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
 Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@approved');
+Route::get('service/contract/sign/attachment/{id?}','RootAdmin\ContractsignController@attachment');
 //End Contract
 
 //Contract sign no Sales

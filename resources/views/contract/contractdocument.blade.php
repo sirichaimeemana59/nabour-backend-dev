@@ -330,14 +330,16 @@
         {{--<div align="center" style="font-size:16px;">บริษัท โอกาสพลัส จำกัด</div><br>--}}
         {{--<div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>--}}
     </div>
-    <span id="pageFooter"></span><header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
+    <div style="page-break-after:always;"></div>
+    @foreach($contract_property as $row)
+    <header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
         <div align="center" style="font-weight: bold;font-size:16px;">เอกสารแนบท้ายสัญญา</div>
         <br><br>
         <table style="width:100%">
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ชื่อบริษัท</div></td>
-                <td align="left" style="font-size:16px;"><div>: {!! $quotation->latest_property_nabour->property_name_th !!}</div></td>
+                <td align="left" style="font-size:16px;"><div>: {!! $row->property_name !!}</div></td>
             </tr>
 
             <tr>
@@ -407,6 +409,8 @@
 {{--<div align="center" style="font-size:16px;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else ___________________________ @endif</div>--}}
 <br><br><br>
 <div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>
+        <div style="page-break-after:always;"></div>
+        @endforeach
 </div>
 @stop
 </body>
