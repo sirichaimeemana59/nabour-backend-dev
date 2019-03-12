@@ -18,6 +18,7 @@ use App\BackendModel\Quotation_transaction;
 use App\BackendModel\Products;
 use App\BackendModel\Property as BackendProperty;
 use App\Property;
+use App\BackendModel\contract_transaction;
 
 class ContractsignController extends Controller
 {
@@ -32,7 +33,6 @@ class ContractsignController extends Controller
         $quotation = $quotation->where('id',$quotation_code);
         $quotation = $quotation->first();
 
-        $type = property_db::find($quotation->property_id);
 
         //dd($type);
         $package = new Products;
@@ -43,9 +43,14 @@ class ContractsignController extends Controller
         $quotation_service = $quotation_service->where('quotation_id', $code);
         $quotation_service = $quotation_service->get();
 
-        $contract_property = new contract;
-        $contract_property = $contract_property->where('quotation_id', $code);
+        $contract_property = new contract_transaction;
+        $contract_property = $contract_property->where('contract_id', $quotation->contract_code);
         $contract_property = $contract_property->get();
+
+        foreach ($contract_property as $row){
+            //dump($row->property_id)  ;
+            $type = property_db::find($row->property_id);
+        }
 
 
         $p = new Province;
@@ -72,6 +77,10 @@ class ContractsignController extends Controller
             $contract = $contract->where('quotation_id', $id);
             $contract = $contract->first();
 
+            $contract_property = new contract_transaction;
+            $contract_property = $contract_property->where('contract_id', $contract->contract_code);
+            $contract_property = $contract_property->get();
+
             $count = new contract;
             $count = $count->where('quotation_id', $id)->where('status','=',1);
             $count = $count->count();
@@ -88,10 +97,12 @@ class ContractsignController extends Controller
             $quotation_service = $quotation_service->where('quotation_id', $id);
             $quotation_service = $quotation_service->get();
 
-            $property = new BackendProperty;
+            $property = new Property;
             $property = $property->get();
 
-            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count_','quotation','quotation_service','count','property'));
+            //dd($count_);
+
+            return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count','count_','quotation','quotation_service','property','contract_property','id','customer_id'));
 
         }else{
             $quotation1 = new Quotation;
@@ -113,7 +124,7 @@ class ContractsignController extends Controller
                 ->get();
             $sing=$singg->max('contract_code');
 
-            $property = new BackendProperty;
+            $property = new Property;
             $property = $property->get();
 
             //dd($quotation1);
@@ -126,28 +137,33 @@ class ContractsignController extends Controller
 
     public function save()
     {
+        $contract = new contract;
+        $contract->contract_code        = Request::get('contract_code');
+        $contract->start_date           = Request::get('start_date');
+        $contract->end_date             = Request::get('end_date');
+        $contract->grand_total_price    = Request::get('price');
+        $contract->sales_id             = Request::get('sales_id');
+        $contract->customer_id          = Request::get('customer_id');
+        $contract->payment_term_type    = Request::get('payment_term_type');
+        $contract->contract_status      = 0;
+        $contract->quotation_id         = Request::get('quotation_id1');
+        $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
+        $contract->type_service         = Request::get('type_service');
+        $contract->save();
+        //dump($contract);
+
         if(!empty(Request::get('property_id'))){
             $count = count(Request::get('property_id'));
-
             for ($i=0;$i<$count;$i++){
+                //contract_id','property_name','property_id
                 $property_id = explode("|",Request::get('property_id')[$i]);
 
-                $contract = new contract;
-                $contract->contract_code        = Request::get('contract_code');
-                $contract->start_date           = Request::get('start_date');
-                $contract->end_date             = Request::get('end_date');
-                $contract->grand_total_price    = Request::get('price');
-                $contract->sales_id             = Request::get('sales_id');
-                $contract->customer_id          = Request::get('customer_id');
-                $contract->payment_term_type    = Request::get('payment_term_type');
-                $contract->contract_status      = 0;
-                $contract->quotation_id         = Request::get('quotation_id1');
-                $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
-                $contract->property_id          = $property_id[0];
-                $contract->type_service         = Request::get('type_service');
-                $contract->property_name        = Request::get('property_name')[$i];
-                $contract->save();
-                //dump($contract);
+                $contract_transaction = new contract_transaction;
+                $contract_transaction->contract_id          = Request::get('contract_code');
+                $contract_transaction->property_name        = Request::get('property_name')[$i];
+                $contract_transaction->property_id          = $property_id[0];
+                $contract_transaction->save();
+                //dump($contract_transaction);
             }
         }
         if(Auth::user()->role !=2){
@@ -160,31 +176,48 @@ class ContractsignController extends Controller
 
     public function update()
     {
-        //dump(Request::get('id'));
+        $contract = contract::find(Request::get('contract_id'));
+        $contract->contract_code        = Request::get('contract_code');
+        $contract->start_date           = Request::get('start_date');
+        $contract->end_date             = Request::get('end_date');
+        $contract->grand_total_price    = Request::get('price');
+        $contract->sales_id             = Request::get('sales_id');
+        $contract->customer_id          = Request::get('customer_id');
+        $contract->payment_term_type    = Request::get('payment_term_type');
+        $contract->contract_status      = 0;
+        $contract->quotation_id         = Request::get('quotation_id1');
+        $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
+        $contract->type_service         = Request::get('type_service');
+        $contract->save();
+
         if(!empty(Request::get('property_id'))){
-
             $count = count(Request::get('property_id'));
-            for($i=0;$i< $count;$i++){
-
+            for ($i=0;$i<$count;$i++){
                 $property_id = explode("|",Request::get('property_id')[$i]);
-                $contract = contract::find(Request::get('id')[$i]);
-                $contract->contract_code        = Request::get('contract_code');
-                $contract->start_date           = Request::get('start_date');
-                $contract->end_date             = Request::get('end_date');
-                $contract->sales_id             = Request::get('sales_id');
-                $contract->customer_id          = Request::get('customer_id');
-                $contract->payment_term_type    = Request::get('payment_term_type');
-                $contract->contract_status      = 0;
-                $contract->quotation_id         = Request::get('quotation_id1');
-                $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
-                $contract->property_id          = $property_id[0];
-                $contract->type_service         = Request::get('type_service');
-                $contract->property_name        = Request::get('property_name')[$i];
-                $contract->save();
-                //dump($contract);
+                $contract_transaction = contract_transaction::find(Request::get('id')[$i]);
+                $contract_transaction->contract_id          = Request::get('contract_code');
+                $contract_transaction->property_name        = Request::get('property_name')[$i];
+                $contract_transaction->property_id          = $property_id[0];
+                $contract_transaction->save();
+                //dump($contract_transaction);
             }
-
         }
+
+        if(!empty(Request::get('property_id_update'))){
+            $count = count(Request::get('property_id_update'));
+            for ($i=0;$i<$count;$i++){
+                //contract_id','property_name','property_id
+                $property_id = explode("|",Request::get('property_id_update')[$i]);
+
+                $contract_transaction = new contract_transaction;
+                $contract_transaction->contract_id          = Request::get('contract_code');
+                $contract_transaction->property_name        = Request::get('property_name_update')[$i];
+                $contract_transaction->property_id          = $property_id[0];
+                $contract_transaction->save();
+                //dump($contract_transaction);
+            }
+        }
+
         if(Auth::user()->role !=2){
             return redirect('customer/service/quotation/add/'.Request::get('customer_id'));
         }else{
@@ -232,5 +265,12 @@ class ContractsignController extends Controller
             $customers = Customer::where('role',0)->pluck('company_name','id');
             return view('contract.list-sales')->with(compact('contracts','customers'));
         }
+    }
+
+    public function delete_property(){
+        $delete_property = contract_transaction::find(Request::get('id_property'));
+        $delete_property->delete();
+
+        return redirect('customer/service/contract/sign/form/'.Request::get('id_quotation').'/'.Request::get('id_customer'));
     }
 }

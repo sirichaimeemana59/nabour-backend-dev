@@ -33,7 +33,7 @@ class ContractsignController extends Controller
         $quotation = $quotation->where('id',$quotation_code);
         $quotation = $quotation->first();
 
-        $type = property_db::find($quotation->property_id);
+
 
         //dd($type);
         $package = new Products;
@@ -48,6 +48,10 @@ class ContractsignController extends Controller
         $contract_property = $contract_property->where('contract_id', $quotation->contract_code);
         $contract_property = $contract_property->get();
 
+        foreach ($contract_property as $row){
+            //dump($row->property_id)  ;
+            $type = property_db::find($row->property_id);
+        }
 
         $p = new Province;
         $provinces = $p->getProvince();

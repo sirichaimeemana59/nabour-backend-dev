@@ -331,6 +331,9 @@
         {{--<div align="center" style="font-size:16px;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</div>--}}
     </div>
     <div style="page-break-after:always;"></div>
+    <?php
+        dump($type->property_type);
+    ?>
     @foreach($contract_property as $row)
     <header align="right" id="header">สัญญาเลขที่ {!! $quotation->contract_code !!} &nbsp;&nbsp;&nbsp;<img src="{{asset('images/logo1.png')}}" alt="" width="10%"></header>
     <div class="con">
