@@ -165,10 +165,10 @@ class CustomerController extends Controller
             //dd($customer);
 
             $customer_company = User_company::find(Request::get('customer_id'));
-            $count = count($customer_company);
+            //$count = count($customer_company);
 
 
-            if ($count != 0) {
+            if ($customer_company) {
                 $user_company = User_company::find(Request::get('customer_id'));
                 $user_company->company_name_en = Request::get('company_name_en');
                 $user_company->customer_id = Request::get('customer_id');
