@@ -10,6 +10,6 @@ class Property extends GeneralModel
 
     public function latest_contract ()
     {
-        return $this->hasOne('App\BackendModel\contract','property_id','id');
+        return $this->hasOne('App\BackendModel\contract_transaction','property_id','id');
     }
 }

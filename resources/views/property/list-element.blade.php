@@ -54,7 +54,7 @@
 					@endif
 				</td>
 				@if(!empty($row->latest_contract->property_id))
-						<td>{!! $row->latest_contract->contract_code !!}</td>
+						<td>{!! $row->latest_contract->contract_id !!}</td>
 					@else
 						<td>ไม่พบข้อมูลสัญญา</td>
 				@endif
