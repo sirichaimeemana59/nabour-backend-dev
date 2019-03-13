@@ -102,6 +102,7 @@ class PropertyController extends Controller {
         $property_demo->property_test_name = null;
         $property_demo->contact_name = null;
         $property_demo->tel_contact = null;
+        $property_demo->lead_id = null;
         $property_demo->default_password = "demo1234";
         $property_demo->save();
 
