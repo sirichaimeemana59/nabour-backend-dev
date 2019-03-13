@@ -252,8 +252,8 @@
 
                                     @foreach($contract_property as $row)
                                         <tr class="item-row">
-                                            <td>
-                                                <select name="property_id[]" id="property_id" class="form-control" {!! $disabled !!} required style="text-align: left;" OnChange="result_Name(this);">
+                                            <td style="text-align: left; width:500px;">
+                                                <select name="property_id[]" id="property_id" class="form-control" {!! $disabled !!} required style="text-align: left;width: 500px;" OnChange="result_Name(this);">
                                                     <option value="">กรุณาเลือกนิติบุคคล</option>
                                                         @foreach($property as $prow)
                                                             <?php
@@ -399,7 +399,7 @@
     </div>
     {{--end delete--}}
     <div id="property_select" style="display:none;">
-        <select name="property_id_update[]" id="property_id" class="form-control" required OnChange="result_Name(this);">
+        <select name="property_id_update[]" id="property_id" class="form-control" required OnChange="result_Name(this);" style="width: 500px;">
             <option value="">กรุณาเลือกนิติบุคคล</option>
             @foreach($property as $prow)
                 <option value="{!! $prow['id'] !!}|{!! $prow['property_name_th'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
@@ -459,12 +459,12 @@
         $(function () {
             $('.add_directer').on('click', function (e){
                 e.preventDefault();
-                var property = '<select name="property_id_update[]" class="price_service" OnChange="result_Name(this);">'+ $('#property_select select').html() + '</select>';
+                var property = '<select name="property_id_update[]" class="price_service" OnChange="result_Name(this);" style="width: 500px;">'+ $('#property_select select').html() + '</select>';
 
                 var tRowTmp = [
                     '<tr class="item-row">',
                     '<input type="hidden" name="" value="" />',
-                    '<td>'+property+'</td>',
+                    '<td style="text-align: left;width:500px;">'+property+'</td>',
                     '<td><input type="hidden" class="toValidate form-control input-sm"/></td>',
                     '<td><input type="text" name="property_name_update[]" value="" class="toValidate form-control input-sm tName" required/></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
