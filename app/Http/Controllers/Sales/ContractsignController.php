@@ -47,16 +47,20 @@ class ContractsignController extends Controller
         $contract_property = $contract_property->where('contract_id', $quotation->contract_code);
         $contract_property = $contract_property->get();
 
+        $type_array = array();
         foreach ($contract_property as $row){
             //dump($row->property_id)  ;
-            $type = property_db::find($row->property_id);
-        }
+            $type = property::find($row->property_id);
+            $type = $type->toArray();
 
+            $type_array[] = $type;
+
+        }
 
         $p = new Province;
         $provinces = $p->getProvince();
 
-        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package','type','contract_property'));
+        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package','type_array','contract_property'));
     }
 
 
@@ -96,6 +100,7 @@ class ContractsignController extends Controller
             $quotation_service = new Quotation_transaction;
             $quotation_service = $quotation_service->where('quotation_id', $id);
             $quotation_service = $quotation_service->get();
+
 
             $property = new Property;
             $property = $property->get();
@@ -271,6 +276,6 @@ class ContractsignController extends Controller
         $delete_property = contract_transaction::find(Request::get('id_property'));
         $delete_property->delete();
 
-        return redirect('customer/service/contract/sign/form/'.Request::get('id_quotation').'/'.Request::get('id_customer'));
+        return redirect('customer/service/sales/contract/sign/form/'.Request::get('id_quotation').'/'.Request::get('id_customer'));
     }
 }
