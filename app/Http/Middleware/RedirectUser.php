@@ -18,11 +18,11 @@ class RedirectUser
     {
         if( Auth::check() || Auth::viaRemember()) {
             if( Auth::user()->role == 0)
-                return redirect ('customer/customer/list');
+                return redirect ('customer/leads/list');
             else if( Auth::user()->role == 1 )
-                return redirect ('customer/customer/list');
+                return redirect ('customer/leads/list');
             else if( Auth::user()->role == 2 )
-                return redirect ('sales/quotation/list');
+                return redirect ('customer/sales/leads/list');
             else
                 return redirect ('auth/logout')->send();
         } else return $next($request);

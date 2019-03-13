@@ -709,17 +709,7 @@
         }
 
         function changeActiveStatus (pid,flag) {
-            $.ajax({
-                url     : $('#root-url').val()+"/customer/property/status",
-                method	: "POST",
-                data 	: ({pid:pid,status:flag}),
-                dataType: "json",
-                success: function (r) {
-                    if(r.result) {
-                        location.reload();
-                    }
-                }
-            });
+
         }
 	</script>
 	<link rel="stylesheet" href="{!!url('/')!!}/js/select2/select2.css">

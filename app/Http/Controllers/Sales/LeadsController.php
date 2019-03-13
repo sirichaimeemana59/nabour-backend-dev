@@ -38,8 +38,8 @@ class LeadsController extends Controller
                 $p_rows = $p_rows->where('channel', '=', Request::get('channel_id'));
             }
 
-            if (Request::get('type_id')) {
-                $p_rows = $p_rows->where('type', '=', Request::get('type_id'));
+            if (Request::get('type_property')) {
+                $p_rows = $p_rows->where('type', '=', Request::get('type_property'));
             }
             //dd(Request::get('channel_id'));
         }
@@ -76,7 +76,7 @@ class LeadsController extends Controller
             $lead->province         =Request::get('province');
             $lead->postcode         =Request::get('postcode');
             $lead->channel          =Request::get('channel');
-            $lead->type             =Request::get('type');
+            $lead->type             =empty(Request::get('type'))?null:Request::get('type');
             $lead->sales_status     =Request::get('sales_status');
             $lead->sale_id          =Auth::user()->id;
             $lead->company_name     =Request::get('company_name');
@@ -89,9 +89,9 @@ class LeadsController extends Controller
         $_lead->get();
 
         if(Auth::user()->role !=2){
-            return redirect('customer/Lead_form/add/list')->with(compact('_lead'));
+            return redirect('customer/leads/list')->with(compact('_lead'));
         }else{
-            return redirect('customer/sales/Lead_form/add/list')->with(compact('_lead'));
+            return redirect('customer/sales/leads/list')->with(compact('_lead'));
         }
 
 
@@ -124,14 +124,15 @@ class LeadsController extends Controller
             $lead = Customer::find($id);
             $lead->fill(Request::all());
             $lead->status_leads = Request::get('status_leads');
+            $lead->type             =empty(Request::get('type'))?null:Request::get('type');
             $lead->save();
             //dump($lead->toArray());
         }
 
         if(Auth::user()->role !=2) {
-            return redirect('customer/Lead_form/add/list');
+            return redirect('customer/leads/list');
         }else{
-            return redirect('customer/sales/Lead_form/add/list');
+            return redirect('customer/sales/leads/list');
         }
     }
 
@@ -160,6 +161,23 @@ class LeadsController extends Controller
             return redirect('customer/Lead_form/add/list');
         }else{
             return redirect('customer/sales/Lead_form/add/list');
+        }
+    }
+
+    public function view_data(){
+        if(Request::isMethod('post')) {
+            $_lead = Customer::find(Request::get('id'));
+
+            //dump($_lead->toArray());
+
+            $p = new Province;
+            $provinces = $p->getProvince();
+
+            $sale = new User;
+            $sale = $sale->where('role','=',2);
+            $sale = $sale->get();
+
+            return view('lead.lead_view')->with(compact('_lead','provinces','sale'));
         }
     }
 }

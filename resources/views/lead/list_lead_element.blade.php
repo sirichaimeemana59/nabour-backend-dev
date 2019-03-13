@@ -3,6 +3,7 @@
     $to=0;
     $allpage=0;
     $status_leads=unserialize(constant('status_leads'));
+    $type_property=unserialize(constant('LEADS_TYPE'));
 ?>
 @if($p_rows->count() > 0)
     <?php
@@ -43,10 +44,11 @@
                 <tr>
                     <th width="6%">เลขที่</th>
                     <th width="9%">วันที่สร้าง</th>
-                    <th width="20%">ชื่อ - สกุล</th>
-                    <th width="15%">เบอร์โทร</th>
-                    <th width="15%">พนักงานขาย</th>
+                    <th width="18%">ชื่อ - สกุล</th>
+                    <th width="13%">เบอร์โทร</th>
+                    <th width="10%">พนักงานขาย</th>
                     <th width="9%">ใบเสนอราคา</th>
+                    <th width="10%">ประเภท</th>
                     <th width="10%">สถานะ</th>
                     <th width="*">การจัดการ</th>
                 </tr>
@@ -64,6 +66,7 @@
                         <td>{!!$row->phone !!}</td>
                         <td>@if($row->latest_sale){!!$row->latest_sale->name!!}@else ไม่พบข้อมูล @endif</td>
                         <td class="text-right">{!! $doc_count > 0 ? $doc_count : 'ไม่มีข้อมูล'; !!}</td>
+                        <td>@if($row->type != null){!! $type_property[$row->type] !!}@else ไม่พบข้อมูล @endif</td>
                         <td>@if($row->status_leads){!!$status_leads[$row->status_leads]!!}@else ไม่พบข้อมูล @endif</td>
                         <td>
                             <div class="btn-group left-dropdown">
@@ -77,6 +80,19 @@
                                         $class='edit-lead-detail';
                                     }
                                     ?>
+                                        @if(Auth::user()->role !=2)
+                                            <li><a href="#" class="view" data-toggle="modal" data-target="#view-lead" data-id="{!!$row->id!!}">
+                                                    <i class="fa-eye"></i>ดู
+                                                </a>
+                                            </li>
+                                                @else
+                                            <li><a href="#" class="view_sales" data-toggle="modal" data-target="#view-lead-sales" data-id="{!!$row->id!!}">
+                                                    <i class="fa-eye"></i>ดู
+                                                </a>
+                                            </li>
+                                        @endif
+
+
                                     <li><a href="#" class="edit {!! $class !!}" data-toggle="modal" data-target="#edit-lead" data-vehicle-id="{!!$row->id!!}">
                                             <i class="fa-pencil-square-o"></i>แก้ไข
                                         </a>

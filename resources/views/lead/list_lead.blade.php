@@ -46,6 +46,10 @@
                                 {!! Form::select('status_leads',unserialize(constant('status_leads')),null,array('class'=>'form-control','required')) !!}
                             </div>
 
+                            <div class="col-sm-3">
+                                {!! Form::select('type_property',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
+                            </div>
+
                         </div>
 
                         <div class="row">
@@ -223,6 +227,52 @@
         </div>
     </div>
     {{--end update --}}
+
+    {{--view --}}
+    <div class="modal fade" id="view-lead" role="dialog" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">รายละเอียด Lead</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="lead-view" class="form">
+
+                            </div>
+                        </div>
+                    </div>
+                    <span class="v-loading">กำลังค้นหาข้อมูล...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--end view --}}
+
+    {{--view sales--}}
+    <div class="modal fade" id="view-lead-sales" role="dialog" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">รายละเอียด Lead</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="view-leadsales" class="form">
+
+                            </div>
+                        </div>
+                    </div>
+                    <span class="v-loading">กำลังค้นหาข้อมูล...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--end view sales--}}
 
     {{--delete--}}
     <div class="modal fade" id="delete">
@@ -542,7 +592,7 @@
                 if (typeof $(this).data('id') !== 'undefined') {
 
                     data_id = $(this).data('id');
-                    console.log(data_id);
+                    //console.log(data_id);
                 }
 
                 $('#lead_id').val(data_id);
@@ -707,6 +757,48 @@
             $('#note').modal('show');
             $('#note_detail').val(note_detail);
         })
+
+
+        $('#panel-lead-list').on('click','.view',function (){
+            var id = $(this).data('id');
+            $('.v-loading').show();
+            $('#lead-view').empty();
+            //console.log(5555);
+            $.ajax({
+                url    : $('#root-url').val()+"/customer/view/detail/leads",
+                method : 'post',
+                dataType: 'html',
+                data : ({'id':id}),
+                success: function (r) {
+                    $('.v-loading').hide();
+                    $('#lead-view').html(r);
+                },
+                error : function () {
+
+                }
+            })
+        });
+
+        $('#panel-lead-list').on('click','.view_sales',function (){
+            //alert('aaa');
+            var id = $(this).data('id');
+            $('.v-loading').show();
+            $('#view-leadsales').empty();
+            //console.log(4444);
+            $.ajax({
+                url    : $('#root-url').val()+"/customer/view/detail/leads/sales",
+                method : 'post',
+                dataType: 'html',
+                data : ({'id':id}),
+                success: function (r) {
+                    $('.v-loading').hide();
+                    $('#view-leadsales').html(r);
+                },
+                error : function () {
+
+                }
+            })
+        });
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
