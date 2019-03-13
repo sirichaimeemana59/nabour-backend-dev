@@ -322,14 +322,23 @@
             <tr>
                 <td width="35%" style="font-size:16px;"><div>ประเภทโครงการ</div></td>
                 <td align="left" style="font-size:16px;"><div>:
-                             {!! $property_type[$type->property_type] !!}
+                        @foreach($type_array as $trow)
+                            @if($row->property_id == $trow['id'])
+                                {!! $property_type[$trow['property_type']]!!}
+                            @endif
+                        @endforeach
                     </div></td>
             </tr>
 
             <tr>
                 <td width="35%" style="font-size:16px;"><div>จำนวนยูนิต</div></td>
                 <td align="left" style="font-size:16px;"><div>:
-                        {!! $type->unit_size !!}  ยูนิต
+                        @foreach($type_array as $trow)
+                            @if($row->property_id == $trow['id'])
+                                {!! $trow['unit_size'] !!} ยูนิต
+                            @endif
+                        @endforeach
+
                     </div></td>
             </tr>
 

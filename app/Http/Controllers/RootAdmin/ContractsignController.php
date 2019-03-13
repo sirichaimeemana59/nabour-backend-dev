@@ -48,15 +48,20 @@ class ContractsignController extends Controller
         $contract_property = $contract_property->where('contract_id', $quotation->contract_code);
         $contract_property = $contract_property->get();
 
+        $type_array = array();
         foreach ($contract_property as $row){
             //dump($row->property_id)  ;
             $type = property_db::find($row->property_id);
-        }
+            $type = $type->toArray();
 
+            $type_array[] = $type;
+
+        }
+        //dump($type_array);
         $p = new Province;
         $provinces = $p->getProvince();
 
-        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package','type','contract_property'));
+        return view('contract.contractdocument')->with(compact('quotation','provinces','quotation_service','package','type_array','contract_property'));
     }
 
 
