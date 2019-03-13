@@ -42,12 +42,12 @@
                 <thead>
                 <tr>
                     <th width="6%">เลขที่</th>
-                    <th width="15%">วันที่สร้าง</th>
+                    <th width="9%">วันที่สร้าง</th>
                     <th width="20%">ชื่อ - สกุล</th>
-                    <th width="*">เบอร์โทร</th>
-                    <th width="*">พนักงานขาย</th>
-                    <th width="120px">ใบเสนอราคา</th>
-                    <th width="120px">สถานะ</th>
+                    <th width="15%">เบอร์โทร</th>
+                    <th width="15%">พนักงานขาย</th>
+                    <th width="9%">ใบเสนอราคา</th>
+                    <th width="10%">สถานะ</th>
                     <th width="*">การจัดการ</th>
                 </tr>
                 </thead>
