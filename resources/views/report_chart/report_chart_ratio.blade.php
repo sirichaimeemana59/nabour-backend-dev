@@ -35,7 +35,7 @@
                             </div>
                             <label class="col-sm-1 control-label">ประเภท</label>
                             <div class="col-sm-3">
-                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','placeholder'=>'ประเภท')) !!}
+                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control')) !!}
                             </div>
                         </div>
                         <br>
