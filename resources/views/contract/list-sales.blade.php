@@ -32,12 +32,7 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <select name="c_id" id="c_id" class="form-control" required>
-                                    <option value="">รายชื่อลูกค้า</option>
-                                    @foreach($customers as $key => $row)
-                                        <option value="{!! $key !!}">{!! $row !!}</option>
-                                    @endforeach
-                                </select>
+                                <input class="form-control" size="25" placeholder="ชื่อบริษัท" name="c_id">
                             </div>
 
                             <div class="col-sm-6 text-right">

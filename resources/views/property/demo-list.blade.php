@@ -31,9 +31,18 @@
 					<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
 						<div class="row">
 							<div class="col-sm-3 block-input">
-								<input class="form-control" size="25" placeholder="{!! trans('messages.name') !!}" name="name">
+								<input class="form-control" size="25" placeholder="ชื่อนิติบุคคล" name="name">
 							</div>
-							<div class="col-sm-9 text-right ">
+
+							<div class="col-sm-3 block-input">
+								<input class="form-control" size="25" placeholder="ชื่อผู้ใช้งาน" name="name_used">
+							</div>
+
+							<div class="col-sm-3 block-input">
+								<input class="form-control" size="25" placeholder="ชื่อผู้ติดต่อ" name="contact_name">
+							</div>
+
+							<div class="col-sm-12 text-right ">
 								<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>
 								<button type="button" class="btn btn-secondary @if(isset($demo)) d-search-property @else p-search-property @endif">{!! trans('messages.search') !!}</button>
 							</div>

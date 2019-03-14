@@ -38,7 +38,7 @@
     <tr>
         <th width="7%">เลขที่</th>
         <th width="140px">เลขที่สัญญา</th>
-        <th width="*">ลูกค้า</th>
+        <th width="*">ชื่อบริษัท</th>
         <th width="170px">Sales</th>
         <th width="150px">วันที่เริ่ม</th>
         <th width="150px">วันที่สิ้นสุด</th>

@@ -48,7 +48,7 @@
                                 <select name="sale_id" id="sale_id" class="form-control" required>
                                     <option value="">พนักงานขาย</option>
                                     @foreach($sales as $key => $row)
-                                        <option value="{!! $key !!}">{!! $row !!}</option>
+                                        <option value="{!! $row['id'] !!}">{!! $row['name'] !!}</option>
                                     @endforeach
                                 </select>
                             </div>

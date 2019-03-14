@@ -321,20 +321,26 @@ class PropertyController extends Controller {
             $props = $props->where('province','=',Request::get('province'));
         }
 
+        if(Request::get('developer_group_id')) {
+            $props = $props->where('developer_group_id','=',Request::get('developer_group_id'));
+        }
+
         if(Request::get('package')){
-            $props = $props->whereHas('lastest_contract', function ($q) {
+            $props = $props->whereHas('latest_contract', function ($q) {
                 $q ->where('package','=',Request::get('package'));
             });
         }
-        if(Request::get('developer_group_id')){
-            $props = $props->whereHas('lastest_contract', function ($q) {
-                $q ->where('developer_group_id','=',Request::get('developer_group_id'));
+
+        if(Request::get('contract_code')){
+            //dd(Request::get('contract_code'));
+            $props = $props->whereHas('latest_contract', function ($q) {
+                $q ->where('contract_id','=',Request::get('contract_code'));
             });
         }
 
         //Join table
         if(Request::get('property_type')){
-            $props = $props->whereHas('lastest_contract', function ($q) {
+            $props = $props->whereHas('latest_contract', function ($q) {
                 $q ->where('property_type','=',Request::get('property_type'));
             });
         }//Join table
@@ -382,6 +388,20 @@ class PropertyController extends Controller {
                     ->orWhere('property_name_en','like',"%".Request::get('name')."%");
             });
         }
+
+         if(Request::get('name_used')) {
+             $props = $props->whereHas('sale_property',function ($q) {
+                 $q ->where('property_test_name','like',"%".Request::get('name_used')."%");
+             });
+         }
+
+        if(Request::get('contact_name')) {
+            $props = $props->whereHas('sale_property',function ($q) {
+                $q ->where('contact_name','like',"%".Request::get('contact_name')."%");
+            });
+        }
+
+
         $p_rows = $props->with('sale_property')->orderBy('updated_at','DESC')->paginate(50);
         $p = new Province;
         $provinces = $p->getProvince();

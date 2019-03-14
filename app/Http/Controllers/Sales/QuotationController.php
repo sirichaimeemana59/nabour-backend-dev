@@ -395,7 +395,7 @@ class QuotationController extends Controller
             return view('quotation.list-element-sales')->with(compact('quotations'));
 
         } else {
-            $customers = Customer::where('role',1)->select('firstname','lastname','id')->get();
+            $customers = Customer::where('role',1)->where('sale_id', Auth::user()->id)->select('firstname','lastname','id')->get();
             if( $customers ) $customers = $customers->toArray();
             return view('quotation.list-sales')->with(compact('quotations','customers'));
         }

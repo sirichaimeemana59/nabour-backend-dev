@@ -41,20 +41,24 @@
 								{!! Form::select('province', $provinces,null,['id'=>'property-province','class'=>'form-control']) !!}
 							</div>
 
-							<div class="col-sm-3">
-								{!! Form::select('sign_status', [0 => 'สถานะสัญญา', 1 => 'ยังไม่หมดสัญญา', 2 => 'หมดสัญญา'],null,['id'=>'property-province','class'=>'form-control']) !!}
+							<div class="col-sm-3 block-input">
+								<input class="form-control" size="25" placeholder="เลขที่สัญญา" name="contract_code">
 							</div>
+
+							{{--<div class="col-sm-3">--}}
+								{{--{!! Form::select('sign_status', [0 => 'สถานะสัญญา', 1 => 'ยังไม่หมดสัญญา', 2 => 'หมดสัญญา'],null,['id'=>'property-province','class'=>'form-control']) !!}--}}
+							{{--</div>--}}
 						</div>
 
 						<div class="row">
-							<div class="col-sm-3">
-								<select class="form-control" name="package">
-									<option value="">Package</option>
-									@foreach($package as $pac)
-										<option value="{!!$pac->id!!}">{!!$pac->name!!}</option>
-									@endforeach
-								</select>
-							</div>
+							{{--<div class="col-sm-3">--}}
+								{{--<select class="form-control" name="package">--}}
+									{{--<option value="">Package</option>--}}
+									{{--@foreach($package as $pac)--}}
+										{{--<option value="{!!$pac->id!!}">{!!$pac->name!!}</option>--}}
+									{{--@endforeach--}}
+								{{--</select>--}}
+							{{--</div>--}}
 							<div class="col-sm-3">
 								<select name="developer_group_id" id="" class="form-control">
 									<option value="">กลุ่มผู้บริหารนิติบุคคล</option>
@@ -63,7 +67,7 @@
 									@endforeach
 								</select>
 							</div>
-							<div class="col-sm-6 text-right ">
+							<div class="col-sm-12 text-right ">
 								<button type="reset" class="btn btn-white @if(isset($demo)) reset-s-btn1 @else reset-s-btn @endif">{!! trans('messages.reset') !!}</button>
 								<button type="button" class="btn btn-secondary @if(isset($demo)) d-search-property @else p-search-property @endif">{!! trans('messages.search') !!}</button>
 							</div>

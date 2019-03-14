@@ -399,6 +399,10 @@ class QuotationController extends Controller
             $quotations = $quotations->where('lead_id',Request::get('leads_id'));
         }
 
+        if(Request::get('sale_id')) {
+            $quotations = $quotations->where('sales_id',Request::get('sale_id'));
+        }
+
         $quotations = $quotations->orderBy('quotation_code','desc')->paginate(500);
 
         $sales = new BackendUser;

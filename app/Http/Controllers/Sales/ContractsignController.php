@@ -257,8 +257,10 @@ class ContractsignController extends Controller
             $contracts = $contracts->where('contract_code','like','%'.Request::get('c_no').'%');
         }
 
-        if( Request::get('c_id') ) {
-            $contracts = $contracts->where('customer_id',Request::get('c_id'));
+        if(Request::get('c_id')) {
+            $contracts = $contracts->whereHas('customer', function ($q) {
+                $q ->where('company_name','like',"%".Request::get('c_id')."%");
+            });
         }
 
         $contracts = $contracts->orderBy('contract_code','desc')->paginate(25);
