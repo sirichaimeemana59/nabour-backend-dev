@@ -162,87 +162,76 @@ class CustomerController extends Controller
             $customer->status           = Request::get('status');
             $customer->sale_id          = Request::get('sale_id');
             $customer->save();
+            //dd($customer);
 
-            $customer_company = User_company::find(Request::get('customer_id'));
-
-            //dd(count($customer_company));
-
-            //if($customer_company){
-                //$count = count($customer_company);
-            //}else{
-                //$count=0;
-            //}
-
-
-
-            if($customer_company){
-                $user_company = User_company::find(Request::get('customer_id'));
-                $user_company->company_name_en      =  Request::get('company_name_en');
-                $user_company->customer_id          =  Request::get('customer_id');
-                $user_company->tax_id               =  Request::get('tax_id');
-                $user_company->date_register        =  Request::get('date_register');
-                $user_company->registered_capital   =  Request::get('registered_capital');
-                $user_company->type_company         =  Request::get('type_company');
-                $user_company->address_no           =  Request::get('address_no');
-                $user_company->street_th            =  Request::get('street_th');
-                $user_company->address_th           =  Request::get('address_th');
-                $user_company->province_company     =  Request::get('province_company');
-                $user_company->postcode_company     =  Request::get('postcode_company');
-                $user_company->tel_company          =  Request::get('tel_company');
-                $user_company->fax_company          =  Request::get('fax_company');
-                $user_company->phone_company        =  Request::get('phone_company');
-                $user_company->mail_company         =  Request::get('mail_company');
-
-                if(!empty(Request::get('directer_company'))){
-                    $directer[] = Request::get('directer_company');
-
-                    $count = count($directer);
-
-                    for ($i = 0; $i < $count; $i++) {
-                        $cut_directer = implode(",", $directer[$i]);
-                    }
-                }
-
-                $user_company->directer_company     =  empty($cut_directer)?null:$cut_directer;;
-                $user_company->save();
-               //dd($user_company);
-            }else{
-                if(!empty(Request::get('company_name_en'))){
-                    $user_company = new User_company;
-                    $user_company->company_name_en      =  Request::get('company_name_en');
-                    $user_company->customer_id          =  Request::get('customer_id');
-                    $user_company->tax_id               =  Request::get('tax_id');
-                    $user_company->date_register        =  Request::get('date_register');
-                    $user_company->registered_capital   =  Request::get('registered_capital');
-                    $user_company->type_company         =  Request::get('type_company');
-                    $user_company->address_no           =  Request::get('address_no');
-                    $user_company->street_th            =  Request::get('street_th');
-                    $user_company->address_th           =  Request::get('address_th');
-                    $user_company->province_company     =  Request::get('province_company');
-                    $user_company->postcode_company     =  Request::get('postcode_company');
-                    $user_company->tel_company          =  Request::get('tel_company');
-                    $user_company->fax_company          =  Request::get('fax_company');
-                    $user_company->phone_company        =  Request::get('phone_company');
-                    $user_company->mail_company         =  Request::get('mail_company');
-                    if(!empty(Request::get('directer_company'))){
-                        $directer[] = Request::get('directer_company');
-
-                        $count = count($directer);
-
-                        for ($i = 0; $i < $count; $i++) {
-                            $cut_directer = implode(",", $directer[$i]);
-                        }
-                    }
-                    $user_company->directer_company     =  empty($cut_directer)?null:$cut_directer;;
-
-                    //dd($user_company);
-                    $user_company->save();
-                }
-            }
+//            $customer_company = User_company::find(Request::get('customer_id'));
+//
+//            if($customer_company){
+//                $user_company = User_company::find(Request::get('customer_id'));
+//                $user_company->company_name_en      =  Request::get('company_name_en');
+//                $user_company->customer_id          =  Request::get('customer_id');
+//                $user_company->tax_id               =  Request::get('tax_id');
+//                $user_company->date_register        =  Request::get('date_register');
+//                $user_company->registered_capital   =  Request::get('registered_capital');
+//                $user_company->type_company         =  Request::get('type_company');
+//                $user_company->address_no           =  Request::get('address_no');
+//                $user_company->street_th            =  Request::get('street_th');
+//                $user_company->address_th           =  Request::get('address_th');
+//                $user_company->province_company     =  Request::get('province_company');
+//                $user_company->postcode_company     =  Request::get('postcode_company');
+//                $user_company->tel_company          =  Request::get('tel_company');
+//                $user_company->fax_company          =  Request::get('fax_company');
+//                $user_company->phone_company        =  Request::get('phone_company');
+//                $user_company->mail_company         =  Request::get('mail_company');
+//
+//                if(!empty(Request::get('directer_company'))){
+//                    $directer[] = Request::get('directer_company');
+//
+//                    $count = count($directer);
+//
+//                    for ($i = 0; $i < $count; $i++) {
+//                        $cut_directer = implode(",", $directer[$i]);
+//                    }
+//                }
+//
+//                $user_company->directer_company     =  empty($cut_directer)?null:$cut_directer;;
+//                $user_company->save();
+//               //dd($user_company);
+//            }else{
+//                if(!empty(Request::get('company_name_en'))){
+//                    $user_company = new User_company;
+//                    $user_company->company_name_en      =  Request::get('company_name_en');
+//                    $user_company->customer_id          =  Request::get('customer_id');
+//                    $user_company->tax_id               =  Request::get('tax_id');
+//                    $user_company->date_register        =  Request::get('date_register');
+//                    $user_company->registered_capital   =  Request::get('registered_capital');
+//                    $user_company->type_company         =  Request::get('type_company');
+//                    $user_company->address_no           =  Request::get('address_no');
+//                    $user_company->street_th            =  Request::get('street_th');
+//                    $user_company->address_th           =  Request::get('address_th');
+//                    $user_company->province_company     =  Request::get('province_company');
+//                    $user_company->postcode_company     =  Request::get('postcode_company');
+//                    $user_company->tel_company          =  Request::get('tel_company');
+//                    $user_company->fax_company          =  Request::get('fax_company');
+//                    $user_company->phone_company        =  Request::get('phone_company');
+//                    $user_company->mail_company         =  Request::get('mail_company');
+//                    if(!empty(Request::get('directer_company'))){
+//                        $directer[] = Request::get('directer_company');
+//
+//                        $count = count($directer);
+//
+//                        for ($i = 0; $i < $count; $i++) {
+//                            $cut_directer = implode(",", $directer[$i]);
+//                        }
+//                    }
+//                    $user_company->directer_company     =  empty($cut_directer)?null:$cut_directer;;
+//
+//                    //dd($user_company);
+//                    $user_company->save();
+//                }
+//            }
 
 
-            //dd($user_company);
-            //dump($customer->toArray());
         }
         return redirect('customer/customer/list');
     }

@@ -122,15 +122,23 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">ชื่อบริษัท</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="company_name" type="text" required value="{!! $customer->company_name !!}">
+                                <input class="form-control" name="sale_id" type="hidden" required value="{!! $customer->sale_id !!}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <input type="hidden" name="company_id" value="{!! $customer->company_id !!}">
                             <input type="hidden" name="role" value="{!! $customer->role !!}">
                         </div>
 
-                        @if(empty($customer->user_company->id))
-                                @include('customer.user_company_form')
-                            @else
-                                @include('customer.user_company_edit')
-                        @endif
+                        {{--@if(empty($customer->user_company->id))--}}
+                                {{--@include('customer.user_company_form')--}}
+                            {{--@else--}}
+                                {{--@include('customer.user_company_edit')--}}
+                        {{--@endif--}}
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
                                 <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
