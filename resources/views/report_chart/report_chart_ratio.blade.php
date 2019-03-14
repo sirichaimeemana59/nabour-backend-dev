@@ -381,6 +381,7 @@
                 $('.show-chart').show();
                 $('.chart-none-quotation').hide();
                 $('.quotation').show();
+
                 $.each(h.approved, function (i,v) {
                     rDataSource.push({type:month[i],value:v,number:h._approved[i]});
                 });
@@ -531,8 +532,21 @@
                 var per = ((approved_sum/total_quotation)*100).toFixed(2);
 
                 $.each(h.approved_sum, function (i,v) {
-                    var con_ = parseInt(h._approved_sum[i])
-                    dataSource_bar.push({type:month[i],value:parseInt(v),number:parseInt(con_)});
+                    var con_ = h._approved_sum[i];
+                    if(v == 0 && con_ == 0){
+                        con_ = null;
+                        v = null;
+                    }else if(v == 0 && con_ != 0){
+                        con_ = parseInt(con_);
+                        v = null;
+                    }else if(v != 0 && con_ == 0){
+                        con_ = null;
+                        v = parseInt(v);
+                    }else{
+                        con_ = parseInt(con_);
+                        v = parseInt(v);
+                    }
+                    dataSource_bar.push({type:month[i],value:v,number:con_});
                 });
                 //console.log(dataSource_bar);
 

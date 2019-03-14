@@ -619,7 +619,7 @@
 
         //start chart bar quotation/contract
         function renderGraph_quotation_sum (h) {
-            console.log(h._approved);
+            // console.log(h._approved);
             $('.chart').show();
             $('.search_year_quotation').hide();
             $('.search_year_lead').hide();
@@ -645,10 +645,23 @@
 
             $.each(h.approved, function (i,v) {
                     var con_ = h._approved[i];
-                    dataSource_bar.push({type:month[i],value:parseInt(v),number:parseInt(con_)});
+                    if(v == 0 && con_ == 0){
+                        con_ = null;
+                        v = null;
+                    }else if(v == 0 && con_ != 0){
+                        con_ = parseInt(con_);
+                        v = null;
+                    }else if(v != 0 && con_ == 0){
+                        con_ = null;
+                        v = parseInt(v);
+                    }else{
+                        con_ = parseInt(con_);
+                        v = parseInt(v);
+                    }
+                    dataSource_bar.push({type:month[i],value:v,number:con_});
             });
 
-            //console.log(dataSource_bar);
+            console.log(dataSource_bar);
 
             text_ ="Quotation/Contract";
 
