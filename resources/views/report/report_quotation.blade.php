@@ -90,7 +90,7 @@
                     {{--<td style="border-bottom: 1px solid black;"><span style="color: black;"></span></td>--}}
                     <td colspan="3" style="border-bottom: 1px solid black; padding:0 0 5px 5px;">Email : </td>
                     <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black; padding:0 0 5px 5px;"> {!! $quotation->latest_lead->email !!}</td>
-                    <td style="color: black; padding:0 0 5px 5px;">Email : </td>
+                    <td style="color: black; padding:0 0 5px 5px;border-bottom: 1px solid black;">Email : </td>
                     <td style="color: black; padding:0 0 5px 5px;">{!! $quotation->latest_sale->email !!}</td>
                 </tr>
                 <tr>
@@ -179,7 +179,7 @@
                 <td align="center" style="vertical-align: top; font-weight: bold; padding:5px;">บริษัท โอกาสพลัส จำกัด<br><br>
                     _____________________________<br>
                     ( วีรยุทธ  งานดี  )<br>
-                    Sales & Marketing Director</td>
+                    Technology Director</td>
                 <td align="center" style="font-weight: bold; color: black; padding:5px;">Aprroval to Payment<br><br>
                     Signature  ____________________________<br><br>
                     Name (_____________________________)<br><br>
