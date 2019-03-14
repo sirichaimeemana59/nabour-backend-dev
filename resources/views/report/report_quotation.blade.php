@@ -91,7 +91,7 @@
                     <td colspan="3" style="border-bottom: 1px solid black; padding:0 0 5px 5px;">Email : </td>
                     <td colspan="2" style="border-right: 1px solid black; border-bottom: 1px solid black; padding:0 0 5px 5px;"> {!! $quotation->latest_lead->email !!}</td>
                     <td style="color: black; padding:0 0 5px 5px;border-bottom: 1px solid black;">Email : </td>
-                    <td style="color: black; padding:0 0 5px 5px;">{!! $quotation->latest_sale->email !!}</td>
+                    <td style="color: black; padding:0 0 5px 5px;border-bottom: 1px solid black;">{!! $quotation->latest_sale->email !!}</td>
                 </tr>
                 <tr>
                     <td colspan="4" style="color: black; padding:0 0 0 5px;">payment(การชำระเงิน)</td>
