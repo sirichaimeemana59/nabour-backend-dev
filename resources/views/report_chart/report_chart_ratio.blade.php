@@ -378,6 +378,7 @@
 
 
             if(approved >0 || _approved > 0){
+                $('.show-chart').show();
                 $('.chart-none-quotation').hide();
                 $('.quotation').show();
                 $.each(h.approved, function (i,v) {
@@ -523,6 +524,7 @@
             }
 
             if(approved_sum >0 || _approved_sum > 0){
+                $('.show-chart').show();
                 $('.chart-none-quotation-bar').hide();
                 $('.quotation-bar').shiftKey();
                 var total_quotation = approved_sum+_approved_sum;
