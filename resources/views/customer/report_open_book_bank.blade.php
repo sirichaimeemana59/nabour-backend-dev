@@ -26,7 +26,6 @@
 @section('content')
     <?php
     $count_contract = count($contract);
-    //dd($customer->user_company->directer_company);
     ?>
     @foreach($contract as $row)
         <div class="content">
@@ -37,7 +36,7 @@
                 </tr>
             </table>
             <br>
-            <div style="text-align: right;"><p>รหัสสัญญา :  {!! $row->contract_code !!}</p><p>วันที่ {!! localDate(Date('Y-d-m')) !!}</p></div>
+            <div style="text-align: right;"><p>รหัสสัญญา :  {!! $row->contract_code !!}</p><p>วันที่ {!! localDate(Date('Y-m-d')) !!}</p></div>
 
             <div>
                 <p>ชื่อสถานประการ(ภาษาไทย) : {!! $customer->company_name !!}</p>
