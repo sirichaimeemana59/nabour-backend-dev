@@ -28,17 +28,6 @@
                     </div>
                     <div class="panel-body search-form">
                     <form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">
-                        {{--<div class="row">--}}
-                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.from_date') !!}</label>--}}
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::text('from-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-from-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
-                            {{--</div>--}}
-                            {{--<label class="col-sm-1 control-label">{!! trans('messages.Report.to_date') !!}</label>--}}
-                            {{--<div class="col-sm-3">--}}
-                                {{--{!! Form::text('to-date', null, array('class'=>'form-control datepicker','data-format'=>'yyyy/mm/dd','id' => 'ie-search-to-date','autocomplete'=>'off','data-language'=>App::getLocale())); !!}--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<br>--}}
                         <div class="row">
                             <label class="col-sm-1 control-label">แหล่งที่มา</label>
                             <div class="col-sm-3">
@@ -174,6 +163,7 @@
                     dataType: "json",
                     method: 'post',
                     success: function (h) {
+                        //console.log(h);
                         renderGraph_ratio(h);
                         renderGraph_quotation(h);
                         renderGraph_quotation_sum_ratio(h);
@@ -233,32 +223,36 @@
                 customer += h.customer[i] << 0;
             }
 
-            var per = ((customer/(leads+customer))*100).toFixed(2);
-            //Math.ceil(per);
+            if(leads > 0 || customer > 0){
+                var per = ((customer/(leads+customer))*100).toFixed(2);
+                //Math.ceil(per);
 
-            $.each(h.leads, function (i,v) {
-                if(h.leads) {
-                    dataSource_ratio.push({type:month[i],value:v,number:h.customer[i]});
-                }
-            });
+                $.each(h.leads, function (i,v) {
+                    if(h.leads) {
+                        dataSource_ratio.push({type:month[i],value:v,number:h.customer[i]});
+                    }
+                });
 
-            text_ ="Leads/Customer Ratio in " + Math.ceil(per) + "%";
-            //console.log(dataSource_ratio);
+                text_ ="Leads/Customer Ratio in " + Math.ceil(per) + "%";
+                //console.log(dataSource_ratio);
 
-            $('#chart_ratio').dxChart('instance').option('dataSource', dataSource_ratio);
-            $('#chart_ratio').dxChart('instance').render();
+                $('#chart_ratio').dxChart('instance').option('dataSource', dataSource_ratio);
+                $('#chart_ratio').dxChart('instance').render();
 
-            $('#reqs-per-second-ratio').dxCircularGauge('instance').option('value', Math.ceil(per));
-            $('#reqs-per-second-ratio').dxCircularGauge('instance').render();
+                $('#reqs-per-second-ratio').dxCircularGauge('instance').option('value', Math.ceil(per));
+                $('#reqs-per-second-ratio').dxCircularGauge('instance').render();
 
-            $('#chart_ratio').dxChart('instance').option('title', text_);
-            $('#chart_ratio').dxChart('instance').render();
+                $('#chart_ratio').dxChart('instance').option('title', text_);
+                $('#chart_ratio').dxChart('instance').render();
 
-            $('#per-ratio-lead').html("Leads/Customer Ratio in " + Math.ceil(per) + "%");
-            $('#per_ratio').html(Math.ceil(per));
-            $('#total_lead_ratio').html("Total Leads is. " + leads);
-            $('#total_customer_ratio').html("Total Customer is. " + customer);
-
+                $('#per-ratio-lead').html("Leads/Customer Ratio in " + Math.ceil(per) + "%");
+                $('#per_ratio').html(Math.ceil(per)+"%");
+                $('#total_lead_ratio').html("Total Leads is. " + leads);
+                $('#total_customer_ratio').html("Total Customer is. " + customer);
+            }else{
+                $('.chart-none-lead').show();
+                $('.lead').hide();
+            }
             //console.log(dataSource_target);
         }
 
@@ -380,25 +374,31 @@
             var per = ((approved/total_quotation)*100).toFixed(2);
 
 
-            $.each(h.approved, function (i,v) {
-                rDataSource.push({type:month[i],value:v,number:h._approved[i]});
-            });
+            if(approved >0 || _approved > 0){
+                $.each(h.approved, function (i,v) {
+                    rDataSource.push({type:month[i],value:v,number:h._approved[i]});
+                });
 
-            text_ ="Quotation/Contract Ratio in " + Math.ceil(per) + "%";
+                text_ ="Quotation/Contract Ratio in " + Math.ceil(per) + "%";
 
-            $('#chart_quotation_ratio').dxChart('instance').option('dataSource', rDataSource);
-            $('#chart_quotation_ratio').dxChart('instance').render();
+                $('#chart_quotation_ratio').dxChart('instance').option('dataSource', rDataSource);
+                $('#chart_quotation_ratio').dxChart('instance').render();
 
-            $('#reqs-per-second-quotation').dxCircularGauge('instance').option('value', Math.ceil(per));
-            $('#reqs-per-second-quotation').dxCircularGauge('instance').render();
+                $('#reqs-per-second-quotation').dxCircularGauge('instance').option('value', Math.ceil(per));
+                $('#reqs-per-second-quotation').dxCircularGauge('instance').render();
 
-            $('#chart_quotation_ratio').dxChart('instance').option('title', text_);
-            $('#chart_quotation_ratio').dxChart('instance').render();
+                $('#chart_quotation_ratio').dxChart('instance').option('title', text_);
+                $('#chart_quotation_ratio').dxChart('instance').render();
 
-            //$('#per').html("Quotation/Contract Ratio in " + per + "%");
-            $('#per_quotation').html(Math.ceil(per));
-            $('#total_quotation_app').html("Quotation Approved " + approved);
-            $('#total_quotation_nonapp').html("Quotation Non-Approved " + _approved);
+                //$('#per').html("Quotation/Contract Ratio in " + per + "%");
+                $('#per_quotation').html(Math.ceil(per)+"%");
+                $('#total_quotation_app').html("Quotation Approved " + approved);
+                $('#total_quotation_nonapp').html("Quotation Non-Approved " + _approved);
+            }else{
+                $('.quotation').hide();
+                $('.chart-none-quotation').show();
+            }
+
         }
 
         $(function(){
@@ -517,22 +517,28 @@
                 _approved_sum += h._approved_sum[i] << 0;
             }
 
-            var total_quotation = approved_sum+_approved_sum;
-            var per = ((approved_sum/total_quotation)*100).toFixed(2);
+            if(approved_sum >0 || _approved_sum > 0){
+                var total_quotation = approved_sum+_approved_sum;
+                var per = ((approved_sum/total_quotation)*100).toFixed(2);
 
-            $.each(h.approved_sum, function (i,v) {
+                $.each(h.approved_sum, function (i,v) {
                     var con_ = parseInt(h._approved_sum[i])
                     dataSource_bar.push({type:month[i],value:parseInt(v),number:parseInt(con_)});
-            });
-            console.log(dataSource_bar);
+                });
+                //console.log(dataSource_bar);
 
-            text_ ="Quotation/Contract";
+                text_ ="Quotation/Contract";
 
-            $('#chart_bar_ratio').dxChart('instance').option('dataSource', dataSource_bar);
-            $('#chart_bar_ratio').dxChart('instance').render();
+                $('#chart_bar_ratio').dxChart('instance').option('dataSource', dataSource_bar);
+                $('#chart_bar_ratio').dxChart('instance').render();
 
-            $('#chart_bar_ratio').dxChart('instance').option('title', text_);
-            $('#chart_bar_ratio').dxChart('instance').render();
+                $('#chart_bar_ratio').dxChart('instance').option('title', text_);
+                $('#chart_bar_ratio').dxChart('instance').render();
+            }else{
+                $('.quotation-bar').hide();
+                $('.chart-none-quotation-bar').show();
+            }
+
 
         }
         $('.reset-s-btn').on('click',function () {

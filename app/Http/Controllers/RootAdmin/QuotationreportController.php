@@ -134,20 +134,10 @@ class QuotationreportController extends Controller
             $channel = Request::get('channel_id');
             $type = Request::get('type_id');
 
-            if (Request::get('from-date')) {
 
-                $month = array('1'=>'Jan','2'=>'Feb','3'=>'Mar','4'=>'Apr','5'=>'May','6'=>'Jun','7'=>'Jul','8'=>'Aug','9'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
-                foreach ($month as $key => $value){
-                    $date = array($from . " 00:00:00", $to . " 00:00:00");
-
-                    $data = $p_rows
-                        ->select(DB::raw('COUNT(*) as count'))
-                        ->whereBetween('created_at', $date)
-                        ->whereMonth('created_at','=',$key)
-                        ->get();
-                    $information[]  = $data->count->toArray();
-                }
-                //dump($information);
+            if (Request::get('from-date') != null) {
+                $date = array($from . " 00:00:00", $to . " 00:00:00");
+                $p_rows = $p_rows->whereBetween('created_at', $date);
             }
 
 

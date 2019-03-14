@@ -348,7 +348,7 @@
                     rDataSource.push({type:month[i],value:v,number:h.customer[i]});
                 }
             });
-            console.log(per);
+            //console.log(per);
 
             text_ = "Leads/Customer Ratio in " + Math.ceil(per) + "%";
 
@@ -363,7 +363,7 @@
 
             $('#per').html("Leads/Customer Ratio in " + Math.ceil(per) + "%");
             // text ="Leads/Customer Ratio in " + per + "%";
-            $('#per_').html(Math.ceil(per));
+            $('#per_').html(Math.ceil(per)+"%");
             $('#total_lead').html("Total Leads is. " + leads);
             $('#total_customer').html("Total Customer is. " + customer);
         }
@@ -512,7 +512,7 @@
             $('#chart_quotation').dxChart('instance').render();
 
             $('#per-line-quotation').html("Quotation/Contract Ratio in " + Math.ceil(per) + "%");
-            $('#per_quotation').html(Math.ceil(per));
+            $('#per_quotation').html(Math.ceil(per)+"%");
             $('#total_lead_quotation').html("Quotation Approved " + approved);
             $('#total_customer_quotation').html("Quotation Non-Approved " + _approved);
         }

@@ -27,30 +27,8 @@
     }
 </style>
 
-{{--<div class="row">--}}
-    {{--<div class="panel-body search-form">--}}
-        {{--<form method="POST" id="search-form" action="#" accept-charset="UTF-8" class="form-horizontal">--}}
-            {{--<div class="row" style="align: left;">--}}
-                {{--<label class="col-sm-9 control-label">ปี</label>--}}
-                {{--<div class="col-sm-2">--}}
-                    {{--<select name="year" id="" class="form-control">--}}
-                        {{--@foreach($year as $key => $value)--}}
-                            {{--<option value="{!! $value !!}">{!! $value !!}</option>--}}
-                        {{--@endforeach--}}
-                    {{--</select>--}}
-                {{--</div>--}}
-                {{--<button type="reset" class="btn btn-white reset-s-btn">{!! trans('messages.reset') !!}</button>--}}
-                {{--<button type="button" class="btn btn-secondary" id="search-year">{!! trans('messages.search') !!}</button>--}}
-            {{--</div>--}}
-        {{--</form>--}}
-    {{--</div>--}}
-{{--</div>--}}
+<div class="panel panel-default lead">
 
-{{--start lead/customer ratio--}}
-<div class="panel panel-default">
-    {{--<div class="panel-heading">--}}
-        {{--<span id="per-ratio-lead"></span>--}}
-    {{--</div>--}}
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-2">
@@ -69,15 +47,22 @@
             </div>
             <div class="col-sm-8">
                 <div id="chart_ratio"></div>
-                {{--<div id="types"></div>--}}
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default chart-none-lead" style="display: none; text-align: center;">
+    <div class="panel-body">
+        <div class="row">
+            {!! trans('messages.feesBills.not_found_report') !!}
         </div>
     </div>
 </div>
 {{--stop lead/customer ratio--}}
 
 {{--start quotation/contract ratio--}}
-<div class="panel panel-default">
+<div class="panel panel-default quotation">
     <div class="panel-heading">
         <span id="per"></span>
     </div>
@@ -104,10 +89,18 @@
         </div>
     </div>
 </div>
+
+<div class="panel panel-default chart-none-quotation" style="display: none; text-align: center;">
+    <div class="panel-body">
+        <div class="row">
+            {!! trans('messages.feesBills.not_found_report') !!}
+        </div>
+    </div>
+</div>
 {{--stop quotation/contract ratio--}}
 
 {{--start quotation/contract ratio bar--}}
-<div class="panel panel-default">
+<div class="panel panel-default quotation-bar">
     <div class="panel-heading">
         <span id="per"></span>
     </div>
@@ -122,6 +115,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default chart-none-quotation-bar" style="display: none; text-align: center;">
+    <div class="panel-body">
+        <div class="row">
+            {!! trans('messages.feesBills.not_found_report') !!}
         </div>
     </div>
 </div>
