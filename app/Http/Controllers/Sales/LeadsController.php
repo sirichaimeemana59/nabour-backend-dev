@@ -80,6 +80,7 @@ class LeadsController extends Controller
             $lead->sales_status     =Request::get('sales_status');
             $lead->sale_id          =Auth::user()->id;
             $lead->company_name     =Request::get('company_name');
+            $lead->tax_id           =Request::get('tax_id');
             $lead->role             =1;
             $lead->save();
             //dump($lead->toArray());
@@ -125,6 +126,7 @@ class LeadsController extends Controller
             $lead->fill(Request::all());
             $lead->status_leads = Request::get('status_leads');
             $lead->type             =empty(Request::get('type'))?null:Request::get('type');
+            $lead->tax_id           =Request::get('tax_id');
             $lead->save();
             //dump($lead->toArray());
         }

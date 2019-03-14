@@ -103,6 +103,14 @@
         {!! Form::select('status_leads',unserialize(constant('status_leads')),null,array('class'=>'form-control','required')) !!}
     </div>
 </div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">เลขประจำตัวผู้เสียภาษี</label>
+    <div class="col-sm-4">
+        <input class="form-control" name="tax_id" type="text" required value="{!!$_lead->tax_id !!}">
+    </div>
+</div>
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-white" data-dismiss="modal">{!!trans('messages.cancel')!!}</button>

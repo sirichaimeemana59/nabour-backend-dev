@@ -60,7 +60,7 @@
                 <tr>
                     <td style="color: black; padding:0 0 0 5px; width: 10%">Taxes ID</td>
                     <td style="color: black; padding:0 0 0 5px;">:</td>
-                    <td colspan="6" style="color: black; padding:0 0 0 5px; border-right: 1px solid black;"> -</td>
+                    <td colspan="6" style="color: black; padding:0 0 0 5px; border-right: 1px solid black;"> {!! $quotation->latest_lead->tax_id !!}</td>
                     <td style="color: black; padding:0 0 0 5px;">Salesperson : </td>
                     <td style="color: black; padding:0 0 0 5px;border-right: 1px solid black;">{!! $quotation->latest_sale->name !!}</td>
                 </tr>

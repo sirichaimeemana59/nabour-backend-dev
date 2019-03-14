@@ -98,6 +98,7 @@ class CustomerController extends Controller
             $customer->status           = 0;
             $customer->sale_id          = Request::get('sale_id');
             $customer->role             =0;
+            $customer->tax_id           = Request::get('tax_id');
             $customer->save();
             //dump($customer->toArray());
         }
@@ -127,7 +128,7 @@ class CustomerController extends Controller
     {
             $customer = Customer::find($id);
 
-            //dump($customer->user_company->count());
+            //dd($customer);
 
             $p = new Province;
             $provinces = $p->get();
@@ -161,6 +162,7 @@ class CustomerController extends Controller
             $customer->active_status    = 'f';
             $customer->status           = Request::get('status');
             $customer->sale_id          = Request::get('sale_id');
+            $customer->tax_id           = Request::get('tax_id');
             $customer->save();
             //dd($customer);
 

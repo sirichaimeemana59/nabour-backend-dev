@@ -193,11 +193,19 @@
                             <div class="col-sm-4">
                                 <input class="form-control" name="postcode" type="text" required>
                             </div>
+
+                            <label class="col-sm-2 control-label">เลขประจำตัวผู้เสียภาษี</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="tax_id" type="text" required>
+                            </div>
                         </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
-                    <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
+
+                <div class="form-group">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                        <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
+                    </div>
                 </div>
                 {!!Form::close(); !!}
             </div>

@@ -190,6 +190,11 @@
                             <div class="col-sm-4">
                                 <input class="form-control" name="postcode" type="text" required>
                             </div>
+
+                            <label class="col-sm-2 control-label">เลขประจำตัวผู้เสียภาษี</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="tax_id" type="text" required>
+                            </div>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -438,7 +443,8 @@
                 company_name 	    : 'required',
                 address 	        : 'required',
                 province  	        : 'required',
-                postcode 	        : 'required'
+                postcode 	        : 'required',
+                tax_id              : 'required'
             },
             errorPlacement: function(error, element) { element.addClass('error'); }
         });

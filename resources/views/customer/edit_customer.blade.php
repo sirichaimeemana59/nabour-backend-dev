@@ -60,12 +60,12 @@
 
                             <label class="col-sm-2 control-label">แหล่งที่มา</label>
                             <div class="col-sm-4">
-                                {!! Form::select('channel',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','required')) !!}
+                                {!! Form::select('channel',unserialize(constant('LEADS_SOURCE')),$customer->channel,array('class'=>'form-control','required')) !!}
                             </div>
 
                             <label class="col-sm-2 control-label">ประเภท</label>
                             <div class="col-sm-4">
-                                {!! Form::select('type',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control','required')) !!}
+                                {!! Form::select('type',unserialize(constant('LEADS_TYPE')),$customer->type,array('class'=>'form-control','required')) !!}
                             </div>
                         </div>
 
@@ -126,6 +126,11 @@
                             <div class="col-sm-4">
                                 <input class="form-control" name="company_name" type="text" required value="{!! $customer->company_name !!}">
                                 <input class="form-control" name="sale_id" type="hidden" required value="{!! $customer->sale_id !!}">
+                            </div>
+
+                            <label class="col-sm-2 control-label">เลขประจำตัวผู้เสียภาษี</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" name="tax_id" type="text" required value="{!! $customer->tax_id !!}">
                             </div>
                         </div>
 
@@ -203,7 +208,8 @@
                 company_name 	    : 'required',
                 address 	        : 'required',
                 province  	        : 'required',
-                postcode 	        : 'required'
+                postcode 	        : 'required',
+                tax_id              : 'required'
             },
             errorPlacement: function(error, element) { element.addClass('error'); }
         });
