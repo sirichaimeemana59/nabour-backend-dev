@@ -209,6 +209,8 @@
 
         function renderGraph_ratio (h) {
             $('.show-chart').show();
+            $('.chart-none-lead').hide();
+            $('.lead').show();
             var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             var number = ['12.5','14','19','17','18','25.5','14.0','15.26','25.60','25.69','22.50'];
 
@@ -224,6 +226,7 @@
             }
 
             if(leads > 0 || customer > 0){
+                $('.chart-none-lead').hide();
                 var per = ((customer/(leads+customer))*100).toFixed(2);
                 //Math.ceil(per);
 
@@ -375,6 +378,8 @@
 
 
             if(approved >0 || _approved > 0){
+                $('.chart-none-quotation').hide();
+                $('.quotation').show();
                 $.each(h.approved, function (i,v) {
                     rDataSource.push({type:month[i],value:v,number:h._approved[i]});
                 });
@@ -518,6 +523,8 @@
             }
 
             if(approved_sum >0 || _approved_sum > 0){
+                $('.chart-none-quotation-bar').hide();
+                $('.quotation-bar').shiftKey();
                 var total_quotation = approved_sum+_approved_sum;
                 var per = ((approved_sum/total_quotation)*100).toFixed(2);
 
