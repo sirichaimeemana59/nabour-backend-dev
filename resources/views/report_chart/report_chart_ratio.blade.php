@@ -526,7 +526,7 @@
             if(approved_sum >0 || _approved_sum > 0){
                 $('.show-chart').show();
                 $('.chart-none-quotation-bar').hide();
-                $('.quotation-bar').shiftKey();
+                $('.quotation-bar').show();
                 var total_quotation = approved_sum+_approved_sum;
                 var per = ((approved_sum/total_quotation)*100).toFixed(2);
 
