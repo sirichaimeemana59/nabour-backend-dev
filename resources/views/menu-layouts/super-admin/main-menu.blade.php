@@ -36,6 +36,12 @@
                     <span class="title">นำเข้าข้อมูล Leads</span>
                 </a>
             </li>
+            <li class="{!! (Request::is('customer/customer/data/import/csv') ? 'active' : '') !!}">
+                <a href="{!! url('customer/customer/data/import/csv') !!}">
+                    <i class="fa fa-upload"></i>
+                    <span class="title">นำเข้าข้อมูลลูกค้า</span>
+                </a>
+            </li>
         </ul>
     </li>
 

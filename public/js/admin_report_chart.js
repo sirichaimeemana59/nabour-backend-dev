@@ -661,7 +661,7 @@
                     dataSource_bar.push({type:month[i],value:v,number:con_});
             });
 
-            console.log(dataSource_bar);
+            //console.log(dataSource_bar);
 
             text_ ="Quotation/Contract";
 

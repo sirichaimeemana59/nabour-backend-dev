@@ -396,6 +396,12 @@
                 $('#property_assign_id').val(data_id);
             });
 
+			$('.reset-s-btn').on('click',function () {
+				$(this).closest('form').find("input").val("");
+				$(this).closest('form').find("select option:selected").removeAttr('selected');
+				propertyDemoPage (1);
+			});
+
             $('.panel-body').on('click','.p-paginate-link', function (e){
                 e.preventDefault();
                 propertyDemoPage($(this).attr('data-page'));

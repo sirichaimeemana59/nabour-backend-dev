@@ -147,7 +147,7 @@ $allpage=0;
                                 @endif
                                 @if($p_rows->lastPage() > 1)
                                     <?php
-                                        echo Form::selectRange('page', 1, $customer->lastPage(),$p_rows->currentPage(),['class'=>'form-control p-paginate-select paginate-select']);
+                                        echo Form::selectRange('page', 1, $p_rows->lastPage(),$p_rows->currentPage(),['class'=>'form-control p-paginate-select paginate-select']);
                                         ?>
                                 @endif
                                 @if($p_rows->hasMorePages())

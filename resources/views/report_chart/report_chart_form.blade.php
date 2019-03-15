@@ -52,15 +52,35 @@
                         <div class="row">
                             <label class="col-sm-1 control-label">แหล่งที่มา</label>
                             <div class="col-sm-3">
-                                {!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}
+                                <?php
+                                    $channel = unserialize(constant('LEADS_SOURCE'));
+                                    $type_id = unserialize(constant('LEADS_TYPE'));
+                                ?>
+                                    <select name="channel_id" id="" class="form-control" required>
+                                        <option value="">แหล่งที่มา</option>
+                                        <option value="all">ทั้งหมด</option>
+                                        @foreach($channel as $key => $value)
+                                            <option value="{!! $key !!}">{!! $value !!}</option>
+                                        @endforeach
+                                    </select>
+                                {{--{!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}--}}
                             </div>
                             <label class="col-sm-1 control-label">ประเภท</label>
                             <div class="col-sm-3">
-                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control')) !!}
+                                    <select name="type_id" id="" class="form-control" required>
+                                        <option value="">ประเภท</option>
+                                        <option value="all">ทั้งหมด</option>
+                                        @foreach($type_id as $key => $value)
+                                            @if($key != '')
+                                            <option value="{!! $key !!}">{!! $value !!}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                {{--{!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control')) !!}--}}
                             </div>
                             <label class="col-sm-1 control-label">ปี</label>
                             <div class="col-sm-3">
-                                <select name="year" id="" class="form-control" required>
+                                <select name="year" id="" class="form-control">
                                     <option value="">กรุณาเลือกปี</option>
                                     @foreach($year as $key => $value)
                                         <?php
@@ -93,6 +113,7 @@
                                 <div class="col-sm-3">
                                     <select name="name" id="name" class="form-control">
                                         <option value="">กรุณาเลือกชื่อลูกค้า</option>
+                                        <option value="all">ทั้งหมด</option>
                                         @foreach($p_rows as $row)
                                             <option value="{!! $row->id !!}">{!! $row->firstname !!}  {!! $row->lastname !!}</option>
                                         @endforeach
@@ -103,6 +124,7 @@
                                 <div class="col-sm-3">
                                     <select name="sale_id" id="sale_id" class="form-control">
                                         <option value="">กรุณาเลือกพนักงานขาย</option>
+                                        <option value="all">ทั้งหมด</option>
                                         @foreach($sale as $srow)
                                             <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
                                         @endforeach
@@ -111,7 +133,7 @@
 
                             <label class="col-sm-1 control-label">ปี</label>
                             <div class="col-sm-2">
-                                <select name="year1" id="" class="form-control" required>
+                                <select name="year1" id="" class="form-control">
                                     <option value="">กรุณาเลือกปี</option>
                                     @foreach($year as $key => $value)
                                         <?php
@@ -143,7 +165,8 @@
                             <div class="col-sm-3">
                                 <select name="name" id="name1" class="form-control">
                                     <option value="">กรุณาเลือกชื่อลูกค้า</option>
-                                    @foreach($p_rows as $row)
+                                    <option value="all">ทั้งหมด</option>
+                                @foreach($p_rows as $row)
                                         <option value="{!! $row->id !!}">{!! $row->firstname !!}  {!! $row->lastname !!}</option>
                                     @endforeach
                                 </select>
@@ -153,6 +176,7 @@
                             <div class="col-sm-3">
                                 <select name="sale_id" id="sale_id1" class="form-control">
                                     <option value="">กรุณาเลือกพนักงานขาย</option>
+                                    <option value="all">ทั้งหมด</option>
                                     @foreach($sale as $srow)
                                         <option value="{!!$srow->id!!}">{!!$srow->name!!}</option>
                                     @endforeach

@@ -31,11 +31,31 @@
                         <div class="row">
                             <label class="col-sm-1 control-label">แหล่งที่มา</label>
                             <div class="col-sm-3">
-                                {!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}
+                                <?php
+                                $channel = unserialize(constant('LEADS_SOURCE'));
+                                $type_id = unserialize(constant('LEADS_TYPE'));
+                                ?>
+                                <select name="channel_id" id="" class="form-control" required>
+                                    <option value="">แหล่งที่มา</option>
+                                    <option value="all">ทั้งหมด</option>
+                                    @foreach($channel as $key => $value)
+                                        <option value="{!! $key !!}">{!! $value !!}</option>
+                                    @endforeach
+                                </select>
+                                {{--{!! Form::select('channel_id',unserialize(constant('LEADS_SOURCE')),null,array('class'=>'form-control','placeholder'=>'แหล่งที่มา')) !!}--}}
                             </div>
                             <label class="col-sm-1 control-label">ประเภท</label>
                             <div class="col-sm-3">
-                                {!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control')) !!}
+                                <select name="type_id" id="" class="form-control" required>
+                                    <option value="">ประเภท</option>
+                                    <option value="all">ทั้งหมด</option>
+                                    @foreach($type_id as $key => $value)
+                                        @if($key != '')
+                                            <option value="{!! $key !!}">{!! $value !!}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                {{--{!! Form::select('type_id',unserialize(constant('LEADS_TYPE')),null,array('class'=>'form-control')) !!}--}}
                             </div>
                         </div>
                         <br>
@@ -185,7 +205,7 @@
                         $('#chart-year').css('opacity', '0.6');
                         var parent_ = $(this).parents('form');
                         var data = parent_.serialize();
-                        //alert(year);
+                        //alert(data);
                         $.ajax({
                             url: $('#root-url').val() + "/report_quotation/report/chart/ratio_lead",
                             data: data,

@@ -103,7 +103,8 @@ Route::post('customer/Customer_form/update', 'RootAdmin\CustomerController@updat
 Route::post('customer/Customer_form/delete', 'RootAdmin\CustomerController@destroy');
 Route::post('customer/Customer_form/check', 'RootAdmin\CustomerController@check');
 Route::get('customer/form/add','RootAdmin\CustomerController@add');
-
+Route::get('customer/customer/data/import/csv','RootAdmin\CustomerController@importCSV');
+Route::post('customer/import/add/customer','RootAdmin\CustomerController@importCSVdata');
 
 
 //Open Book Bank

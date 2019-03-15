@@ -275,4 +275,69 @@ class CustomerController extends Controller
 
         return view('customer.report_open_book_bank')->with(compact('customer','provinces','contract'));
     }
+
+    public function importCSV(){
+        return view('customer.import_leads');
+    }
+
+    public function importCSVdata(){
+
+        //dump(Request::input('data_import'));
+
+        $data_array=array();
+        $data = explode(PHP_EOL,Request::get('data_import'));
+        foreach ($data as $datas){
+            $data_array[] = str_getcsv($datas);
+        }
+
+        $result = $this->checkUnitFormat($data_array);
+
+        if($result['result'] == true){
+            foreach ($data_array as $row){
+                $rows = new Customer;
+                $rows->firstname        = $row[0];
+                $rows->lastname         = $row[1];
+                $rows->phone            = $row[2];
+                $rows->email            = $row[3];
+                $rows->address          = $row[4];
+                $rows->province         = $row[5];
+                $rows->postcode         = $row[6];
+                $rows->company_name     = $row[7];
+                $rows->channel          = null;
+                $rows->type             = null;
+                $rows->active_status    = 'f';
+                $rows->status           = 0;
+                $rows->sale_id          = $row[10];
+                $rows->role             =0;
+                $rows->tax_id           = $row[11];
+                $rows->save();
+                //dump($rows);
+            }
+        }else{
+            $msg=$result['messages'];
+            return view('customer.import_leads')->with(compact('msg'));
+        }
+
+        //dump($rows);
+        //dump($data_array);
+        return redirect('customer/customer/list');
+    }
+
+    private function checkUnitFormat ($data) {
+        $valid = true;
+        $msg = "";
+        if(!empty($data)) {
+            foreach($data as $row => $datas) {
+                if(count($datas) != 12) {
+                    $valid = false;
+                    $msg .= 'ข้อมูลบรรทัดที่ '.($row +1).' จำนวนข้อมูลไม่ถูกต้อง<br/>';
+                }
+            }
+            //return true;
+        } else {
+            $valid =  false;
+            $msg = 'ไม่มีข้อมูล';
+        }
+        return array('result'=> $valid, 'messages' => $msg);
+    }
 }
