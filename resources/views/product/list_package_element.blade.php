@@ -47,6 +47,7 @@ $allpage=0;
                     <th width="10%">เลขที่</th>
                     <th width="20%">ชื่อผลิตภัณฑ์</th>
                     <th width="*">รายละเอียด</th>
+                    <th width="10%">ราคาไม่รวม Vat</th>
                     <th width="140px">Action</th>
                 </tr>
                 </thead>
@@ -60,6 +61,7 @@ $allpage=0;
                         <td>{!!$row->product_code!!}</td>
                         <td>{!!$row->name!!}</td>
                         <td>{!!$row->description!!}</td>
+                        <td>{!!number_format($row->price,2)!!}</td>
                             @if($row->is_delete == 1)
                         <td class="action-links">
                             <a href="#" class="edit edit-package btn btn-warning" disabled data-toggle="modal" data-target="#edit-package" data-vehicle-id="{!!$row->id!!}" style="pointer-events: none;">
