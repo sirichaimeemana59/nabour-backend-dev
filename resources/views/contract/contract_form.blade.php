@@ -307,7 +307,6 @@
                 type_service    : 'required',
                 start_date  : 'required',
                 end_date    : 'required',
-                person_name    : 'required',
                 property_name    : 'required'
             },
             errorPlacement: function(error, element) { element.addClass('error'); }
