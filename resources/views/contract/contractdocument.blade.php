@@ -277,7 +277,7 @@
                 <td style="width: 150px;">
                     <p style="text-align: center;">ลงชื่อ..........................................ผู้ใช้บริการ</p>
                     <p></p>
-                    <p style="text-align: center;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</p>
+                    <p style="text-align: center;">@if(!empty($quotation->person_name))( {!! $quotation->person_name !!} ) @else {!! $name !!} @endif</p>
                     <p style="text-align: center;">กรรมการ</p>
                     <p style="text-align: center;">บริษัท {!! $quotation->customer->company_name !!}</p>
                 </td>
@@ -293,7 +293,7 @@
                 <td style="width: 150px;">
                     <p style="text-align: center;">ลงชื่อ..........................................พยาน</p>
                         <br>
-                    <p style="text-align: center;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</p>
+                    <p style="text-align: center;">@if(!empty($quotation->person_name))( {!! $quotation->person_name !!} ) @else {!! $name !!} @endif</p>
                 </td>
                 <td style="width: 150px;">
                     <br><br><br><br><br>
