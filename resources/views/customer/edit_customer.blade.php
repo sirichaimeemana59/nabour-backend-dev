@@ -145,7 +145,7 @@
                                 {{--@include('customer.user_company_edit')--}}
                         {{--@endif--}}
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                <a href="{!! url('customer/customer/list') !!}"><button type="button" class="btn btn-white" data-dismiss="modal">{{ trans('messages.cancel') }}</button></a>
                                 <button type="submit" class="btn btn-primary change-active-status-btn">{{ trans('messages.confirm') }}</button>
                             </div>
                             {!!Form::close(); !!}
