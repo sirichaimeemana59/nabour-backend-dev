@@ -292,7 +292,6 @@
             <tr>
                 <td style="width: 150px;">
                     <p style="text-align: center;">ลงชื่อ..........................................พยาน</p>
-                        <br>
                     <p style="text-align: center;">@if(!empty($quotation->person_name))( {!! $quotation->person_name !!} ) @else {!! $name !!} @endif</p>
                 </td>
                 <td style="width: 150px;">
