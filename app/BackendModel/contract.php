@@ -7,7 +7,7 @@ class contract extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'contract';
-    protected $fillable = ['contract_code','start_date','end_date','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','type_service'];
+    protected $fillable = ['contract_code','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','type_service'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 
@@ -42,5 +42,10 @@ class contract extends GeneralModel
     public function latest_property_nabour ()
     {
         return $this->hasOne('App\Property','id','property_id');
+    }
+
+    public function latest_contract_transection ()
+    {
+        return $this->hasOne('App\BackendModel\contract_transaction','contract_id','contract_code');
     }
 }

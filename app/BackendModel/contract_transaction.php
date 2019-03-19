@@ -7,7 +7,7 @@ class contract_transaction extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'contract_transaction';
-    protected $fillable = ['contract_id','property_name','property_id'];
+    protected $fillable = ['contract_id','property_name','property_id','start_date','end_date'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 

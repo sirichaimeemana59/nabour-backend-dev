@@ -169,18 +169,18 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">วันที่ทำสัญญา</label>
-                        <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" autocomplete="off"   required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
-                        <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" required autocomplete="off"  >
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">วันที่ทำสัญญา</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" autocomplete="off"   required>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control datepicker" data-language="th" required data-format="yyyy-mm-dd" name="end_date" type="text" required autocomplete="off"  >--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ผู้ทำสัญญา</label>
                         <div class="col-sm-10">
@@ -192,7 +192,13 @@
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
                         <div class="col-sm-9">
                             <table class="table table-striped table-condensed" id="itemsTable">
-
+                                <tr>
+                                    <th>นิติบุคคล</th>
+                                    <th>ชื่อบริษัท</th>
+                                    <th>วันที่ทำสัญญา</th>
+                                    <th>วันที่สิ้นสุดสัญญา</th>
+                                    <th>ลบ</th>
+                                </tr>
                             </table>
                         </div>
 
@@ -253,11 +259,11 @@
             @endforeach
         </select>
     </div>
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
+
     <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/nabour-vehicle.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
@@ -266,6 +272,12 @@
     <script type="text/javascript" src="{!!url('/js/nabour-search-form.js')!!}"></script>
     <script type="text/javascript">
         // Override
+
+        $( function() {
+            $( ".start_date" ).datepicker();
+            $( ".end_date" ).datepicker();
+        } );
+
         $(function () {
             $("#property_id").select2({
                 placeholder: "{{ trans('messages.unit_number') }}",
@@ -284,6 +296,8 @@
                     '<input type="hidden" name="" value="" />',
                     '<td style="text-align: left; width:500px;">'+property+'</td>',
                     '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName" required/></td>',
+                    '<td> <input class="input-medium" name="start_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium" name="end_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 
@@ -328,6 +342,8 @@
             $(strName).parents('tr').find('.tName').val(name);
         }
     </script>
+    <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
+    <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">
 @endsection

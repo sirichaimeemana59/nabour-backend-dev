@@ -145,8 +145,6 @@ class ContractsignController extends Controller
 
                 $contract = new contract;
                 $contract->contract_code        = Request::get('contract_code');
-                $contract->start_date           = Request::get('start_date');
-                $contract->end_date             = Request::get('end_date');
                 $contract->grand_total_price    = Request::get('price');
                 $contract->sales_id             = Request::get('sales_id');
                 $contract->customer_id          = Request::get('customer_id');
@@ -168,11 +166,12 @@ class ContractsignController extends Controller
                 $contract_transaction->contract_id          = Request::get('contract_code');
                 $contract_transaction->property_name        = Request::get('property_name')[$i];
                 $contract_transaction->property_id          = $property_id[0];
+                $contract_transaction->start_date           = Request::get('start_date')[$i];
+                $contract_transaction->end_date             = Request::get('end_date')[$i];
                 $contract_transaction->save();
                 //dump($contract_transaction);
             }
         }
-
         return redirect('customer/service/quotation/add/'.Request::get('customer_id'));
     }
 
@@ -181,8 +180,6 @@ class ContractsignController extends Controller
     {
         $contract = contract::find(Request::get('contract_id'));
         $contract->contract_code        = Request::get('contract_code');
-        $contract->start_date           = Request::get('start_date');
-        $contract->end_date             = Request::get('end_date');
         $contract->grand_total_price    = Request::get('price');
         $contract->sales_id             = Request::get('sales_id');
         $contract->customer_id          = Request::get('customer_id');
@@ -200,6 +197,8 @@ class ContractsignController extends Controller
                 $contract_transaction = contract_transaction::find(Request::get('id')[$i]);
                 $contract_transaction->contract_id          = Request::get('contract_code');
                 $contract_transaction->property_name        = Request::get('property_name')[$i];
+                $contract_transaction->start_date           = Request::get('start_date')[$i];
+                $contract_transaction->end_date        = Request::get('end_date')[$i];
                 $contract_transaction->property_id          = $property_id[0];
                 $contract_transaction->save();
                 //dump($contract_transaction);
@@ -215,6 +214,8 @@ class ContractsignController extends Controller
                 $contract_transaction = new contract_transaction;
                 $contract_transaction->contract_id          = Request::get('contract_code');
                 $contract_transaction->property_name        = Request::get('property_name_update')[$i];
+                $contract_transaction->start_date           = Request::get('start_date_update')[$i];
+                $contract_transaction->end_date             = Request::get('end_date_update')[$i];
                 $contract_transaction->property_id          = $property_id[0];
                 $contract_transaction->save();
                 //dump($contract_transaction);

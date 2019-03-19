@@ -218,19 +218,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">วันที่ทำสัญญา</label>
-                        <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required value="{!! $contract->start_date !!}" {!! $disabled !!} autocomplete="off"  >
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">วันที่ทำสัญญา</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date" type="text" required value="{!! $contract->start_date !!}" {!! $disabled !!} autocomplete="off"  >--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>
-                        <div class="col-sm-10">
-                            <input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date" type="text" value="{!! $contract->end_date !!}"  autocomplete="off"  >
-                        </div>
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">วันที่สิ้นสุดสัญญา</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date" type="text" value="{!! $contract->end_date !!}"  autocomplete="off"  >--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ผู้ทำสัญญา</label>
@@ -249,6 +249,14 @@
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
                         <div class="col-sm-9">
                             <table class="table table-striped table-condensed" id="itemsTable">
+                                <tr>
+                                    <th>นิติบุคคล</th>
+                                    <th></th>
+                                    <th>ชื่อบริษัท</th>
+                                    <th>วันที่ทำสัญญา</th>
+                                    <th>วันที่สิ้นสุดสัญญา</th>
+                                    <th>ลบ</th>
+                                </tr>
 
                                     @foreach($contract_property as $row)
                                         <tr class="item-row">
@@ -264,6 +272,8 @@
                                                 </select>
                                             <td>
                                             <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required/></td>
+                                            <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off"></td>
+                                            <td><input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date[]" type="text" value="{!! $row->end_date !!}"  autocomplete="off"></td>
                                             <td>
                                                 <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $customer_id !!}">
                                                     <i class="fa-trash"></i>
@@ -466,6 +476,8 @@
                     '<td style="text-align: left;width:500px;">'+property+'</td>',
                     '<td><input type="hidden" class="toValidate form-control input-sm"/></td>',
                     '<td><input type="text" name="property_name_update[]" value="" class="toValidate form-control input-sm tName" required/></td>',
+                    '<td> <input class="input-medium" name="start_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium" name="end_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 

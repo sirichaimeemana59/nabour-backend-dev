@@ -65,8 +65,8 @@
         @else
             <td>ไม่พบข้อมูล</td>
         @endif
-        <td>{!! localDate($row->start_date) !!}</td>
-        <td>{!! localDate($row->end_date) !!}</td>
+        <td>@if(empty($row->latest_contract_transection)) - @else {!! localDate($row->latest_contract_transection->start_date) !!} @endif</td>
+        <td>@if(empty($row->latest_contract_transection)) - @else {!! localDate($row->latest_contract_transection->end_date) !!} @endif</td>
         <?php
             if($row->status == 1 AND $row->latest_quotation->status == 1){
                 $status = "เซ็นสัญญาแล้ว";
