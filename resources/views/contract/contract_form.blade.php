@@ -190,7 +190,7 @@
 
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <table class="table table-striped table-condensed" id="itemsTable">
                                 <tr>
                                     <th>นิติบุคคล</th>
@@ -289,13 +289,13 @@
         $(function () {
             $('.add_directer').on('click', function (e){
                 e.preventDefault();
-                var property = '<select name="property_id[]" class="price_service" OnChange="result_Name(this);" style="width:500px;">'+ $('#property_select select').html() + '</select>';
+                var property = '<select name="property_id[]" class="price_service" OnChange="result_Name(this);" style="width:300px;">'+ $('#property_select select').html() + '</select>';
 
                 var tRowTmp = [
                     '<tr class="item-row">',
                     '<input type="hidden" name="" value="" />',
-                    '<td style="text-align: left; width:500px;">'+property+'</td>',
-                    '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName" required/></td>',
+                    '<td style="text-align: left; width:300px;">'+property+'</td>',
+                    '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName input-medium" required/></td>',
                     '<td> <input class="input-medium" name="start_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
                     '<td> <input class="input-medium" name="end_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
