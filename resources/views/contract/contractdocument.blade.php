@@ -49,7 +49,7 @@
 
         #pageFooter::after {
             /* counter-reset: page 2; */
-            content: counter(page) " / 7" ;
+            content: counter(page) " / 6" ;
             text-align: right;
             font-size:16px;
         }
