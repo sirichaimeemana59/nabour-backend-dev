@@ -247,11 +247,10 @@
                     {{--</div>--}}
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <table class="table table-striped table-condensed" id="itemsTable">
                                 <tr>
                                     <th>นิติบุคคล</th>
-                                    <th></th>
                                     <th>ชื่อบริษัท</th>
                                     <th>วันที่ทำสัญญา</th>
                                     <th>วันที่สิ้นสุดสัญญา</th>
@@ -260,7 +259,7 @@
 
                                     @foreach($contract_property as $row)
                                         <tr class="item-row">
-                                            <td style="text-align: left; width:500px;">
+                                            <td style="text-align: left; width:300px;">
                                                 <select name="property_id[]" id="property_id" class="form-control" {!! $disabled !!} required style="text-align: left;width: 300px;" OnChange="result_Name(this);">
                                                     <option value="">กรุณาเลือกนิติบุคคล</option>
                                                         @foreach($property as $prow)
@@ -270,7 +269,7 @@
                                                             <option value="{!! $prow['id'] !!}|{!! $prow['property_name_th'] !!}" {!! $selected !!} >{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
                                                         @endforeach
                                                 </select>
-                                            <td>
+                                            </td>
                                             <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required/></td>
                                             <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off"></td>
                                             <td><input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date[]" type="text" value="{!! $row->end_date !!}"  autocomplete="off"></td>
@@ -409,7 +408,7 @@
     </div>
     {{--end delete--}}
     <div id="property_select" style="display:none;">
-        <select name="property_id_update[]" id="property_id" class="form-control" required OnChange="result_Name(this);" style="width: 500px;">
+        <select name="property_id_update[]" id="property_id" class="form-control" required OnChange="result_Name(this);" style="width: 300px;">
             <option value="">กรุณาเลือกนิติบุคคล</option>
             @foreach($property as $prow)
                 <option value="{!! $prow['id'] !!}|{!! $prow['property_name_th'] !!}">{!! $prow['property_name_th']." ".$prow['property_name_en'] !!}</option>
@@ -472,12 +471,10 @@
 
                 var tRowTmp = [
                     '<tr class="item-row">',
-                    '<input type="hidden" name="" value="" />',
                     '<td style="text-align: left;width:300px;">'+property+'</td>',
-                    '<td><input type="hidden" class="toValidate form-control input-sm"/></td>',
                     '<td><input type="text" name="property_name_update[]" value="" class="toValidate form-control input-sm tName input-medium" required/></td>',
-                    '<td> <input class="input-medium" name="start_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
-                    '<td> <input class="input-medium" name="end_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium form-control" name="start_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium form-control" name="end_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 

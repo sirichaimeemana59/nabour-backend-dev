@@ -296,8 +296,8 @@
                     '<input type="hidden" name="" value="" />',
                     '<td style="text-align: left; width:300px;">'+property+'</td>',
                     '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName input-medium" required/></td>',
-                    '<td> <input class="input-medium" name="start_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
-                    '<td> <input class="input-medium" name="end_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium form-control" name="start_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium form-control" name="end_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 
