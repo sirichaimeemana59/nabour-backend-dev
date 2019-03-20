@@ -97,11 +97,15 @@
                         $_service=$quo->lastest_package->status==1?"service_":"";
                         ?>
                         <tr class="item-row">
+                            @if($quo->lastest_package->status!=1)
                             <td>
                                 <a class="btn btn-danger delete-quotation-button" data-id="{!! $quo->id !!}" data-quo-id="{!! $quo->quotation_id !!}">
                                     <i class="fa-trash"></i>
                                 </a>
                             </td>
+                                @else
+                                <td></td>
+                            @endif
                             <td>
                                 @if($quo->lastest_package->status==1)
                                     <select name="_data[{!! $key !!}][service]" class="toValidate form-control input-sm unit-select-project {!! $_service !!}" required OnChange="resultPrice(this.value);">
