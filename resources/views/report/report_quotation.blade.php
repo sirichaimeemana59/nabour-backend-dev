@@ -176,8 +176,8 @@
     <div class="sign">
         <table width="100%" >
             <tr>
-                <td align="center" style="vertical-align: top; font-weight: bold; padding:5px;">บริษัท โอกาสพลัส จำกัด<br><br>
-                    _____________________________<br>
+                <td align="center" style="vertical-align: top; font-weight: bold; padding:5px;">บริษัท โอกาสพลัส จำกัด<br>
+                    <img src="{!! asset('images/signaturepq.png') !!}" alt="" width="200px"><br>
                     ( วีรยุทธ  งานดี  )<br>
                     Technology Director</td>
                 <td align="center" style="font-weight: bold; color: black; padding:5px;">Aprroval to Payment<br><br>

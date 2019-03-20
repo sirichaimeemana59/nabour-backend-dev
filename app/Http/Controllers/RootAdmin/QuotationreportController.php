@@ -90,7 +90,7 @@ class QuotationreportController extends Controller
     public function report()
     {
 
-        $p_rows = Quotation::selectRaw('lead_id,SUM(product_price_with_vat) as sum,SUM(grand_total_price) as sum_total,SUM(product_vat) as sum_vat,count(quotation_code) as count')->where('status', '=', 1)
+        $p_rows = Quotation::selectRaw('lead_id,SUM(product_price_with_vat) as sum,SUM(grand_total_price) as sum_total,SUM(product_vat) as sum_vat,count(quotation_code) as count')
             ->groupBy('lead_id')->paginate(50);
 
         //return($quotation);
