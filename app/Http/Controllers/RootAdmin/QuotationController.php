@@ -248,7 +248,7 @@ class QuotationController extends Controller
             $search = $search->where('quotation_code',Request::get('quotation_code1'));
             $search = $search->first();
 
-            if( !empty(Request::get('_data'))) {
+            if( !empty(Request::get('transaction'))) {
                 foreach (Request::get('transaction') as $t) {
                     $trans = new Quotation_transaction;
                     $service_id = explode("|", $t['service']);

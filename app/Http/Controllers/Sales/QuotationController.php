@@ -140,6 +140,7 @@ class QuotationController extends Controller
         $quotation->sales_id               = Request::get('sales_id');
         $quotation->lead_id                = Request::get('lead_id');
         $quotation->send_email_status      = 0;
+        $quotation->property_name          = Request::get('property_name');
         $quotation->save();
         //dump($quotation->toArray());
 
@@ -241,6 +242,29 @@ class QuotationController extends Controller
 
             }
 
+            $search = new Quotation;
+            $search = $search->where('quotation_code',Request::get('quotation_code1'));
+            $search = $search->first();
+
+            if( !empty(Request::get('transaction'))) {
+                foreach (Request::get('transaction') as $t) {
+                    $trans = new Quotation_transaction;
+                    $service_id = explode("|", $t['service']);
+                    $trans->package_id = $service_id[0];
+                    $trans->project_package = empty($t['project']) ? '0' : str_replace(',', '', $t['project']);
+                    $trans->month_package = empty($t['price']) ? '0' : $t['price'];
+                    $trans->unit_package = empty($t['unit_price']) ? '0' : str_replace(',', '', $t['unit_price']);
+                    $trans->total_package = empty($t['total']) ? '0' : str_replace(',', '', $t['total']);
+                    $trans->lead_id = Request::get('lead_id');
+                    $trans->quotation_code = Request::get('quotation_code1');
+                    $trans->quotation_id = $search->id;
+                    $trans->save();
+
+                    //dd($trans);
+                    //dump($trans->toArray());
+                }
+            }
+
             $grand_total_   =str_replace(',','',Request::get('grand_total_'));
             $vat            =str_replace(',','',Request::get('vat'));
             $discount       =str_replace(',','',Request::get('discount'));
@@ -260,6 +284,7 @@ class QuotationController extends Controller
             $quotation->sales_id               = Request::get('sales_id');
             $quotation->lead_id                = Request::get('lead_id');
             $quotation->send_email_status      = 0;
+            $quotation->property_name          = Request::get('property_name');
             $quotation->save();
             //dd($quotation);
             //dump($quotation->toArray());
@@ -399,5 +424,12 @@ class QuotationController extends Controller
             if( $customers ) $customers = $customers->toArray();
             return view('quotation.list-sales')->with(compact('quotations','customers'));
         }
+    }
+
+    public function delete_quotation(){
+        $quotaion = Quotation_transaction::find(Request::get('id_quotation'));
+        $quotaion->delete();
+
+        return redirect('customer/service/sales/quotation/update/form/'.Request::get('id'));
     }
 }

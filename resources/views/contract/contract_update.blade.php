@@ -235,7 +235,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">ผู้ทำสัญญา</label>
                         <div class="col-sm-10">
-                            <input class="form-control" name="person_name" type="text"  value="{!! $contract->person_name !!}" >
+                            <input class="form-control" name="person_name" {!! $read !!} type="text"  value="{!! $contract->person_name !!}" >
                         </div>
                     </div>
 
@@ -270,11 +270,11 @@
                                                         @endforeach
                                                 </select>
                                             </td>
-                                            <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required/></td>
-                                            <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off"></td>
+                                            <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required {!! $read !!}/></td>
+                                            <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off" ></td>
                                             <td><input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date[]" type="text" value="{!! $row->end_date !!}"  autocomplete="off"></td>
                                             <td>
-                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $customer_id !!}">
+                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $customer_id !!}" {!! $disabled !!}>
                                                     <i class="fa-trash"></i>
                                                 </a>
                                             </td>
@@ -287,7 +287,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-4" style="margin-left: 15%">
-                            <button type="button" class="btn btn-info btn-primary add_directer"><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>
+                            <button type="button" class="btn btn-info btn-primary add_directer" {!! $disabled !!}><i class="fa fa-plus"> </i> เพิ่มนิติบุคคล</button>
                         </div>
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-4">
