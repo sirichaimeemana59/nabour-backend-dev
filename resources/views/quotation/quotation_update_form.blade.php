@@ -81,7 +81,6 @@
                         <th style="width: 20%">Month</th>
                         <th style="width: 20%">Unit_price</th>
                         <th style="width: 15%">{!! trans('messages.feesBills.total') !!}</th>
-                        <th style="width: 15%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -98,7 +97,11 @@
                         $_service=$quo->lastest_package->status==1?"service_":"";
                         ?>
                         <tr class="item-row">
-                            <td></td>
+                            <td>
+                                <a class="btn btn-danger delete-quotation-button" data-id="{!! $quo->id !!}" data-quo-id="{!! $quo->quotation_id !!}">
+                                    <i class="fa-trash"></i>
+                                </a>
+                            </td>
                             <td>
                                 @if($quo->lastest_package->status==1)
                                     <select name="_data[{!! $key !!}][service]" class="toValidate form-control input-sm unit-select-project {!! $_service !!}" required OnChange="resultPrice(this.value);">
@@ -162,11 +165,6 @@
                                     </div>
                                     <input name="_data[{!! $key !!}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{!!$quo->total_package!!}"/>
                                 </td>
-                                <td>
-                                    <a class="btn btn-danger delete-quotation-button" data-id="{!! $quo->id !!}" data-quo-id="{!! $quo->quotation_id !!}">
-                                        <i class="fa-trash"></i>
-                                    </a>
-                                </td>
                         </tr>
                         <?php
                         $sum +=$quo->total_package;
@@ -176,6 +174,7 @@
                 </table>
                 <div class="row">
                     <div class="col-sm-7">
+                        <a href="#" id="addRowBtn" class="btn btn-primary"><i class="fa-plus"></i> {!! trans('messages.feesBills.add_item') !!}</a>
                     </div>
                     <div class="col-md-5 text-right">
                         <div class="row">
@@ -330,13 +329,30 @@
         </div>
     </div>
     {{--end delete--}}
+
+    <div id="invoice-category-template" style="display:none;">
+        <select name="transaction[0][service]"  class="toValidate form-control input-sm price_service"  required OnChange="result_Price(this);">
+            <option value="">กรุณาเลือกค่าบริการ</option>
+            @foreach($service as $_row)
+                <?php
+                if($_row->price_with_vat > 0){
+                    $price_vat1=$_row->price_with_vat;
+                }else{
+                    $price_vat1=$_row->price;
+                }
+                ?>
+                <option value="{!!$_row->id!!}|{!! $price_vat1 !!}">{!!$_row->name!!}</option>
+            @endforeach
+        </select>
+    </div>
 @endsection
 
 @section('script')
+    <?php $t = time(); ?>
     <script type="text/javascript" src="{!!url('/js/number.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.th.js')!!}"></script>
-    <script type="text/javascript" src="{!!url('/js/nabour-create-quotation.js')!!}"></script>
+    <script type="text/javascript" src="{!!url('/')!!}/js/nabour-create-quotation.js?v={!! $t !!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-validate/jquery.validate.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/jquery-ui/jquery-ui.min.js')!!}"></script>
     <script type="text/javascript" src="{!!url('/js/selectboxit/jquery.selectBoxIt.min.js')!!}"></script>

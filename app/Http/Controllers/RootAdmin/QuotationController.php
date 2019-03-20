@@ -233,10 +233,8 @@ class QuotationController extends Controller
     {
         if( !empty(Request::get('_data'))) {
             foreach ( Request::get('_data') as $q) {
-                //dd($q['id_']);
                 $service_id = explode("|",$q['service']);
                 $quotation_service = Quotation_transaction::find($q['id_']);
-                //dd($quotation_service);
                 $quotation_service->lead_id             = $q['lead_id'];
                 $quotation_service->package_id          = $service_id[0];
                 $quotation_service->project_package     = empty($q['project'])?'0':str_replace(',', '',$q['project']);
@@ -244,8 +242,29 @@ class QuotationController extends Controller
                 $quotation_service->unit_package        = empty($q['unit_price'])?'0':str_replace(',', '',$q['unit_price']);
                 $quotation_service->total_package       = empty($q['total1'])?'0':str_replace(',', '',$q['total1']);
                 $quotation_service->save();
-               //dump($quotation_service->toArray());
+            }
 
+            $search = new Quotation;
+            $search = $search->where('quotation_code',Request::get('quotation_code1'));
+            $search = $search->first();
+
+            if( !empty(Request::get('_data'))) {
+                foreach (Request::get('transaction') as $t) {
+                    $trans = new Quotation_transaction;
+                    $service_id = explode("|", $t['service']);
+                    $trans->package_id = $service_id[0];
+                    $trans->project_package = empty($t['project']) ? '0' : str_replace(',', '', $t['project']);
+                    $trans->month_package = empty($t['price']) ? '0' : $t['price'];
+                    $trans->unit_package = empty($t['unit_price']) ? '0' : str_replace(',', '', $t['unit_price']);
+                    $trans->total_package = empty($t['total']) ? '0' : str_replace(',', '', $t['total']);
+                    $trans->lead_id = Request::get('lead_id');
+                    $trans->quotation_code = Request::get('quotation_code1');
+                    $trans->quotation_id = $search->id;
+                    $trans->save();
+
+                    //dd($trans);
+                    //dump($trans->toArray());
+                }
             }
 
             $grand_total_   =str_replace(',','',Request::get('grand_total_'));
@@ -253,7 +272,7 @@ class QuotationController extends Controller
             $discount       =str_replace(',','',Request::get('discount'));
 
             $_total =  ($grand_total_- $vat)+$discount;
-            //dd($_total);
+
             $quotation = new Quotation;
             $quotation = $quotation->find(Request::get('quotation_code'));
 
@@ -269,12 +288,7 @@ class QuotationController extends Controller
             $quotation->send_email_status      = 0;
             $quotation->property_name          = Request::get('property_name');
             $quotation->save();
-            //dd($quotation);
-           //dump($quotation->toArray());
         }
-
-
-
         return redirect('customer/service/quotation/add/'.Request::get('lead_id'));
     }
 

@@ -252,7 +252,7 @@ function rewokeMask () {
     $(".tQty").number( true, 0 );
     $(".tPrice").number( true, 2 );
     $("#unitprice").number(true,2);
-    $(".colTotal").number( true, 2 );
+    // $(".colTotal").number( true, 2 );
 }
 
 function validatePayment () {
