@@ -185,12 +185,19 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">อายุใบเสนอราคา</h3>
+                                <h3 class="panel-title">ข้อมูลใบเสนอราคา</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="tab-pane active" id="member-list">
                                     <div id="member-list-content">
                                         <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">ชื่อโครงการ </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" required class="form-control" name="property_name">
+                                                </div>
+                                            </div>
+
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">วันหมดอายุ </label>
                                                 <div class="col-sm-10">

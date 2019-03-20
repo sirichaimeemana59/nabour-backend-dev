@@ -72,6 +72,8 @@ Route::get('service/quotation/cancel/{id?}', 'RootAdmin\QuotationController@canc
 Route::post('service/quotation/delete', 'RootAdmin\QuotationController@destroy');
 Route::post('service/quotation/check', 'RootAdmin\QuotationController@restore');
 
+Route::post('service/quotation/delete_quotationtransecion', 'RootAdmin\QuotationController@delete_quotation');
+
 Route::any('quotation/list', 'RootAdmin\QuotationController@quotationList');
 Route::any('contract/list', 'RootAdmin\ContractsignController@contractList');
 //End Quotation
@@ -90,6 +92,8 @@ Route::get('service/sales/quotation/success/{id?}', 'Sales\QuotationController@s
 Route::get('service/sales/quotation/cancel/{id?}', 'Sales\QuotationController@cancel');
 Route::post('service/sales/quotation/delete', 'Sales\QuotationController@destroy');
 Route::post('service/sales/quotation/check', 'Sales\QuotationController@restore');
+
+Route::post('service/sales/quotation/delete_quotationtransecion', 'RootAdmin\QuotationController@delete_quotation');
 
 Route::any('quotation/sales/list', 'Sales\QuotationController@quotationList');
 Route::any('contract/sales/list', 'Sales\ContractsignController@contractList');

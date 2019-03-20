@@ -145,6 +145,7 @@ class QuotationController extends Controller
         $quotation->sales_id               = Request::get('sales_id');
         $quotation->lead_id                = Request::get('lead_id');
         $quotation->send_email_status      = 0;
+        $quotation->property_name          = Request::get('property_name');
         $quotation->save();
         //dd($quotation);
         //dump($quotation->toArray());
@@ -266,6 +267,7 @@ class QuotationController extends Controller
             $quotation->sales_id               = Request::get('sales_id');
             $quotation->lead_id                = Request::get('lead_id');
             $quotation->send_email_status      = 0;
+            $quotation->property_name          = Request::get('property_name');
             $quotation->save();
             //dd($quotation);
            //dump($quotation->toArray());
@@ -417,5 +419,12 @@ class QuotationController extends Controller
             if( $customers ) $customers = $customers->toArray();
             return view('quotation.list')->with(compact('quotations','customers','sales'));
         }
+    }
+
+    public function delete_quotation(){
+        $quotaion = Quotation_transaction::find(Request::get('id_quotation'));
+        $quotaion->delete();
+
+        return redirect('customer/service/quotation/update/form/'.Request::get('id'));
     }
 }

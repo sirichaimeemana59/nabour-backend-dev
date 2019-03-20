@@ -124,7 +124,11 @@
                     <tr>
                         <td class="line_table" style="vertical-align: top; padding:5px 0 5px 5px;">{!! $i !!}</td>
                         <td class="line_table" width="65%" style="padding:5px 0 5px 5px;">
-                            {!! $row->lastest_package->name !!}<br>{!! $row->lastest_package->description !!}</td>
+                            {!! $row->lastest_package->name !!}<br>{!! $row->lastest_package->description !!}<br>
+                            @if($row->lastest_package->status == 1 )
+                                - {!! $quotation->property_name !!}
+                            @endif
+                        </td>
                         </td>
                         <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->project_package,0) !!}</td>
                         <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! $row->month_package !!}</td>

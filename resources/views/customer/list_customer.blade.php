@@ -388,6 +388,16 @@
             propertyPageSale (1);
         });
 
+        $('.panel-body').on('click','.p-paginate-link', function (e){
+            e.preventDefault();
+            propertyPage($(this).attr('data-page'));
+        })
+
+        $('.panel-body').on('change','.p-paginate-select', function (e){
+            e.preventDefault();
+            propertyPage($(this).val());
+        })
+
         //update
         $('#panel-lead-list').on('click','.edit-customer' ,function (){
             var id = $(this).data('vehicle-id');

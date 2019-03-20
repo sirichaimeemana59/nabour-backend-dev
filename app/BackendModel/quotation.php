@@ -7,7 +7,7 @@ class Quotation extends GeneralModel
     use SoftDeletes;
     protected $connection   = 'back_office';
     protected $table        = 'quotation';
-    protected $fillable     = ['product_price_with_vat','product_vat','grand_total_price','quotation_code','discount','invalid_date','remark','sales_id','lead_id','send_email_status','status','deleted_at'];
+    protected $fillable     = ['product_price_with_vat','product_vat','grand_total_price','quotation_code','discount','invalid_date','remark','sales_id','lead_id','send_email_status','status','deleted_at','property_name'];
     public $timestamps      = true;
     public $primaryKey = 'id';
     protected $dates = ['deleted_at'];

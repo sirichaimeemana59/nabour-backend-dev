@@ -81,6 +81,7 @@
                         <th style="width: 20%">Month</th>
                         <th style="width: 20%">Unit_price</th>
                         <th style="width: 15%">{!! trans('messages.feesBills.total') !!}</th>
+                        <th style="width: 15%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -161,6 +162,11 @@
                                     </div>
                                     <input name="_data[{!! $key !!}][total1]" required class="tLineTotal" id="_tLineTotal" type="hidden" value="{!!$quo->total_package!!}"/>
                                 </td>
+                                <td>
+                                    <a class="btn btn-danger delete-quotation-button" data-id="{!! $quo->id !!}" data-quo-id="{!! $quo->quotation_id !!}">
+                                        <i class="fa-trash"></i>
+                                    </a>
+                                </td>
                         </tr>
                         <?php
                         $sum +=$quo->total_package;
@@ -236,12 +242,18 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">อายุใบเสนอราคา</h3>
+                                <h3 class="panel-title">ข้อมูลใบเสนอราคา</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="tab-pane active" id="member-list">
                                     <div id="member-list-content">
                                         <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">ชื่อโครงการ </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" required class="form-control" name="property_name" value="{!! $quotation->property_name !!}">
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">วันหมดอายุ </label>
                                                 <div class="col-sm-10">
@@ -279,6 +291,45 @@
     {{--@endforeach--}}
     {{--</select>--}}
     {{--</div>--}}
+    {{--delete--}}
+    <div class="modal fade" id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ลบรายการบริการ</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role !=2)
+                                    {!! Form::model(null,array('url' => array('service/quotation/delete_quotationtransecion'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('service/sales/quotation/delete_quotationtransecion'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @endif
+                                <br>
+                                <input type="hidden" name="id_quotation" class="id_quotation">
+                                <input type="hidden" name="id" class="id">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
+                                    <br>
+
+                                </div>
+                                    <div style="text-align: center;">
+                                        <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                        <button type="submit" class="btn btn-primary btn-lg" name="submit" >ลบ</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end delete--}}
 @endsection
 
 @section('script')
@@ -393,5 +444,13 @@
             $(strPrice).parents('tr').find('.tPrice').val(price);
             calTotal();
         }
+
+        $('.delete-quotation-button').on('click',function(){
+            var id = $(this).data("id");
+            var quotation_id = $(this).data("quo-id");
+            $('.id_quotation').val(id);
+            $('.id').val(quotation_id);
+            $('#delete').modal('show');
+        })
     </script>
 @endsection
