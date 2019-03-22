@@ -80,6 +80,7 @@
                                         $class='edit-lead-detail';
                                     }
                                     ?>
+                                    @if($row->status_leads != 5 AND $row->status_leads != 6)
                                         @if(Auth::user()->role !=2)
                                             <li><a href="#" class="view" data-toggle="modal" data-target="#view-lead" data-id="{!!$row->id!!}">
                                                     <i class="fa-eye"></i>ดู
@@ -129,6 +130,30 @@
                                                     <i class="fa-newspaper-o"></i>หมายเหตุ
                                                 </a>
                                             </li>
+                                        @else
+                                                    @if(Auth::user()->role !=2)
+                                                        <li><a href="#" class="view" data-toggle="modal" data-target="#view-lead" data-id="{!!$row->id!!}">
+                                                                <i class="fa-eye"></i>ดู
+                                                            </a>
+                                                        </li>
+                                                    @else
+                                                        <li><a href="#" class="view_sales" data-toggle="modal" data-target="#view-lead-sales" data-id="{!!$row->id!!}">
+                                                                <i class="fa-eye"></i>ดู
+                                                            </a>
+                                                        </li>
+                                                    @endif
+
+
+                                                    <li><a href="#" class="edit {!! $class !!}" data-toggle="modal" data-target="#edit-lead" data-vehicle-id="{!!$row->id!!}">
+                                                            <i class="fa-pencil-square-o"></i>แก้ไข
+                                                        </a>
+                                                    </li>
+                                                    <li><a href="#" class="note"  data-toggle="tooltip" data-original-title="หมายเหตุ" data-id="{!! $row->id !!}" data-detail="{!! $row->note !!}">
+                                                            {{--<a href="{{url('root/admin/package/delete/'.$row->id)}}" class="btn btn-danger delete-member" data-status="0" data-uid="" data-toggle="tooltip" data-placement="top" data-original-title="ลบ Package" onclick="return confirm('คุณต้องการลบรายการนี้ ใช่หรือไม่ ?')">--}}
+                                                            <i class="fa-newspaper-o"></i>หมายเหตุ
+                                                        </a>
+                                                    </li>
+                                        @endif
                                 </ul>
                             </div>
                         </td>
