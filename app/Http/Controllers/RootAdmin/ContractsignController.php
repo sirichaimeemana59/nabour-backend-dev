@@ -26,22 +26,22 @@ class ContractsignController extends Controller
         $this->middleware('admin');
     }
 
-    public function index($quotation_code = null,$code = null)
+    public function index($id = null)
     {
         $quotation = new contract;
         //$quotation = $quotation->where('lead_id',$lead_id);
-        $quotation = $quotation->where('id',$quotation_code);
+        $quotation = $quotation->where('id',$id);
         $quotation = $quotation->first();
 
 
 
-        //dd($type);
+        //dd($quotation_code);
         $package = new Products;
         $package = $package->where('status', '1');
         $package = $package->get();
 
         $quotation_service = new Quotation_transaction;
-        $quotation_service = $quotation_service->where('quotation_id', $code);
+        $quotation_service = $quotation_service->where('quotation_id', $quotation->id);
         $quotation_service = $quotation_service->get();
 
         $contract_property = new contract_transaction;
@@ -65,21 +65,23 @@ class ContractsignController extends Controller
     }
 
 
-    public function create($id = null, $customer_id = null)
+    public function create($quotation_id = null,$id = null)
     {
         $search = new contract;
-        $search = $search->where('quotation_id', $id);
+        $search = $search->where('quotation_id', $quotation_id);
+        $search = $search->where('id', $id);
         $search = $search->first();
 
-        //dd($search);
+        //dd($id);
 
         if(!empty($search)){
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('id', $id);
+            $quotation1 = $quotation1->where('id', $quotation_id);
             $quotation1 = $quotation1->first();
 
             $contract = new contract;
-            $contract = $contract->where('quotation_id', $id);
+            $contract = $contract->where('quotation_id', $quotation_id);
+            $contract = $contract->where('id', $id);
             $contract = $contract->first();
 
             $contract_property = new contract_transaction;
@@ -87,39 +89,36 @@ class ContractsignController extends Controller
             $contract_property = $contract_property->get();
 
             $count = new contract;
-            $count = $count->where('quotation_id', $id)->where('status','=',1);
+            $count = $count->where('quotation_id', $quotation_id)->where('status','=',1);
+            $count = $count->where('id', $id);
             $count = $count->count();
 
             $count_ = new contract;
-            $count_ = $count_->where('customer_id', $customer_id)->where('status','=',1);
+            $count_ = $count_->where('customer_id', $quotation1->customer_id)->where('status','=',1);
+            $count_ = $count_->where('id', $id);
             $count_ = $count_->count();
 
             $quotation = new Quotation;
-            $quotation = $quotation->where('id', $id);
+            $quotation = $quotation->where('id', $quotation_id);
             $quotation = $quotation->first();
 
             $quotation_service = new Quotation_transaction;
-            $quotation_service = $quotation_service->where('quotation_id', $id);
+            $quotation_service = $quotation_service->where('quotation_id', $quotation_id);
             $quotation_service = $quotation_service->get();
 
             $property = new Property;
             $property = $property->get();
 
-            //dd($count_);
+            //dd($contract);
 
             return view('contract.contract_update')->with(compact('quotation1','quo_id','contract','search','count','count_','quotation','quotation_service','property','contract_property','id','customer_id'));
 
         }else{
             $quotation1 = new Quotation;
-            $quotation1 = $quotation1->where('id', $id);
+            $quotation1 = $quotation1->where('id', $quotation_id);
             $quotation1 = $quotation1->first();
 
-            $lead = new Customer;
-            $lead = $lead->where('id', $id);
-            $lead = $lead->first();
-
             $contract = new contract;
-
 
             $date=date("Y-m-d");
             $cut_date_now=explode("-",$date);
@@ -282,5 +281,33 @@ class ContractsignController extends Controller
         $delete_property->delete();
 
         return redirect('customer/service/contract/sign/form/'.Request::get('id_quotation').'/'.Request::get('id_customer'));
+    }
+
+    public function per($id = null){
+        $quotation1 = new Quotation;
+        $quotation1 = $quotation1->where('id', $id);
+        $quotation1 = $quotation1->first();
+
+//        $lead = new Customer;
+//        $lead = $lead->where('id', $id);
+//        $lead = $lead->first();
+
+        $contract = new contract;
+
+
+        $date=date("Y-m-d");
+        $cut_date_now=explode("-",$date);
+
+        $singg = contract::whereYear('created_at', '=', $cut_date_now[0])
+            ->whereMonth('created_at', '=', $cut_date_now[1])
+            ->get();
+        $sing=$singg->max('contract_code');
+
+        $property = new Property;
+        $property = $property->get();
+
+        //dd($quotation1);
+        return view('contract.contract_form')->with(compact('quotation1','sing','quo_id','contract','property'));
+        //dd($id);
     }
 }

@@ -128,9 +128,15 @@
     @endif
 
     @if(Auth::user()->role ==2)
-        <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/sales/contract/sign/quotation/'.$contract->id.'/'.$contract->latest_quotation->id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
+        <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/sales/contract/sign/quotation/'.$contract->id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
+        @if($contract->status == 1)
+            <a class="btn btn-info btn-success action-float-right" href="{!! url('service/sales/contract/per/'.$contract->latest_quotation->id) !!}"><i class="fa fa-file-o"> </i> ต่อเอกสารสัญญา</a>
+        @endif
     @else
-        <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$contract->id.'/'.$contract->latest_quotation->id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
+        <a class="btn btn-info btn-primary action-float-right" href="{!! url('service/contract/sign/quotation/'.$contract->id) !!}" target="_blank"><i class="fa fa-print"> </i> พิมพ์เอกสารสัญญา</a>
+        @if($contract->status == 1)
+            <a class="btn btn-info btn-success action-float-right" href="{!! url('service/admin/contract/per/'.$contract->latest_quotation->id) !!}"><i class="fa fa-file-o"> </i> ต่อเอกสารสัญญา</a>
+        @endif
     @endif
 
         <?php
@@ -274,7 +280,7 @@
                                             <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off" ></td>
                                             <td><input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date[]" type="text" value="{!! $row->end_date !!}"  autocomplete="off"></td>
                                             <td>
-                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $customer_id !!}" {!! $disabled !!}>
+                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $contract->customer_id !!}" {!! $disabled !!}>
                                                     <i class="fa-trash"></i>
                                                 </a>
                                             </td>

@@ -131,22 +131,24 @@ Route::get('customer/sales/create/book/account/{id?}','Sales\CustomerController@
 //End Customer Sales
 
 //Contract sign no
-Route::get('service/contract/sign/quotation/{quotation_code?}/{code?}', 'RootAdmin\ContractsignController@index');
-Route::get('customer/service/contract/sign/form/{id?}/{customer_id?}', 'RootAdmin\ContractsignController@create');
+Route::get('service/contract/sign/quotation/{id?}', 'RootAdmin\ContractsignController@index');
+Route::get('customer/service/contract/sign/form/{quotation_id?}/{id?}', 'RootAdmin\ContractsignController@create');
 Route::post('service/contract/sign/add', 'RootAdmin\ContractsignController@save');
 Route::post('service/contract/sign/update', 'RootAdmin\ContractsignController@update');
 Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@approved');
 Route::get('service/contract/sign/attachment/{id?}','RootAdmin\ContractsignController@attachment');
 Route::post('customer/Customer_form/delete_property','RootAdmin\ContractsignController@delete_property');
+Route::get('service/admin/contract/per/{id?}','RootAdmin\ContractsignController@per');
 //End Contract
 
 //Contract sign no Sales
-Route::get('service/sales/contract/sign/quotation/{quotation_code?}/{code?}', 'Sales\ContractsignController@index');
-Route::get('customer/service/sales/contract/sign/form/{id?}/{customer_id?}', 'Sales\ContractsignController@create');
+Route::get('service/sales/contract/sign/quotation/{quotation_code?}', 'Sales\ContractsignController@index');
+Route::get('customer/service/sales/contract/sign/form/{quotation_id?}/{id?}', 'Sales\ContractsignController@create');
 Route::post('service/sales/contract/sign/add', 'Sales\ContractsignController@save');
 Route::post('service/sales/contract/sign/update', 'Sales\ContractsignController@update');
 Route::post('customer/sales/contract/approved', 'Sales\ContractsignController@approved');
 Route::post('customer/sales/Customer_form/delete_property','Sales\ContractsignController@delete_property');
+Route::get('service/sales/contract/per/{id?}','Sales\ContractsignController@per');
 //End Contract Sales
 
 //Report Quotation

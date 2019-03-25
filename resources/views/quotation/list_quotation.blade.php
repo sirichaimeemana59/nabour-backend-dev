@@ -109,29 +109,29 @@
                             <td class="action-links">
                                 @if(empty($row->latest_contract->quotation_id) AND $count_ <1)
                                     @if(Auth::user()->role !=2)
-                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"   data-original-title="ออกสัญญา">
                                             @else
-                                                <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="ออกสัญญา">
+                                                <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="ออกสัญญา">
                                                     @endif
                                                     <i class="fa-check"></i>
                                                 </a>
                                                 @else
                                                     @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="รายละเอียดสัญญา">
+                                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->latest_contract->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
                                                             <i class="fa-edit"></i>
                                                         </a>
                                                     @else
-                                                        <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->lead_id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="รายละเอียดสัญญา">
+                                                        <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->latest_contract->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
                                                             <i class="fa-edit"></i>
                                                         </a>
                                                     @endif
                                                 @endif
                                                 @if(Auth::user()->role !=2)
-                                                    <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                                                    <a href="{!! url('service/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top"  data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                                                         <i class="fa-print"></i>
                                                     </a>
                                                 @else
-                                                    <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top" data-toggle="modal" data-target="#edit-package" data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
+                                                    <a href="{!! url('service/sales/quotation/print_quotation/'.$row->id) !!}" class="edit edit-service btn btn-info"  data-toggle="tooltip" data-placement="top"  data-original-title="พิมพ์ใบเสนอราคา" target="_blank">
                                                         <i class="fa-print"></i>
                                                     </a>
                                                 @endif

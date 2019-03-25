@@ -64,7 +64,7 @@
         ?>
         <td>{!! $status !!}</td>
         <td class="action-links">
-            <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->quotation_id.'/'.$row->customer_id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
+            <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->quotation_id.'/'.$row->id) !!}" class="btn btn-info"  data-toggle="tooltip" data-placement="top" data-original-title="ดูสัญญา">
                 <i class="fa-eye"></i>
             </a>
             <a href="{!! url('service/sales/contract/sign/quotation/'.$row->id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
