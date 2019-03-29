@@ -265,3 +265,7 @@ Route::post('root/admin/upload_file/receipt/file/submit', 'RootAdmin\Editreceipt
 Route::post('root/admin/receipt/delete/image','RootAdmin\EditreceiptController@delete');
 //End Edit receipt
 
+//Report Summary
+Route::any('report_admin/report_summary','RootAdmin\ReportsummaryController@index');
+Route::post('report_admin/report_summary_excel','RootAdmin\ReportsummaryController@report');
+//End Report Summary

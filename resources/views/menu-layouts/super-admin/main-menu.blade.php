@@ -117,6 +117,20 @@
             {{--</li>--}}
         {{--</ul>--}}
     {{--</li>--}}
+    <li class="has-sub {!! (Request::is('report_admin/*') ? 'active' : '') !!}">
+        <a href="">
+            <i class="fa fa-area-chart"></i>
+            <span class="title">รายงาน</span>
+        </a>
+        <ul {!! (Request::is('report_admin/*') ? 'style="display:block;"' : '') !!}>
+            {{--report_quotation--}}
+            <li class="{!! (Request::is('report_admin/report_summary') ? 'active' : '') !!}">
+                <a href="{!! url('report_admin/report_summary') !!}">
+                    <span class="title">รายงานสรุปการใช้งาน</span>
+                </a>
+            </li>
+        </ul>
+    </li>
     {{--report Quotation--}}
     <li class="has-sub {!! (Request::is('report_quotation/*') ? 'active' : '') !!}">
         <a href="">

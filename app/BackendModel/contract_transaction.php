@@ -12,8 +12,21 @@ class contract_transaction extends GeneralModel
     public $timestamps      = true;
 
 
-    public function contract ()
+    public function latest_contract ()
     {
-        return $this->hasMany('App\BackendModel\contract','contract_id','id')->orderBy('created_at','desc');
+        return $this->hasOne('App\BackendModel\contract','contract_code','contract_id')->orderBy('created_at','desc');
+    }
+
+    public function latest_property ()
+    {
+        return $this->hasOne('App\BackendModel\Property','id','property_id');
+    }
+
+    public function latest_quotation () {
+        return $this->hasOne('App\BackendModel\Quotation','id','quotation_id');
+    }
+
+    public function customer () {
+        return $this->hasOne('App\BackendModel\Customer','id','customer_id');
     }
 }
