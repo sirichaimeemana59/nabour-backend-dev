@@ -72,7 +72,7 @@ class ContractsignController extends Controller
         $search = $search->where('id', $id);
         $search = $search->first();
 
-        //dd($id);
+
 
         if(!empty($search)){
             $quotation1 = new Quotation;

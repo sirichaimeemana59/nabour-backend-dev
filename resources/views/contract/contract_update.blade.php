@@ -280,7 +280,7 @@
                                             <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off" ></td>
                                             <td><input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date[]" type="text" value="{!! $row->end_date !!}"  autocomplete="off"></td>
                                             <td>
-                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $id !!}" data-customer="{!! $contract->customer_id !!}" {!! $disabled !!}>
+                                                <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $contract->quotation_id !!}" data-customer="{!! $contract->id !!}" {!! $disabled !!}>
                                                     <i class="fa-trash"></i>
                                                 </a>
                                             </td>
