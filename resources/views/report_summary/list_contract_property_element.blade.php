@@ -63,7 +63,11 @@ $allpage=0;
         @foreach($contracts as $row)
             <tr>
                 <td>{!! $i; !!}</td>
-                <td>{!! $row->latest_contract_transection['contract_id'] !!}</td>
+                @if(!empty($row->latest_contract_transection))
+                    <td>{!! $row->latest_contract_transection['contract_id'] !!}</td>
+                @else
+                    <td>{!! $row->contract_code !!}</td>
+                @endif
                 @if(!empty($row->latest_contract_transection))
                     <td>{!!$row->latest_contract_transection->latest_property['property_name_th']!!}</td>
                 @else
