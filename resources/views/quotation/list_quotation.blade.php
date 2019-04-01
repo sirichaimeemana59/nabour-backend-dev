@@ -117,13 +117,25 @@
                                                 </a>
                                                 @else
                                                     @if(Auth::user()->role !=2)
-                                                        <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->latest_contract->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
-                                                            <i class="fa-edit"></i>
-                                                        </a>
+                                                        @if($row->latest_contract)
+                                                            <a href="{!! url('customer/service/contract/sign/form/'.$row->id.'/'.$row->latest_contract->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
+                                                                <i class="fa-edit"></i>
+                                                            </a>
+                                                            @else
+                                                            <a href="{!! url('customer/service/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
+                                                                <i class="fa-edit"></i>
+                                                            </a>
+                                                        @endif
                                                     @else
-                                                        <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->latest_contract->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
-                                                            <i class="fa-edit"></i>
-                                                        </a>
+                                                        @if($row->latest_contract)
+                                                            <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id.'/'.$row->latest_contract->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
+                                                                <i class="fa-edit"></i>
+                                                            </a>
+                                                        @else
+                                                            <a href="{!! url('customer/service/sales/contract/sign/form/'.$row->id) !!}" class="edit edit-service btn btn-success"  data-toggle="tooltip" data-placement="top"  data-original-title="รายละเอียดสัญญา">
+                                                                <i class="fa-edit"></i>
+                                                            </a>
+                                                        @endif
                                                     @endif
                                                 @endif
                                                 @if(Auth::user()->role !=2)

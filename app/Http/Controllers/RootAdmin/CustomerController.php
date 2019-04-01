@@ -99,6 +99,7 @@ class CustomerController extends Controller
             $customer->sale_id          = Request::get('sale_id');
             $customer->role             =0;
             $customer->tax_id           = Request::get('tax_id');
+            $customer->property_name    = Request::get('property_name');
             $customer->save();
             //dump($customer->toArray());
         }
@@ -163,6 +164,7 @@ class CustomerController extends Controller
             $customer->status           = Request::get('status');
             $customer->sale_id          = Request::get('sale_id');
             $customer->tax_id           = Request::get('tax_id');
+            $customer->property_name    = Request::get('property_name');
             $customer->save();
             //dd($customer);
 

@@ -48,4 +48,9 @@ class contract extends GeneralModel
     {
         return $this->hasOne('App\BackendModel\contract_transaction','contract_id','contract_code');
     }
+
+    public function latest_contract_section ()
+    {
+        return $this->hasMany('App\BackendModel\contract_transaction','contract_id','contract_code');
+    }
 }

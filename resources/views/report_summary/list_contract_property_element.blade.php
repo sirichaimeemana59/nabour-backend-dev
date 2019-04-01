@@ -10,32 +10,32 @@ $from=0;
 $to=0;
 $allpage=0;
 ?>
-@if($p_rows->count() > 0)
+@if($contracts->count() > 0)
     <?php
-    $from   = (($p_rows->currentPage()-1)*$p_rows->perPage())+1;
-    $to     = (($p_rows->currentPage()-1)*$p_rows->perPage())+$p_rows->perPage();
-    $to     = ($to > $p_rows->total()) ? $p_rows->total() : $to;
-    $allpage 	= $p_rows->lastPage();
+    $from   = (($contracts->currentPage()-1)*$contracts->perPage())+1;
+    $to     = (($contracts->currentPage()-1)*$contracts->perPage())+$contracts->perPage();
+    $to     = ($to > $contracts->total()) ? $contracts->total() : $to;
+    $allpage 	= $contracts->lastPage();
     ?>
 
     <div class="row">
         <div class="col-md-4" style="margin-bottom: 10px;">
             <div class="dataTables_info" role="status" aria-live="polite" style="padding:0 0 10px 0;">
-                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$p_rows->total()]) !!}
+                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$contracts->total()]) !!}
             </div>
         </div>
         <div class="col-md-8">
             <div class="text-right" >
                 <div class="invoice-options hidden-print option-top-md">
                     @if($allpage > 1)
-                        @if($p_rows->currentPage() > 1)
-                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $p_rows->currentPage()-1 }}">{{ trans('messages.prev') }}</a>
+                        @if($contracts->currentPage() > 1)
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $contracts->currentPage()-1 }}">{{ trans('messages.prev') }}</a>
                         @endif
-                        @if($p_rows->lastPage() > 1)
-                            <?php echo Form::selectRange('page', 1, $p_rows->lastPage(),$p_rows->currentPage(),['class'=>'form-control paginate-select']); ?>
+                        @if($contracts->lastPage() > 1)
+                            <?php echo Form::selectRange('page', 1, $contracts->lastPage(),$contracts->currentPage(),['class'=>'form-control paginate-select']); ?>
                         @endif
-                        @if($p_rows->hasMorePages())
-                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $p_rows->currentPage()+1 }}">{{ trans('messages.next') }}</a>
+                        @if($contracts->hasMorePages())
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $contracts->currentPage()+1 }}">{{ trans('messages.next') }}</a>
                         @endif
                     @endif
                 </div>
@@ -60,22 +60,22 @@ $allpage=0;
         <?php
         $i=1;
         ?>
-        @foreach($p_rows as $row)
+        @foreach($contracts as $row)
             <tr>
                 <td>{!! $i; !!}</td>
-                <td>{!! $row->contract_id !!}</td>
-                @if(!empty($row->latest_property))
-                    <td>{!!$row->latest_property->property_name_th!!}</td>
+                <td>{!! $row->latest_contract_transection['contract_id'] !!}</td>
+                @if(!empty($row->latest_contract_transection))
+                    <td>{!!$row->latest_contract_transection->latest_property['property_name_th']!!}</td>
                 @else
                     <td>ไม่พบข้อมูล</td>
                 @endif
 
-                <td>@if(empty($row->start_date)) - @else {!! localDate($row->start_date) !!} @endif</td>
-                <td>@if(empty($row->end_date)) - @else {!! localDate($row->end_date) !!} @endif</td>
+                <td>@if(empty($row->latest_contract_transection['start_date'])) - @else {!! localDate($row->latest_contract_transection['start_date']) !!} @endif</td>
+                <td>@if(empty($row->latest_contract_transection['end_date'])) - @else {!! localDate($row->latest_contract_transection['end_date']) !!} @endif</td>
                 <td>{!! localDate(Date('y-m-d')) !!}</td>
 
                 <td></td>
-                <td style="text-align: right;">@if(empty($row->latest_contract)) - @else <?php $sum = $row->latest_contract->latest_quotation->product_price_with_vat+ $row->latest_contract->latest_quotation->product_vat+ $row->latest_contract->latest_quotation->grand_total_price;?>{!! number_format($sum,2) !!} @endif</td>
+                <td style="text-align: right;"><?php $sum = $row->product_price_with_vat+ $row->product_vat+ $row->grand_total_price;?>{!! number_format($sum,2) !!}</td>
             </tr>
             <?php
             $i++;
@@ -87,21 +87,21 @@ $allpage=0;
     <div class="row">
         <div class="col-md-4" style="margin-bottom: 10px;">
             <div class="dataTables_info" role="status" aria-live="polite" style="padding:0 0 10px 0;">
-                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$p_rows->total()]) !!}
+                {!! trans('messages.showing',['from'=>$from,'to'=>$to,'total'=>$contracts->total()]) !!}
             </div>
         </div>
         <div class="col-md-8">
             <div class="text-right" >
                 <div class="invoice-options hidden-print option-top-md">
                     @if($allpage > 1)
-                        @if($p_rows->currentPage() > 1)
-                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $p_rows->currentPage()-1 }}">{{ trans('messages.prev') }}</a>
+                        @if($contracts->currentPage() > 1)
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $contracts->currentPage()-1 }}">{{ trans('messages.prev') }}</a>
                         @endif
-                        @if($p_rows->lastPage() > 1)
-                            <?php echo Form::selectRange('page', 1, $p_rows->lastPage(),$p_rows->currentPage(),['class'=>'form-control paginate-select']); ?>
+                        @if($contracts->lastPage() > 1)
+                            <?php echo Form::selectRange('page', 1, $contracts->lastPage(),$contracts->currentPage(),['class'=>'form-control paginate-select']); ?>
                         @endif
-                        @if($p_rows->hasMorePages())
-                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $p_rows->currentPage()+1 }}">{{ trans('messages.next') }}</a>
+                        @if($contracts->hasMorePages())
+                            <a class="btn btn-white paginate-link" href="#" data-page="{{ $contracts->currentPage()+1 }}">{{ trans('messages.next') }}</a>
                         @endif
                     @endif
                 </div>

@@ -7,7 +7,7 @@ class Customer extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'customer';
-    protected $fillable = ['firstname','lastname','phone','email','address','province','postcode','company_name','channel','type','active_status','role','sale_id','convert_date','note','status_leads','tax_id'];
+    protected $fillable = ['firstname','lastname','phone','email','address','province','postcode','company_name','channel','type','active_status','role','sale_id','convert_date','note','status_leads','tax_id','property_name'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 

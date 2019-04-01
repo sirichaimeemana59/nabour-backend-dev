@@ -137,6 +137,12 @@
                         <div class="form-group">
                             <input type="hidden" name="company_id" value="{!! $customer->company_id !!}">
                             <input type="hidden" name="role" value="{!! $customer->role !!}">
+
+                                <label class="col-sm-2 control-label">ชื่อโครงการ</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" name="property_name" type="text" required value="{!! $customer->property_name !!}">
+                                </div>
+
                         </div>
 
                         {{--@if(empty($customer->user_company->id))--}}

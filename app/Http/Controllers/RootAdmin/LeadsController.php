@@ -98,6 +98,7 @@ class LeadsController extends Controller
             $lead->company_name     =Request::get('company_name');
             $lead->tax_id           =Request::get('tax_id');
             $lead->role             =1;
+            $lead->property_name    = Request::get('property_name');
             $lead->save();
             //dump($lead->toArray());
         }
@@ -138,6 +139,7 @@ class LeadsController extends Controller
             $lead->status_leads = Request::get('status_leads');
             $lead->type         =empty(Request::get('type'))?null:Request::get('type');
             $lead->tax_id           =Request::get('tax_id');
+            $lead->property_name    = Request::get('property_name');
             $lead->save();
             //dump($lead->toArray());
         }

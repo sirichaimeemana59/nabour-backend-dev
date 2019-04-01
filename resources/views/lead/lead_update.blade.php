@@ -109,6 +109,12 @@
     <div class="col-sm-4">
         <input class="form-control" name="tax_id" type="text" required value="{!!$_lead->tax_id !!}">
     </div>
+
+
+        <label class="col-sm-2 control-label">ชื่อโครงการ</label>
+        <div class="col-sm-4">
+            <input class="form-control" name="property_name" type="text" required value="{!! $_lead->property_name !!}">
+        </div>
 </div>
 
 </div>

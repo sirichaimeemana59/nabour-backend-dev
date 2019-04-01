@@ -37,21 +37,13 @@ class ReportsummaryController extends Controller
             }
 
 
-            if(Request::get('c_id')) {
-                $contracts = $contracts->whereHas('customer', function ($q) {
-                    $q ->where('company_name','like',"%".Request::get('c_id')."%");
-                });
-            }
-
             if( Request::get('customer_id') ) {
                 $contracts = $contracts->where('customer_id',Request::get('customer_id'));
             }
 
             $c_no = Request::get('c_no');
             $customer_id = Request::get('customer_id');
-            $contracts = $contracts->where('status','=','1')->orderBy('contract_code','desc')->first();
-
-            $p_rows = contract_transaction::where('contract_id','=',$contracts->contract_code)->orderBy('start_date','ASC')->paginate(50);
+            $contracts = $contracts->where('status','=','1')->orderBy('contract_code','desc')->paginate(50);
 
             return view('report_summary.list_contract_property_element')->with(compact('contracts','p_rows','c_no','customer_id'));
 
@@ -67,6 +59,10 @@ class ReportsummaryController extends Controller
             $customer = $customer->orderBy('created_at','desc')->get();
 
             $customers = Customer::where('role',0)->pluck('company_name','id');
+
+            $contracts = new contract;
+            $contracts = $contracts->where('status','=','1')->orderBy('contract_code','desc')->paginate(50);
+
             return view('report_summary.list_contract_property')->with(compact('contracts','customers','sales','customer','p_rows','c_no','customer_id'));
         }
         //return view('report.report_summary');
@@ -90,12 +86,14 @@ class ReportsummaryController extends Controller
             $contracts = $contracts->where('customer_id',Request::get('customer_id'));
         }
 
-        $contracts = $contracts->where('status','=','1')->orderBy('contract_code','desc')->first();
+        $contracts = $contracts->where('status','=','1')->orderBy('contract_code','desc')->paginate(50);
 
-        $p_rows = contract_transaction::where('contract_id','=',$contracts->contract_code)->orderBy('start_date','ASC')->paginate(50);
-        $rows = contract_transaction::where('contract_id','=',$contracts->contract_code)->orderBy('start_date','ASC')->first();
+        foreach ($contracts as $row){
+            $contract_s = contract_transaction::where('contract_id','=',$row['contract_code'])->get();
+        }
 
-        return view('report.report_summary')->with(compact('contracts','p_rows','rows'));
+
+        return view('report.report_summary')->with(compact('contracts','contract_s'));
 
     }
 
