@@ -40,7 +40,7 @@
             <div class="headcontent">
                 <p>เอกสารแนบท้ายใช้ระบบ "เนเบอร์ แพลตฟอร์ม"</p>
                 <p>สรุปรายงานการใช้งานประจำเดือน {!! localDate(Date('Y-m-d')) !!}</p>
-                <p>ลูกค้า : {!! $s_row->customer->firstname !!}  {!! $s_row->customer->lastname !!}</p>
+                <p>ลูกค้า : @if(!empty($s_row->customer->firstname)){!! $s_row->customer->firstname !!} @else - @endif   @if(!empty($s_row->customer->lastname)){!! $s_row->customer->lastname !!} @else - @endif</p>
             </div>
 
             <table width="100%">
