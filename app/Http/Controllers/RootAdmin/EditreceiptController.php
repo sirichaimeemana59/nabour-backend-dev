@@ -240,9 +240,9 @@ class EditreceiptController extends Controller
                 $receipt->updated_at        = Request::get('receipt_date');
                 $receipt->remark            = Request::get('remark');
                 
-                if($receipt->payment_type != Request::get('payment_type')) {
-                    $change_payment_type = true;
-                }
+                //if($receipt->payment_type != Request::get('payment_type')) {
+                //    $change_payment_type = true;
+                //}
 
                 if($receipt->payment_date != Request::get('payment_date')) {
                     $change_payment_date = true;
@@ -318,6 +318,13 @@ class EditreceiptController extends Controller
                         $bt->timestamps    = false;
                         $bt->transfer_date = $receipt->payment_date;
                         $bt->save();
+
+                        foreach (Request::get('transaction') as $t) {
+                            $transaction = Transaction::find($t['id']);
+                            $transaction->timestamps            = false;
+                            $transaction->bank_transfer_date    = $bt->transfer_date;
+                            $transaction->save();
+                        }
                     }
 
                     foreach (Request::get('transaction') as $t) {
