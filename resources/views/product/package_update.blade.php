@@ -5,6 +5,7 @@
             $('.add-v-exp-dt1').show();
         } else {
             $('.add-v-exp-dt1').hide();
+            $('._price').val('');
         }
     });
 
@@ -91,7 +92,7 @@
             }
         ?>
 
-        <input class="form-control" name="price" id="_price" type="text" required value="{!!$price!!}">
+        <input class="form-control _price" name="price" id="_price"  type="text" required value="{!!$price!!}">
     </div>
 </div>
 <input type="hidden" name="is_delete" value="f">

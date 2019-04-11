@@ -159,21 +159,41 @@
                 }*/
                 ?>
         <tr>
-            <td colspan="2" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
+            @if($row->lastest_package->free == 't' )
+                <td colspan="2" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;"></span></td>
+            @else
+                <td colspan="2" rowspan="4" align="center" style="vertical-align: center; border-bottom:0px solid black; border-left:0px solid black;"><span style="color: black;">{!! convertIntToTextThai($quotation->product_price_with_vat) !!}</span></td>
+            @endif
             <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:5px 0 0 5px;">Sub Total</td>
-            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($sum_service,2) !!}  บาท</td>
+                @if($row->lastest_package->free == 't' )
+                    <td align="right" colspan="2" style="padding:5px 5px 5px 0;">0.00  บาท</td>
+                @else
+                    <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($sum_service,2) !!}  บาท</td>
+                @endif
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black; border-right: 1px solid black; padding:0 0 0 5px;">Discount</td>
-            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->discount,2) !!}  บาท</td>
+            @if($row->lastest_package->free == 't' )
+                <td align="right" colspan="2" style="padding:5px 5px 5px 0;">0.00  บาท</td>
+            @else
+                <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->discount,2) !!}  บาท</td>
+            @endif
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 0 5px;">Vat 7%</td>
-            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->product_vat,2) !!}  บาท</td>
+            @if($row->lastest_package->free == 't' )
+                <td align="right" colspan="2" style="padding:5px 5px 5px 0;">0.00  บาท</td>
+            @else
+                <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format($quotation->product_vat,2) !!}  บาท</td>
+            @endif
         </tr>
         <tr>
             <td align="left" colspan="2" style="border-left: 1px solid black;border-right: 1px solid black; padding:0 0 5px 5px;" >Grand Total</td>
-            <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format(($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount,2) !!}  บาท</td>
+            @if($row->lastest_package->free == 't' )
+                <td align="right" colspan="2" style="padding:5px 5px 5px 0;">0.00  บาท</td>
+            @else
+                <td align="right" colspan="2" style="padding:5px 5px 5px 0;">{!! number_format(($quotation->grand_total_price+$quotation->product_vat)-$quotation->discount,2) !!}  บาท</td>
+            @endif
         </tr>
         </table>
         <br>

@@ -150,8 +150,8 @@ class PackageController extends Controller
             $product = Products::find($id);
             $product->name                  = Request::get('name');
             $product->description           = Request::get('description');
-            if(Request::get('vat') == null AND Request::get('price_vat') != Request::get('price')){
-                $product->price             = Request::get('price_vat');
+            if(Request::get('vat') == null){
+                $product->price             = Request::get('price');
                 $product->price_with_vat    = "0";
                 $product->vat               = "0";
             }else{
@@ -161,6 +161,7 @@ class PackageController extends Controller
             $product->status                = Request::get('status');
             $product->is_delete             = Request::get('is_delete');
             $product->free                  = empty(Request::get('free'))?'f':'t';
+            //dd($product);
             $product->save();
             //dump($product->toArray());
         }
