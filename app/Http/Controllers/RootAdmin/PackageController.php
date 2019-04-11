@@ -109,7 +109,7 @@ class PackageController extends Controller
             $product->vat               = Request::get('vat_value');
             $product->is_delete         = Request::get('is_delete');
             $product->product_code      = Request::get('product_code');
-            $product->free              = Request::get('free');
+            $product->free                  = empty(Request::get('free'))?'f':'t';
             $product->save();
         }else{
             $product = new Products;
@@ -120,7 +120,7 @@ class PackageController extends Controller
             $product->status            = Request::get('status');
             $product->is_delete         = Request::get('is_delete');
             $product->product_code      = Request::get('product_code');
-            $product->free              = Request::get('free');
+            $product->free                  = empty(Request::get('free'))?'f':'t';
             $product->save();
         }
 
@@ -142,7 +142,7 @@ class PackageController extends Controller
             $product->status            = Request::get('status');
             $product->vat               = Request::get('vat_value');
             $product->is_delete         = Request::get('is_delete');
-            $product->free              = Request::get('free');
+            $product->free                  = empty(Request::get('free'))?'f':'t';
             $product->save();
             //dump($product->toArray());
         }else{
@@ -160,7 +160,7 @@ class PackageController extends Controller
 
             $product->status                = Request::get('status');
             $product->is_delete             = Request::get('is_delete');
-            $product->free              = Request::get('free');
+            $product->free                  = empty(Request::get('free'))?'f':'t';
             $product->save();
             //dump($product->toArray());
         }

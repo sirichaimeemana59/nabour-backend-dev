@@ -118,7 +118,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4">กรณีฟรี</label>
                                     <div class="col-sm-12">
-                                        <input type="radio" name="free" value="t">  :   Free of charge <br>
+                                        <input type="checkbox" name="free" value="t">  :   Free of charge <br>
                                     </div>
                                 </div>
 

@@ -106,9 +106,22 @@
             $check1="";
             $check2="checked";
         }
+
+        if($package->free == 't'){
+            $f="checked";
+        }else{
+            $f="";
+        }
         ?>
         <input type="radio" name="status" value="2" {!! $check2 !!}>  :   บริการ <br>
         <input type="radio" name="status" value="1" {!! $check1 !!}>  :   Package
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-4">กรณีฟรี</label>
+    <div class="col-sm-12">
+        <input type="checkbox" name="free" value="t" {!! $f !!}>  :   Free of charge <br>
     </div>
 </div>
 
@@ -170,6 +183,7 @@ $price_vat1 = $vat1+$package->price;
         ราคาสุทธิ <input type="text" class="form-control" name="vat_total" id="vat2">
     </div>
 </div>
+
 @endif
 <br>
 {{--End content--}}
