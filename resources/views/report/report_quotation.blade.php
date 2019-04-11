@@ -133,7 +133,12 @@
                         <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->project_package,0) !!}</td>
                         <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! $row->month_package !!}</td>
                         <td style="vertical-align: top; text-align: right; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->unit_package,2) !!}</td>
-                        <td align="right" style="vertical-align: top; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->total_package,2) !!}</td>
+                        @if($row->lastest_package->free == 't' )
+                            <td align="right" style="vertical-align: top; padding:5px 5px 0 0;color: red;"  class="line_table">Free of charge</td>
+                            @else
+                            <td align="right" style="vertical-align: top; padding:5px 5px 0 0;"  class="line_table">{!! number_format($row->total_package,2) !!}</td>
+                        @endif
+
                     </tr>
                     <?php $i++;
                     $num = $i;

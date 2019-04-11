@@ -112,7 +112,16 @@
                                         <input type="radio" name="status" value="2" required>  :   บริการ <br>
                                         <input type="radio" name="status" value="1" required>  :   Package
                                     </div>
+
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-4">กรณีฟรี</label>
+                                    <div class="col-sm-12">
+                                        <input type="radio" name="free" value="t">  :   Free of charge <br>
+                                    </div>
+                                </div>
+
                                 <input type="hidden" name="is_delete" value="0">
                                     <div class="form-group">
                                         <label class="col-sm-2">Vat 7 %</label>
