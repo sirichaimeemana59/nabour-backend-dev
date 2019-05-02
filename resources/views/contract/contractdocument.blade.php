@@ -295,10 +295,11 @@
                     <p style="text-align: center;">@if(!empty($quotation->person_name))( {!! $quotation->person_name !!} ) @else {!! $name !!} @endif</p>
                 </td>
                 <td style="width: 150px;">
-                    <br><br><br><br><br>
-                    <p style="text-align: center;">ลงชื่อ..........................................</p>
-                    <p style="text-align: center;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</p>
-                    <p style="text-align: center;">ผู้อำนวยการฝ่ายขายและการตลาด</p>
+                    <br><br><br><br>
+                    <p style="text-align: center;"><img src="{!! asset('images/signaturepq.png') !!}" alt="" width="200px"><br>
+                    </p>
+                    <p style="text-align: center;">( วีรยุทธ  งานดี  )</p>
+                    <p style="text-align: center;">Technology Director</p>
                     <p style="text-align: center;">บริษัท โอกาสพลัส จำกัด</p>
                     <br><br>
                     <p style="text-align: center;">วันที่ทำสัญญา {{localDate(date("Y-m-d"))}}</p>
@@ -375,13 +376,13 @@
                     <p></p>
                     <p style="text-align: center;">@if(!empty($quotation->person_name)){!! $quotation->person_name !!} @else {!! $name !!} @endif</p>
                     <p style="text-align: center;">กรรมการผู้จัดการ</p>
-                    <p style="text-align: center;">บริษัท {!! $quotation->customer->company_name !!}</p>
+                    <p style="text-align: center;">{!! $quotation->customer->company_name !!}</p>
                 </td>
                 <td style="width: 150px; margin-left: 45px;">
-                    <br><br>
-                    <p style="text-align: center;">ลงชื่อ..........................................</p>
-                    <p style="text-align: center;">(นางสาวพัสตราภรณ์ เลิศล้ำยิ่ง)</p>
-                    <p style="text-align: center;">ผู้อำนวยการฝ่ายขายและการตลาด</p>
+                    <p style="text-align: center;"><img src="{!! asset('images/signaturepq.png') !!}" alt="" width="200px">
+                    </p>
+                    <p style="text-align: center;">( วีรยุทธ  งานดี  )</p>
+                    <p style="text-align: center;">Technology Director</p>
                     <p style="text-align: center;">บริษัท โอกาสพลัส จำกัด</p>
                     <br><br></td>
             </tr>
