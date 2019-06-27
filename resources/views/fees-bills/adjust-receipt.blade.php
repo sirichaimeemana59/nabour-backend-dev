@@ -45,9 +45,10 @@
     </div>
 @endsection
 @section('script')
+<?php $t = time(); ?>
 <script type="text/javascript" src="{{ url('/') }}/js/jquery-validate/jquery.validate.min.js"></script>
-<script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.th.js"></script>
+<script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.js?v={!! $t !!}"></script>
+<script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.th.js?v={!! $t !!}"></script>
 <script type="text/javascript" src="{{ url('/') }}/js/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{{ url('/') }}/js/selectboxit/jquery.selectBoxIt.min.js"></script>
 <script type="text/javascript" src="{{ url('/') }}/js/select2/select2.min.js"></script>
@@ -56,7 +57,7 @@
 <link rel="stylesheet" href="{{ url('/') }}/js/select2/select2.css">
 <link rel="stylesheet" href="{{ url('/') }}/js/select2/select2-bootstrap.css">
     <script type="text/javascript">
-        $(function(){
+        $(document).ready(function(){
                 $('.search-receipt').on('click', function () {
                     var id = $('#receipt_id').val();
                     $('#id-invoice').val(id);

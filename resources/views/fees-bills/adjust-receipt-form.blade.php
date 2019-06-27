@@ -177,11 +177,14 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">{{ trans('messages.feesBills.due_date') }}</label>
                         <div class="col-sm-4 block-input">
-                            {!! Form::text('due_date',null,array('class'=>'form-control')) !!}
+                            {{--{!! Form::date('due_date',$bill->due_date,array('class'=>'form-control')) !!}--}}
+                            <input type="text" required class="form-control datepicker" value="{!! $bill->due_date !!}" name="due_date" data-format="yyyy-mm-dd" autocomplete="off">
+
                         </div>
                         <label class="control-label col-sm-2">{{ trans('messages.feesBills.create_date_receipt') }}</label>
                         <div class="col-sm-4 block-input">
-                            {!! Form::text('receipt_date',$bill->updated_at,array('class'=>'form-control')) !!}
+                            {{--{!! Form::date('receipt_date',$bill->updated_at,array('class'=>'form-control')) !!}--}}
+                            <input type="text" required class="form-control datepicker" value="{!! $bill->updated_at !!}" name="receipt_date" data-format="yyyy-mm-dd" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -280,7 +283,12 @@
                                 {{ trans('messages.RevenueRecord.receive_date') }}
                             </label>
                             <div class="col-sm-8 no-padding-right">
-                                {!! Form::text('payment_date',null,array('id'=>'payment_date','class'=>'form-control')) !!}
+                                {{--{!! Form::date('payment_date',$bill->payment_date,array('id'=>'payment_date','class'=>'form-control')) !!}--}}
+                                <input type="text" required class="form-control datepicker" value="{!! $bill->payment_date !!}" name="payment_date" data-format="yyyy-mm-dd" autocomplete="off">
+
+                                <input type="text" required class="form-control datepicker"  name="payment_date" data-format="yyyy-mm-dd" autocomplete="off">
+
+
                             </div>
                         </div>
                     </div>
@@ -315,14 +323,17 @@
             </div>
             <script type="text/javascript" src="{{ url('/') }}/js/nabour-validate-payment.js"></script>
             <script type="text/javascript" src="{{ url('/') }}/js/nabour-create-invoice.js"></script>
+                <?php $t = time(); ?>
+                <script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.js?v={!! $t !!}"></script>
+                <script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.th.js?v={!! $t !!}"></script>
             <script type="text/javascript">
-            
+
             $(function () {
-                
+
                 $('#itemsTable').find('tr:last select').selectBoxIt().on('open', function(){
                     $(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
                 });
-                
+
                 $('#create-receipt-form').validate({
                     rules: {
                         name        : "required",

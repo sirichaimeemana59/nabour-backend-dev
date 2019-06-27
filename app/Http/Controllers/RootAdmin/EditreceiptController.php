@@ -239,6 +239,7 @@ class EditreceiptController extends Controller
                 $receipt->due_date          = Request::get('due_date');
                 $receipt->updated_at        = Request::get('receipt_date');
                 $receipt->remark            = Request::get('remark');
+                $receipt->name            = Request::get('name');
                 
                 //if($receipt->payment_type != Request::get('payment_type')) {
                 //    $change_payment_type = true;
