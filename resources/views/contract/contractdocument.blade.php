@@ -123,13 +123,10 @@
                         3.1.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือน ตามสัญญาเป็นเวลา 1 ปี คิดค่าใช้จ่ายตามการใช้งานจริง 2 รูปแบบการใช้งานของแต่ละโครงการดังนี้<br></div>
                 </div>
                 <div class="subnode">
-                    <div> 3.1.2.1 &nbsp;&nbsp;&nbsp;
-                        @foreach($quotation_service as $row)
-                            @foreach($package as $_row)
-                                @if($row->package_id == $_row->id AND $_row->status == 1)
-                                    {!! $_row->name !!}<br>{!! $_row->description !!}
-                                @endif
-                            @endforeach
+                    <div> 3.1.2.1 &nbsp;&nbsp;&nbsp
+
+                        @foreach($quotation->latest_quotation_tran as $row)
+                           {!! $row->lastest_package['name'] !!}<br>{!! $row->lastest_package['detail'] !!}
                         @endforeach
                         <br>
                     </div>
@@ -286,7 +283,7 @@
                     <p></p>
                     <p style="text-align: center;">@if(!empty($quotation->person_name))( {!! $quotation->person_name !!} ) @else {!! $name !!} @endif</p>
                     <p style="text-align: center;">กรรมการ</p>
-                    <p style="text-align: center;">บริษัท {!! $quotation->customer->company_name !!}</p>
+                    <p style="text-align: center;">{!! $quotation->customer->company_name !!}</p>
                 </td>
                 <td style="width: 150px; margin-left: 45px;">
                     <p style="text-align: center;">ลงชื่อ..........................................</p>

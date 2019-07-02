@@ -53,4 +53,8 @@ class contract extends GeneralModel
     {
         return $this->hasMany('App\BackendModel\contract_transaction','contract_id','contract_code');
     }
+
+    public function latest_quotation_tran () {
+        return $this->hasMany('App\BackendModel\Quotation_transaction','quotation_id','quotation_id');
+    }
 }
