@@ -123,8 +123,15 @@
                         3.1.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือน ตามสัญญาเป็นเวลา 1 ปี คิดค่าใช้จ่ายตามการใช้งานจริง 2 รูปแบบการใช้งานของแต่ละโครงการดังนี้<br></div>
                 </div>
                 <div class="subnode">
-                    <div> 3.1.2.1 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือนแบบ Full Package (มีทุก Feature รวมด้านการเงิน) ขึ้นไป ราคา 2,500 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่ร่วมภาษีมูลค่าเพิ่ม 7%<br>
-                        3.1.2.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือนแบบ Lite Package (รวมทุก Feature ยกเว้นด้าน การเงิน) ราคา 1,250 บาท ต่อโครงการ ต่อเดือน ค่าบริการนี้ยังไม่รวมภาษีมูลค่าเพิ่ม 7%<br><br>
+                    <div> 3.1.2.1 &nbsp;&nbsp;&nbsp;
+                        @foreach($quotation_service as $row)
+                            @foreach($package as $_row)
+                                @if($row->package_id == $_row->id AND $_row->status == 1)
+                                    {!! $_row->name !!}<br>{!! $_row->description !!}
+                                @endif
+                            @endforeach
+                        @endforeach
+                        <br>
                     </div>
                 </div>
 

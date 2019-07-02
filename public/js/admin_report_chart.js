@@ -348,7 +348,7 @@
                     rDataSource.push({type:month[i],value:v,number:h.customer[i]});
                 }
             });
-            //console.log(per);
+            //console.log(rDataSource);
 
             text_ = "Leads/Customer Ratio in " + Math.ceil(per) + "%";
 
