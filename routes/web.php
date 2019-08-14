@@ -76,6 +76,7 @@ Route::post('service/quotation/delete_quotationtransecion', 'RootAdmin\Quotation
 
 Route::any('quotation/list', 'RootAdmin\QuotationController@quotationList');
 Route::any('contract/list', 'RootAdmin\ContractsignController@contractList');
+Route::post('contract/delete/contract', 'RootAdmin\ContractsignController@delete_contract');
 //End Quotation
 
 //Quotation Sales

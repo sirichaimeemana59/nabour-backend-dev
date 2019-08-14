@@ -188,6 +188,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">รายละเอียดบริการ</label>
+                        <div class="col-sm-10">
+                            <textarea name="detail_service" class="form-control" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
                         <div class="col-sm-10">

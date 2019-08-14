@@ -152,6 +152,7 @@ class ContractsignController extends Controller
                 $contract->quotation_id         = Request::get('quotation_id1');
                 $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
                 $contract->type_service         = Request::get('type_service');
+                $contract->detail_service       = Request::get('detail_service');
                 $contract->save();
                 //dump($contract);
 
@@ -187,6 +188,7 @@ class ContractsignController extends Controller
         $contract->quotation_id         = Request::get('quotation_id1');
         $contract->person_name          = empty(Request::get('person_name'))?null:Request::get('person_name');
         $contract->type_service         = Request::get('type_service');
+        $contract->detail_service       = Request::get('detail_service');
         $contract->save();
 
         if(!empty(Request::get('property_id'))){
@@ -309,5 +311,16 @@ class ContractsignController extends Controller
         //dd($quotation1);
         return view('contract.contract_form')->with(compact('quotation1','sing','quo_id','contract','property'));
         //dd($id);
+    }
+
+    public function delete_contract(){
+        $contract = contract::find(Request::get('id2'));
+        $contract->delete();
+
+        $contract_transaction=contract_transaction::where('contract_id',Request::get('id_contract'));
+        $contract_transaction->delete();
+
+        return redirect('/contract/list');
+
     }
 }

@@ -82,6 +82,9 @@
             <a href="{!! url('service/contract/sign/quotation/'.$row->id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
                 <i class="fa-print"></i>
             </a>
+            <a href="#" class="btn btn-danger delete_contract" data-id="{!! $row->id !!}" data-id_contract="{!! $row->contract_code !!}"  data-original-title="ลบสัญญา">
+                <i class="fa-trash"></i>
+            </a>
         </td>
     </tr>
         <?php

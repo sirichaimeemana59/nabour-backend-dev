@@ -90,6 +90,38 @@
         </div>
     </div>
 
+    {{--delete--}}
+    <div class="modal fade" id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ลบข้อมูลสัญญา</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                {!! Form::model(null,array('url' => array('contract/delete/contract'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                <br>
+                                <input type="hidden" name="id2" id="id2">
+                                <input type="hidden" name="id_contract" id="id_contract">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
+                                    <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ลบ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{!!url('/js/datepicker/bootstrap-datepicker.js')!!}"></script>
@@ -151,6 +183,16 @@
                     }
                 })
             }
+
+            $('.delete_contract').on('click',function(e){
+                e.preventDefault();
+                var id = $(this).data('id');
+                var id_contract = $(this).data('id_contract');
+                //alert(id);
+                $('#id2').val(id);
+                $('#id_contract').val(id_contract);
+                $('#delete').modal('show');
+            });
         })
     </script>
 
