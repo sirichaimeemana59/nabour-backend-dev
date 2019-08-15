@@ -140,6 +140,7 @@ Route::post('customer/contract/approved', 'RootAdmin\ContractsignController@appr
 Route::get('service/contract/sign/attachment/{id?}','RootAdmin\ContractsignController@attachment');
 Route::post('customer/Customer_form/delete_property','RootAdmin\ContractsignController@delete_property');
 Route::get('service/admin/contract/per/{id?}','RootAdmin\ContractsignController@per');
+Route::post('customer/Customer_form/delete_detail_contract','RootAdmin\ContractsignController@delete_detail_contract');
 //End Contract
 
 //Contract sign no Sales

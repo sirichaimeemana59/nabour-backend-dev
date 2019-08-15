@@ -43,7 +43,7 @@
         <th width="150px">วันที่เริ่ม</th>
         <th width="150px">วันที่สิ้นสุด</th>
         <th width="150px">สถานะ</th>
-        <th width="90px">Action</th>
+        <th width="*">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -82,9 +82,11 @@
             <a href="{!! url('service/contract/sign/quotation/'.$row->id) !!}" class="btn btn-success"  data-toggle="tooltip" data-placement="top" data-original-title="พิมพ์ใบสัญญา" target="_blank">
                 <i class="fa-print"></i>
             </a>
+            @if($row->status != 1)
             <a href="#" class="btn btn-danger delete_contract" data-id="{!! $row->id !!}" data-id_contract="{!! $row->contract_code !!}"  data-original-title="ลบสัญญา">
                 <i class="fa-trash"></i>
             </a>
+            @endif
         </td>
     </tr>
         <?php

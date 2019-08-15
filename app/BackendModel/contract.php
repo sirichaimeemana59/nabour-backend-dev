@@ -7,7 +7,7 @@ class contract extends GeneralModel
 {
     protected $connection = 'back_office';
     protected $table = 'contract';
-    protected $fillable = ['contract_code','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','type_service','detail_service'];
+    protected $fillable = ['contract_code','contract_type','grand_total_price','sales_id','customer_id','payment_term_type','contract_status','quotation_id','person_name','type_service'];
     protected  $primaryKey = 'id';
     public $timestamps      = true;
 
@@ -56,5 +56,10 @@ class contract extends GeneralModel
 
     public function latest_quotation_tran () {
         return $this->hasMany('App\BackendModel\Quotation_transaction','quotation_id','quotation_id');
+    }
+
+    public function latest_contract_detail ()
+    {
+        return $this->hasMany('App\BackendModel\contract_detail','contract_code','contract_code')->orderBy('created_at','desc');
     }
 }

@@ -188,10 +188,33 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">รายละเอียดบริการ</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control" name="detail_service" type="text">--}}
+                            {{--<textarea name="detail_service" class="form-control" id="" cols="30" rows="10"></textarea>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    <div class="form-group ">
                         <label class="col-sm-2 control-label">รายละเอียดบริการ</label>
                         <div class="col-sm-10">
-                            <textarea name="detail_service" class="form-control" id="" cols="30" rows="10"></textarea>
+                            <table class="table table-striped table-condensed" id="itemsTable1">
+                                <tr>
+                                    <th>ชื่อผลิตภัณฑ์</th>
+                                    <th>รายละเอียด</th>
+                                    <th>ลบ</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4" style="margin-left: 15%">
+                            <button type="button" class="btn btn-info btn-primary add_detail"><i class="fa fa-plus"> </i> เพิ่มรายละเอียดบริการ</button>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-4">
                         </div>
                     </div>
 
@@ -294,6 +317,7 @@
         });
 
         $(function () {
+
             $('.add_directer').on('click', function (e){
                 e.preventDefault();
                 var property = '<select name="property_id[]" class="price_service" OnChange="result_Name(this);" style="width:300px;">'+ $('#property_select select').html() + '</select>';
@@ -311,7 +335,26 @@
                 $('#itemsTable').append(tRowTmp);
             });
 
+            $('.add_detail').on('click', function (e){
+                e.preventDefault();
+                var tRowTmp = [
+                    '<tr class="item-row">',
+                    '<input type="hidden" name="" value="" />',
+                    '<td><input type="text" name="detail_name[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
+                    '<td><input type="text" name="detail[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
+                    '<td><a class="btn btn-danger unit-card-delete-button1 action-item"><i class="fa-trash"></i></a></td>',
+                    '</tr>'].join('');
+
+                $('#itemsTable1').append(tRowTmp);
+            });
+
             $('body').on("click", '.unit-card-delete-button', function() {
+                //alert('aaa');
+                $(this).closest('tr.item-row').remove();
+                return false;
+            });
+
+            $('body').on("click", '.unit-card-delete-button1', function() {
                 //alert('aaa');
                 $(this).closest('tr.item-row').remove();
                 return false;

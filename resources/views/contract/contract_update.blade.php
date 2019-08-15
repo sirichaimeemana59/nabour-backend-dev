@@ -245,10 +245,47 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    {{--<div class="form-group">--}}
+                        {{--<label class="col-sm-2 control-label">รายละเอียดบริการ</label>--}}
+                        {{--<div class="col-sm-10">--}}
+                            {{--<input class="form-control" name="detail_service" type="text"  value="{!! $contract->detail_service !!}" >--}}
+                            {{--<textarea name="detail_service" class="form-control" id="" cols="30" rows="10">{!! $contract->detail_service !!}</textarea>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                    <div class="form-group ">
                         <label class="col-sm-2 control-label">รายละเอียดบริการ</label>
                         <div class="col-sm-10">
-                            <textarea name="detail_service" class="form-control" id="" cols="30" rows="10">{!! $contract->detail_service !!}</textarea>
+                            <table class="table table-striped table-condensed" id="itemsTable1">
+                                <tr>
+                                    <th>ชื่อผลิตภัณฑ์</th>
+                                    <th>รายละเอียด</th>
+                                    <th>ลบ</th>
+                                </tr>
+
+                                @foreach($contract_detail as $row)
+                                    <tr class="item-row">
+                                        <input type="hidden" name="detail_id[]" value="{!! $row->id !!}" class="toValidate form-control input-sm"/>
+                                        <td><input type="text" name="detail_name1[]" value="{!! $row->detail_name !!}" class="toValidate form-control input-sm" required/></td>
+                                        <td><input type="text" name="detail1[]" value="{!! $row->detail !!}" class="toValidate form-control input-sm" required /></td>
+
+                                        <td>
+                                            <a class="btn btn-danger delete-detail" data-id="{!! $row->id !!}" data-quotation="{!! $contract->quotation_id !!}" data-customer="{!! $contract->id !!}">
+                                                <i class="fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4" style="margin-left: 15%">
+                            <button type="button" class="btn btn-info btn-primary add_detail"><i class="fa fa-plus"> </i> เพิ่มรายละเอียดบริการ</button>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-4">
                         </div>
                     </div>
 
@@ -364,6 +401,7 @@
                                 @endif
                                 <br>
                                     <input type="hidden" name="id2" id="id2">
+                                    <input type="hidden" name="id2" id="id2">
                                     <input type="hidden" name="quo_id" id="quo_id">
                                     <input type="hidden" name="customer_id" id="customer_id">
                                 <div style="text-align: center;">
@@ -404,6 +442,44 @@
                                     <input type="hidden" name="id_property" class="id_property">
                                     <input type="hidden" name="id_quotation" class="id_quotation">
                                     <input type="hidden" name="id_customer" class="id_customer">
+                                <div style="text-align: center;">
+                                    <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
+                                    <br>
+                                    <button type="button" class="btn btn-white btn-lg" data-dismiss="modal">{{ trans('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit" >ลบ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close(); !!}
+            </div>
+        </div>
+    </div>
+    {{--end delete--}}
+
+    {{--delete detail--}}
+    <div class="modal fade" id="delete_detail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">ลบบริการ</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form">
+                                @if(Auth::user()->role !=2)
+                                    {!! Form::model(null,array('url' => array('customer/Customer_form/delete_detail_contract'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @else
+                                    {!! Form::model(null,array('url' => array('customer/sales/Customer_form/delete_detail_contract'),'class'=>'form-horizontal','id'=>'p_form')) !!}
+                                @endif
+                                <br>
+                                <input type="hidden" name="id_detail" class="id_detail">
+                                    <input type="hidden" name="id_quotation" class="id_quotation1">
+                                    <input type="hidden" name="id_customer" class="id_customer1">
                                 <div style="text-align: center;">
                                     <img src="https://cdn3.iconfinder.com/data/icons/tango-icon-library/48/edit-delete-512.png" alt="" width="50%">
                                     <br>
@@ -522,6 +598,35 @@
             $('#delete').modal('show');
             //console.log(id);
         })
+
+        $('.add_detail').on('click', function (e){
+            e.preventDefault();
+            var tRowTmp = [
+                '<tr class="item-row">',
+                '<input type="hidden" name="" value="" />',
+                '<td><input type="text" name="detail_name[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
+                '<td><input type="text" name="detail[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
+                '<td><a class="btn btn-danger unit-card-delete-button1 action-item"><i class="fa-trash"></i></a></td>',
+                '</tr>'].join('');
+
+            $('#itemsTable1').append(tRowTmp);
+        });
+
+        $('.delete-detail').on('click',function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            var id_quotation = $(this).data("quotation");
+            var id_customer = $(this).data("customer");
+
+            $('.id_quotation1').val(id_quotation);
+            $('.id_customer1').val(id_customer);
+
+            $('.id_detail').val(id);
+
+            $('#delete_detail').modal('show');
+            //console.log(id);
+        })
+
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2-bootstrap.css">

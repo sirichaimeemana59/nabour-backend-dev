@@ -123,13 +123,19 @@
                         3.1.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือน ตามสัญญาเป็นเวลา 1 ปี คิดค่าใช้จ่ายตามการใช้งานจริง 2 รูปแบบการใช้งานของแต่ละโครงการดังนี้<br></div>
                 </div>
                 <div class="subnode">
-                    <div> 3.1.2.1 &nbsp;&nbsp;&nbsp
-                        {!! $quotation->detail_service !!}
+                    @foreach($contract_detail as $key => $row)
+                        <div> 3.1.2.{!! $key+1 !!}&nbsp;&nbsp
+                            {!! $row->detail_name !!}  : {!! $row->detail !!}
+                            <br>
+                        </div>
+                    @endforeach
+                    {{--<div> 3.1.2.1 &nbsp;&nbsp;&nbsp--}}
+                        {{--{!! $quotation->detail_service !!}--}}
                         {{--@foreach($quotation->latest_quotation_tran as $row)--}}
                            {{--{!! $row->lastest_package['name'] !!}<br>{!! $row->lastest_package['detail'] !!}--}}
                         {{--@endforeach--}}
-                        <br>
-                    </div>
+                        {{--<br>--}}
+                    {{--</div>--}}
                 </div>
 
             </div>
