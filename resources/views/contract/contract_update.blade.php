@@ -602,7 +602,7 @@
         $('.add_detail').on('click', function (e){
             e.preventDefault();
             var tRowTmp = [
-                '<tr class="item-row">',
+                '<tr class="item-row1">',
                 '<input type="hidden" name="" value="" />',
                 '<td><input type="text" name="detail_name[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
                 '<td><input type="text" name="detail[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
@@ -626,6 +626,12 @@
             $('#delete_detail').modal('show');
             //console.log(id);
         })
+
+        $('body').on("click", '.unit-card-delete-button1', function() {
+            //alert('aaa');
+            $(this).closest('tr.item-row1').remove();
+            return false;
+        });
 
     </script>
     <link rel="stylesheet" href="{!! url('/') !!}/js/select2/select2.css">
