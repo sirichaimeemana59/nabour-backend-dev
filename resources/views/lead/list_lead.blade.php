@@ -774,7 +774,7 @@
             })
         }
 
-        $('.note').on('click',function(){
+        $('#panel-lead-list').on('click','.note',function(){
             var id = $(this).data('id');
             var note_detail =  $(this).data('detail');
            //alert(id);
