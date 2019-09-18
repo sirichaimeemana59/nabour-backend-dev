@@ -94,7 +94,7 @@
                 </div>
                 <!-- Client and Payment Details -->
                 <div class="invoice-details">
-    
+
                     <div class="invoice-client-info">
                         <strong>{{ trans('messages.feesBills.client') }}</strong>
                         <ul class="list-unstyled">
@@ -126,7 +126,7 @@
                                                 $building = trans('messages.Prop_unit.building')." ".$bill->property_unit->building;
                                             else
                                                 $building = "";
-    
+
                                             if($bill->property_unit->unit_floor){
                                                 $unit_floor = "(".$bill->property_unit->unit_floor.")";
                                             }else{
@@ -140,7 +140,7 @@
                                             $bill->property->{'property_name_'.$lang}." ".
                                             $bill->property->{'address_'.$lang}
                                         }}
-    
+
                                         {{ $bill->property->has_province->{'name_'.$lang }." ".$bill->property->postcode }}
                                     </li>
                                 @endif
@@ -157,7 +157,7 @@
                 </div>
             </div>
             {!! Form::model($bill,array('url'=>['root/admin/edit/receipt/save'],'method'=>'post','class'=>'form-horizontal','id'=>'create-receipt-form','autocomplete' => 'off')) !!}
-            {!! Form::hidden('id') !!}    
+            {!! Form::hidden('id') !!}
             <div class="row">
                 <div style="padding:0px 15px;">
                     <div class="form-group">
@@ -210,7 +210,15 @@
                             <input type="text" name="transaction[{{ $key }}][detail]" value="{{ $transaction->detail }}" class="toValidate form-control input-sm tDesc"/>
                         </td>
                         <td>
-                            <div class="text-center">{{ $cate[$transaction->category] }}</div>
+{{--                            {{ $cate[$transaction->category] }}--}}
+                            <div class="text-center">
+                                <select name="transaction[{{ $key }}][cat]" id="" class="form-control">
+                                    <option value="0">--กรุณาเลือกหมวดหมู่--</option>
+                                    @foreach($cate as $key => $row)
+                                        <option value="{!! $key !!}" @if($transaction->category == $key) {!! $select="selected" !!} @endif>{!! $row !!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </td>
                         <td class="text-right">
                             {{ number_format($transaction->quantity,2) }}
@@ -286,7 +294,7 @@
                                 {{--{!! Form::date('payment_date',$bill->payment_date,array('id'=>'payment_date','class'=>'form-control')) !!}--}}
                                 <input type="text" required class="form-control datepicker" value="{!! $bill->payment_date !!}" name="payment_date" data-format="yyyy-mm-dd" autocomplete="off">
 
-                                <input type="text" required class="form-control datepicker"  name="payment_date" data-format="yyyy-mm-dd" autocomplete="off">
+{{--                                <input type="text" required class="form-control datepicker"  name="payment_date" data-format="yyyy-mm-dd" autocomplete="off">--}}
 
 
                             </div>
@@ -294,7 +302,7 @@
                     </div>
                     <div class="row" id="select-bank-block" @if( $bill->payment_type == 1) style="display:none;" @endif>
                         <div class="col-sm-12">
-                        <?php 
+                        <?php
                             if( $bill->payment_type == 2 ) {
                                 $bank_id = $bill->bankTransaction->bank_id;
                             } else {
@@ -316,7 +324,7 @@
             <input name="grand_total" id="form-grand-total" type="hidden" value="{{ $bill->total }}"/>
             <input name="total" id="form-total" type="hidden" value="{{ $bill->final_grand_total }}"/>
             {!! Form::close() !!}
-           
+
             <input type="hidden" id="baht-label" value="{{ trans('messages.Report.baht') }}" />
             <div id="invoice-category-template" style="display:none;">
             {!! Form::select('category',$cate,null,array('class'=>'form-control')) !!}
@@ -324,8 +332,8 @@
             <script type="text/javascript" src="{{ url('/') }}/js/nabour-validate-payment.js"></script>
             <script type="text/javascript" src="{{ url('/') }}/js/nabour-create-invoice.js"></script>
                 <?php $t = time(); ?>
-                <script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.js?v={!! $t !!}"></script>
-                <script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.th.js?v={!! $t !!}"></script>
+{{--                <script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.js?v={!! $t !!}"></script>--}}
+{{--                <script type="text/javascript" src="{{ url('/') }}/js/datepicker/bootstrap-datepicker.th.js?v={!! $t !!}"></script>--}}
             <script type="text/javascript">
 
             $(function () {

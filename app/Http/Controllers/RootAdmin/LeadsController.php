@@ -74,9 +74,9 @@ class LeadsController extends Controller
 
 
         if(!Request::ajax()) {
-            return view('lead.list_lead')->with(compact('provinces', 'sale', '_lead','p_rows','property','property_demo'));
+            return view('lead.list_lead')->with(compact('provinces', 'sale','p_rows','property','property_demo'));
         }else{
-            return view('lead.list_lead_element')->with(compact('provinces', 'sale', '_lead','p_rows','property','property_demo'));
+            return view('lead.list_lead_element')->with(compact('provinces', 'sale','p_rows','property','property_demo'));
         }
     }
 

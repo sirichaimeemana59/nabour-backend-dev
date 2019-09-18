@@ -209,7 +209,9 @@ Route::any('root/admin/edit/receipt', 'RootAdmin\EditreceiptController@getReceip
 Route::any('root/admin/edit/receipt/save', 'RootAdmin\EditreceiptController@adjustReceipt');
 Route::any('root/admin/edit/expense', 'RootAdmin\EditExpenseController@getExpenseForAdjust');
 Route::any('root/admin/edit/expense/save', 'RootAdmin\EditExpenseController@adjustExpense');
-
+//Invoive
+Route::any('root/admin/edit/invoice','RootAdmin\EditInvoiceController@index');
+Route::post('root/admin/invoice/delete','RootAdmin\EditInvoiceController@destroy');
 // Property
 Route::any('customer/property/list', 'RootAdmin\PropertyController@index');
 Route::any('customer/property/demo/list', 'RootAdmin\PropertyController@demoList');

@@ -214,6 +214,12 @@
                         <span class="title">แก้ไขข้อมูลใบสำคัญจ่าย</span>
                     </a>
                 </li>
+                <li class="{!! (Request::is('root/admin/edit/invoice*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/edit/invoice') !!}">
+                        <i></i>
+                        <span class="title">แก้ไขข้อมูลใบแจ้งหนี้</span>
+                    </a>
+                </li>
             </ul>
         </li>
 

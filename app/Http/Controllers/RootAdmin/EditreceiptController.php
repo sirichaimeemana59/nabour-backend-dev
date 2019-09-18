@@ -22,7 +22,7 @@ class EditreceiptController extends Controller
         $this->middleware('admin');
         view()->share('active_menu','finance');
     }
-    
+
 
     public function index()
     {
@@ -203,9 +203,9 @@ class EditreceiptController extends Controller
 
     public function adjustReceipt() {
         if(Request::isMethod('post')) {
-            
+
 			$change_payment_type = $change_payment_date = false;
-		
+
             $receipt = Invoice::find(Request::get('id'));
 
             $validDate = true;
@@ -232,7 +232,7 @@ class EditreceiptController extends Controller
                 return redirect()->back()->withInput();
 
             } else {
-                
+
                 $old_payment_type           = $receipt->payment_type;
                 $receipt->timestamps        = false;
                 $receipt->ref_no            = Request::get('ref_no');
@@ -240,7 +240,7 @@ class EditreceiptController extends Controller
                 $receipt->updated_at        = Request::get('receipt_date');
                 $receipt->remark            = Request::get('remark');
                 $receipt->name            = Request::get('name');
-                
+
                 //if($receipt->payment_type != Request::get('payment_type')) {
                 //    $change_payment_type = true;
                 //}
@@ -255,7 +255,7 @@ class EditreceiptController extends Controller
                 // if payment method was changed
                 if( $old_payment_type == 1 && $receipt->payment_type == 2 ) {
                     // if cash to bank transfer
-                    
+
                     //check if cash on hand was transfered to bank account
                     if( $receipt->cash_on_hand_transfered ) {
                         Request::session()->flash('class', 'warning');
@@ -287,7 +287,7 @@ class EditreceiptController extends Controller
                     // update bank transfer date in receipt
                     $receipt->bank_transfer_date = null;
                     $receipt->transfered_to_bank = false;
-                    
+
                     $bt     = $receipt->bankTransaction;
                     $bank   = new Bank;
                     $bank->updateBalance ( $bt->bank_id, $receipt->final_grand_total * -1 );
@@ -305,6 +305,7 @@ class EditreceiptController extends Controller
                         $transaction = Transaction::find($t['id']);
                         $transaction->timestamps            = false;
                         $transaction->detail                =  $t['detail'];
+                        $transaction->category                =  $t['cat'];
                         $transaction->save();
                     }
                 }
@@ -344,7 +345,7 @@ class EditreceiptController extends Controller
                     Request::session()->flash('class', 'warning');
                     Request::session()->flash('message', "เกิดความผิดพลาด ไม่สามารถบันทึกข้อมูลใบเสร็จรับเงินได้");
                     return redirect()->back()->withInput();
-                } 
+                }
             }
 		}
     }

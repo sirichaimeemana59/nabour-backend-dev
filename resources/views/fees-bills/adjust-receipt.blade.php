@@ -2,7 +2,7 @@
 @section('content')
 @if ($message = Session::pull('message'))
     <div class="alert alert-{{ Session::pull('class') }} alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>	
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{!! $message !!}</strong>
     </div>
 @endif
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>
     </div>
 @endsection
@@ -66,7 +66,7 @@
                     $('#status-action').val('retrieve');
                     retriveData(id,b);
                 });
-                
+
             $('body').on('click','#create-receipt-btn',function (){
                 var payValid = validatePayment();
                 var allGood = validateTransaction();
@@ -93,7 +93,7 @@
                     }
                 })
             }
-            
+
         });
     </script>
 
