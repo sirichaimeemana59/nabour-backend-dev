@@ -273,3 +273,9 @@ Route::post('root/admin/receipt/delete/image','RootAdmin\EditreceiptController@d
 Route::any('report_admin/report_summary','RootAdmin\ReportsummaryController@index');
 Route::post('report_admin/report_summary_excel','RootAdmin\ReportsummaryController@report');
 //End Report Summary
+
+//Edit Bill Water
+Route::get('/root/admin/edit/bill_water','RootAdmin\Editbillwater@index');
+Route::any('/root/admin/edit/bill_water_form','RootAdmin\Editbillwater@create');
+Route::post('meter/water/form', 'RootAdmin\Editbillwater@editForm');
+Route::post('meter/water/save', 'RootAdmin\Editbillwater@save');

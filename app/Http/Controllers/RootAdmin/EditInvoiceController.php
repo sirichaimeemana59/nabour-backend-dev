@@ -106,6 +106,14 @@ class EditInvoiceController extends Controller
     {
         $tran = Transaction::find(Request::input('id2'));
 
-        dd($tran);
+        $invoice = Invoice::find($tran->invoice_id);
+        $invoice->added_fine_flag = false;
+        $invoice->last_instalment_cf_date_b4_fine = null;
+        $invoice->save();
+        $tran->delete();
+
+        //dd($tran->invoice_id);
+
+        return redirect('root/admin/edit/invoice');
     }
 }

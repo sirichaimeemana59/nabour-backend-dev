@@ -220,6 +220,12 @@
                         <span class="title">แก้ไขข้อมูลใบแจ้งหนี้</span>
                     </a>
                 </li>
+                <li class="{!! (Request::is('root/admin/edit/bill_water*') ? 'active' : '') !!}">
+                    <a href="{!! url('root/admin/edit/bill_water') !!}">
+                        <i></i>
+                        <span class="title">แก้ไขข้อมูลค่าน้ำ</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
