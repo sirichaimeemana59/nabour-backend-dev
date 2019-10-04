@@ -267,6 +267,7 @@ class EditreceiptController extends Controller
                     $receipt->transfered_to_bank = true;
 
                     // Save Bank transfer transaction
+                    //$search_bt = BankTransaction::where('invoice_id',);
                     $bt     = new BankTransaction;
                     $bt->saveBankRevenueTransaction($receipt,Request::get('bank_id'));
                     $bank   = new Bank;
@@ -282,6 +283,7 @@ class EditreceiptController extends Controller
                     }
 
                 } else if ( $old_payment_type == 2 && $receipt->payment_type == 1 ) {
+                   // dd('dd');
                     // if bank transfer to cash
 
                     // update bank transfer date in receipt
@@ -308,6 +310,22 @@ class EditreceiptController extends Controller
                         $transaction->category                =  $t['cat'];
                         $transaction->save();
                     }
+
+                    //dd($receipt);
+                    $search_bt = BankTransaction::where('invoice_id',$receipt->id)->first();
+                    $search_bt->bank_id = Request::input('bank_id');
+                    $search_bt->save();
+
+                    $edit_bank_balance = Bank::find(Request::input('hidden_bank_id'));
+                    $edit_bank_balance->balance =  $edit_bank_balance->balance-$receipt->grand_total;
+                    $edit_bank_balance->save();
+
+                    $edit_bank_new = Bank::find(Request::input('bank_id'));
+                    $edit_bank_new->balance =  $edit_bank_new->balance+$receipt->grand_total;
+                    $edit_bank_new->save();
+                    //dd($edit_bank_balance);
+
+
                 }
 
                 if( $change_payment_date ) {
