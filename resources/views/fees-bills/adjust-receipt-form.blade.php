@@ -322,7 +322,7 @@
                 </div>
             </div>
             @if(!empty($bill->bankTransaction->bank_id))
-                <input type="text" name="hidden_bank_id" value="{!!$bill->bankTransaction->bank_id !!}">
+                <input type="hidden" name="hidden_bank_id" value="{!!$bill->bankTransaction->bank_id !!}">
                 @endif
             <input name="grand_total" id="form-grand-total" type="hidden" value="{{ $bill->total }}"/>
             <input name="total" id="form-total" type="hidden" value="{{ $bill->final_grand_total }}"/>
