@@ -120,12 +120,12 @@
                 <div> 3.1 &nbsp;&nbsp;&nbsp; อัตราค่าบริการ แบ่งออกเป็น 2 รูปแบบ<br></div>
                 <div class="subdetail">
                     <div>3.1.1 &nbsp;&nbsp;&nbsp; ค่าติดตั้งระบบจ่ายครั้งแรก ครั้งเดียว โครงการละ 5,000 บาท @if($quotation->type_service == 1){!! $type_service[$quotation->type_service] !!}@endif<br>
-                        3.1.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือน ตามสัญญาเป็นเวลา 1 ปี คิดค่าใช้จ่ายตามการใช้งานจริง 2 รูปแบบการใช้งานของแต่ละโครงการดังนี้<br></div>
+                        3.1.2 &nbsp;&nbsp;&nbsp; ค่าบริการรายเดือน ตามสัญญาเป็นเวลา 1 ปี คิดค่าใช้จ่ายตามการใช้งานจริงแยกเป็นของแต่ละโครงการดังนี้<br></div>
                 </div>
                 <div class="subnode">
-                    @foreach($contract_detail as $key => $row)
+                    @foreach($contract_property as $key => $row)
                         <div> 3.1.2.{!! $key+1 !!}&nbsp;&nbsp
-                            {!! $row->detail_name !!}  : {!! $row->detail !!}
+                            {!! $row->property_name !!}  ใช้บริการ {!! $row->product !!} : {!! $row->product_detail !!}
                             <br>
                         </div>
                     @endforeach

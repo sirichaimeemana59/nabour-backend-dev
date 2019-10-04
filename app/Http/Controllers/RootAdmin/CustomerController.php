@@ -72,9 +72,9 @@ class CustomerController extends Controller
         //dump($customer->toArray());
 
         if(!Request::ajax()) {
-            return view('customer.list_customer')->with(compact('customer','provinces','sale','p_rows'));
+            return view('customer.list_customer')->with(compact('provinces','sale','p_rows'));
         }else{
-            return view('customer.list_customer_element')->with(compact('customer','provinces','sale','p_rows'));
+            return view('customer.list_customer_element')->with(compact('provinces','sale','p_rows'));
         }
 
     }

@@ -196,27 +196,27 @@
                             {{--<textarea name="detail_service" class="form-control" id="" cols="30" rows="10"></textarea>--}}
                         {{--</div>--}}
                     {{--</div>--}}
-                    <div class="form-group ">
-                        <label class="col-sm-2 control-label">รายละเอียดบริการ</label>
-                        <div class="col-sm-10">
-                            <table class="table table-striped table-condensed" id="itemsTable1">
-                                <tr>
-                                    <th>ชื่อผลิตภัณฑ์</th>
-                                    <th>รายละเอียด</th>
-                                    <th>ลบ</th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+{{--                    <div class="form-group ">--}}
+{{--                        <label class="col-sm-2 control-label">รายละเอียดบริการ</label>--}}
+{{--                        <div class="col-sm-10">--}}
+{{--                            <table class="table table-striped table-condensed" id="itemsTable1">--}}
+{{--                                <tr>--}}
+{{--                                    <th>ชื่อผลิตภัณฑ์</th>--}}
+{{--                                    <th>รายละเอียด</th>--}}
+{{--                                    <th>ลบ</th>--}}
+{{--                                </tr>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="form-group">
-                        <div class="col-sm-4" style="margin-left: 15%">
-                            <button type="button" class="btn btn-info btn-primary add_detail"><i class="fa fa-plus"> </i> เพิ่มรายละเอียดบริการ</button>
-                        </div>
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-4">
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <div class="col-sm-4" style="margin-left: 15%">--}}
+{{--                            <button type="button" class="btn btn-info btn-primary add_detail"><i class="fa fa-plus"> </i> เพิ่มรายละเอียดบริการ</button>--}}
+{{--                        </div>--}}
+{{--                        <label class="col-sm-2 control-label"></label>--}}
+{{--                        <div class="col-sm-4">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">นิติบุคคล</label>
@@ -227,6 +227,8 @@
                                     <th>ชื่อบริษัท</th>
                                     <th>วันที่ทำสัญญา</th>
                                     <th>วันที่สิ้นสุดสัญญา</th>
+                                    <th>ชื่อผลิตภัณฑ์</th>
+                                    <th>รายละเอียด</th>
                                     <th>ลบ</th>
                                 </tr>
                             </table>
@@ -327,8 +329,10 @@
                     '<input type="hidden" name="" value="" />',
                     '<td style="text-align: left; width:300px;">'+property+'</td>',
                     '<td><input type="text" name="property_name[]" value="" class="toValidate form-control input-sm tName input-medium" required/></td>',
-                    '<td> <input class="input-medium form-control" name="start_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
-                    '<td> <input class="input-medium form-control" name="end_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium form-control" name="start_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off" required></td>',
+                    '<td> <input class="input-medium form-control" name="end_date[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off" required></td>',
+                    '<td><input type="text" name="product[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
+                    '<td><input type="text" name="product_detail[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 

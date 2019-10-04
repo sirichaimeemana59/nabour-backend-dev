@@ -253,41 +253,41 @@
                         {{--</div>--}}
                     {{--</div>--}}
 
-                    <div class="form-group ">
-                        <label class="col-sm-2 control-label">รายละเอียดบริการ</label>
-                        <div class="col-sm-10">
-                            <table class="table table-striped table-condensed" id="itemsTable1">
-                                <tr>
-                                    <th>ชื่อผลิตภัณฑ์</th>
-                                    <th>รายละเอียด</th>
-                                    <th>ลบ</th>
-                                </tr>
+{{--                    <div class="form-group ">--}}
+{{--                        <label class="col-sm-2 control-label">รายละเอียดบริการ</label>--}}
+{{--                        <div class="col-sm-10">--}}
+{{--                            <table class="table table-striped table-condensed" id="itemsTable1">--}}
+{{--                                <tr>--}}
+{{--                                    <th>ชื่อผลิตภัณฑ์</th>--}}
+{{--                                    <th>รายละเอียด</th>--}}
+{{--                                    <th>ลบ</th>--}}
+{{--                                </tr>--}}
 
-                                @foreach($contract_detail as $row)
-                                    <tr class="item-row">
-                                        <input type="hidden" name="detail_id[]" value="{!! $row->id !!}" class="toValidate form-control input-sm"/>
-                                        <td><input type="text" name="detail_name1[]" value="{!! $row->detail_name !!}" class="toValidate form-control input-sm" required/></td>
-                                        <td><input type="text" name="detail1[]" value="{!! $row->detail !!}" class="toValidate form-control input-sm" required /></td>
+{{--                                @foreach($contract_detail as $row)--}}
+{{--                                    <tr class="item-row">--}}
+{{--                                        <input type="hidden" name="detail_id[]" value="{!! $row->id !!}" class="toValidate form-control input-sm"/>--}}
+{{--                                        <td><input type="text" name="detail_name1[]" value="{!! $row->detail_name !!}" class="toValidate form-control input-sm" required/></td>--}}
+{{--                                        <td><input type="text" name="detail1[]" value="{!! $row->detail !!}" class="toValidate form-control input-sm" required /></td>--}}
 
-                                        <td>
-                                            <a class="btn btn-danger delete-detail" data-id="{!! $row->id !!}" data-quotation="{!! $contract->quotation_id !!}" data-customer="{!! $contract->id !!}">
-                                                <i class="fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    </div>
+{{--                                        <td>--}}
+{{--                                            <a class="btn btn-danger delete-detail" data-id="{!! $row->id !!}" data-quotation="{!! $contract->quotation_id !!}" data-customer="{!! $contract->id !!}">--}}
+{{--                                                <i class="fa-trash"></i>--}}
+{{--                                            </a>--}}
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                @endforeach--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="form-group">
-                        <div class="col-sm-4" style="margin-left: 15%">
-                            <button type="button" class="btn btn-info btn-primary add_detail"><i class="fa fa-plus"> </i> เพิ่มรายละเอียดบริการ</button>
-                        </div>
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-4">
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <div class="col-sm-4" style="margin-left: 15%">--}}
+{{--                            <button type="button" class="btn btn-info btn-primary add_detail"><i class="fa fa-plus"> </i> เพิ่มรายละเอียดบริการ</button>--}}
+{{--                        </div>--}}
+{{--                        <label class="col-sm-2 control-label"></label>--}}
+{{--                        <div class="col-sm-4">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     {{--<div class="form-group">--}}
                         {{--<label class="col-sm-2 control-label">ชื่อนิติบุคคล</label>--}}
@@ -304,6 +304,8 @@
                                     <th>ชื่อบริษัท</th>
                                     <th>วันที่ทำสัญญา</th>
                                     <th>วันที่สิ้นสุดสัญญา</th>
+                                    <th>ชื่อผลิตภัณฑ์</th>
+                                    <th>รายละเอียด</th>
                                     <th>ลบ</th>
                                 </tr>
 
@@ -323,6 +325,8 @@
                                             <td><input type="text" name="property_name[]" value="{!! $row->property_name !!}" class="toValidate form-control input-sm tName" required {!! $read !!}/></td>
                                             <td><input class="form-control datepicker" data-language="th" data-format="yyyy-mm-dd" name="start_date[]" type="text" required value="{!! $row->start_date !!}" {!! $disabled !!} autocomplete="off" ></td>
                                             <td><input class="form-control datepicker" data-language="th" {!! $disabled !!} required data-format="yyyy-mm-dd" name="end_date[]" type="text" value="{!! $row->end_date !!}"  autocomplete="off"></td>
+                                            <td><input type="text" name="product[]" value="{!! $row->product !!}" class="toValidate form-control input-sm" required {!! $read !!}/></td>
+                                            <td><input type="text" name="product_detail[]" value="{!! $row->product_detail !!}" class="toValidate form-control input-sm" required {!! $read !!}/></td>
                                             <td>
                                                 <a class="btn btn-danger delete-property-button" data-id="{!! $row->id !!}" data-quotation="{!! $contract->quotation_id !!}" data-customer="{!! $contract->id !!}" {!! $disabled !!}>
                                                     <i class="fa-trash"></i>
@@ -562,8 +566,10 @@
                     '<tr class="item-row">',
                     '<td style="text-align: left;width:300px;">'+property+'</td>',
                     '<td><input type="text" name="property_name_update[]" value="" class="toValidate form-control input-sm tName input-medium" required/></td>',
-                    '<td> <input class="input-medium form-control" name="start_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
-                    '<td> <input class="input-medium form-control" name="end_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off"></td>',
+                    '<td> <input class="input-medium form-control" name="start_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off" required></td>',
+                    '<td> <input class="input-medium form-control" name="end_date_update[]" data-date-format="yyyy-mm-dd" type="text" data-provide="datepicker" data-date-language="th-th" autocomplete="off" required></td>',
+                    '<td><input type="text" name="product_update[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
+                    '<td><input type="text" name="product_detail_update[]" value="" class="toValidate form-control input-sm  input-medium" required/></td>',
                     '<td><a class="btn btn-danger unit-card-delete-button action-item"><i class="fa-trash"></i></a></td>',
                     '</tr>'].join('');
 
